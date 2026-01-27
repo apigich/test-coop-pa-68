@@ -30,10 +30,10 @@
       .header-icon-box { margin-bottom: 15px; margin-right: 0 !important; }
     }
     
-    /* === Sidebar (ปรับให้ Flex เพื่อดันปุ่ม Logout ไปล่างสุด) === */
+    /* === Sidebar === */
     .sidebar { 
       min-height: 100vh; background: white; border-right: 1px solid #e9ecef; padding-top: 20px; 
-      display: flex; flex-direction: column; /* เรียงแนวตั้ง */
+      display: flex; flex-direction: column; 
     }
     .nav-link-main { 
       padding: 12px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; 
@@ -47,7 +47,7 @@
     }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
 
-    /* ปุ่ม Logout ใน Sidebar (ตามรูปภาพ) */
+    /* ปุ่ม Logout ใน Sidebar */
     .sidebar-logout-btn {
       background: white; border: 1px solid #6c757d; color: #6c757d;
       border-radius: 5px; padding: 10px; width: 100%; text-align: center;
@@ -102,7 +102,6 @@
     /* === Footer === */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
-    
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
     .admin-trigger:hover { opacity: 1; color: #fff; }
     
@@ -273,7 +272,7 @@
           </div>
 
           <h6 class="fw-bold mt-4 mb-3">➕ เพิ่มกิจกรรมลงปฏิทิน</h6>
-          <form onsubmit="submitCalendar(event)">
+          <form id="calForm" onsubmit="submitCalendar(event)">
             <input class="form-control mb-2" id="c_name" placeholder="ชื่อกิจกรรม (เช่น ประชุม กรอ.)" required>
             <div class="row mb-2">
               <div class="col-md-5 mb-2"><label class="small text-muted">วันเริ่ม</label><input type="date" class="form-control" id="c_start" required></div>
@@ -282,7 +281,7 @@
             </div>
             <input class="form-control mb-2" id="c_desc" placeholder="รายละเอียดเพิ่มเติม (เวลา, สถานที่)">
             <input class="form-control mb-3" id="c_link" placeholder="ลิงก์เอกสาร/ประชาสัมพันธ์ (ถ้ามี)">
-            <button class="btn btn-dark w-100 fw-bold"><i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม</button>
+            <button type="submit" class="btn btn-dark w-100 fw-bold"><i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม</button>
           </form>
         </div>
 
@@ -469,28 +468,14 @@
        });
     }
     function updateUI() {
-       // Form 1
-       let b1 = document.getElementById('banner1');
-       let badge1 = document.getElementById('badge1');
-       let st1 = document.getElementById('statusText1');
-       if(form1Open) {
-          b1.classList.remove('closed'); badge1.style.display = 'block'; 
-          st1.className = "banner-desc mt-2 badge bg-white text-danger fs-6"; st1.innerText = "📅 เปิดรับ: 1 ม.ค. 68 - 31 ธ.ค. 68";
-       } else {
-          b1.classList.add('closed'); badge1.style.display = 'none'; 
-          st1.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st1.innerText = "⛔ ปิดรับแจ้งเรื่อง";
-       }
-       // Form 2
-       let b2 = document.getElementById('banner2');
-       let badge2 = document.getElementById('badge2');
-       let st2 = document.getElementById('statusText2');
-       if(form2Open) {
-          b2.classList.remove('closed'); badge2.style.display = 'block'; 
-          st2.className = "banner-desc mt-2 badge bg-danger text-white fs-6"; st2.innerText = "📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68";
-       } else {
-          b2.classList.add('closed'); badge2.style.display = 'none'; 
-          st2.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st2.innerText = "⛔ ปิดรับความคิดเห็นแล้ว";
-       }
+       let b1 = document.getElementById('banner1'), badge1 = document.getElementById('badge1'), st1 = document.getElementById('statusText1');
+       if(form1Open) { b1.classList.remove('closed'); badge1.style.display = 'block'; st1.className = "banner-desc mt-2 badge bg-white text-danger fs-6"; st1.innerText = "📅 เปิดรับ: 1 ม.ค. 68 - 31 ธ.ค. 68"; } 
+       else { b1.classList.add('closed'); badge1.style.display = 'none'; st1.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st1.innerText = "⛔ ปิดรับแจ้งเรื่อง"; }
+       
+       let b2 = document.getElementById('banner2'), badge2 = document.getElementById('badge2'), st2 = document.getElementById('statusText2');
+       if(form2Open) { b2.classList.remove('closed'); badge2.style.display = 'block'; st2.className = "banner-desc mt-2 badge bg-danger text-white fs-6"; st2.innerText = "📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68"; } 
+       else { b2.classList.add('closed'); badge2.style.display = 'none'; st2.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st2.innerText = "⛔ ปิดรับความคิดเห็นแล้ว"; }
+       
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
     }
@@ -550,32 +535,53 @@
     }
     function formatDateThai(dateStr) { if(!dateStr) return ""; let d = new Date(dateStr); let months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]; return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`; }
     function changeMonth(n) { currentDate.setMonth(currentDate.getMonth()+n); renderCalendar(); }
-    function submitCalendar(e) { e.preventDefault(); let btn = e.target.querySelector('button'); btn.disabled = true; btn.innerText = 'กำลังบันทึก...'; let data = { action:'saveCalendar', title: getVal('c_name'), startDate: getVal('c_start'), endDate: getVal('c_end'), color: getVal('c_color'), desc: getVal('c_desc'), link: getVal('c_link') }; postData(data, () => { Swal.fire('สำเร็จ','เพิ่มกิจกรรมเรียบร้อยแล้ว','success'); document.getElementById('calForm').reset(); fetchEvents(); btn.disabled = false; btn.innerHTML = '<i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม'; }); }
+    
+    // 🟢 ฟังก์ชันบันทึกแบบใหม่ (เร็ว!)
+    function submitCalendar(e) {
+      e.preventDefault();
+      
+      // 1. เก็บค่าจากฟอร์ม
+      let title = getVal('c_name');
+      let startDate = getVal('c_start');
+      let endDate = getVal('c_end') || startDate;
+      let color = getVal('c_color');
+      let desc = getVal('c_desc');
+      let link = getVal('c_link');
+
+      // 2. สร้าง Event จำลองแล้วยัดใส่ปฏิทินทันที (ไม่ต้องรอ Server)
+      let tempEvent = {
+        id: 'TEMP_' + new Date().getTime(),
+        title: title, startDate: startDate, endDate: endDate,
+        color: color, desc: desc, link: link
+      };
+      
+      events.push(tempEvent); // เพิ่มลงตัวแปร
+      renderCalendar(); // วาดใหม่ทันที
+      
+      document.getElementById('calForm').reset();
+      Swal.fire({ icon: 'success', title: 'บันทึกข้อมูลแล้ว', timer: 1500, showConfirmButton: false });
+
+      // 3. ส่งไปเก็บหลังบ้าน (ทำเงียบๆ)
+      let data = { action: 'saveCalendar', title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
+      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).catch(e => console.error("Save error:", e));
+    }
+
     function delEvent(id, e) { e.stopPropagation(); Swal.fire({ title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก' }).then((result) => { if (result.isConfirmed) { postData({action:'deleteEvent', id: id}, () => { Swal.fire('เรียบร้อย', 'ลบข้อมูลแล้ว', 'success'); fetchEvents(); }); } }); }
     
     // 🟢 ระบบ Login / Logout
     function loginToggle() {
-      // คลิกที่ Footer เพื่อ Login
       Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', inputPlaceholder: 'รหัสผ่านผู้ดูแลระบบ', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
         if(!res.value) return;
         postData({action: 'login', password: res.value}, (data) => {
-           if(data.status === 'SUCCESS') {
-              setAdminMode(true);
-              Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false});
-           } else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); }
+           if(data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } 
+           else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); }
         });
       });
     }
 
     function logoutSystem() {
-      // คลิกที่ Sidebar / Calendar เพื่อ Logout
-      Swal.fire({
-        title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่, ออกจากระบบ', cancelButtonText: 'ยกเลิก'
-      }).then((res) => {
-        if(res.isConfirmed) {
-          setAdminMode(false);
-          Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false});
-        }
+      Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่, ออกจากระบบ', cancelButtonText: 'ยกเลิก' }).then((res) => {
+        if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); }
       });
     }
 
@@ -583,14 +589,16 @@
        isAdmin = status;
        if(status) {
           document.getElementById('adminPanel').style.display='block';
-          document.getElementById('sidebarLogoutArea').style.display='block'; // โชว์ปุ่ม sidebar
-          // อัปเดต Footer เป็นข้อความพิเศษสำหรับแอดมิน (ถ้าต้องการ) หรือปล่อยเหมือนเดิม
+          document.getElementById('sidebarLogoutArea').style.display='block';
+          document.getElementById('footerCopyright').innerHTML = '© 2026 All Rights Reserved. <span class="text-warning fw-bold" style="cursor:pointer">(Logout)</span>';
        } else {
           document.getElementById('adminPanel').style.display='none';
-          document.getElementById('sidebarLogoutArea').style.display='none'; // ซ่อนปุ่ม sidebar
+          document.getElementById('sidebarLogoutArea').style.display='none';
+          document.getElementById('footerCopyright').innerHTML = '© 2026 All Rights Reserved.';
        }
        updateUI(); renderCalendar();
-       if(document.getElementById('toggleSpecialForm')) document.getElementById('toggleSpecialForm').checked = form2Open;
+       if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
+       if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
     }
 
     function postData(data, callback) { fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()).then(d => callback(d)).catch(e => console.error(e)); }
