@@ -23,14 +23,8 @@
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
     
     .org-title-group { display: flex; flex-direction: column; justify-content: center; }
-    .org-main-text { 
-      font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
-      font-size: clamp(1.1rem, 2vw, 1.6rem); 
-    }
-    .org-sub-text {
-      font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); 
-      color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
+    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); font-size: clamp(1.1rem, 2vw, 1.6rem); }
+    .org-sub-text { font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
     .eng-subtitle { font-weight: 300; opacity: 0.8; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.85rem; margin-top: 5px; }
 
     @media (max-width: 768px) {
@@ -54,24 +48,45 @@
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* === Banner Buttons === */
+    /* === Banner Buttons (แก้ไขให้วงกลมเป๊ะๆ ห้ามเบี้ยว) === */
     .banner-btn {
       display: flex; align-items: center; justify-content: flex-start;
-      padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
+      padding: 15px 20px; /* ขนาดปุ่มกำลังดี */
+      margin-bottom: 20px; border-radius: 15px;
       color: white; cursor: pointer; transition: all 0.3s ease; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
       border: none; width: 100%; text-align: left;
-      background-size: cover !important; background-position: center !important;
+      background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     
+    /* 🟢 1. บังคับขนาดวงกลมให้เท่ากันเป๊ะๆ (Square) */
     .banner-icon { 
-      font-size: 4.5rem; background: rgba(255,255,255,0.25); padding: 10px; border-radius: 50%; 
-      flex-shrink: 0; margin-right: 20px;
+      width: 100px;        /* ความกว้าง */
+      height: 100px;       /* ความสูงเท่ากัน */
+      min-width: 100px;    /* 🟢 ห้ามย่อเด็ดขาด (ป้องกันเบี้ยว) */
+      min-height: 100px;   /* 🟢 ห้ามย่อเด็ดขาด */
+      
+      border-radius: 50%;  /* ทำเป็นวงกลม */
+      font-size: 4rem;     /* อิโมจิใหญ่สะใจ */
+      
+      background: rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      margin-right: 20px;
+      flex-shrink: 0;      /* ห้ามโดนบีบจาก Flexbox */
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .banner-text { text-align: center; flex-grow: 1; position: relative; z-index: 2; }
-    .banner-title { font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; }
-    .banner-desc { font-size: 1.1rem; opacity: 0.95; font-weight: 400; }
+    
+    .banner-text { 
+      text-align: center; /* ตัวหนังสืออยู่กลาง */
+      flex-grow: 1; position: relative; z-index: 2; 
+    }
+    .banner-title { 
+      font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .banner-desc { 
+      font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
     
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
     .banner-btn.closed:hover { transform: none; box-shadow: none; }
@@ -92,6 +107,8 @@
     /* === Carousel === */
     .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
     .carousel-caption { display: none !important; }
+    
+    /* ปุ่มเลื่อนกลับมาแล้ว */
     .carousel-control-prev-icon, .carousel-control-next-icon {
       background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%;
     }
@@ -652,6 +669,7 @@
           document.getElementById('adminPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
+       // 🟢 Footer ไม่มีคำว่า Logout
        updateUI(); renderCalendar();
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
