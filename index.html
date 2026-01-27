@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,58 +11,98 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <style>
-    body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; display: flex; flex-direction: column; min-height: 100vh; font-size: 0.95rem; }
+    /* === Global Styles === */
+    body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; font-size: 0.95rem; }
     
-    /* Header */
-    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center/cover; color: white; padding: 60px 0; position: relative; }
-    .header-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(90deg, rgba(13,110,253,0.9), rgba(0,50,133,0.7)); }
-    .header-content { position: relative; z-index: 2; padding: 0 20px; }
+    /* === Header === */
+    .main-header { 
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
+      color: white; padding: 70px 0; position: relative; 
+    }
+    .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.9) 0%, rgba(0, 50, 133, 0.7) 100%); z-index: 1; }
+    .header-content { position: relative; z-index: 2; padding: 0 40px; }
     
-    /* Sidebar */
-    .sidebar { min-height: 100vh; background: white; border-right: 1px solid #ddd; padding-top: 20px; }
-    .nav-link-main { padding: 12px 20px; color: #0d6efd; font-weight: bold; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f0f0f0; }
-    .nav-link-main:hover, .nav-link-main.active { background: #e7f1ff; border-left: 4px solid #0d6efd; }
-    .nav-link-sub { padding: 8px 20px 8px 40px; color: #666; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; }
-    .nav-link-sub:hover { color: #0d6efd; }
+    /* === Sidebar Navigation === */
+    .sidebar { min-height: 100vh; background: white; border-right: 1px solid #e9ecef; padding-top: 20px; }
+    .nav-link-main { 
+      padding: 12px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; 
+      text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem;
+    }
+    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 25px; }
+    .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
 
-    /* Content */
-    .content-section { background: white; padding: 25px; border-radius: 10px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    
-    /* Banner Buttons Style */
+    .nav-link-sub { 
+      padding: 8px 20px 8px 45px; color: #6c757d; cursor: pointer; display: block; 
+      text-decoration: none; font-size: 0.9rem; transition: 0.2s; position: relative;
+    }
+    .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
+    .nav-link-sub::before { content: "•"; position: absolute; left: 30px; top: 50%; transform: translateY(-50%); font-size: 1.2rem; color: #dee2e6; }
+
+    /* === Content Area === */
+    .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
+    .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
+
+    /* === Banner Buttons (แก้ไขให้กดง่ายขึ้น) === */
     .banner-btn {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 20px; margin-bottom: 15px; border-radius: 50px;
-      color: white; cursor: pointer; transition: transform 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      position: relative; overflow: hidden;
+      padding: 25px; margin-bottom: 20px; border-radius: 15px;
+      color: white; cursor: pointer; transition: all 0.3s ease; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
+      border: none; width: 100%; text-align: left; /* เพิ่มเพื่อให้แน่ใจว่าเป็นปุ่มกด */
     }
-    .banner-btn:hover { transform: scale(1.02); }
-    .banner-icon { font-size: 3rem; background: rgba(255,255,255,0.2); padding: 10px; border-radius: 50%; }
-    .banner-text { text-align: right; flex-grow: 1; padding-left: 15px; }
-    .banner-title { font-weight: bold; font-size: 1.2rem; margin-bottom: 5px; }
-    .banner-desc { font-size: 0.9rem; opacity: 0.9; }
+    .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
+    .banner-icon { font-size: 3.5rem; background: rgba(255,255,255,0.25); padding: 15px; border-radius: 50%; }
+    .banner-text { text-align: right; flex-grow: 1; padding-left: 20px; }
+    .banner-title { font-weight: 800; font-size: 1.4rem; margin-bottom: 5px; line-height: 1.2; }
+    .banner-desc { font-size: 0.95rem; opacity: 0.95; font-weight: 300; }
     
-    .bg-gradient-pink { background: linear-gradient(90deg, #ff7eb3, #ff758c); }
-    .bg-gradient-yellow { background: linear-gradient(90deg, #fce38a, #f38181); }
+    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
+    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
 
-    /* Calendar & Events */
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); border: 1px solid #ddd; }
-    .day-cell { min-height: 80px; border: 1px solid #eee; padding: 5px; background: white; }
-    .event-badge { display: block; background: #0d6efd; color: white; font-size: 12px; padding: 2px 5px; margin-bottom: 2px; border-radius: 4px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .delete-btn { float: right; color: white; background: red; border-radius: 50%; width: 15px; height: 15px; text-align: center; line-height: 15px; font-size: 10px; cursor: pointer; display: none; }
+    /* === Calendar === */
+    .calendar-container { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; background: #0d6efd; color: white; padding: 20px; }
+    .btn-nav { background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; transition: 0.2s; }
+    .btn-nav:hover { background: rgba(255,255,255,0.4); }
     
-    .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); border-left: 1px solid #eee; border-bottom: 1px solid #eee; }
+    .day-name { background: #f8f9fa; text-align: center; font-weight: bold; padding: 15px 5px; border-right: 1px solid #eee; border-bottom: 1px solid #eee; color: #666; }
+    .day-cell { min-height: 120px; border-right: 1px solid #eee; border-bottom: 1px solid #eee; padding: 8px; position: relative; background: white; transition: 0.2s; }
+    .day-cell:hover { background-color: #fafafa; }
+    .day-cell.today { background-color: #f0f7ff; }
+    .day-number { font-weight: bold; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; margin-bottom: 5px; color: #444; }
+    .day-cell.today .day-number { background: #0d6efd; color: white; }
+    
+    .event-badge { 
+      display: block; font-size: 0.8rem; padding: 4px 25px 4px 8px; 
+      margin-bottom: 4px; border-radius: 4px; color: white; cursor: pointer; 
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s;
+    }
+    .event-badge:hover { transform: scale(1.02); z-index: 2; opacity: 0.9; }
+    
+    /* ปุ่มลบ (กากบาท) */
+    .delete-btn { 
+      position: absolute; right: 4px; top: 50%; transform: translateY(-50%); 
+      color: white; font-weight: bold; cursor: pointer; font-size: 10px; 
+      padding: 0; border-radius: 50%; background: rgba(0,0,0,0.2); 
+      width: 18px; height: 18px; text-align: center; line-height: 18px; 
+      display: none; 
+    }
+    .delete-btn:hover { background: rgba(255,0,0,0.8); }
 
-    /* Footer */
-    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 100px 40px 120px 40px; margin-top: auto; border-top: none; width: 100%; }
-    .main-footer h5 { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; line-height: 1.6; margin-top: 0; }
-    .admin-trigger { cursor: pointer; opacity: 0.3; transition: 0.3s; }
+    /* === Footer (แก้ให้แสดงผลชัดเจน) === */
+    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
+    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
+    .admin-trigger { cursor: pointer; opacity: 0.3; transition: 0.3s; margin-top: 20px; display: inline-block; }
     .admin-trigger:hover { opacity: 1; color: #ffc107; }
-    .map-container { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.3); border: 2px solid #343a40; }
 
     @media (max-width: 768px) {
       .sidebar { position: static; height: auto; border-right: none; }
-      .day-cell { min-height: 60px; }
-      .main-footer { padding: 60px 20px 80px 20px; }
+      .header-content { text-align: center; display: block !important; }
+      .banner-btn { flex-direction: column; text-align: center; }
+      .banner-text { text-align: center; padding-left: 0; padding-top: 10px; }
     }
   </style>
 </head>
@@ -72,168 +112,184 @@
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
-  <header class="main-header">
+  <header class="main-header container-fluid p-0">
     <div class="header-overlay"></div>
     <div class="header-content d-flex align-items-center">
-      <i class="material-icons" style="font-size: 3.5rem; margin-right: 15px;">account_balance</i>
+      <div class="me-4"><i class="material-icons" style="font-size: 4rem;">account_balance</i></div> 
       <div>
-        <h1 class="m-0 fw-bold" style="font-size: 1.5rem;">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
-        <small>สำนักงานจังหวัดเชียงใหม่</small>
+        <h1 class="m-0 fw-bold" style="text-shadow: 0 2px 4px rgba(0,0,0,0.3);">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
+        <div style="font-size: 1.1rem; opacity: 0.9; letter-spacing: 1px;">สำนักงานจังหวัดเชียงใหม่</div>
       </div>
     </div>
   </header>
 
-  <div class="container-fluid p-0 d-flex flex-grow-1">
+  <div class="container-fluid p-0 d-flex flex-grow-1 flex-column flex-md-row">
     
-    <div class="sidebar col-md-2 d-none d-md-block">
-      <h6 class="px-3 text-secondary fw-bold">เมนูหลัก</h6>
+    <div class="sidebar col-md-3 col-lg-2 p-0">
+      <h6 class="px-3 text-secondary fw-bold mt-3 mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
+      
       <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
-      <div id="sub-home">
-        <a class="nav-link-sub" onclick="scrollToId('sec-pr')">- สื่อประชาสัมพันธ์</a>
-        <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">- รับฟังความคิดเห็น</a>
-        <a class="nav-link-sub" onclick="scrollToId('sec-dash')">- Dashboard</a>
+      <div id="sub-home" class="mb-2">
+        <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
+        <a class="nav-link-sub" onclick="scrollToId('sec-dash')">Dashboard</a>
       </div>
+      
       <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
-      <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรม</a>
+      <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
       <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
       
-      <div class="mt-4 px-3">
-         <button id="adminBtn" class="btn btn-outline-secondary btn-sm w-100" onclick="loginToggle()">🔐 Admin Login</button>
+      <div class="mt-5 px-3 mb-4">
+         <button id="adminBtn" class="btn btn-outline-secondary btn-sm w-100 py-2" onclick="loginToggle()">
+           <i class="material-icons align-middle fs-6">lock</i> Admin Login
+         </button>
       </div>
     </div>
 
-    <div class="col-md-10 col-12 bg-light p-4">
+    <div class="col-md-9 col-lg-10 bg-light p-4">
       
       <div id="page-home">
         
-        <div id="sec-pr" class="content-section">
-          <h4 class="text-primary fw-bold mb-3"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์</h4>
-          <div class="row">
-            <div class="col-md-4 mb-3">
-               <div class="card h-100 shadow-sm">
-                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/640px-Doi_Suthep_02.jpg" class="card-img-top" style="height:150px; object-fit:cover;">
-                 <div class="card-body"><h6 class="card-title fw-bold">เชียงใหม่เมืองสร้างสรรค์</h6><p class="small text-muted">ร่วมขับเคลื่อนเศรษฐกิจ...</p></div>
-               </div>
-            </div>
-            <div class="col-md-4 mb-3">
-               <div class="card h-100 shadow-sm">
-                 <img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg" class="card-img-top" style="height:150px; object-fit:cover;">
-                 <div class="card-body"><h6 class="card-title fw-bold">เทศกาลดอกไม้บาน</h6><p class="small text-muted">เชิญเที่ยวชมสวนดอกไม้...</p></div>
-               </div>
-            </div>
-            <div class="col-md-4 mb-3">
-               <div class="card h-100 shadow-sm bg-light d-flex align-items-center justify-content-center">
-                 <div class="text-center text-muted"><i class="material-icons fs-1">add_photo_alternate</i><br>พื้นที่ประชาสัมพันธ์</div>
-               </div>
-            </div>
+        <div id="section-video" class="content-section text-center">
+          <h3 class="section-header">📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด</h3>
+          <div class="ratio ratio-16x9 w-100 w-md-75 mx-auto shadow rounded overflow-hidden" style="max-width: 800px;">
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
           </div>
         </div>
 
-        <div id="sec-feedback" class="content-section text-center">
-          <h3 class="fw-bold mb-4" style="color: #333;">📢 รับฟังความคิดเห็นประชาชนในการพัฒนาจังหวัด</h3>
+        <div id="sec-feedback" class="content-section text-center" style="background: #fff;">
+          <h3 class="fw-bold mb-5 text-dark" style="letter-spacing: 1px;">📢 รับฟังความคิดเห็นประชาชนในการพัฒนาจังหวัด</h3>
           
           <div class="row justify-content-center">
             
-            <div class="col-md-8 mb-3">
-              <div class="banner-btn bg-gradient-pink" onclick="openFormModal('general')">
+            <div class="col-lg-9 mb-4">
+              <div class="banner-btn bg-gradient-pink" onclick="openFormModal('general')" role="button">
                 <div class="banner-icon"><i class="material-icons">assignment</i></div>
                 <div class="banner-text">
                    <div class="banner-title">แบบฟอร์มแจ้งปัญหาทั่วไป</div>
                    <div class="banner-desc">(รับแจ้งตลอด 24 ชั่วโมง)</div>
-                   <div class="banner-desc text-warning fw-bold">เปิดรับ: 1 ม.ค. 68 - 31 ธ.ค. 68</div>
+                   <div class="banner-desc mt-2 badge bg-white text-danger fs-6">📅 เปิดรับ: 1 ม.ค. 68 - 31 ธ.ค. 68</div>
                 </div>
               </div>
             </div>
 
-            <div class="col-md-8 mb-3" id="specialBanner" style="display:none;">
-              <div class="banner-btn bg-gradient-yellow" onclick="openFormModal('special')">
+            <div class="col-lg-9 mb-3" id="specialBanner" style="display:none;">
+              <div class="banner-btn bg-gradient-yellow" onclick="openFormModal('special')" role="button">
                 <div class="banner-icon"><i class="material-icons">lightbulb</i></div>
                 <div class="banner-text">
                    <div class="banner-title">เสนอไอเดีย: เชียงใหม่ 2030</div>
-                   <div class="banner-desc">(โครงการพิเศษ)</div>
-                   <div class="banner-desc text-danger fw-bold">เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68</div>
+                   <div class="banner-desc">(โครงการพิเศษเพื่ออนาคต)</div>
+                   <div class="banner-desc mt-2 badge bg-danger text-white fs-6">📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68</div>
                 </div>
               </div>
             </div>
 
-            <div class="col-md-8" id="specialBannerClosed" style="display:none;">
-               <div class="alert alert-secondary">🚫 แบบฟอร์มเสนอไอเดียพิเศษ ปิดรับความคิดเห็นแล้ว</div>
+            <div class="col-lg-9" id="specialBannerClosed" style="display:none;">
+               <div class="alert alert-secondary d-flex align-items-center justify-content-center py-4">
+                 <i class="material-icons me-2">block</i> 
+                 <div><strong>แบบฟอร์มเสนอไอเดียพิเศษ</strong> ปิดรับความคิดเห็นแล้ว</div>
+               </div>
             </div>
 
           </div>
         </div>
 
         <div id="sec-dash" class="content-section text-center">
-          <h4 class="text-primary mb-3">📊 Dashboard สรุปข้อมูล</h4>
+          <h4 class="text-primary mb-4 fw-bold">📊 Dashboard สรุปข้อมูล</h4>
           <div class="p-5 border border-dashed rounded bg-light">
-             <i class="material-icons fs-1 text-muted">bar_chart</i>
-             <p>พื้นที่แสดงกราฟสรุปสถิติเรื่องร้องเรียน</p>
+             <i class="material-icons fs-1 text-muted mb-3">bar_chart</i>
+             <h5 class="text-muted">พื้นที่แสดงกราฟสรุปสถิติเรื่องร้องเรียน</h5>
+             <small>ระบบกำลังอยู่ระหว่างการเชื่อมต่อข้อมูล...</small>
           </div>
         </div>
       </div>
 
       <div id="page-docs" style="display:none;">
         <div class="content-section">
-          <h3 class="text-primary mb-4">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
-          <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center py-3">
-              <i class="material-icons fs-3 me-3 text-danger">picture_as_pdf</i>
-              <div><h6 class="mb-0 fw-bold">แผนพัฒนาจังหวัดฉบับประชาชน (PDF)</h6><small class="text-muted">อัปเดตเมื่อ: 25 ม.ค. 68</small></div>
+          <h3 class="section-header">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
+          <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action d-flex align-items-center py-4 px-3 border-bottom">
+              <i class="material-icons fs-2 me-4 text-danger">picture_as_pdf</i>
+              <div>
+                <h5 class="mb-1 fw-bold text-dark">แผนพัฒนาจังหวัดฉบับประชาชน (PDF)</h5>
+                <small class="text-muted">ฉบับสมบูรณ์ ประจำปีงบประมาณ 2568 (อัปเดต: 25 ม.ค. 68)</small>
+              </div>
             </a>
-            <a href="http://www.chiangmai.go.th" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center py-3">
-              <i class="material-icons fs-3 me-3 text-primary">language</i>
-              <div><h6 class="mb-0 fw-bold">เว็บไซต์จังหวัดเชียงใหม่</h6><small class="text-muted">www.chiangmai.go.th</small></div>
+            <a href="http://www.chiangmai.go.th" target="_blank" class="list-group-item list-group-item-action d-flex align-items-center py-4 px-3">
+              <i class="material-icons fs-2 me-4 text-primary">language</i>
+              <div>
+                <h5 class="mb-1 fw-bold text-dark">เว็บไซต์จังหวัดเชียงใหม่</h5>
+                <small class="text-muted">www.chiangmai.go.th</small>
+              </div>
             </a>
           </div>
         </div>
       </div>
 
       <div id="page-calendar" style="display:none;">
-        <div class="d-flex justify-content-between mb-3 align-items-center">
-          <h3 class="text-primary">📅 ปฏิทินกิจกรรม</h3>
+        <div class="content-section border-0 bg-transparent p-0 mb-4 shadow-none">
+          <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
+          <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
         </div>
 
-        <div id="adminPanel" class="content-section bg-warning-subtle mb-3" style="display:none;">
-          <h5 class="fw-bold"><i class="material-icons align-middle">admin_panel_settings</i> แผงควบคุมผู้ดูแล</h5>
-          <hr>
+        <div id="adminPanel" class="content-section bg-warning-subtle mb-4 border-warning" style="display:none;">
+          <h5 class="fw-bold text-dark"><i class="material-icons align-middle">admin_panel_settings</i> แผงควบคุมผู้ดูแล</h5>
+          <hr class="border-secondary opacity-25">
           
-          <div class="form-check form-switch mb-4 bg-white p-3 rounded shadow-sm">
-             <input class="form-check-input" type="checkbox" id="toggleSpecialForm" onchange="toggleSpecialForm()">
-             <label class="form-check-label fw-bold" for="toggleSpecialForm">เปิดรับความคิดเห็น "หัวข้อพิเศษ (Banner สีเหลือง)"</label>
-             <div class="small text-muted">หากปิด ผู้ใช้งานทั่วไปจะไม่เห็นปุ่มสีเหลือง</div>
+          <div class="form-check form-switch mb-4 bg-white p-3 rounded shadow-sm d-flex align-items-center justify-content-between">
+             <div>
+                <label class="form-check-label fw-bold text-dark" for="toggleSpecialForm">เปิดรับความคิดเห็น "หัวข้อพิเศษ (Banner สีเหลือง)"</label>
+                <div class="small text-muted">หากปิดสวิตช์นี้ ผู้ใช้งานทั่วไปจะไม่เห็นปุ่มสีเหลืองที่หน้าแรก</div>
+             </div>
+             <input class="form-check-input fs-4" type="checkbox" id="toggleSpecialForm" onchange="toggleSpecialForm()">
           </div>
 
-          <h6 class="fw-bold mt-3">เพิ่มกิจกรรมลงปฏิทิน</h6>
+          <h6 class="fw-bold mt-4 mb-3">➕ เพิ่มกิจกรรมลงปฏิทิน</h6>
           <form onsubmit="submitCalendar(event)">
-            <input class="form-control mb-2" id="c_name" placeholder="ชื่อกิจกรรม" required>
+            <input class="form-control mb-2" id="c_name" placeholder="ชื่อกิจกรรม (เช่น ประชุม กรอ.)" required>
             <div class="row mb-2">
-              <div class="col"><input type="date" class="form-control" id="c_start" required></div>
-              <div class="col"><input type="date" class="form-control" id="c_end"></div>
-              <div class="col-2"><input type="color" class="form-control" id="c_color" value="#0d6efd"></div>
+              <div class="col-md-5 mb-2"><label class="small text-muted">วันเริ่ม</label><input type="date" class="form-control" id="c_start" required></div>
+              <div class="col-md-5 mb-2"><label class="small text-muted">วันจบ</label><input type="date" class="form-control" id="c_end"></div>
+              <div class="col-md-2 mb-2"><label class="small text-muted">สีแถบ</label><input type="color" class="form-control form-control-color w-100" id="c_color" value="#0d6efd"></div>
             </div>
-            <input class="form-control mb-2" id="c_desc" placeholder="รายละเอียด">
-            <input class="form-control mb-2" id="c_link" placeholder="ลิงก์ประชาสัมพันธ์">
-            <button class="btn btn-dark w-100">บันทึกกิจกรรม</button>
+            <input class="form-control mb-2" id="c_desc" placeholder="รายละเอียดเพิ่มเติม (เวลา, สถานที่)">
+            <input class="form-control mb-3" id="c_link" placeholder="ลิงก์เอกสาร/ประชาสัมพันธ์ (ถ้ามี)">
+            <button class="btn btn-dark w-100 fw-bold"><i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม</button>
           </form>
         </div>
 
-        <div class="calendar-container bg-white p-3 rounded shadow-sm">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <button class="btn btn-light" onclick="changeMonth(-1)"><</button>
-            <h4 id="monthDisplay" class="m-0">...</h4>
-            <button class="btn btn-light" onclick="changeMonth(1)">></button>
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <button class="btn-nav" onclick="changeMonth(-1)"><i class="material-icons">chevron_left</i></button>
+            <h4 id="monthDisplay" class="m-0 fw-bold">...</h4>
+            <button class="btn-nav" onclick="changeMonth(1)"><i class="material-icons">chevron_right</i></button>
           </div>
-          <div class="calendar-grid" id="calBody">Loading...</div>
+          <div class="calendar-grid">
+             <div class="day-name text-danger">อา.</div><div class="day-name">จ.</div><div class="day-name">อ.</div>
+             <div class="day-name">พ.</div><div class="day-name">พฤ.</div><div class="day-name">ศ.</div><div class="day-name text-primary">ส.</div>
+          </div>
+          <div class="calendar-grid" id="calBody">
+             <div class="p-5 text-center w-100 text-muted" style="grid-column: span 7;">กำลังโหลดข้อมูล...</div>
+          </div>
         </div>
       </div>
 
       <div id="page-qa" style="display:none;">
         <div class="content-section">
-          <h3 class="text-primary">❓ ถาม-ตอบ (Q&A)</h3>
-          <div class="accordion" id="accQA">
-            <div class="accordion-item">
-              <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#q1">วัตถุประสงค์โครงการ?</button></h2>
-              <div id="q1" class="accordion-collapse collapse show"><div class="accordion-body">เพื่อรวบรวมข้อมูลพัฒนาจังหวัด...</div></div>
+          <h3 class="section-header">❓ ถาม-ตอบ (Q&A)</h3>
+          <p class="text-muted mb-4">คำถามที่พบบ่อยเกี่ยวกับการมีส่วนร่วมและแผนพัฒนาจังหวัด</p>
+          
+          <div class="accordion accordion-flush" id="accQA">
+            <div class="accordion-item border rounded mb-3 shadow-sm">
+              <h2 class="accordion-header"><button class="accordion-button fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#qa1">📌 โครงการนี้มีวัตถุประสงค์เพื่ออะไร?</button></h2>
+              <div id="qa1" class="accordion-collapse collapse show"><div class="accordion-body text-muted bg-light">เพื่อรวบรวมข้อมูลปัญหาและความต้องการจริงจากประชาชน นำไปสู่การจัดทำแผนพัฒนาจังหวัดเชียงใหม่ที่มีประสิทธิภาพและตรงจุด โดยเน้นการมีส่วนร่วมของทุกภาคส่วน</div></div>
+            </div>
+            <div class="accordion-item border rounded mb-3 shadow-sm">
+              <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#qa2">📅 แผนพัฒนาจังหวัดมีระยะเวลากี่ปี?</button></h2>
+              <div id="qa2" class="accordion-collapse collapse"><div class="accordion-body text-muted bg-light">แผนพัฒนาจังหวัดเชียงใหม่ฉบับปัจจุบัน ครอบคลุมระยะเวลา 5 ปี (พ.ศ. 2566 - 2570) เพื่อให้เกิดการพัฒนาที่ต่อเนื่องและยั่งยืน</div></div>
+            </div>
+            <div class="accordion-item border rounded mb-3 shadow-sm">
+              <h2 class="accordion-header"><button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#qa3">📞 หากต้องการข้อมูลเพิ่มเติม ติดต่อได้ที่ไหน?</button></h2>
+              <div id="qa3" class="accordion-collapse collapse"><div class="accordion-body text-muted bg-light">สามารถติดต่อกลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด สำนักงานจังหวัดเชียงใหม่ ได้ที่เบอร์โทรศัพท์ 053-112-703 ในวันและเวลาราชการ</div></div>
             </div>
           </div>
         </div>
@@ -242,29 +298,57 @@
     </div>
   </div>
 
+  <footer class="main-footer container-fluid p-0">
+    <div class="row m-0">
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูล<br>เพื่อการพัฒนาจังหวัด</h5>
+        <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
+        <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
+        <div class="admin-trigger" onclick="loginToggle()">© 2026 All Rights Reserved.</div>
+      </div>
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <h5 class="footer-title">ช่องทางการติดต่อ</h5>
+        <ul class="list-unstyled">
+          <li class="mb-3 d-flex"><span class="me-2">📞</span> <span>053-112-703</span></li>
+          <li class="mb-3 d-flex"><span class="me-2">📧</span> <span>plancm.700@gmail.com</span></li>
+          <li class="mb-3 d-flex"><span class="me-2">🕒</span> <span>จันทร์ - ศุกร์ (08.30 - 16.30 น.)</span></li>
+          <li class="mb-3 d-flex"><span class="me-2">🌐</span> <a href="http://www.chiangmai.go.th" class="text-decoration-none text-white-50">www.chiangmai.go.th</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h5 class="footer-title">แผนที่ตั้งหน่วยงาน</h5>
+        <div class="map-container mb-3" style="height: 200px; background: #333;">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3777.073400030026!2d98.96962291538332!3d18.84364176510363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3a7e90960001%3A0x6a37890c4273030!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1675240000000!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </footer>
+
   <div class="modal fade" id="formModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title" id="formTitle">แบบฟอร์ม</h5>
+          <h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5>
           <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body p-4">
           <form onsubmit="submitForm(event)">
             <input type="hidden" id="f_topic_type">
             <div class="mb-3">
-               <label class="fw-bold">ชื่อ-นามสกุล</label>
-               <input class="form-control" id="f_name" required>
+               <label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
+               <input class="form-control" id="f_name" required placeholder="ระบุชื่อจริง">
             </div>
             <div class="mb-3">
-               <label class="fw-bold">เบอร์ติดต่อ</label>
-               <input class="form-control" id="f_contact">
+               <label class="fw-bold form-label">เบอร์ติดต่อ</label>
+               <input class="form-control" id="f_contact" placeholder="เช่น 08x-xxxxxxx">
             </div>
             <div class="mb-3">
-               <label class="fw-bold">รายละเอียดความคิดเห็น</label>
-               <textarea class="form-control" id="f_detail" rows="4" required></textarea>
+               <label class="fw-bold form-label">รายละเอียด / ความคิดเห็น <span class="text-danger">*</span></label>
+               <textarea class="form-control" id="f_detail" rows="5" required placeholder="พิมพ์รายละเอียดที่ต้องการเสนอแนะ..."></textarea>
             </div>
-            <button class="btn btn-success w-100">ยืนยันการส่งข้อมูล</button>
+            <div class="d-grid">
+               <button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยันการส่งข้อมูล</button>
+            </div>
           </form>
         </div>
       </div>
@@ -280,19 +364,31 @@
         </div>
         <div class="modal-body p-4 bg-light">
           <div class="d-flex align-items-start mb-3">
-            <i class="material-icons text-primary me-2">event</i>
-            <div><small class="text-muted fw-bold">ช่วงเวลากิจกรรม</small><div id="modalEventDate" class="fw-bold text-dark"></div></div>
+            <div class="bg-white p-2 rounded-circle shadow-sm me-3"><i class="material-icons text-primary fs-4">event</i></div>
+            <div>
+              <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">ช่วงเวลากิจกรรม</small>
+              <div id="modalEventDate" class="fw-bold text-dark fs-5"></div>
+            </div>
           </div>
+          <hr class="my-3 opacity-25">
           <div class="d-flex align-items-start mb-4">
-            <i class="material-icons text-primary me-2">info</i>
-            <div><small class="text-muted fw-bold">รายละเอียด</small><div id="modalEventDesc" class="text-dark" style="white-space: pre-line;"></div></div>
+            <div class="bg-white p-2 rounded-circle shadow-sm me-3"><i class="material-icons text-primary fs-4">info</i></div>
+            <div>
+              <small class="text-muted fw-bold text-uppercase" style="font-size: 0.75rem;">รายละเอียด</small>
+              <div id="modalEventDesc" class="text-dark" style="white-space: pre-line;"></div>
+            </div>
           </div>
-          <a id="modalEventLink" href="#" target="_blank" class="btn btn-primary w-100 py-2 rounded-pill shadow-sm"><i class="material-icons align-text-bottom fs-6 me-1">open_in_new</i> เปิดลิงก์ประชาสัมพันธ์</a>
+          
+          <a id="modalEventLink" href="#" target="_blank" class="btn btn-primary w-100 py-2 rounded-pill shadow-sm fw-bold">
+            <i class="material-icons align-text-bottom fs-6 me-1">open_in_new</i> เปิดลิงก์ประชาสัมพันธ์ / เอกสาร
+          </a>
         </div>
       </div>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
     let currentDate = new Date();
     let events = [];
@@ -304,12 +400,17 @@
       checkSettings(); 
     }
 
-    // --- Navigation ---
+    // --- Navigation System ---
     function showPage(id) {
+      // Hide all
       ['home','docs','calendar','qa'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
+      // Show selected
       document.getElementById('page-'+id).style.display = 'block';
+      
+      // Update Menu Active State
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
       document.getElementById('menu-'+id).classList.add('active');
+
       if(id === 'calendar') renderCalendar();
       window.scrollTo(0,0);
     }
@@ -321,23 +422,26 @@
        }, 100);
     }
 
-    // --- Settings / Toggle Form ---
+    // --- Data Fetching & Form Logic ---
     function checkSettings() {
        fetch(SCRIPT_URL + '?action=getSettings').then(r => r.json()).then(data => {
             specialFormOpen = (data.status === 'OPEN');
             updateBannerDisplay();
-            document.getElementById('toggleSpecialForm').checked = specialFormOpen;
+            if(document.getElementById('toggleSpecialForm')) {
+               document.getElementById('toggleSpecialForm').checked = specialFormOpen;
+            }
        });
     }
 
     function toggleSpecialForm() {
        let isChecked = document.getElementById('toggleSpecialForm').checked;
        let status = isChecked ? 'OPEN' : 'CLOSED';
+       
        postData({ action: 'toggleForm', status: status }, () => {
           specialFormOpen = isChecked;
           updateBannerDisplay();
           const Toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 3000});
-          Toast.fire({icon: 'success', title: 'อัปเดตสถานะฟอร์มแล้ว'});
+          Toast.fire({icon: 'success', title: 'บันทึกสถานะเรียบร้อย'});
        });
     }
 
@@ -352,7 +456,6 @@
        }
     }
 
-    // --- Forms ---
     var modalForm;
     function openFormModal(type) {
        modalForm = new bootstrap.Modal(document.getElementById('formModal'));
@@ -364,16 +467,33 @@
 
     function submitForm(e) {
       e.preventDefault();
-      let data = { action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: getVal('f_topic_type') };
+      let btn = e.target.querySelector('button');
+      let oldText = btn.innerText;
+      btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
+
+      let data = { 
+        action:'saveForm', 
+        name: getVal('f_name'), 
+        contact: getVal('f_contact'), 
+        detail: getVal('f_detail'), 
+        topic: getVal('f_topic_type') 
+      };
+      
       postData(data, () => { 
-        Swal.fire('สำเร็จ','ทางเราได้รับข้อมูลแล้ว','success'); 
+        Swal.fire('บันทึกสำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); 
         document.forms[0].reset();
         modalForm.hide();
+        btn.disabled = false; btn.innerText = oldText;
       });
     }
 
-    // --- Calendar & Popup ---
-    function fetchEvents() { fetch(SCRIPT_URL + '?action=getEvents').then(r => r.json()).then(data => { events = data; renderCalendar(); }); }
+    // --- Calendar System ---
+    function fetchEvents() { 
+      fetch(SCRIPT_URL + '?action=getEvents')
+      .then(r => r.json())
+      .then(data => { events = data; renderCalendar(); })
+      .catch(e => console.error("Error loading events:", e));
+    }
     
     function renderCalendar() {
       const y = currentDate.getFullYear(), m = currentDate.getMonth();
@@ -383,30 +503,46 @@
       
       let html = '';
       for(let i=0; i<firstDay; i++) html += '<div class="day-cell bg-light"></div>';
+      
       for(let d=1; d<=daysInMonth; d++) {
         let dateKey = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         let daysEvents = events.filter(e => dateKey >= e.startDate && dateKey <= e.endDate);
+        
         let evHtml = daysEvents.map(e => 
           `<div class="event-badge" style="background:${e.color}" onclick="openEventDetail('${e.id}')">
-             ${e.title} ${isAdmin ? `<span class="delete-btn" onclick="delEvent('${e.id}', event)">x</span>` : ''}
+             ${e.title} ${isAdmin ? `<span class="delete-btn" onclick="delEvent('${e.id}', event)">✕</span>` : ''}
            </div>`
         ).join('');
-        html += `<div class="day-cell"><div class="fw-bold">${d}</div>${evHtml}</div>`;
+        
+        // เช็ควันนี้
+        let today = new Date();
+        let isToday = (d === today.getDate() && m === today.getMonth() && y === today.getFullYear()) ? 'today' : '';
+
+        html += `<div class="day-cell ${isToday}"><div class="day-number">${d}</div>${evHtml}</div>`;
       }
       document.getElementById('calBody').innerHTML = html;
+      
+      // แสดงปุ่มลบถ้าเป็นแอดมิน
       if(isAdmin) document.querySelectorAll('.delete-btn').forEach(el => el.style.display = 'block');
     }
 
     function openEventDetail(id) {
       let ev = events.find(e => e.id === id);
       if(!ev) return;
+
       document.getElementById('modalEventTitle').innerText = ev.title;
       let dateRange = formatDateThai(ev.startDate);
       if(ev.startDate !== ev.endDate) dateRange += " - " + formatDateThai(ev.endDate);
       document.getElementById('modalEventDate').innerText = dateRange;
-      document.getElementById('modalEventDesc').innerText = ev.desc || "-";
+      document.getElementById('modalEventDesc').innerText = ev.desc ? ev.desc : "- ไม่มีรายละเอียดเพิ่มเติม -";
+      
       let linkBtn = document.getElementById('modalEventLink');
-      if(ev.link) { linkBtn.href = ev.link; linkBtn.style.display = 'block'; } else { linkBtn.style.display = 'none'; }
+      if(ev.link && ev.link.trim() !== "") { 
+        linkBtn.href = ev.link; linkBtn.style.display = 'block'; 
+      } else { 
+        linkBtn.style.display = 'none'; 
+      }
+      
       new bootstrap.Modal(document.getElementById('eventDetailModal')).show();
     }
 
@@ -421,44 +557,71 @@
     
     function submitCalendar(e) {
       e.preventDefault();
-      let data = { action:'saveCalendar', title: getVal('c_name'), startDate: getVal('c_start'), endDate: getVal('c_end'), color: getVal('c_color'), desc: getVal('c_desc'), link: getVal('c_link') };
-      postData(data, () => { Swal.fire('สำเร็จ','เพิ่มกิจกรรมแล้ว','success'); fetchEvents(); });
+      let btn = e.target.querySelector('button');
+      btn.disabled = true; btn.innerText = 'กำลังบันทึก...';
+
+      let data = { 
+        action:'saveCalendar', 
+        title: getVal('c_name'), 
+        startDate: getVal('c_start'), 
+        endDate: getVal('c_end'), 
+        color: getVal('c_color'), 
+        desc: getVal('c_desc'), 
+        link: getVal('c_link') 
+      };
+      
+      postData(data, () => { 
+        Swal.fire('สำเร็จ','เพิ่มกิจกรรมเรียบร้อยแล้ว','success'); 
+        document.getElementById('calForm').reset();
+        fetchEvents(); 
+        btn.disabled = false; btn.innerHTML = '<i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม';
+      });
     }
     
     function delEvent(id, e) {
-      e.stopPropagation();
+      e.stopPropagation(); // ไม่ให้กดทะลุไปเปิด Modal
       Swal.fire({
-        title: 'ยืนยันการลบ?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก'
+        title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', 
+        showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก'
       }).then((result) => {
         if (result.isConfirmed) {
-          postData({action:'deleteEvent', id: id}, () => { Swal.fire('เรียบร้อย', '', 'success'); fetchEvents(); });
+          postData({action:'deleteEvent', id: id}, () => { 
+             Swal.fire('เรียบร้อย', 'ลบข้อมูลแล้ว', 'success'); 
+             fetchEvents(); 
+          });
         }
       });
     }
 
-    // --- Admin Login ---
+    // --- Admin System ---
     function loginToggle() {
       if(isAdmin) { 
         isAdmin = false; 
         document.getElementById('adminPanel').style.display='none'; 
-        document.getElementById('adminBtn').innerHTML = '🔐 Admin Login'; 
+        document.getElementById('adminBtn').innerHTML = '<i class="material-icons align-middle fs-6">lock</i> Admin Login'; 
         updateBannerDisplay();
         renderCalendar(); 
         Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false});
         return; 
       }
-      Swal.fire({ title: 'รหัสผ่าน', input: 'password' }).then(res => {
+      
+      Swal.fire({ title: 'รหัสผ่านผู้ดูแล', input: 'password', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
         if(!res.value) return;
+        
+        // เช็คกับ Server
         postData({action: 'login', password: res.value}, (data) => {
            if(data.status === 'SUCCESS') {
               isAdmin=true; 
               document.getElementById('adminPanel').style.display='block'; 
-              document.getElementById('adminBtn').innerHTML = '🚪 Logout'; 
+              document.getElementById('adminBtn').innerHTML = '<i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ'; 
               updateBannerDisplay(); 
               renderCalendar(); 
-              Swal.fire({icon: 'success', title: 'เข้าสู่ระบบสำเร็จ', timer: 1500, showConfirmButton: false});
+              // ตั้งค่าปุ่ม Toggle ให้ตรงสถานะจริง
+              if(document.getElementById('toggleSpecialForm')) document.getElementById('toggleSpecialForm').checked = specialFormOpen;
+              
+              Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false});
            } else {
-              Swal.fire('รหัสผ่านผิด');
+              Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'});
            }
         });
       });
@@ -470,6 +633,7 @@
        .then(d => callback(d))
        .catch(e => console.error(e)); 
     }
+    
     function getVal(id) { return document.getElementById(id).value; }
   </script>
 </body>
