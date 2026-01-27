@@ -14,28 +14,26 @@
     /* === Global Styles === */
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; font-size: 0.95rem; }
     
-    /* === Header (ปรับแก้ตามสั่ง: เอาชื่อสำนักงานมาต่อ + ปรับขนาด) === */
+    /* === Header (เตรียมพร้อมใส่รูปพื้นหลัง) === */
     .main-header { 
+      /* 🟢 เปลี่ยนรูปพื้นหลังส่วนหัวที่นี่ (ใน url('...')) */
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
       color: white; padding: 50px 0; position: relative; 
     }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.9) 0%, rgba(0, 50, 133, 0.75) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
     
-    /* จัดการ Font Header ให้เหมาะสม */
+    /* Font Header */
     .org-title-group { display: flex; flex-direction: column; justify-content: center; }
     .org-main-text { 
       font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
-      font-size: clamp(1.1rem, 2vw, 1.6rem); /* ปรับขนาดให้พอดี ไม่ใหญ่เกิน */
+      font-size: clamp(1.1rem, 2vw, 1.6rem); 
     }
     .org-sub-text {
       font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); 
-      color: #ffeb3b; /* สีเหลืองทองให้เด่น */
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
-    .eng-subtitle {
-      font-weight: 300; opacity: 0.8; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.85rem; margin-top: 5px;
-    }
+    .eng-subtitle { font-weight: 300; opacity: 0.8; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.85rem; margin-top: 5px; }
 
     @media (max-width: 768px) {
       .header-content { flex-direction: column; text-align: center; padding: 0 20px; }
@@ -45,43 +43,40 @@
     }
     
     /* === Sidebar === */
-    .sidebar { 
-      min-height: 100vh; background: white; border-right: 1px solid #e9ecef; padding-top: 20px; 
-      display: flex; flex-direction: column; 
-    }
-    .nav-link-main { 
-      padding: 12px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; 
-      text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem;
-    }
+    .sidebar { min-height: 100vh; background: white; border-right: 1px solid #e9ecef; padding-top: 20px; display: flex; flex-direction: column; }
+    .nav-link-main { padding: 12px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 25px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
-    .nav-link-sub { 
-      padding: 8px 20px 8px 45px; color: #6c757d; cursor: pointer; display: block; 
-      text-decoration: none; font-size: 0.9rem; transition: 0.2s; position: relative;
-    }
+    .nav-link-sub { padding: 8px 20px 8px 45px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; position: relative; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
-
-    .sidebar-logout-btn {
-      background: white; border: 1px solid #6c757d; color: #6c757d;
-      border-radius: 5px; padding: 10px; width: 100%; text-align: center;
-      transition: 0.2s; display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-    }
+    .sidebar-logout-btn { background: white; border: 1px solid #6c757d; color: #6c757d; border-radius: 5px; padding: 10px; width: 100%; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .sidebar-logout-btn:hover { background: #f8f9fa; color: #000; border-color: #000; }
 
     /* === Content === */
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* === Banner Buttons === */
+    /* === Banner Buttons (ปรับใหม่: รองรับรูปพื้นหลัง + ไอคอนใหญ่) === */
     .banner-btn {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 25px; margin-bottom: 20px; border-radius: 15px;
+      padding: 30px 25px; margin-bottom: 20px; border-radius: 15px;
       color: white; cursor: pointer; transition: all 0.3s ease; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
       border: none; width: 100%; text-align: left;
+      /* Default background sizing */
+      background-size: cover !important; 
+      background-position: center !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
+    
+    /* 🟢 ไอคอนใหญ่ขึ้น (ตามสั่ง) */
+    .banner-icon { 
+      font-size: 5rem; /* ปรับให้ใหญ่สะใจ */
+      background: rgba(255,255,255,0.25); padding: 15px; border-radius: 50%; 
+      flex-shrink: 0; /* ไม่ให้หดเวลาจอเล็ก */
+    }
+    
+    .banner-text { text-align: right; flex-grow: 1; padding-left: 20px; position: relative; z-index: 2; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
     .banner-btn.closed:hover { transform: none; box-shadow: none; }
     
@@ -91,17 +86,28 @@
       border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
       z-index: 10; display: none;
     }
-    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    
+    /* 🟢 พื้นหลังแบบ ไล่สีทับรูปภาพ (Gradient Overlay) */
+    /* ถ้าจะใส่รูป ให้แก้ใน HTML style="..." แต่ class นี้จะช่วยทำสีจางๆ ทับให้ */
+    .bg-gradient-pink { 
+      background: linear-gradient(135deg, rgba(255, 126, 179, 0.95), rgba(255, 117, 140, 0.95)); 
+    }
+    .bg-gradient-yellow { 
+      background: linear-gradient(135deg, rgba(252, 227, 138, 0.95), rgba(243, 129, 129, 0.95)); 
+      color: #4a4a4a !important; 
+    }
+    /* ถ้ามีรูปพื้นหลัง ให้ลดความทึบสีลงเพื่อให้เห็นรูป */
+    .has-bg-image.bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.85), rgba(255, 117, 140, 0.85)); }
+    .has-bg-image.bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.85), rgba(243, 129, 129, 0.85)); }
+
     .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
 
-    /* === Carousel (สื่อประชาสัมพันธ์) === */
+    /* === Carousel (เอา Caption ออก) === */
     .carousel-item img {
-      height: 300px; object-fit: cover; border-radius: 10px;
+      height: 350px; object-fit: cover; border-radius: 10px;
     }
-    .carousel-caption {
-      background: rgba(0,0,0,0.6); border-radius: 10px; padding: 10px; bottom: 20px;
-    }
+    /* ซ่อน Caption ตามคำสั่ง */
+    .carousel-caption { display: none !important; }
 
     /* === Calendar === */
     .calendar-container { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
@@ -190,6 +196,7 @@
           <h3 class="fw-bold mb-5 text-dark" style="letter-spacing: 1px;">📢 รับฟังความคิดเห็นประชาชนในการพัฒนาจังหวัด</h3>
           
           <div class="row justify-content-center">
+            
             <div class="col-lg-9 mb-4 position-relative">
               <div id="banner1" class="banner-btn bg-gradient-pink" onclick="handleBannerClick(1)" role="button">
                 <div id="badge1" class="new-badge">NEW</div>
@@ -201,17 +208,19 @@
                 </div>
               </div>
             </div>
+
             <div class="col-lg-9 mb-3 position-relative">
               <div id="banner2" class="banner-btn bg-gradient-yellow" onclick="handleBannerClick(2)" role="button">
                 <div id="badge2" class="new-badge">NEW</div>
-                <div class="banner-icon"><i class="material-icons">lightbulb</i></div>
+                <div class="banner-icon"><i class="material-icons">groups</i></div>
                 <div class="banner-text">
                    <div class="banner-title">เสนอไอเดีย: เชียงใหม่ 2030</div>
-                   <div class="banner-desc">(โครงการพิเศษเพื่ออนาคต)</div>
+                   <div class="banner-desc">(โครงการพิเศษ/ประชาคม)</div>
                    <div id="statusText2" class="banner-desc mt-2 badge bg-danger text-white fs-6">📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68</div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -241,38 +250,18 @@
             <div class="carousel-inner">
               <div class="carousel-item active" data-bs-interval="4000">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg" class="d-block w-100" alt="PR 1">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>🌟 สื่อประชาสัมพันธ์ 1</h5>
-                  <p>รายละเอียดกิจกรรมหรือโครงการที่น่าสนใจ</p>
-                </div>
               </div>
               <div class="carousel-item" data-bs-interval="4000">
                 <img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg" class="d-block w-100" alt="PR 2">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>🌸 สื่อประชาสัมพันธ์ 2</h5>
-                  <p>เทศกาลท่องเที่ยวและกิจกรรมเด่นของจังหวัด</p>
-                </div>
               </div>
               <div class="carousel-item" data-bs-interval="4000">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg" class="d-block w-100" alt="PR 3">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>🛒 สื่อประชาสัมพันธ์ 3</h5>
-                  <p>ส่งเสริมเศรษฐกิจและผลิตภัณฑ์ชุมชน</p>
-                </div>
               </div>
               <div class="carousel-item" data-bs-interval="4000">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Royal_Park_Rajapruek.jpg/1280px-Royal_Park_Rajapruek.jpg" class="d-block w-100" alt="PR 4">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>🌳 สื่อประชาสัมพันธ์ 4</h5>
-                  <p>การพัฒนาพื้นที่สีเขียวและสิ่งแวดล้อม</p>
-                </div>
               </div>
               <div class="carousel-item" data-bs-interval="4000">
                 <img src="https://via.placeholder.com/1200x600/0d6efd/ffffff?text=PR+Space+5" class="d-block w-100" alt="PR 5">
-                <div class="carousel-caption d-none d-md-block">
-                  <h5>📢 สื่อประชาสัมพันธ์ 5</h5>
-                  <p>พื้นที่ว่างสำหรับข่าวสารเพิ่มเติม</p>
-                </div>
               </div>
             </div>
             
@@ -616,19 +605,17 @@
     function submitCalendar(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button');
-      // Optimistic UI: เพิ่มทันที
       let title = getVal('c_name'), startDate = getVal('c_start'), endDate = getVal('c_end') || startDate, color = getVal('c_color'), desc = getVal('c_desc'), link = getVal('c_link');
       let tempEvent = { id: 'TEMP_' + new Date().getTime(), title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
       events.push(tempEvent); renderCalendar();
       document.getElementById('calForm').reset();
       Swal.fire({ icon: 'success', title: 'บันทึกข้อมูลแล้ว', timer: 1500, showConfirmButton: false });
-      // Send to server
       let data = { action: 'saveCalendar', title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).catch(e => console.error("Save error:", e));
     }
     function delEvent(id, e) { e.stopPropagation(); Swal.fire({ title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก' }).then((result) => { if (result.isConfirmed) { postData({action:'deleteEvent', id: id}, () => { Swal.fire('เรียบร้อย', 'ลบข้อมูลแล้ว', 'success'); fetchEvents(); }); } }); }
     
-    // 🟢 ระบบ Login / Logout (Footer trigger ไม่มีข้อความ Logout แล้ว)
+    // 🟢 ระบบ Login / Logout
     function loginToggle() {
       // ถ้าเป็นแอดมิน -> กดแล้วถาม Logout
       if(isAdmin) { 
@@ -662,7 +649,7 @@
           document.getElementById('adminPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
-       // 🟢 Footer ไม่เปลี่ยนข้อความแล้ว (ตามสั่ง)
+       // 🟢 Footer ไม่มีคำว่า Logout
        updateUI(); renderCalendar();
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
