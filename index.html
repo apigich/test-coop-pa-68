@@ -23,14 +23,8 @@
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
     
     .org-title-group { display: flex; flex-direction: column; justify-content: center; }
-    .org-main-text { 
-      font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
-      font-size: clamp(1.1rem, 2vw, 1.6rem); 
-    }
-    .org-sub-text {
-      font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); 
-      color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
+    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); font-size: clamp(1.1rem, 2vw, 1.6rem); }
+    .org-sub-text { font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
     .eng-subtitle { font-weight: 300; opacity: 0.8; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.85rem; margin-top: 5px; }
 
     @media (max-width: 768px) {
@@ -54,38 +48,41 @@
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* === Banner Buttons (แก้ไข: ปุ่มกระชับ / อิโมจิใหญ่ / ตัวหนังสือกลาง+ใหญ่) === */
+    /* === Banner Buttons (แก้ไขเรื่องวงกลมเบี้ยว) === */
     .banner-btn {
-      display: flex; align-items: center; 
-      justify-content: flex-start; /* จัดไอคอนไว้ซ้าย */
-      padding: 15px 20px; /* 🟢 ลดขนาด Padding กลับมาเท่าเดิม (ไม่ใหญ่เทอะทะ) */
-      margin-bottom: 20px; border-radius: 15px;
+      display: flex; align-items: center; justify-content: flex-start;
+      padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
       color: white; cursor: pointer; transition: all 0.3s ease; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
       border: none; width: 100%; text-align: left;
-      background-size: cover !important; background-position: center !important;
+      /* รองรับรูปพื้นหลัง */
+      background-size: cover !important; 
+      background-position: center !important;
+      background-repeat: no-repeat !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     
+    /* 🟢 1. แก้ไขให้เป็นวงกลมสมบูรณ์ ไม่เบี้ยว */
     .banner-icon { 
-      font-size: 4.5rem; /* 🟢 อิโมจิใหญ่สะใจ */
-      background: rgba(255,255,255,0.25); padding: 10px; border-radius: 50%; 
-      flex-shrink: 0; margin-right: 20px;
+      width: 110px;        /* ล็อกความกว้าง */
+      height: 110px;       /* ล็อกความสูงเท่ากัน = วงกลม */
+      font-size: 4rem;     /* ขนาดอิโมจิ */
+      background: rgba(255,255,255,0.25); /* พื้นหลังวงกลมสีขาวจางๆ */
+      border-radius: 50%;  /* สั่งให้เป็นวงกลม */
+      display: flex; align-items: center; justify-content: center; /* จัดอิโมจิให้อยู่กลางวงกลม */
+      flex-shrink: 0;      /* 🟢 คำสั่งสำคัญ: ห้ามโดนบีบ ไม่ว่าจะจอแคบแค่ไหน */
+      margin-right: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* เงาเล็กน้อยให้ดูมีมิติ */
     }
     
     .banner-text { 
-      text-align: center; /* 🟢 จัดข้อความกึ่งกลาง */
-      flex-grow: 1; position: relative; z-index: 2; 
+      text-align: center; flex-grow: 1; position: relative; z-index: 2; 
     }
-    
     .banner-title { 
-      font-weight: 800; 
-      font-size: 1.6rem; /* 🟢 ตัวหนังสือใหญ่ขึ้น */
-      margin-bottom: 5px; line-height: 1.2; 
+      font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
     .banner-desc { 
-      font-size: 1.1rem; /* 🟢 คำอธิบายใหญ่ขึ้น */
-      opacity: 0.95; font-weight: 400; 
+      font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2);
     }
     
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
@@ -98,29 +95,25 @@
       z-index: 10; display: none;
     }
     
-    /* Background Gradients */
-    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
-    /* ถ้ามีรูปพื้นหลัง ให้สีจางลง */
+    /* Background Gradients (ใช้ทับรูปภาพได้) */
+    .bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.95), rgba(255, 117, 140, 0.95)); }
+    .bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.95), rgba(243, 129, 129, 0.95)); color: #4a4a4a !important; }
+    
+    /* ถ้ามีรูปพื้นหลัง (class 'has-bg-image') ให้สีจางลงเพื่อให้เห็นรูป */
     .has-bg-image.bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.85), rgba(255, 117, 140, 0.85)); }
     .has-bg-image.bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.85), rgba(243, 129, 129, 0.85)); }
+    
     .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
 
-    /* === Carousel (ปรับปรุง: เอาลูกกลิ้ง/ปุ่มเลื่อนกลับมา) === */
-    .carousel-item img {
-      height: 350px; object-fit: cover; border-radius: 10px;
-    }
+    /* === Carousel === */
+    .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
     .carousel-caption { display: none !important; }
     
-    /* 🟢 ตกแต่งปุ่มเลื่อนให้เห็นชัด */
+    /* ปุ่มเลื่อน (ลูกกลิ้ง) */
     .carousel-control-prev-icon, .carousel-control-next-icon {
-      background-color: rgba(0,0,0,0.5); /* พื้นหลังสีดำจางๆ */
-      border-radius: 50%; padding: 25px; /* ขนาดวงกลม */
-      background-size: 50% 50%; /* ขนาดลูกศร */
+      background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%;
     }
-    .carousel-control-prev, .carousel-control-next {
-      width: 10%; opacity: 0.8;
-    }
+    .carousel-control-prev, .carousel-control-next { width: 10%; opacity: 0.8; }
     .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
 
     /* === Calendar === */
