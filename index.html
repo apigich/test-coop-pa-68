@@ -14,7 +14,7 @@
     /* === Global Styles === */
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; font-size: 0.95rem; }
     
-    /* === Header === */
+    /* === Header (ปรับแก้ตามสั่ง: เอาชื่อสำนักงานมาต่อ + ปรับขนาด) === */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
       color: white; padding: 50px 0; position: relative; 
@@ -22,12 +22,26 @@
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.9) 0%, rgba(0, 50, 133, 0.75) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
     
-    .org-title { font-weight: 700; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.3); font-size: clamp(1.2rem, 2.5vw, 1.8rem); }
-    .org-subtitle { font-weight: 300; opacity: 0.95; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 5px; font-size: clamp(0.75rem, 1.5vw, 1rem); }
+    /* จัดการ Font Header ให้เหมาะสม */
+    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
+    .org-main-text { 
+      font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+      font-size: clamp(1.1rem, 2vw, 1.6rem); /* ปรับขนาดให้พอดี ไม่ใหญ่เกิน */
+    }
+    .org-sub-text {
+      font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); 
+      color: #ffeb3b; /* สีเหลืองทองให้เด่น */
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+    .eng-subtitle {
+      font-weight: 300; opacity: 0.8; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.85rem; margin-top: 5px;
+    }
 
     @media (max-width: 768px) {
       .header-content { flex-direction: column; text-align: center; padding: 0 20px; }
       .header-icon-box { margin-bottom: 15px; margin-right: 0 !important; }
+      .org-main-text { font-size: 1.25rem; }
+      .org-sub-text { font-size: 1.1rem; }
     }
     
     /* === Sidebar === */
@@ -47,7 +61,6 @@
     }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
 
-    /* ปุ่ม Logout ใน Sidebar */
     .sidebar-logout-btn {
       background: white; border: 1px solid #6c757d; color: #6c757d;
       border-radius: 5px; padding: 10px; width: 100%; text-align: center;
@@ -82,6 +95,14 @@
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
 
+    /* === Carousel (สื่อประชาสัมพันธ์) === */
+    .carousel-item img {
+      height: 300px; object-fit: cover; border-radius: 10px;
+    }
+    .carousel-caption {
+      background: rgba(0,0,0,0.6); border-radius: 10px; padding: 10px; bottom: 20px;
+    }
+
     /* === Calendar === */
     .calendar-container { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
     .calendar-header { display: flex; justify-content: space-between; align-items: center; background: #0d6efd; color: white; padding: 20px; }
@@ -104,7 +125,6 @@
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
     .admin-trigger:hover { opacity: 1; color: #fff; }
-    
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
 
     @media (max-width: 768px) {
@@ -124,9 +144,10 @@
     <div class="header-overlay"></div>
     <div class="header-content">
       <div class="me-4 header-icon-box"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
-      <div>
-        <h1 class="m-0 org-title">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
-        <div class="org-subtitle">Strategy and Information for Provincial Development</div>
+      <div class="org-title-group">
+        <h1 class="m-0 org-main-text">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
+        <h2 class="m-0 org-sub-text">สำนักงานจังหวัดเชียงใหม่</h2>
+        <div class="eng-subtitle">Strategy and Information for Provincial Development</div>
       </div>
     </div>
   </header>
@@ -140,6 +161,7 @@
         <div id="sub-home" class="mb-2">
           <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-dash')">Dashboard</a>
+          <a class="nav-link-sub" onclick="scrollToId('sec-pr')">สื่อประชาสัมพันธ์</a>
         </div>
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
         <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
@@ -168,7 +190,6 @@
           <h3 class="fw-bold mb-5 text-dark" style="letter-spacing: 1px;">📢 รับฟังความคิดเห็นประชาชนในการพัฒนาจังหวัด</h3>
           
           <div class="row justify-content-center">
-            
             <div class="col-lg-9 mb-4 position-relative">
               <div id="banner1" class="banner-btn bg-gradient-pink" onclick="handleBannerClick(1)" role="button">
                 <div id="badge1" class="new-badge">NEW</div>
@@ -180,7 +201,6 @@
                 </div>
               </div>
             </div>
-
             <div class="col-lg-9 mb-3 position-relative">
               <div id="banner2" class="banner-btn bg-gradient-yellow" onclick="handleBannerClick(2)" role="button">
                 <div id="badge2" class="new-badge">NEW</div>
@@ -192,7 +212,6 @@
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -206,6 +225,68 @@
              </div>
           </div>
         </div>
+
+        <div id="sec-pr" class="content-section">
+          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์</h4>
+          
+          <div id="prCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="2"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="3"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="4"></button>
+            </div>
+            
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="4000">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg" class="d-block w-100" alt="PR 1">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>🌟 สื่อประชาสัมพันธ์ 1</h5>
+                  <p>รายละเอียดกิจกรรมหรือโครงการที่น่าสนใจ</p>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="4000">
+                <img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg" class="d-block w-100" alt="PR 2">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>🌸 สื่อประชาสัมพันธ์ 2</h5>
+                  <p>เทศกาลท่องเที่ยวและกิจกรรมเด่นของจังหวัด</p>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="4000">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg" class="d-block w-100" alt="PR 3">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>🛒 สื่อประชาสัมพันธ์ 3</h5>
+                  <p>ส่งเสริมเศรษฐกิจและผลิตภัณฑ์ชุมชน</p>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="4000">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Royal_Park_Rajapruek.jpg/1280px-Royal_Park_Rajapruek.jpg" class="d-block w-100" alt="PR 4">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>🌳 สื่อประชาสัมพันธ์ 4</h5>
+                  <p>การพัฒนาพื้นที่สีเขียวและสิ่งแวดล้อม</p>
+                </div>
+              </div>
+              <div class="carousel-item" data-bs-interval="4000">
+                <img src="https://via.placeholder.com/1200x600/0d6efd/ffffff?text=PR+Space+5" class="d-block w-100" alt="PR 5">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5>📢 สื่อประชาสัมพันธ์ 5</h5>
+                  <p>พื้นที่ว่างสำหรับข่าวสารเพิ่มเติม</p>
+                </div>
+              </div>
+            </div>
+            
+            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
       </div>
 
       <div id="page-docs" style="display:none;">
@@ -257,7 +338,6 @@
                   </div>
                </div>
             </div>
-            
             <div class="col-md-6 mb-3">
                <div class="bg-white p-3 rounded shadow-sm h-100">
                   <div class="form-check form-switch d-flex justify-content-between align-items-center">
@@ -369,7 +449,6 @@
                <label class="fw-bold form-label">เบอร์ติดต่อ</label>
                <input class="form-control" id="f_contact" placeholder="เช่น 08x-xxxxxxx">
             </div>
-            
             <div class="mb-3" id="topicSelectDiv">
                <label class="fw-bold form-label">หมวดหมู่ปัญหา <span class="text-danger">*</span></label>
                <select class="form-select" id="f_topic_select">
@@ -381,7 +460,6 @@
                   <option>อื่นๆ</option>
                </select>
             </div>
-
             <div class="mb-3">
                <label class="fw-bold form-label">รายละเอียด / ความคิดเห็น <span class="text-danger">*</span></label>
                <textarea class="form-control" id="f_detail" rows="5" required placeholder="พิมพ์รายละเอียดที่ต้องการเสนอแนะ..."></textarea>
@@ -535,41 +613,31 @@
     }
     function formatDateThai(dateStr) { if(!dateStr) return ""; let d = new Date(dateStr); let months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]; return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`; }
     function changeMonth(n) { currentDate.setMonth(currentDate.getMonth()+n); renderCalendar(); }
-    
-    // 🟢 ฟังก์ชันบันทึกแบบใหม่ (เร็ว!)
     function submitCalendar(e) {
       e.preventDefault();
-      
-      // 1. เก็บค่าจากฟอร์ม
-      let title = getVal('c_name');
-      let startDate = getVal('c_start');
-      let endDate = getVal('c_end') || startDate;
-      let color = getVal('c_color');
-      let desc = getVal('c_desc');
-      let link = getVal('c_link');
-
-      // 2. สร้าง Event จำลองแล้วยัดใส่ปฏิทินทันที (ไม่ต้องรอ Server)
-      let tempEvent = {
-        id: 'TEMP_' + new Date().getTime(),
-        title: title, startDate: startDate, endDate: endDate,
-        color: color, desc: desc, link: link
-      };
-      
-      events.push(tempEvent); // เพิ่มลงตัวแปร
-      renderCalendar(); // วาดใหม่ทันที
-      
+      let btn = e.target.querySelector('button');
+      // Optimistic UI: เพิ่มทันที
+      let title = getVal('c_name'), startDate = getVal('c_start'), endDate = getVal('c_end') || startDate, color = getVal('c_color'), desc = getVal('c_desc'), link = getVal('c_link');
+      let tempEvent = { id: 'TEMP_' + new Date().getTime(), title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
+      events.push(tempEvent); renderCalendar();
       document.getElementById('calForm').reset();
       Swal.fire({ icon: 'success', title: 'บันทึกข้อมูลแล้ว', timer: 1500, showConfirmButton: false });
-
-      // 3. ส่งไปเก็บหลังบ้าน (ทำเงียบๆ)
+      // Send to server
       let data = { action: 'saveCalendar', title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).catch(e => console.error("Save error:", e));
     }
-
     function delEvent(id, e) { e.stopPropagation(); Swal.fire({ title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก' }).then((result) => { if (result.isConfirmed) { postData({action:'deleteEvent', id: id}, () => { Swal.fire('เรียบร้อย', 'ลบข้อมูลแล้ว', 'success'); fetchEvents(); }); } }); }
     
-    // 🟢 ระบบ Login / Logout
+    // 🟢 ระบบ Login / Logout (Footer trigger ไม่มีข้อความ Logout แล้ว)
     function loginToggle() {
+      // ถ้าเป็นแอดมิน -> กดแล้วถาม Logout
+      if(isAdmin) { 
+        Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่, ออกจากระบบ', cancelButtonText: 'ยกเลิก' }).then((res) => {
+          if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); }
+        });
+        return; 
+      }
+      // ถ้ายังไม่เป็น -> ถาม Login
       Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', inputPlaceholder: 'รหัสผ่านผู้ดูแลระบบ', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
         if(!res.value) return;
         postData({action: 'login', password: res.value}, (data) => {
@@ -590,12 +658,11 @@
        if(status) {
           document.getElementById('adminPanel').style.display='block';
           document.getElementById('sidebarLogoutArea').style.display='block';
-          document.getElementById('footerCopyright').innerHTML = '© 2026 All Rights Reserved. <span class="text-warning fw-bold" style="cursor:pointer">(Logout)</span>';
        } else {
           document.getElementById('adminPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
-          document.getElementById('footerCopyright').innerHTML = '© 2026 All Rights Reserved.';
        }
+       // 🟢 Footer ไม่เปลี่ยนข้อความแล้ว (ตามสั่ง)
        updateUI(); renderCalendar();
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
