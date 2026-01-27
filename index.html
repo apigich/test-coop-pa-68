@@ -14,7 +14,7 @@
     /* === Global Styles === */
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; font-size: 0.95rem; }
     
-    /* === Header (ปรับแก้ขนาดตัวอักษรให้พอดี) === */
+    /* === Header === */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
       color: white; padding: 50px 0; position: relative; 
@@ -22,23 +22,19 @@
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.9) 0%, rgba(0, 50, 133, 0.75) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
     
-    /* ปรับขนาดตัวหนังสือแบบ Responsive (ยืดหดตามจอ) */
-    .org-title { 
-      font-weight: 700; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
-      font-size: clamp(1.2rem, 2.5vw, 1.8rem); /* ปรับขนาดอัตโนมัติ */
-    }
-    .org-subtitle { 
-      font-weight: 300; opacity: 0.95; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 5px;
-      font-size: clamp(0.75rem, 1.5vw, 1rem); /* ปรับขนาดอัตโนมัติ */
-    }
+    .org-title { font-weight: 700; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.3); font-size: clamp(1.2rem, 2.5vw, 1.8rem); }
+    .org-subtitle { font-weight: 300; opacity: 0.95; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 5px; font-size: clamp(0.75rem, 1.5vw, 1rem); }
 
     @media (max-width: 768px) {
       .header-content { flex-direction: column; text-align: center; padding: 0 20px; }
       .header-icon-box { margin-bottom: 15px; margin-right: 0 !important; }
     }
     
-    /* === Sidebar === */
-    .sidebar { min-height: 100vh; background: white; border-right: 1px solid #e9ecef; padding-top: 20px; }
+    /* === Sidebar (ปรับให้ Flex เพื่อดันปุ่ม Logout ไปล่างสุด) === */
+    .sidebar { 
+      min-height: 100vh; background: white; border-right: 1px solid #e9ecef; padding-top: 20px; 
+      display: flex; flex-direction: column; /* เรียงแนวตั้ง */
+    }
     .nav-link-main { 
       padding: 12px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; 
       text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem;
@@ -50,6 +46,15 @@
       text-decoration: none; font-size: 0.9rem; transition: 0.2s; position: relative;
     }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
+
+    /* ปุ่ม Logout ใน Sidebar (ตามรูปภาพ) */
+    .sidebar-logout-btn {
+      background: white; border: 1px solid #6c757d; color: #6c757d;
+      border-radius: 5px; padding: 10px; width: 100%; text-align: center;
+      transition: 0.2s; display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+    }
+    .sidebar-logout-btn:hover { background: #f8f9fa; color: #000; border-color: #000; }
 
     /* === Content === */
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
@@ -64,10 +69,7 @@
       border: none; width: 100%; text-align: left;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
-    
-    .banner-btn.closed { 
-      filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed;
-    }
+    .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
     .banner-btn.closed:hover { transform: none; box-shadow: none; }
     
     .new-badge {
@@ -76,7 +78,6 @@
       border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
       z-index: 10; display: none;
     }
-    
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
@@ -101,8 +102,10 @@
     /* === Footer === */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
-    .admin-trigger { cursor: pointer; opacity: 0.3; transition: 0.3s; margin-top: 20px; display: inline-block; }
-    .admin-trigger:hover { opacity: 1; color: #ffc107; }
+    
+    .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
+    .admin-trigger:hover { opacity: 1; color: #fff; }
+    
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
 
     @media (max-width: 768px) {
@@ -132,18 +135,21 @@
   <div class="container-fluid p-0 d-flex flex-grow-1 flex-column flex-md-row">
     
     <div class="sidebar col-md-3 col-lg-2 p-0">
-      <h6 class="px-3 text-secondary fw-bold mt-3 mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
-      <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
-      <div id="sub-home" class="mb-2">
-        <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
-        <a class="nav-link-sub" onclick="scrollToId('sec-dash')">Dashboard</a>
+      <div class="flex-grow-1">
+        <h6 class="px-3 text-secondary fw-bold mt-3 mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
+        <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
+        <div id="sub-home" class="mb-2">
+          <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
+          <a class="nav-link-sub" onclick="scrollToId('sec-dash')">Dashboard</a>
+        </div>
+        <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
+        <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
+        <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
       </div>
-      <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
-      <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
-      <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
-      <div class="mt-5 px-3 mb-4">
-         <button id="adminBtn" class="btn btn-outline-secondary btn-sm w-100 py-2" onclick="loginToggle()">
-           <i class="material-icons align-middle fs-6">lock</i> Admin Login
+
+      <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;">
+         <button class="sidebar-logout-btn" onclick="logoutSystem()">
+           <i class="material-icons align-middle fs-6 me-2">logout</i> ออกจากระบบ
          </button>
       </div>
     </div>
@@ -232,7 +238,12 @@
         </div>
 
         <div id="adminPanel" class="content-section bg-warning-subtle mb-4 border-warning" style="display:none;">
-          <h5 class="fw-bold text-dark"><i class="material-icons align-middle">admin_panel_settings</i> แผงควบคุมผู้ดูแล</h5>
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle">admin_panel_settings</i> แผงควบคุมผู้ดูแล</h5>
+             <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()">
+               <i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ
+             </button>
+          </div>
           <hr class="border-secondary opacity-25">
           
           <div class="row">
@@ -316,7 +327,9 @@
         <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูล<br>เพื่อการพัฒนาจังหวัด</h5>
         <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
-        <div class="admin-trigger" onclick="loginToggle()">© 2026 All Rights Reserved.</div>
+        
+        <div id="footerCopyright" class="admin-trigger" onclick="loginToggle()">© 2026 All Rights Reserved.</div>
+      
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">ช่องทางการติดต่อ</h5>
@@ -539,7 +552,47 @@
     function changeMonth(n) { currentDate.setMonth(currentDate.getMonth()+n); renderCalendar(); }
     function submitCalendar(e) { e.preventDefault(); let btn = e.target.querySelector('button'); btn.disabled = true; btn.innerText = 'กำลังบันทึก...'; let data = { action:'saveCalendar', title: getVal('c_name'), startDate: getVal('c_start'), endDate: getVal('c_end'), color: getVal('c_color'), desc: getVal('c_desc'), link: getVal('c_link') }; postData(data, () => { Swal.fire('สำเร็จ','เพิ่มกิจกรรมเรียบร้อยแล้ว','success'); document.getElementById('calForm').reset(); fetchEvents(); btn.disabled = false; btn.innerHTML = '<i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม'; }); }
     function delEvent(id, e) { e.stopPropagation(); Swal.fire({ title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก' }).then((result) => { if (result.isConfirmed) { postData({action:'deleteEvent', id: id}, () => { Swal.fire('เรียบร้อย', 'ลบข้อมูลแล้ว', 'success'); fetchEvents(); }); } }); }
-    function loginToggle() { if(isAdmin) { isAdmin = false; document.getElementById('adminPanel').style.display='none'; document.getElementById('adminBtn').innerHTML = '<i class="material-icons align-middle fs-6">lock</i> Admin Login'; updateUI(); renderCalendar(); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); return; } Swal.fire({ title: 'รหัสผ่านผู้ดูแล', input: 'password', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => { if(!res.value) return; postData({action: 'login', password: res.value}, (data) => { if(data.status === 'SUCCESS') { isAdmin=true; document.getElementById('adminPanel').style.display='block'; document.getElementById('adminBtn').innerHTML = '<i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ'; updateUI(); renderCalendar(); if(document.getElementById('toggleSpecialForm')) document.getElementById('toggleSpecialForm').checked = form2Open; Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); } }); }); }
+    
+    // 🟢 ระบบ Login / Logout
+    function loginToggle() {
+      // คลิกที่ Footer เพื่อ Login
+      Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', inputPlaceholder: 'รหัสผ่านผู้ดูแลระบบ', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
+        if(!res.value) return;
+        postData({action: 'login', password: res.value}, (data) => {
+           if(data.status === 'SUCCESS') {
+              setAdminMode(true);
+              Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false});
+           } else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); }
+        });
+      });
+    }
+
+    function logoutSystem() {
+      // คลิกที่ Sidebar / Calendar เพื่อ Logout
+      Swal.fire({
+        title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่, ออกจากระบบ', cancelButtonText: 'ยกเลิก'
+      }).then((res) => {
+        if(res.isConfirmed) {
+          setAdminMode(false);
+          Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false});
+        }
+      });
+    }
+
+    function setAdminMode(status) {
+       isAdmin = status;
+       if(status) {
+          document.getElementById('adminPanel').style.display='block';
+          document.getElementById('sidebarLogoutArea').style.display='block'; // โชว์ปุ่ม sidebar
+          // อัปเดต Footer เป็นข้อความพิเศษสำหรับแอดมิน (ถ้าต้องการ) หรือปล่อยเหมือนเดิม
+       } else {
+          document.getElementById('adminPanel').style.display='none';
+          document.getElementById('sidebarLogoutArea').style.display='none'; // ซ่อนปุ่ม sidebar
+       }
+       updateUI(); renderCalendar();
+       if(document.getElementById('toggleSpecialForm')) document.getElementById('toggleSpecialForm').checked = form2Open;
+    }
+
     function postData(data, callback) { fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()).then(d => callback(d)).catch(e => console.error(e)); }
     function getVal(id) { return document.getElementById(id).value; }
   </script>
