@@ -23,8 +23,14 @@
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
     
     .org-title-group { display: flex; flex-direction: column; justify-content: center; }
-    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); font-size: clamp(1.1rem, 2vw, 1.6rem); }
-    .org-sub-text { font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+    .org-main-text { 
+      font-weight: 700; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+      font-size: clamp(1.1rem, 2vw, 1.6rem); 
+    }
+    .org-sub-text {
+      font-weight: 400; font-size: clamp(0.9rem, 1.5vw, 1.3rem); 
+      color: #ffeb3b; text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
     .eng-subtitle { font-weight: 300; opacity: 0.8; letter-spacing: 0.5px; text-transform: uppercase; font-size: 0.85rem; margin-top: 5px; }
 
     @media (max-width: 768px) {
@@ -48,42 +54,24 @@
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* === Banner Buttons (แก้ไขเรื่องวงกลมเบี้ยว) === */
+    /* === Banner Buttons === */
     .banner-btn {
       display: flex; align-items: center; justify-content: flex-start;
       padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
       color: white; cursor: pointer; transition: all 0.3s ease; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
       border: none; width: 100%; text-align: left;
-      /* รองรับรูปพื้นหลัง */
-      background-size: cover !important; 
-      background-position: center !important;
-      background-repeat: no-repeat !important;
+      background-size: cover !important; background-position: center !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     
-    /* 🟢 1. แก้ไขให้เป็นวงกลมสมบูรณ์ ไม่เบี้ยว */
     .banner-icon { 
-      width: 110px;        /* ล็อกความกว้าง */
-      height: 110px;       /* ล็อกความสูงเท่ากัน = วงกลม */
-      font-size: 4rem;     /* ขนาดอิโมจิ */
-      background: rgba(255,255,255,0.25); /* พื้นหลังวงกลมสีขาวจางๆ */
-      border-radius: 50%;  /* สั่งให้เป็นวงกลม */
-      display: flex; align-items: center; justify-content: center; /* จัดอิโมจิให้อยู่กลางวงกลม */
-      flex-shrink: 0;      /* 🟢 คำสั่งสำคัญ: ห้ามโดนบีบ ไม่ว่าจะจอแคบแค่ไหน */
-      margin-right: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* เงาเล็กน้อยให้ดูมีมิติ */
+      font-size: 4.5rem; background: rgba(255,255,255,0.25); padding: 10px; border-radius: 50%; 
+      flex-shrink: 0; margin-right: 20px;
     }
-    
-    .banner-text { 
-      text-align: center; flex-grow: 1; position: relative; z-index: 2; 
-    }
-    .banner-title { 
-      font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .banner-desc { 
-      font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-    }
+    .banner-text { text-align: center; flex-grow: 1; position: relative; z-index: 2; }
+    .banner-title { font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; }
+    .banner-desc { font-size: 1.1rem; opacity: 0.95; font-weight: 400; }
     
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
     .banner-btn.closed:hover { transform: none; box-shadow: none; }
@@ -95,21 +83,15 @@
       z-index: 10; display: none;
     }
     
-    /* Background Gradients (ใช้ทับรูปภาพได้) */
-    .bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.95), rgba(255, 117, 140, 0.95)); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.95), rgba(243, 129, 129, 0.95)); color: #4a4a4a !important; }
-    
-    /* ถ้ามีรูปพื้นหลัง (class 'has-bg-image') ให้สีจางลงเพื่อให้เห็นรูป */
+    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
+    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     .has-bg-image.bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.85), rgba(255, 117, 140, 0.85)); }
     .has-bg-image.bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.85), rgba(243, 129, 129, 0.85)); }
-    
     .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
 
     /* === Carousel === */
     .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
     .carousel-caption { display: none !important; }
-    
-    /* ปุ่มเลื่อน (ลูกกลิ้ง) */
     .carousel-control-prev-icon, .carousel-control-next-icon {
       background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%;
     }
@@ -610,6 +592,8 @@
     }
     function formatDateThai(dateStr) { if(!dateStr) return ""; let d = new Date(dateStr); let months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]; return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`; }
     function changeMonth(n) { currentDate.setMonth(currentDate.getMonth()+n); renderCalendar(); }
+    
+    // 🟢 บันทึกแบบ Optimistic UI (ไว)
     function submitCalendar(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button');
@@ -621,18 +605,29 @@
       let data = { action: 'saveCalendar', title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).catch(e => console.error("Save error:", e));
     }
-    function delEvent(id, e) { e.stopPropagation(); Swal.fire({ title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก' }).then((result) => { if (result.isConfirmed) { postData({action:'deleteEvent', id: id}, () => { Swal.fire('เรียบร้อย', 'ลบข้อมูลแล้ว', 'success'); fetchEvents(); }); } }); }
     
-    // 🟢 ระบบ Login / Logout
+    // 🟢 ลบแบบ Optimistic UI (ไว)
+    function delEvent(id, e) { 
+      e.stopPropagation(); 
+      Swal.fire({ title: 'ยืนยันการลบ?', text: "ต้องการลบกิจกรรมนี้ใช่หรือไม่?", icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', confirmButtonText: 'ลบเลย', cancelButtonText: 'ยกเลิก' }).then((result) => { 
+        if (result.isConfirmed) { 
+          // ลบจากหน้าจอทันที
+          events = events.filter(ev => ev.id !== id);
+          renderCalendar();
+          Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1500, showConfirmButton: false });
+          // ส่งคำสั่งลบหลังบ้าน
+          fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({action:'deleteEvent', id: id}) }).catch(e => console.error(e));
+        } 
+      }); 
+    }
+    
     function loginToggle() {
-      // ถ้าเป็นแอดมิน -> กดแล้วถาม Logout
       if(isAdmin) { 
         Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่, ออกจากระบบ', cancelButtonText: 'ยกเลิก' }).then((res) => {
           if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); }
         });
         return; 
       }
-      // ถ้ายังไม่เป็น -> ถาม Login
       Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', inputPlaceholder: 'รหัสผ่านผู้ดูแลระบบ', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
         if(!res.value) return;
         postData({action: 'login', password: res.value}, (data) => {
@@ -657,7 +652,6 @@
           document.getElementById('adminPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
-       // 🟢 Footer ไม่มีคำว่า Logout
        updateUI(); renderCalendar();
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
