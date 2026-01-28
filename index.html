@@ -33,33 +33,21 @@
       .org-main-text { font-size: 1.4rem; }
     }
     
-    /* === Layout & Sidebar (Sticky Logic) === */
+    /* Sidebar */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
-    
     .sidebar {
-      min-width: 250px; max-width: 250px; 
-      background: white; border-right: 1px solid #e9ecef;
-      transition: all 0.3s; 
-      position: sticky; top: 0; height: 100vh; 
-      overflow-y: auto; z-index: 1000;
+      min-width: 250px; max-width: 250px; background: white; border-right: 1px solid #e9ecef;
+      transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000;
       display: flex; flex-direction: column;
     }
-    
-    /* Mobile Sidebar */
     @media (max-width: 768px) {
       .sidebar { margin-left: -250px; position: fixed; height: 100%; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
       .sidebar.active { margin-left: 0; }
       .overlay { display: none; position: fixed; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.5s ease-in-out; }
       .overlay.active { display: block; opacity: 1; }
     }
-
-    .sidebar-toggle-btn {
-      position: absolute; top: 20px; left: 20px; z-index: 1001;
-      background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); 
-      color: white; border-radius: 5px; padding: 5px 10px; cursor: pointer;
-    }
+    .sidebar-toggle-btn { position: absolute; top: 20px; left: 20px; z-index: 1001; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; border-radius: 5px; padding: 5px 10px; cursor: pointer; }
     .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.4); }
-
     .nav-link-main { padding: 15px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1.05rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 25px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
@@ -73,7 +61,7 @@
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* Banner Buttons */
+    /* Banner Buttons (Updated Layout) */
     .banner-btn {
       display: flex; align-items: center; justify-content: flex-start;
       padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
@@ -83,6 +71,7 @@
       background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
+    
     .banner-icon { 
       width: 100px; height: 100px; min-width: 100px; min-height: 100px;
       border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25);
@@ -92,6 +81,20 @@
     .banner-text { text-align: center; flex-grow: 1; position: relative; z-index: 2; }
     .banner-title { font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
     .banner-desc { font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+    
+    /* 🟢 Badge สำหรับสถานะ (ไม่ทับวันที่) */
+    .status-badge {
+        font-size: 0.9rem; padding: 5px 12px; border-radius: 20px;
+        font-weight: bold; background: white; color: #d63031;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        display: inline-block; margin-right: 5px;
+    }
+    .date-badge {
+        font-size: 0.9rem; padding: 5px 12px; border-radius: 20px;
+        background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5);
+        display: inline-block;
+    }
+
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
     .banner-btn.closed:hover { transform: none; box-shadow: none; }
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index: 10; display: none; }
@@ -109,12 +112,22 @@
     .carousel-control-prev, .carousel-control-next { width: 10%; opacity: 0.8; }
     .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
 
-    /* Footer & Admin */
+    /* Admin & Footer */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
     .admin-trigger:hover { opacity: 1; color: #fff; }
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    
+    /* 🟢 Pagination */
+    .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
+    .page-btn { 
+       border: 1px solid #dee2e6; background: white; color: #0d6efd; 
+       padding: 5px 12px; cursor: pointer; border-radius: 5px; transition: 0.2s;
+    }
+    .page-btn:hover { background: #e9ecef; }
+    .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
+    .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
 </head>
 <body onload="initSystem()">
@@ -149,7 +162,7 @@
           <a class="nav-link-sub" onclick="scrollToId('sec-pr')">สื่อประชาสัมพันธ์</a>
         </div>
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
-        <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินจังหวัด</a>
+        <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
         <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
       </div>
       <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;">
@@ -198,6 +211,7 @@
         <div id="sec-feedback" class="content-section text-center" style="background: #fff;">
           <h3 class="fw-bold mb-5 text-dark" style="letter-spacing: 1px;">📢 รับฟังความคิดเห็นประชาชนในการพัฒนาจังหวัด</h3>
           <div class="row justify-content-center">
+            
             <div class="col-lg-9 mb-4 position-relative">
               <div id="banner1" class="banner-btn bg-gradient-pink" onclick="handleBannerClick(1)" role="button">
                 <div id="badge1" class="new-badge">NEW</div>
@@ -205,10 +219,14 @@
                 <div class="banner-text">
                    <div class="banner-title">แบบฟอร์มแจ้งปัญหาทั่วไป</div>
                    <div class="banner-desc">(รับแจ้งตลอด 24 ชั่วโมง)</div>
-                   <div id="statusText1" class="banner-desc mt-2 badge bg-white text-danger fs-6">📅 เปิดรับ: 1 ม.ค. 68 - 31 ธ.ค. 68</div>
+                   <div class="mt-2" id="info1">
+                      <span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span>
+                      <span class="date-badge">📅 1 ม.ค. 68 - 31 ธ.ค. 68</span>
+                   </div>
                 </div>
               </div>
             </div>
+
             <div class="col-lg-9 mb-3 position-relative">
               <div id="banner2" class="banner-btn bg-gradient-yellow" onclick="handleBannerClick(2)" role="button">
                 <div id="badge2" class="new-badge">NEW</div>
@@ -216,10 +234,14 @@
                 <div class="banner-text">
                    <div class="banner-title">เสนอไอเดีย: เชียงใหม่ 2030</div>
                    <div class="banner-desc">(โครงการพิเศษ/ประชาคม)</div>
-                   <div id="statusText2" class="banner-desc mt-2 badge bg-danger text-white fs-6">📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68</div>
+                   <div class="mt-2" id="info2">
+                      <span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับความคิดเห็น</span>
+                      <span class="date-badge">📅 1 ก.พ. 68 - 28 ก.พ. 68</span>
+                   </div>
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
@@ -260,6 +282,7 @@
       <div id="page-docs" style="display:none;">
         <div class="content-section">
           <h3 class="section-header">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
+          
           <div id="adminDocPanel" class="admin-controls mb-4">
              <div class="d-flex justify-content-between align-items-center mb-3">
                <h5 class="fw-bold m-0"><i class="material-icons align-middle">post_add</i> จัดการเอกสาร/ลิงก์</h5>
@@ -272,15 +295,41 @@
                 <input type="hidden" id="doc_id" value="">
                 <div class="mb-2"><input type="text" class="form-control" id="doc_title" placeholder="ชื่อเอกสาร / หัวข้อ" required></div>
                 <div class="mb-2"><input type="text" class="form-control" id="doc_desc" placeholder="คำอธิบายเพิ่มเติม"></div>
+                <div class="mb-2">
+                   <select class="form-select" id="doc_cat">
+                      <option value="General">เอกสารทั่วไป (General)</option>
+                      <option value="Plan">แผนพัฒนา (Plan)</option>
+                      <option value="Report">รายงานผล (Report)</option>
+                      <option value="Announcement">ประกาศ/คำสั่ง (Announcement)</option>
+                   </select>
+                </div>
                 <div class="row g-2">
                    <div class="col-md-9"><input type="text" class="form-control" id="doc_link" placeholder="ลิงก์" required></div>
                    <div class="col-md-3"><button type="submit" id="btnSaveDoc" class="btn btn-success w-100 fw-bold">บันทึก</button></div>
                 </div>
              </form>
           </div>
+
+          <div class="row g-2 mb-3">
+             <div class="col-md-4">
+                <input type="text" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." onkeyup="filterDocs()">
+             </div>
+             <div class="col-md-3">
+                <select id="filterCat" class="form-select" onchange="filterDocs()">
+                   <option value="All">ทุกหมวดหมู่</option>
+                   <option value="General">เอกสารทั่วไป</option>
+                   <option value="Plan">แผนพัฒนา</option>
+                   <option value="Report">รายงานผล</option>
+                   <option value="Announcement">ประกาศ/คำสั่ง</option>
+                </select>
+             </div>
+          </div>
+
           <div id="docListContainer" class="list-group list-group-flush">
              <div class="text-center py-5 text-muted"><div class="spinner-border text-primary mb-2" role="status"></div><div>กำลังโหลดข้อมูล...</div></div>
           </div>
+          
+          <div id="pagination" class="pagination-container"></div>
         </div>
       </div>
 
@@ -289,19 +338,18 @@
           <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
           <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
         </div>
-        
+        <div class="alert alert-info shadow-sm" role="alert">
+          <i class="material-icons align-middle me-2">info</i> 
+          ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่
+        </div>
         <div class="content-section text-center py-5 shadow-sm border">
            <i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i>
            <h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3>
            <p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p>
-           
            <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
              <i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน
            </a>
-           
-           <div class="mt-3 text-muted small">
-             (หน้าต่างใหม่จะเปิดขึ้นเพื่อความปลอดภัยของข้อมูล)
-           </div>
+           <div class="mt-3 text-muted small">(หน้าต่างใหม่จะเปิดขึ้นเพื่อความปลอดภัยของข้อมูล)</div>
         </div>
       </div>
 
@@ -382,9 +430,14 @@
   
   <script>
     let docs = [];
+    let filteredDocs = [];
     let isAdmin = false;
     let form1Open = true; 
     let form2Open = true;
+    
+    // Pagination Variables
+    let currentPage = 1;
+    const itemsPerPage = 10;
 
     function initSystem() { 
       fetchDocs(); 
@@ -404,7 +457,7 @@
       document.getElementById('page-'+id).style.display = 'block';
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
       document.getElementById('menu-'+id).classList.add('active');
-      if(id === 'docs') renderDocs(); 
+      if(id === 'docs') { filterDocs(); } // Render Docs
       window.scrollTo(0,0);
       if(window.innerWidth <= 768) {
          document.getElementById('sidebar').classList.remove('active');
@@ -418,27 +471,90 @@
        if(window.innerWidth <= 768) toggleSidebar();
     }
 
-    // --- DOCS SYSTEM ---
-    function fetchDocs() { fetch(SCRIPT_URL + '?action=getDocs').then(r => r.json()).then(data => { docs = data; if(document.getElementById('page-docs').style.display === 'block') renderDocs(); }).catch(e => console.error(e)); }
+    // --- 🟢 DOCS SYSTEM 2.0 (Filter & Paginate) ---
+    function fetchDocs() { fetch(SCRIPT_URL + '?action=getDocs').then(r => r.json()).then(data => { docs = data; if(document.getElementById('page-docs').style.display === 'block') filterDocs(); }).catch(e => console.error(e)); }
+    
+    function filterDocs() {
+       let searchText = document.getElementById('searchDoc').value.toLowerCase();
+       let catFilter = document.getElementById('filterCat').value;
+       
+       filteredDocs = docs.filter(d => {
+          let matchesSearch = d.title.toLowerCase().includes(searchText) || (d.desc && d.desc.toLowerCase().includes(searchText));
+          let matchesCat = (catFilter === 'All') || (d.type === catFilter);
+          return matchesSearch && matchesCat;
+       });
+       
+       currentPage = 1; // Reset to page 1
+       renderDocs();
+    }
+
     function renderDocs() {
       let html = '';
-      if(docs.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีเอกสารในขณะนี้</div>'; } 
+      if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
       else {
-        docs.forEach(doc => {
+        // Slice for Pagination
+        let start = (currentPage - 1) * itemsPerPage;
+        let end = start + itemsPerPage;
+        let paginatedItems = filteredDocs.slice(start, end);
+
+        paginatedItems.forEach(doc => {
           let icon = 'description', color = 'text-primary';
           if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } 
           else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
           let dateStr = "เผยแพร่: " + formatDate(doc.created);
           if(doc.updated && doc.updated !== doc.created) { dateStr += ` | แก้ไข: ${formatDate(doc.updated)}`; }
           
+          let catBadge = `<span class="badge bg-secondary me-2">${doc.type}</span>`;
+          
           let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : '';
           let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
 
-          html += `<div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom"><i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i><div class="flex-grow-1"><a href="${doc.link}" target="_blank" class="text-decoration-none text-dark"><h5 class="mb-1 fw-bold">${doc.title}</h5><div class="text-muted small mb-2">${doc.desc || "-"}</div><small class="text-secondary">${dateStr}</small></a></div><div class="d-flex align-items-center">${editBtn} ${deleteBtn}</div></div>`;
+          html += `
+            <div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom">
+              <i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i>
+              <div class="flex-grow-1">
+                <a href="${doc.link}" target="_blank" class="text-decoration-none text-dark">
+                  <h5 class="mb-1 fw-bold">${doc.title}</h5>
+                  <div class="text-muted small mb-2">${catBadge} ${doc.desc || "-"}</div>
+                  <small class="text-secondary">${dateStr}</small>
+                </a>
+              </div>
+              <div class="d-flex align-items-center">${editBtn} ${deleteBtn}</div>
+            </div>`;
         });
+        
+        renderPagination();
       }
       document.getElementById('docListContainer').innerHTML = html;
     }
+    
+    function renderPagination() {
+       let totalPages = Math.ceil(filteredDocs.length / itemsPerPage);
+       let html = '';
+       
+       if(totalPages > 1) {
+          html += `<div class="page-btn ${currentPage===1 ? 'disabled' : ''}" onclick="changePage(${currentPage-1})">« ก่อนหน้า</div>`;
+          
+          for(let i=1; i<=totalPages; i++) {
+             if(i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+               html += `<div class="page-btn ${i===currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</div>`;
+             } else if(i === currentPage - 2 || i === currentPage + 2) {
+               html += `<span class="px-2">...</span>`;
+             }
+          }
+          
+          html += `<div class="page-btn ${currentPage===totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage+1})">ถัดไป »</div>`;
+       }
+       document.getElementById('pagination').innerHTML = html;
+    }
+    
+    function changePage(page) {
+       let totalPages = Math.ceil(filteredDocs.length / itemsPerPage);
+       if(page < 1 || page > totalPages) return;
+       currentPage = page;
+       renderDocs();
+    }
+
     function formatDate(isoStr) { if(!isoStr) return ""; let d = new Date(isoStr); return d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); }
     
     function editDoc(id) {
@@ -447,6 +563,8 @@
        document.getElementById('doc_title').value = doc.title;
        document.getElementById('doc_desc').value = doc.desc;
        document.getElementById('doc_link').value = doc.link;
+       document.getElementById('doc_cat').value = doc.type; // Set Category
+       
        document.getElementById('btnSaveDoc').innerText = 'บันทึกการแก้ไข';
        document.getElementById('btnSaveDoc').classList.replace('btn-success', 'btn-warning');
        document.getElementById('btnCancelEdit').style.display = 'inline-block';
@@ -461,22 +579,22 @@
     }
     function submitDocument(e) {
       e.preventDefault();
-      let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link');
+      let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link'), cat = getVal('doc_cat');
       let isEdit = (id !== "");
       if(isEdit) {
          let idx = docs.findIndex(d => d.id === id);
-         if(idx !== -1) { docs[idx].title = title; docs[idx].desc = desc; docs[idx].link = link; docs[idx].updated = new Date().toISOString(); }
+         if(idx !== -1) { docs[idx].title = title; docs[idx].desc = desc; docs[idx].link = link; docs[idx].type = cat; docs[idx].updated = new Date().toISOString(); }
       } else {
          let newId = 'TEMP_' + Date.now(); 
-         docs.unshift({ title: title, desc: desc, link: link, id: newId, type: 'link', created: new Date().toISOString() });
+         docs.unshift({ title: title, desc: desc, link: link, id: newId, type: cat, created: new Date().toISOString() });
       }
-      renderDocs(); cancelEditDoc();
+      filterDocs(); cancelEditDoc(); // Re-filter & Reset
       Swal.fire({ icon: 'success', title: isEdit ? 'แก้ไขเรียบร้อย' : 'เพิ่มเอกสารแล้ว', timer: 1500, showConfirmButton: false });
-      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: 'link' }) }).then(() => fetchDocs());
+      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat }) }).then(() => fetchDocs());
     }
     function deleteDoc(id) {
       if(!confirm('ต้องการลบเอกสารนี้?')) return;
-      docs = docs.filter(d => d.id !== id); renderDocs();
+      docs = docs.filter(d => d.id !== id); filterDocs();
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDoc', id: id }) });
     }
 
@@ -493,13 +611,24 @@
        });
     }
     function updateUI() {
-       let b1 = document.getElementById('banner1'), badge1 = document.getElementById('badge1'), st1 = document.getElementById('statusText1');
-       if(form1Open) { b1.classList.remove('closed'); badge1.style.display = 'block'; st1.className = "banner-desc mt-2 badge bg-white text-danger fs-6"; st1.innerText = "📅 เปิดรับ: 1 ม.ค. 68 - 31 ธ.ค. 68"; } 
-       else { b1.classList.add('closed'); badge1.style.display = 'none'; st1.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st1.innerText = "⛔ ปิดรับแจ้งเรื่อง"; }
+       // 🟢 Banner Status Logic (ไม่บังวันที่)
+       let b1 = document.getElementById('banner1'), st1 = document.getElementById('statusBadge1');
+       if(form1Open) { 
+          b1.classList.remove('closed'); st1.style.display = 'none'; 
+          document.getElementById('badge1').style.display = 'block';
+       } else { 
+          b1.classList.add('closed'); st1.style.display = 'inline-block';
+          document.getElementById('badge1').style.display = 'none';
+       }
        
-       let b2 = document.getElementById('banner2'), badge2 = document.getElementById('badge2'), st2 = document.getElementById('statusText2');
-       if(form2Open) { b2.classList.remove('closed'); badge2.style.display = 'block'; st2.className = "banner-desc mt-2 badge bg-danger text-white fs-6"; st2.innerText = "📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68"; } 
-       else { b2.classList.add('closed'); badge2.style.display = 'none'; st2.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st2.innerText = "⛔ ปิดรับความคิดเห็นแล้ว"; }
+       let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
+       if(form2Open) { 
+          b2.classList.remove('closed'); st2.style.display = 'none';
+          document.getElementById('badge2').style.display = 'block';
+       } else { 
+          b2.classList.add('closed'); st2.style.display = 'inline-block';
+          document.getElementById('badge2').style.display = 'none';
+       }
        
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
@@ -558,7 +687,7 @@
           document.getElementById('adminDocPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
-       updateUI(); renderDocs(); 
+       updateUI(); filterDocs(); // Re-render to show/hide edit buttons
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
     }
