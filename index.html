@@ -51,7 +51,7 @@
     .nav-link-main { padding: 15px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1.05rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 25px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
-    .nav-link-sub { padding: 10px 20px 10px 45px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.95rem; transition: 0.2s; position: relative; }
+    .nav-link-sub { padding: 10px 20px 10px 45px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; position: relative; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
     .sidebar-logout-btn { background: white; border: 1px solid #6c757d; color: #6c757d; border-radius: 5px; padding: 10px; width: 100%; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .sidebar-logout-btn:hover { background: #f8f9fa; color: #000; border-color: #000; }
@@ -61,7 +61,7 @@
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* Banner Buttons (Updated Layout) */
+    /* Banner Buttons */
     .banner-btn {
       display: flex; align-items: center; justify-content: flex-start;
       padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
@@ -82,7 +82,7 @@
     .banner-title { font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
     .banner-desc { font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
     
-    /* 🟢 Badge สำหรับสถานะ (ไม่ทับวันที่) */
+    /* 🟢 Badges */
     .status-badge {
         font-size: 0.9rem; padding: 5px 12px; border-radius: 20px;
         font-weight: bold; background: white; color: #d63031;
@@ -311,9 +311,7 @@
           </div>
 
           <div class="row g-2 mb-3">
-             <div class="col-md-4">
-                <input type="text" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." onkeyup="filterDocs()">
-             </div>
+             <div class="col-md-4"><input type="text" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." onkeyup="filterDocs()"></div>
              <div class="col-md-3">
                 <select id="filterCat" class="form-select" onchange="filterDocs()">
                    <option value="All">ทุกหมวดหมู่</option>
@@ -328,7 +326,6 @@
           <div id="docListContainer" class="list-group list-group-flush">
              <div class="text-center py-5 text-muted"><div class="spinner-border text-primary mb-2" role="status"></div><div>กำลังโหลดข้อมูล...</div></div>
           </div>
-          
           <div id="pagination" class="pagination-container"></div>
         </div>
       </div>
@@ -488,6 +485,17 @@
        renderDocs();
     }
 
+    function getCatBadge(type) {
+       let label = type, colorClass = 'bg-secondary';
+       switch(type) {
+          case 'General': label = 'เอกสารทั่วไป'; colorClass = 'bg-secondary'; break;
+          case 'Plan': label = 'แผนพัฒนา'; colorClass = 'bg-primary'; break;
+          case 'Report': label = 'รายงานผล'; colorClass = 'bg-success'; break;
+          case 'Announcement': label = 'ประกาศ/คำสั่ง'; colorClass = 'bg-warning text-dark'; break;
+       }
+       return `<span class="badge ${colorClass} me-2">${label}</span>`;
+    }
+
     function renderDocs() {
       let html = '';
       if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
@@ -504,7 +512,7 @@
           let dateStr = "เผยแพร่: " + formatDate(doc.created);
           if(doc.updated && doc.updated !== doc.created) { dateStr += ` | แก้ไข: ${formatDate(doc.updated)}`; }
           
-          let catBadge = `<span class="badge bg-secondary me-2">${doc.type}</span>`;
+          let catBadge = getCatBadge(doc.type);
           
           let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : '';
           let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
@@ -515,7 +523,7 @@
               <div class="flex-grow-1">
                 <a href="${doc.link}" target="_blank" class="text-decoration-none text-dark">
                   <h5 class="mb-1 fw-bold">${doc.title}</h5>
-                  <div class="text-muted small mb-2">${catBadge} ${doc.desc || "-"}</div>
+                  <div class="mb-2">${catBadge} <span class="text-muted small">${doc.desc || "-"}</span></div>
                   <small class="text-secondary">${dateStr}</small>
                 </a>
               </div>
@@ -563,7 +571,7 @@
        document.getElementById('doc_title').value = doc.title;
        document.getElementById('doc_desc').value = doc.desc;
        document.getElementById('doc_link').value = doc.link;
-       document.getElementById('doc_cat').value = doc.type; // Set Category
+       document.getElementById('doc_cat').value = doc.type; // 🟢 Set Category correctly
        
        document.getElementById('btnSaveDoc').innerText = 'บันทึกการแก้ไข';
        document.getElementById('btnSaveDoc').classList.replace('btn-success', 'btn-warning');
@@ -583,12 +591,17 @@
       let isEdit = (id !== "");
       if(isEdit) {
          let idx = docs.findIndex(d => d.id === id);
+         // 🟢 Update local array
          if(idx !== -1) { docs[idx].title = title; docs[idx].desc = desc; docs[idx].link = link; docs[idx].type = cat; docs[idx].updated = new Date().toISOString(); }
       } else {
          let newId = 'TEMP_' + Date.now(); 
          docs.unshift({ title: title, desc: desc, link: link, id: newId, type: cat, created: new Date().toISOString() });
       }
-      filterDocs(); cancelEditDoc(); // Re-filter & Reset
+      
+      // 🟢 Re-filter immediately so changes appear
+      filterDocs(); 
+      cancelEditDoc(); 
+      
       Swal.fire({ icon: 'success', title: isEdit ? 'แก้ไขเรียบร้อย' : 'เพิ่มเอกสารแล้ว', timer: 1500, showConfirmButton: false });
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat }) }).then(() => fetchDocs());
     }
@@ -611,24 +624,13 @@
        });
     }
     function updateUI() {
-       // 🟢 Banner Status Logic (ไม่บังวันที่)
        let b1 = document.getElementById('banner1'), st1 = document.getElementById('statusBadge1');
-       if(form1Open) { 
-          b1.classList.remove('closed'); st1.style.display = 'none'; 
-          document.getElementById('badge1').style.display = 'block';
-       } else { 
-          b1.classList.add('closed'); st1.style.display = 'inline-block';
-          document.getElementById('badge1').style.display = 'none';
-       }
+       if(form1Open) { b1.classList.remove('closed'); st1.style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } 
+       else { b1.classList.add('closed'); st1.style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
        
        let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
-       if(form2Open) { 
-          b2.classList.remove('closed'); st2.style.display = 'none';
-          document.getElementById('badge2').style.display = 'block';
-       } else { 
-          b2.classList.add('closed'); st2.style.display = 'inline-block';
-          document.getElementById('badge2').style.display = 'none';
-       }
+       if(form2Open) { b2.classList.remove('closed'); st2.style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } 
+       else { b2.classList.add('closed'); st2.style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
        
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
@@ -687,7 +689,7 @@
           document.getElementById('adminDocPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
-       updateUI(); filterDocs(); // Re-render to show/hide edit buttons
+       updateUI(); filterDocs(); 
        if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
        if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
     }
