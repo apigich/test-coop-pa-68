@@ -14,27 +14,17 @@
     /* === Global Styles === */
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* === Header (ปรับโฉมใหม่ ใหญ่ขึ้น) === */
+    /* Header */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
       color: white; padding: 60px 0; position: relative; 
     }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.95) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
-    
     .org-title-group { display: flex; flex-direction: column; justify-content: center; }
-    /* บรรทัดบน: สำนักงานจังหวัด */
-    .org-top-text { 
-      font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase;
-    }
-    /* บรรทัดกลาง: กลุ่มงานยุทธศาสตร์ */
-    .org-main-text { 
-      font-weight: 800; line-height: 1.2; text-shadow: 0 4px 6px rgba(0,0,0,0.3); 
-      font-size: clamp(1.5rem, 3vw, 2.2rem); /* 🟢 ใหญ่ขึ้น */
-    }
-    /* บรรทัดล่าง: ภาษาอังกฤษ */
+    .org-top-text { font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; }
+    .org-main-text { font-weight: 800; line-height: 1.2; text-shadow: 0 4px 6px rgba(0,0,0,0.3); font-size: clamp(1.5rem, 3vw, 2.2rem); }
     .eng-subtitle { font-weight: 300; opacity: 0.8; font-size: 0.9rem; margin-top: 8px; letter-spacing: 0.5px; }
-
     @media (max-width: 768px) {
       .main-header { padding: 40px 0; }
       .header-content { flex-direction: column; text-align: center; padding: 0 20px; }
@@ -44,24 +34,39 @@
     }
     
     /* === Layout & Sidebar (Sticky & Toggle) === */
-    .wrapper { display: flex; width: 100%; align-items: stretch; }
+    .wrapper { 
+      display: flex; width: 100%; 
+      align-items: flex-start; /* 🟢 สำคัญ: ทำให้ Sticky ทำงานได้ถูกต้อง */
+    }
     
     .sidebar {
-      min-width: 250px; max-width: 250px; background: white; border-right: 1px solid #e9ecef;
-      transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000;
+      min-width: 250px; max-width: 250px; 
+      background: white; border-right: 1px solid #e9ecef;
+      transition: all 0.3s; 
+      
+      /* 🟢 Sticky Logic: เมนูจะติดขอบจอเสมอ */
+      position: sticky; 
+      top: 0; 
+      height: 100vh; /* ความสูงเต็มจอ */
+      overflow-y: auto; /* ถ้าเมนูยาวเกินให้เลื่อนได้ */
+      z-index: 1000;
+      
       display: flex; flex-direction: column;
     }
     
-    /* Mobile: ซ่อน Sidebar ไว้ก่อน */
+    /* Mobile: ซ่อน Sidebar */
     @media (max-width: 768px) {
-      .sidebar { margin-left: -250px; position: fixed; height: 100%; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+      .sidebar { 
+        margin-left: -250px; 
+        position: fixed; /* บนมือถือใช้ Fixed */
+        height: 100%; 
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1); 
+      }
       .sidebar.active { margin-left: 0; }
-      /* Overlay เวลาเปิดเมนูมือถือ */
       .overlay { display: none; position: fixed; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.5s ease-in-out; }
       .overlay.active { display: block; opacity: 1; }
     }
 
-    /* Toggle Button (Hamburger) */
     .sidebar-toggle-btn {
       position: absolute; top: 20px; left: 20px; z-index: 1001;
       background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); 
@@ -74,16 +79,15 @@
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
     .nav-link-sub { padding: 10px 20px 10px 45px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.95rem; transition: 0.2s; position: relative; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
-    
     .sidebar-logout-btn { background: white; border: 1px solid #6c757d; color: #6c757d; border-radius: 5px; padding: 10px; width: 100%; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .sidebar-logout-btn:hover { background: #f8f9fa; color: #000; border-color: #000; }
 
-    /* === Content === */
-    .main-content { width: 100%; padding: 20px; min-height: 100vh; transition: all 0.3s; background-color: #f0f2f5; }
+    /* Content */
+    .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; }
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
-    /* === Banner Buttons === */
+    /* Banner Buttons */
     .banner-btn {
       display: flex; align-items: center; justify-content: flex-start;
       padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
@@ -93,6 +97,7 @@
       background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
+    
     .banner-icon { 
       width: 100px; height: 100px; min-width: 100px; min-height: 100px;
       border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25);
@@ -104,8 +109,8 @@
     .banner-desc { font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; }
     .banner-btn.closed:hover { transform: none; box-shadow: none; }
-    
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index: 10; display: none; }
+    
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     .has-bg-image.bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.85), rgba(255, 117, 140, 0.85)); }
@@ -119,30 +124,11 @@
     .carousel-control-prev, .carousel-control-next { width: 10%; opacity: 0.8; }
     .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
 
-    /* Calendar */
-    .calendar-container { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-    .calendar-header { display: flex; justify-content: space-between; align-items: center; background: #0d6efd; color: white; padding: 20px; }
-    .btn-nav { background: rgba(255,255,255,0.2); border: none; color: white; border-radius: 50%; width: 40px; height: 40px; cursor: pointer; transition: 0.2s; }
-    .btn-nav:hover { background: rgba(255,255,255,0.4); }
-    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); border-left: 1px solid #eee; border-bottom: 1px solid #eee; }
-    .day-name { background: #f8f9fa; text-align: center; font-weight: bold; padding: 15px 5px; border-right: 1px solid #eee; border-bottom: 1px solid #eee; color: #666; }
-    .day-cell { min-height: 120px; border-right: 1px solid #eee; border-bottom: 1px solid #eee; padding: 8px; position: relative; background: white; transition: 0.2s; }
-    .day-cell:hover { background-color: #fafafa; }
-    .day-cell.today { background-color: #f0f7ff; }
-    .day-number { font-weight: bold; width: 30px; height: 30px; text-align: center; line-height: 30px; border-radius: 50%; margin-bottom: 5px; color: #444; }
-    .day-cell.today .day-number { background: #0d6efd; color: white; }
-    .event-badge { display: block; font-size: 0.8rem; padding: 4px 25px 4px 8px; margin-bottom: 4px; border-radius: 4px; color: white; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: 0.2s; }
-    .event-badge:hover { transform: scale(1.02); z-index: 2; opacity: 0.9; }
-    .delete-btn { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); color: white; font-weight: bold; cursor: pointer; font-size: 10px; padding: 0; border-radius: 50%; background: rgba(0,0,0,0.2); width: 18px; height: 18px; text-align: center; line-height: 18px; display: none; }
-    .delete-btn:hover { background: rgba(255,0,0,0.8); }
-
-    /* Footer */
+    /* Admin & Footer */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
     .admin-trigger:hover { opacity: 1; color: #fff; }
-    
-    /* 🟢 Admin Controls */
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
   </style>
 </head>
@@ -156,7 +142,6 @@
     <div class="header-overlay"></div>
     <div class="header-content">
       <button class="sidebar-toggle-btn d-md-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
-      
       <div class="me-4 header-icon-box d-none d-md-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
@@ -290,7 +275,6 @@
       <div id="page-docs" style="display:none;">
         <div class="content-section">
           <h3 class="section-header">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
-          
           <div id="adminDocPanel" class="admin-controls mb-4">
              <div class="d-flex justify-content-between align-items-center mb-3">
                <h5 class="fw-bold m-0"><i class="material-icons align-middle">post_add</i> จัดการเอกสาร/ลิงก์</h5>
@@ -321,39 +305,22 @@
           <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
         </div>
         
-        <div id="adminPanel" class="content-section bg-warning-subtle mb-4 border-warning" style="display:none;">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle">admin_panel_settings</i> จัดการปฏิทิน</h5>
-             <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
-          </div>
-          <hr class="border-secondary opacity-25">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-             <span id="calFormMode" class="badge bg-success">เพิ่มกิจกรรมใหม่</span>
-             <button id="btnCancelEditCal" class="btn btn-sm btn-secondary" style="display:none;" onclick="cancelEditCal()">ยกเลิกการแก้ไข</button>
-          </div>
-          <form id="calForm" onsubmit="submitCalendar(event)">
-            <input type="hidden" id="cal_id" value=""> <input class="form-control mb-2" id="c_name" placeholder="ชื่อกิจกรรม" required>
-            <div class="row mb-2">
-              <div class="col-md-5 mb-2"><label class="small text-muted">วันเริ่ม</label><input type="date" class="form-control" id="c_start" required></div>
-              <div class="col-md-5 mb-2"><label class="small text-muted">วันจบ</label><input type="date" class="form-control" id="c_end"></div>
-              <div class="col-md-2 mb-2"><label class="small text-muted">สีแถบ</label><input type="color" class="form-control form-control-color w-100" id="c_color" value="#0d6efd"></div>
-            </div>
-            <input class="form-control mb-2" id="c_desc" placeholder="รายละเอียดเพิ่มเติม">
-            <input class="form-control mb-3" id="c_link" placeholder="ลิงก์เอกสาร">
-            <button type="submit" id="btnSaveCal" class="btn btn-dark w-100 fw-bold"><i class="material-icons align-middle fs-6">save</i> บันทึกกิจกรรม</button>
-          </form>
+        <div class="alert alert-info shadow-sm" role="alert">
+          <i class="material-icons align-middle me-2">info</i> 
+          ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่
+        </div>
+
+        <div class="card shadow border-0 overflow-hidden">
+           <iframe src="http://164.115.44.24/cmbase/public/calendar" 
+                   style="width: 100%; height: 850px; border: none;" 
+                   title="ปฏิทินจังหวัดเชียงใหม่">
+           </iframe>
         </div>
         
-        <div class="calendar-container">
-          <div class="calendar-header">
-            <button class="btn-nav" onclick="changeMonth(-1)"><i class="material-icons">chevron_left</i></button>
-            <h4 id="monthDisplay" class="m-0 fw-bold">...</h4>
-            <button class="btn-nav" onclick="changeMonth(1)"><i class="material-icons">chevron_right</i></button>
-          </div>
-          <div class="calendar-grid">
-             <div class="day-name text-danger">อา.</div><div class="day-name">จ.</div><div class="day-name">อ.</div><div class="day-name">พ.</div><div class="day-name">พฤ.</div><div class="day-name">ศ.</div><div class="day-name text-primary">ส.</div>
-          </div>
-          <div class="calendar-grid" id="calBody"><div class="p-5 text-center w-100 text-muted" style="grid-column: span 7;">กำลังโหลดข้อมูล...</div></div>
+        <div class="text-center mt-3">
+           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-outline-secondary btn-sm">
+             <i class="material-icons align-middle fs-6">open_in_new</i> หากปฏิทินไม่แสดง คลิกที่นี่เพื่อเปิดหน้าต่างใหม่
+           </a>
         </div>
       </div>
 
@@ -430,45 +397,20 @@
     </div>
   </div>
 
-  <div class="modal fade" id="eventDetailModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg">
-        <div class="modal-header bg-primary text-white"><h5 class="modal-title fw-bold" id="modalEventTitle">...</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
-        <div class="modal-body p-4 bg-light">
-          <div class="mb-3">
-            <small class="text-muted fw-bold text-uppercase">ช่วงเวลา</small>
-            <div id="modalEventDate" class="fw-bold text-dark fs-5"></div>
-          </div>
-          <div class="mb-4">
-            <small class="text-muted fw-bold text-uppercase">รายละเอียด</small>
-            <div id="modalEventDesc" class="text-dark"></div>
-          </div>
-          
-          <div class="d-grid gap-2">
-             <a id="modalEventLink" href="#" target="_blank" class="btn btn-primary rounded-pill fw-bold"><i class="material-icons align-text-bottom">open_in_new</i> เปิดลิงก์</a>
-             <button id="btnEditEvent" class="btn btn-warning rounded-pill fw-bold" style="display:none;" onclick="editEventFromModal()">
-               <i class="material-icons align-text-bottom">edit</i> แก้ไขกิจกรรม
-             </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
-    let currentDate = new Date();
-    let events = [];
     let docs = [];
     let isAdmin = false;
     let form1Open = true; 
     let form2Open = true;
-    let selectedEventId = null; // เก็บ ID ที่กำลังดู
 
-    function initSystem() { fetchEvents(); fetchDocs(); checkSettings(); }
+    function initSystem() { 
+      fetchDocs(); 
+      checkSettings(); 
+    }
     
-    // 🟢 Sidebar Toggle Logic
+    // Sidebar Toggle
     function toggleSidebar() {
        let sidebar = document.getElementById('sidebar');
        let overlay = document.getElementById('sidebarOverlay');
@@ -481,11 +423,8 @@
       document.getElementById('page-'+id).style.display = 'block';
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
       document.getElementById('menu-'+id).classList.add('active');
-      if(id === 'calendar') renderCalendar();
       if(id === 'docs') renderDocs(); 
       window.scrollTo(0,0);
-      
-      // ปิด Sidebar บนมือถือเมื่อกดเลือกเมนู
       if(window.innerWidth <= 768) {
          document.getElementById('sidebar').classList.remove('active');
          document.getElementById('sidebarOverlay').classList.remove('active');
@@ -495,13 +434,11 @@
     function scrollToId(id) {
        showPage('home');
        setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100);
-       if(window.innerWidth <= 768) toggleSidebar(); // ปิดเมนูมือถือ
+       if(window.innerWidth <= 768) toggleSidebar();
     }
 
     // --- DOCS SYSTEM ---
-    function fetchDocs() {
-      fetch(SCRIPT_URL + '?action=getDocs').then(r => r.json()).then(data => { docs = data; if(document.getElementById('page-docs').style.display === 'block') renderDocs(); });
-    }
+    function fetchDocs() { fetch(SCRIPT_URL + '?action=getDocs').then(r => r.json()).then(data => { docs = data; if(document.getElementById('page-docs').style.display === 'block') renderDocs(); }).catch(e => console.error(e)); }
     function renderDocs() {
       let html = '';
       if(docs.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีเอกสารในขณะนี้</div>'; } 
@@ -562,150 +499,17 @@
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDoc', id: id }) });
     }
 
-    // --- CALENDAR SYSTEM (🟢 อัปเกรด: แก้ไขได้) ---
-    function fetchEvents() { fetch(SCRIPT_URL + '?action=getEvents').then(r => r.json()).then(data => { events = data; renderCalendar(); }); }
-    function renderCalendar() {
-      const y = currentDate.getFullYear(), m = currentDate.getMonth();
-      document.getElementById('monthDisplay').innerText = new Date(y, m).toLocaleDateString('th-TH', {month:'long', year:'numeric'});
-      const firstDay = new Date(y, m, 1).getDay(); const daysInMonth = new Date(y, m+1, 0).getDate();
-      let html = ''; for(let i=0; i<firstDay; i++) html += '<div class="day-cell bg-light"></div>';
-      for(let d=1; d<=daysInMonth; d++) {
-        let dateKey = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-        let daysEvents = events.filter(e => dateKey >= e.startDate && dateKey <= e.endDate);
-        let evHtml = daysEvents.map(e => `<div class="event-badge" style="background:${e.color}" onclick="openEventDetail('${e.id}')">${e.title} ${isAdmin ? `<span class="delete-btn" onclick="delEvent('${e.id}', event)">✕</span>` : ''}</div>`).join('');
-        let today = (d === new Date().getDate() && m === new Date().getMonth() && y === new Date().getFullYear()) ? 'today' : '';
-        html += `<div class="day-cell ${today}"><div class="day-number">${d}</div>${evHtml}</div>`;
-      }
-      document.getElementById('calBody').innerHTML = html;
-      if(isAdmin) document.querySelectorAll('.delete-btn').forEach(el => el.style.display = 'block');
-    }
-    function changeMonth(n) { currentDate.setMonth(currentDate.getMonth()+n); renderCalendar(); }
-
-    function openEventDetail(id) {
-      let ev = events.find(e => e.id === id); if(!ev) return;
-      selectedEventId = id; // จำ ID ไว้เผื่อแก้
-      
-      document.getElementById('modalEventTitle').innerText = ev.title;
-      let dateRange = formatDateThai(ev.startDate); if(ev.startDate !== ev.endDate) dateRange += " - " + formatDateThai(ev.endDate);
-      document.getElementById('modalEventDate').innerText = dateRange; 
-      document.getElementById('modalEventDesc').innerText = ev.desc ? ev.desc : "-";
-      let linkBtn = document.getElementById('modalEventLink'); if(ev.link && ev.link.trim() !== "") { linkBtn.href = ev.link; linkBtn.style.display = 'block'; } else { linkBtn.style.display = 'none'; }
-      
-      // 🟢 แสดงปุ่มแก้ไขถ้าเป็นแอดมิน
-      if(isAdmin) document.getElementById('btnEditEvent').style.display = 'block';
-      else document.getElementById('btnEditEvent').style.display = 'none';
-
-      new bootstrap.Modal(document.getElementById('eventDetailModal')).show();
-    }
-
-    // 🟢 กดปุ่ม "แก้ไข" จาก Modal -> โอนข้อมูลไปฟอร์ม
-    function editEventFromModal() {
-       let ev = events.find(e => e.id === selectedEventId);
-       if(!ev) return;
-       
-       // ปิด Modal
-       bootstrap.Modal.getInstance(document.getElementById('eventDetailModal')).hide();
-       
-       // ยัดค่าลงฟอร์ม
-       document.getElementById('cal_id').value = ev.id;
-       document.getElementById('c_name').value = ev.title;
-       document.getElementById('c_start').value = ev.startDate;
-       document.getElementById('c_end').value = ev.endDate;
-       document.getElementById('c_color').value = ev.color;
-       document.getElementById('c_desc').value = ev.desc;
-       document.getElementById('c_link').value = ev.link;
-       
-       // เปลี่ยนสถานะปุ่ม
-       document.getElementById('calFormMode').innerText = "กำลังแก้ไขกิจกรรม";
-       document.getElementById('calFormMode').className = "badge bg-warning text-dark";
-       document.getElementById('btnSaveCal').innerText = "อัปเดตกิจกรรม";
-       document.getElementById('btnCancelEditCal').style.display = 'block';
-       
-       // เลื่อนไปหาฟอร์ม
-       document.getElementById('adminPanel').scrollIntoView({behavior: 'smooth'});
-    }
-
-    function cancelEditCal() {
-       document.getElementById('calForm').reset();
-       document.getElementById('cal_id').value = '';
-       document.getElementById('calFormMode').innerText = "เพิ่มกิจกรรมใหม่";
-       document.getElementById('calFormMode').className = "badge bg-success";
-       document.getElementById('btnSaveCal').innerText = "บันทึกกิจกรรม";
-       document.getElementById('btnCancelEditCal').style.display = 'none';
-    }
-
-    function submitCalendar(e) {
-      e.preventDefault();
-      let id = getVal('cal_id');
-      let title = getVal('c_name'), startDate = getVal('c_start'), endDate = getVal('c_end') || startDate, color = getVal('c_color'), desc = getVal('c_desc'), link = getVal('c_link');
-      let isEdit = (id !== "");
-
-      // Optimistic UI Update
-      if(isEdit) {
-         let idx = events.findIndex(e => e.id === id);
-         if(idx !== -1) {
-            events[idx] = { id: id, title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
-         }
-      } else {
-         let tempId = 'TEMP_' + Date.now();
-         events.push({ id: tempId, title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link });
-      }
-      renderCalendar();
-      cancelEditCal(); // Reset form
-      
-      Swal.fire({ icon: 'success', title: isEdit ? 'อัปเดตเรียบร้อย' : 'บันทึกข้อมูลแล้ว', timer: 1500, showConfirmButton: false });
-      
-      let data = { action: 'saveCalendar', id: id, title: title, startDate: startDate, endDate: endDate, color: color, desc: desc, link: link };
-      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).catch(e => console.error("Save error:", e));
-    }
-
-    // --- Core & Helper Functions ---
-    function formatDateThai(dateStr) { if(!dateStr) return ""; let d = new Date(dateStr); let months = ["ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค."]; return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear() + 543}`; }
-    function changeMonth(n) { currentDate.setMonth(currentDate.getMonth()+n); renderCalendar(); }
-    
-    function delEvent(id, e) { e.stopPropagation(); Swal.fire({ title: 'ยืนยันการลบ?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ลบ', confirmButtonColor: '#d33', cancelButtonText: 'ยกเลิก' }).then((result) => { if (result.isConfirmed) { events = events.filter(ev => ev.id !== id); renderCalendar(); Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1500, showConfirmButton: false }); fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({action:'deleteEvent', id: id}) }); } }); }
-    
-    // Login System
-    function loginToggle() {
-      if(isAdmin) return logoutSystem();
-      Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
-        if(!res.value) return;
-        postData({action: 'login', password: res.value}, (data) => {
-           if(data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } 
-           else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); }
-        });
-      });
-    }
-    function logoutSystem() {
-      Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((res) => {
-        if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); }
-      });
-    }
-    function setAdminMode(status) {
-       isAdmin = status;
-       if(status) {
-          document.getElementById('adminPanel').style.display='block';
-          document.getElementById('adminHomePanel').style.display='block';
-          document.getElementById('adminDocPanel').style.display='block';
-          document.getElementById('sidebarLogoutArea').style.display='block';
-       } else {
-          document.getElementById('adminPanel').style.display='none';
-          document.getElementById('adminHomePanel').style.display='none';
-          document.getElementById('adminDocPanel').style.display='none';
-          document.getElementById('sidebarLogoutArea').style.display='none';
-       }
-       updateUI(); renderCalendar(); renderDocs(); 
-       if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
-       if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
-    }
-    
-    // Form & Banner Logic
+    // --- Core Functions ---
     function checkSettings() { fetch(SCRIPT_URL + '?action=getSettings').then(r => r.json()).then(data => { form1Open = (data.form1 === 'OPEN'); form2Open = (data.form2 === 'OPEN'); updateUI(); }); }
     function toggleForm(num) {
        let isChecked = document.getElementById('swForm'+num).checked;
        let status = isChecked ? 'OPEN' : 'CLOSED';
        let key = 'FORM_' + num + '_STATUS';
-       postData({ action: 'toggleForm', key: key, status: status }, () => { if(num===1) form1Open = isChecked; if(num===2) form2Open = isChecked; updateUI(); });
+       postData({ action: 'toggleForm', key: key, status: status }, () => {
+          if(num===1) form1Open = isChecked; if(num===2) form2Open = isChecked; updateUI();
+          const Toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 3000});
+          Toast.fire({icon: 'success', title: 'บันทึกสถานะเรียบร้อย'});
+       });
     }
     function updateUI() {
        let b1 = document.getElementById('banner1'), badge1 = document.getElementById('badge1'), st1 = document.getElementById('statusText1');
@@ -715,6 +519,9 @@
        let b2 = document.getElementById('banner2'), badge2 = document.getElementById('badge2'), st2 = document.getElementById('statusText2');
        if(form2Open) { b2.classList.remove('closed'); badge2.style.display = 'block'; st2.className = "banner-desc mt-2 badge bg-danger text-white fs-6"; st2.innerText = "📅 เปิดรับ: 1 ก.พ. 68 - 28 ก.พ. 68"; } 
        else { b2.classList.add('closed'); badge2.style.display = 'none'; st2.className = "banner-desc mt-2 badge bg-secondary text-white fs-6"; st2.innerText = "⛔ ปิดรับความคิดเห็นแล้ว"; }
+       
+       if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
+       if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
     }
     function handleBannerClick(num) {
        let isOpen = (num === 1) ? form1Open : form2Open;
@@ -742,7 +549,38 @@
       let data = { action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: topicVal };
       postData(data, () => { Swal.fire('บันทึกสำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); document.getElementById('formModal').querySelector('form').reset(); bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); btn.disabled = false; btn.innerText = oldText; });
     }
-
+    
+    // Login System
+    function loginToggle() {
+      if(isAdmin) return logoutSystem();
+      Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
+        if(!res.value) return;
+        postData({action: 'login', password: res.value}, (data) => {
+           if(data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } 
+           else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); }
+        });
+      });
+    }
+    function logoutSystem() {
+      Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((res) => {
+        if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); }
+      });
+    }
+    function setAdminMode(status) {
+       isAdmin = status;
+       if(status) {
+          document.getElementById('adminHomePanel').style.display='block';
+          document.getElementById('adminDocPanel').style.display='block';
+          document.getElementById('sidebarLogoutArea').style.display='block';
+       } else {
+          document.getElementById('adminHomePanel').style.display='none';
+          document.getElementById('adminDocPanel').style.display='none';
+          document.getElementById('sidebarLogoutArea').style.display='none';
+       }
+       updateUI(); renderDocs(); 
+       if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
+       if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
+    }
     function postData(data, callback) { fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()).then(d => callback(d)).catch(e => console.error(e)); }
     function getVal(id) { return document.getElementById(id).value; }
   </script>
