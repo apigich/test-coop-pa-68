@@ -6,7 +6,7 @@
   <title>ระบบพัฒนาจังหวัดเชียงใหม่</title>
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
@@ -15,47 +15,85 @@
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* Global Loader */
-    #globalLoader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.98); z-index: 9999;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 0.3s ease;
-    }
-    .loader-spinner { width: 50px; height: 50px; border: 5px solid #e0e0e0; border-top: 5px solid #0d6efd; border-radius: 50%; animation: spin 0.8s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    /* 🟢 ลบ Global Loader ออกเพื่อให้เข้าเว็บได้ทันที */
 
-    /* === HEADER (Mobile Fix) === */
+    /* === HEADER (Re-Design: สวย โปร่ง ไม่แน่น) === */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
-      color: white; position: relative; padding: 40px 0;
+      color: white; position: relative; 
+      padding: 50px 0; /* เพิ่มพื้นที่แนวตั้งให้ดูสง่า */
     }
-    .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.95) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
-    .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; min-height: 100px; }
-    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
+    .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     
-    .org-top-text { font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; }
-    .org-main-text { font-weight: 800; line-height: 1.3; text-shadow: 0 4px 6px rgba(0,0,0,0.3); font-size: clamp(1.4rem, 2.5vw, 2.2rem); }
-    .eng-subtitle { font-weight: 300; opacity: 0.8; font-size: 0.9rem; margin-top: 8px; letter-spacing: 0.5px; }
+    .header-content { 
+      position: relative; z-index: 2; padding: 0 40px; 
+      display: flex; align-items: center; 
+      min-height: 120px; 
+    }
+    
+    .org-title-group { 
+      display: flex; flex-direction: column; justify-content: center; 
+      padding-left: 20px;
+    }
+    
+    /* 🟢 ปรับ Typography ให้นุ่มนวลขึ้น */
+    .org-top-text { 
+      font-weight: 400; 
+      font-size: 1.3rem; 
+      letter-spacing: 1.5px; /* เพิ่มระยะห่างตัวอักษร */
+      color: #ffeb3b; 
+      margin-bottom: 8px; 
+      text-transform: uppercase; 
+    }
+    .org-main-text { 
+      font-weight: 600; /* 🟢 ลดความหนาลงจาก 800 เหลือ 600 (ไม่อ้วน) */
+      line-height: 1.4; 
+      text-shadow: 0 4px 10px rgba(0,0,0,0.2); 
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem); 
+      letter-spacing: 0.5px; /* เพิ่มช่องไฟนิดนึงให้อ่านง่าย */
+    }
+    .eng-subtitle { 
+      font-weight: 300; 
+      opacity: 0.9; 
+      font-size: 1rem; 
+      margin-top: 8px; 
+      letter-spacing: 1px; 
+      display: block !important; /* 🟢 บังคับโชว์ตลอดเวลา */
+    }
 
-    /* Mobile Header Fixes */
-    @media (max-width: 768px) {
+    /* 🟢 Mobile Fixes (แก้บั๊กมือถือ/จอแนวตั้ง) */
+    @media (max-width: 992px) { /* รวม Tablet และ Mobile */
       .main-header { padding: 0; }
+      
       .header-content { 
-        flex-direction: column; text-align: center; 
-        padding: 70px 20px 30px 20px; /* เว้นที่ด้านบนให้ปุ่มเมนู */
+        flex-direction: column; 
+        text-align: center; 
+        padding: 80px 20px 40px 20px; /* เว้นด้านบนหลบปุ่มเมนู */
+        align-items: center;
       }
-      .header-icon-box { margin-bottom: 10px; margin-right: 0 !important; }
-      .org-top-text { font-size: 1rem; margin-bottom: 5px; }
-      .org-main-text { font-size: 1.3rem; padding: 0 5px; line-height: 1.4; }
-      .eng-subtitle { display: none; } /* ซ่อนภาษาอังกฤษบนมือถือ */
+      
+      .header-icon-box { margin-bottom: 15px; margin-right: 0 !important; }
+      .org-title-group { padding-left: 0; }
+      
+      .org-top-text { font-size: 1.1rem; margin-bottom: 5px; }
+      .org-main-text { 
+        font-size: 1.5rem; 
+        padding: 0 5px; 
+        line-height: 1.5; /* เพิ่มระยะห่างบรรทัดในมือถือ */
+      }
+      .eng-subtitle { 
+        font-size: 0.85rem; 
+        margin-top: 10px;
+        opacity: 0.8;
+        line-height: 1.4;
+      }
 
-      /* ปุ่มเมนูชัดเจน ไม่กลืน */
+      /* ปุ่มเมนูบนมือถือ */
       .sidebar-toggle-btn {
         top: 20px !important; left: 20px !important;
-        background-color: #0d6efd !important;
-        border: 2px solid rgba(255,255,255,0.8) !important;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        background-color: transparent !important; 
+        border: 2px solid rgba(255,255,255,0.6) !important;
+        box-shadow: none !important;
         width: 45px; height: 45px;
         display: flex; align-items: center; justify-content: center;
       }
@@ -68,13 +106,18 @@
       transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000;
       display: flex; flex-direction: column; flex-shrink: 0;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 992px) { /* เปลี่ยนจุดตัดเป็น 992px เพื่อรองรับ Tablet แนวตั้ง */
       .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
       .sidebar.active { margin-left: 0; }
       .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; }
       .overlay.active { display: block; opacity: 1; }
+      .sidebar-toggle-btn { display: block !important; } /* โชว์ปุ่มใน Tablet ด้วย */
+      .header-icon-box.d-none { display: block !important; } /* โชว์โลโก้ตรงกลาง */
+      .d-md-block { display: none !important; } /* ซ่อนโลโก้ด้านข้าง */
     }
-    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; }
+
+    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; display: none; }
+    .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.2) !important; }
     
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
@@ -90,31 +133,16 @@
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
     /* Banner Buttons */
-    .banner-btn {
-      display: flex; align-items: center; justify-content: flex-start;
-      padding: 20px; margin-bottom: 20px; border-radius: 15px;
-      color: white; cursor: pointer; transition: all 0.3s ease; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
-      border: none; width: 100%; text-align: left;
-      background-size: cover !important; background-position: center !important;
-    }
+    .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
-    .banner-icon { 
-      flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; 
-      font-size: 4rem; background: rgba(255,255,255,0.25);
-      display: flex; align-items: center; justify-content: center; 
-      margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
+    .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
     .banner-text { flex-grow: 1; position: relative; z-index: 2; overflow: hidden; }
     .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
     .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-    
     .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
     .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
-
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
-    
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     .has-bg-image.bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.85), rgba(255, 117, 140, 0.85)); }
@@ -124,16 +152,14 @@
     /* Carousel */
     .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
     .carousel-control-prev-icon, .carousel-control-next-icon { background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%; }
-    .carousel-control-prev, .carousel-control-next { width: 10%; opacity: 0.8; }
     .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
 
-    /* Admin & Footer */
+    /* Footer & Admin */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
     .admin-trigger:hover { opacity: 1; color: #fff; }
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-    
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
@@ -142,11 +168,6 @@
 </head>
 <body onload="initSystem()">
 
-  <div id="globalLoader">
-    <div class="loader-spinner mb-3"></div>
-    <div class="text-primary fw-bold">กำลังเชื่อมต่อระบบ...</div>
-  </div>
-
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
@@ -154,8 +175,11 @@
   <header class="main-header container-fluid p-0">
     <div class="header-overlay"></div>
     <div class="header-content">
-      <button class="sidebar-toggle-btn d-md-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
-      <div class="me-4 header-icon-box d-none d-md-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
+      <button class="sidebar-toggle-btn me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+      
+      <div class="me-4 header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
+      <div class="header-icon-box d-block d-lg-none mb-3"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
+
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
         <h1 class="m-0 org-main-text">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
@@ -377,7 +401,6 @@
              </div>
              <form onsubmit="submitQA(event)">
                 <input type="hidden" id="qa_id" value="">
-                
                 <div class="input-group mb-2">
                    <select class="form-select" id="qa_emoji" style="max-width: 80px;">
                       <option value="❓">❓</option><option value="📢">📢</option><option value="📣">📣</option>
@@ -390,7 +413,6 @@
                    </select>
                    <input type="text" class="form-control" id="qa_question" placeholder="หัวข้อ / คำถาม" required>
                 </div>
-
                 <div class="mb-2"><textarea class="form-control" id="qa_answer" rows="3" placeholder="รายละเอียดคำตอบ" required></textarea></div>
                 <button type="submit" id="btnSaveQA" class="btn btn-success w-100 fw-bold">บันทึก Q&A</button>
              </form>
@@ -460,32 +482,43 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
+    // 🟢 Instant Load Logic (Load from Cache first)
     let docs = [], qaList = [], filteredDocs = [];
-    let isAdmin = false, form1Open = false, form2Open = false;
+    let isAdmin = false, form1Open = true, form2Open = true; // Default Open
     let currentPage = 1; const itemsPerPage = 10;
 
-    // 🟢 Turbo Init: Lazy Loading & Parallel Fetch
     function initSystem() { 
-      document.getElementById('globalLoader').style.display = 'flex'; // Show Loader
-      
-      // 1. Fetch Settings First (Critical)
-      fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()).then(settings => {
+      // 1. ลองโหลดจาก LocalStorage ก่อน (ถ้ามี)
+      let cachedSettings = localStorage.getItem('siteSettings');
+      if (cachedSettings) {
+         let s = JSON.parse(cachedSettings);
+         form1Open = (s.form1 === 'OPEN'); form2Open = (s.form2 === 'OPEN');
+         updateUI();
+      }
+
+      // 2. Fetch Data (Background Update)
+      Promise.all([
+         fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()),
+         fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()),
+         fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json())
+      ]).then(([settings, docsData, qaData]) => {
+         
+         // Save to Cache
+         localStorage.setItem('siteSettings', JSON.stringify(settings));
+         
+         // Update UI
          form1Open = (settings.form1 === 'OPEN');
          form2Open = (settings.form2 === 'OPEN');
          updateUI();
          
-         // 🟢 Unlock Screen Immediately
-         document.getElementById('globalLoader').style.opacity = '0';
-         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
+         docs = docsData;
+         qaList = qaData;
+         
+         // Re-render if on that page
+         if(document.getElementById('page-docs').style.display==='block') filterDocs();
+         if(document.getElementById('page-qa').style.display==='block') renderQA();
 
-         // 2. Lazy Load Others (Background)
-         fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()).then(d => { docs=d; if(document.getElementById('page-docs').style.display==='block') filterDocs(); });
-         fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()).then(q => { qaList=q; renderQA(); });
-
-      }).catch(e => {
-         console.error("Connection Error:", e);
-         Swal.fire('เชื่อมต่อไม่ได้', 'กรุณารีเฟรชหน้าจอ', 'error');
-      });
+      }).catch(e => console.error(e));
     }
     
     // Sidebar Toggle
@@ -502,16 +535,18 @@
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
       document.getElementById('menu-'+id).classList.add('active');
       if(id === 'docs') { filterDocs(); } 
+      if(id === 'qa') { renderQA(); }
       window.scrollTo(0,0);
-      if(window.innerWidth <= 768) {
+      if(window.innerWidth <= 992) {
          document.getElementById('sidebar').classList.remove('active');
          document.getElementById('sidebarOverlay').classList.remove('active');
       }
     }
+    
     function scrollToId(id) {
        showPage('home');
        setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100);
-       if(window.innerWidth <= 768) toggleSidebar();
+       if(window.innerWidth <= 992) toggleSidebar();
     }
 
     // --- DOCS SYSTEM ---
@@ -537,7 +572,7 @@
     }
     function renderDocs() {
       let html = '';
-      if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
+      if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
       else {
         let start = (currentPage - 1) * itemsPerPage;
         let end = start + itemsPerPage;
@@ -616,7 +651,7 @@
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDoc', id: id }) });
     }
 
-    // --- 🟢 QA SYSTEM ---
+    // --- QA SYSTEM ---
     function renderQA() {
        let html = '';
        if(qaList.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูลถาม-ตอบ</div>'; }
@@ -644,7 +679,6 @@
        e.preventDefault();
        let id = getVal('qa_id'), q = getVal('qa_question'), a = getVal('qa_answer'), emoji = getVal('qa_emoji');
        let isEdit = (id !== "");
-       
        if(isEdit) {
           let idx = qaList.findIndex(x => x.id === id);
           if(idx !== -1) { qaList[idx].q = q; qaList[idx].a = a; qaList[idx].emoji = emoji; }
@@ -726,33 +760,22 @@
        if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
-    
-    // 🟢 Submit Form with Backend Guard
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText;
       btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
-      
       let topicVal = document.getElementById('f_topic_type').value;
-      let topicKey = (topicVal.includes("ทั่วไป")) ? "FORM_1_STATUS" : "FORM_2_STATUS"; // Map key for backend check
+      let topicKey = (topicVal.includes("ทั่วไป")) ? "FORM_1_STATUS" : "FORM_2_STATUS"; 
 
       if(topicVal === 'แจ้งปัญหาทั่วไป') {
          let select = document.getElementById('f_topic_select');
          if(select.value === "") { Swal.fire('กรุณาเลือกหมวดหมู่'); btn.disabled = false; btn.innerText = oldText; return; }
          topicVal = select.value;
       }
-      
-      let data = { 
-         action:'saveForm', 
-         name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), 
-         topic: topicVal,
-         topicKey: topicKey // Send key for validation
-      };
-      
+      let data = { action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: topicVal, topicKey: topicKey };
       postData(data, (response) => { 
          if (response.status === 'CLOSED_ERROR') {
             Swal.fire('เสียใจด้วย', 'ฟอร์มนี้เพิ่งปิดรับข้อมูลไปเมื่อสักครู่นี้', 'error');
-            // Force refresh UI
             if (topicKey === "FORM_1_STATUS") { form1Open = false; } else { form2Open = false; }
             updateUI();
             bootstrap.Modal.getInstance(document.getElementById('formModal')).hide();
