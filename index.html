@@ -15,108 +15,104 @@
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* 🟢 ลบ Global Loader ออกเพื่อให้เข้าเว็บได้ทันที */
+    /* 🟢 Loader (แบบโหลดเสร็จค่อยโชว์ เพื่อความชัวร์ของข้อมูล) */
+    #globalLoader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: #ffffff; z-index: 9999;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      transition: opacity 0.3s ease;
+    }
+    .loader-content { text-align: center; }
+    .loader-spinner { 
+      width: 60px; height: 60px; margin: 0 auto 20px;
+      border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; 
+      border-radius: 50%; animation: spin 1s linear infinite; 
+    }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* === HEADER (Re-Design: สวย โปร่ง ไม่แน่น) === */
+    /* === HEADER (Re-Designed for Logo & Mobile) === */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
       color: white; position: relative; 
-      padding: 50px 0; /* เพิ่มพื้นที่แนวตั้งให้ดูสง่า */
+      padding: 0; /* 🟢 ให้ Flexbox จัดการระยะห่าง */
+      height: auto;
+      min-height: 250px;
+      display: flex; align-items: center;
     }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     
     .header-content { 
-      position: relative; z-index: 2; padding: 0 40px; 
-      display: flex; align-items: center; 
-      min-height: 120px; 
+      position: relative; z-index: 2; width: 100%; padding: 40px; 
+      display: flex; align-items: center; justify-content: center;
+      gap: 30px; /* ระยะห่างระหว่างโลโก้กับข้อความ */
     }
     
+    /* 🟢 Logo Styling */
+    .header-logo-img {
+      width: 140px; height: 140px; 
+      object-fit: contain; 
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+      flex-shrink: 0; /* ห้ามหด */
+    }
+
     .org-title-group { 
       display: flex; flex-direction: column; justify-content: center; 
-      padding-left: 20px;
     }
     
-    /* 🟢 ปรับ Typography ให้นุ่มนวลขึ้น */
     .org-top-text { 
-      font-weight: 400; 
-      font-size: 1.3rem; 
-      letter-spacing: 1.5px; /* เพิ่มระยะห่างตัวอักษร */
-      color: #ffeb3b; 
-      margin-bottom: 8px; 
-      text-transform: uppercase; 
+      font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; 
+      margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
     }
     .org-main-text { 
-      font-weight: 600; /* 🟢 ลดความหนาลงจาก 800 เหลือ 600 (ไม่อ้วน) */
-      line-height: 1.4; 
-      text-shadow: 0 4px 10px rgba(0,0,0,0.2); 
-      font-size: clamp(1.4rem, 2.5vw, 2.2rem); 
-      letter-spacing: 0.5px; /* เพิ่มช่องไฟนิดนึงให้อ่านง่าย */
+      font-weight: 700; line-height: 1.3; 
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+      font-size: 2.2rem;
     }
     .eng-subtitle { 
-      font-weight: 300; 
-      opacity: 0.9; 
-      font-size: 1rem; 
-      margin-top: 8px; 
-      letter-spacing: 1px; 
-      display: block !important; /* 🟢 บังคับโชว์ตลอดเวลา */
+      font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; 
+      letter-spacing: 0.5px;
     }
 
-    /* 🟢 Mobile Fixes (แก้บั๊กมือถือ/จอแนวตั้ง) */
-    @media (max-width: 992px) { /* รวม Tablet และ Mobile */
-      .main-header { padding: 0; }
+    /* 🟢 Mobile & Vertical Layout Fixes */
+    @media (max-width: 992px) { 
+      .main-header { min-height: auto; }
       
       .header-content { 
-        flex-direction: column; 
+        flex-direction: column; /* เรียงลงมา */
         text-align: center; 
-        padding: 80px 20px 40px 20px; /* เว้นด้านบนหลบปุ่มเมนู */
-        align-items: center;
+        padding: 70px 20px 40px 20px; /* เว้นที่ด้านบนให้ปุ่มเมนู */
+        gap: 15px;
       }
       
-      .header-icon-box { margin-bottom: 15px; margin-right: 0 !important; }
-      .org-title-group { padding-left: 0; }
+      .header-logo-img { width: 100px; height: 100px; } /* ลดขนาดโลโก้ในมือถือ */
       
-      .org-top-text { font-size: 1.1rem; margin-bottom: 5px; }
-      .org-main-text { 
-        font-size: 1.5rem; 
-        padding: 0 5px; 
-        line-height: 1.5; /* เพิ่มระยะห่างบรรทัดในมือถือ */
-      }
-      .eng-subtitle { 
-        font-size: 0.85rem; 
-        margin-top: 10px;
-        opacity: 0.8;
-        line-height: 1.4;
-      }
+      .org-top-text { font-size: 1.1rem; }
+      .org-main-text { font-size: 1.5rem; line-height: 1.4; }
+      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; } /* โชว์อังกฤษแต่เล็กหน่อย */
 
-      /* ปุ่มเมนูบนมือถือ */
+      /* ปุ่มเมนู (Fixed Position) */
       .sidebar-toggle-btn {
         top: 20px !important; left: 20px !important;
-        background-color: transparent !important; 
-        border: 2px solid rgba(255,255,255,0.6) !important;
+        background-color: transparent !important;
+        border: 2px solid rgba(255,255,255,0.7) !important;
         box-shadow: none !important;
-        width: 45px; height: 45px;
-        display: flex; align-items: center; justify-content: center;
       }
     }
     
-    /* Sidebar */
+    /* === Sidebar === */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar {
       min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef;
       transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000;
       display: flex; flex-direction: column; flex-shrink: 0;
     }
-    @media (max-width: 992px) { /* เปลี่ยนจุดตัดเป็น 992px เพื่อรองรับ Tablet แนวตั้ง */
+    @media (max-width: 992px) {
       .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
       .sidebar.active { margin-left: 0; }
       .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; }
       .overlay.active { display: block; opacity: 1; }
-      .sidebar-toggle-btn { display: block !important; } /* โชว์ปุ่มใน Tablet ด้วย */
-      .header-icon-box.d-none { display: block !important; } /* โชว์โลโก้ตรงกลาง */
-      .d-md-block { display: none !important; } /* ซ่อนโลโก้ด้านข้าง */
     }
-
-    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; display: none; }
+    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
     .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.2) !important; }
     
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
@@ -149,12 +145,9 @@
     .has-bg-image.bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.85), rgba(243, 129, 129, 0.85)); }
     .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
 
-    /* Carousel */
+    /* Carousel & Admin & Footer */
     .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
     .carousel-control-prev-icon, .carousel-control-next-icon { background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%; }
-    .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
-
-    /* Footer & Admin */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
@@ -168,17 +161,25 @@
 </head>
 <body onload="initSystem()">
 
+  <div id="globalLoader">
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
+      <h5 class="text-primary fw-bold">ระบบพัฒนาจังหวัดเชียงใหม่</h5>
+      <div class="text-muted small">กำลังเชื่อมต่อข้อมูลล่าสุด...</div>
+    </div>
+  </div>
+
   <script>
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
-  <header class="main-header container-fluid p-0">
+  <header class="main-header container-fluid">
     <div class="header-overlay"></div>
     <div class="header-content">
-      <button class="sidebar-toggle-btn me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
       
-      <div class="me-4 header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
-      <div class="header-icon-box d-block d-lg-none mb-3"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
+      <img src="https://upload.wikimedia.org/wikipedia/th/thumb/8/82/Chiang_Mai_Provincial_Emblem.svg/1200px-Chiang_Mai_Provincial_Emblem.svg.png" 
+           alt="ตราจังหวัดเชียงใหม่" class="header-logo-img">
 
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
@@ -482,31 +483,22 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
-    // 🟢 Instant Load Logic (Load from Cache first)
     let docs = [], qaList = [], filteredDocs = [];
-    let isAdmin = false, form1Open = true, form2Open = true; // Default Open
+    let isAdmin = false, form1Open = true, form2Open = true; // 🟢 Default Open เพื่อกันกระพริบ แต่ Loader จะบังอยู่แล้ว
     let currentPage = 1; const itemsPerPage = 10;
 
+    // 🟢 Init System: โหลดให้เสร็จก่อนค่อยเปิด
     function initSystem() { 
-      // 1. ลองโหลดจาก LocalStorage ก่อน (ถ้ามี)
-      let cachedSettings = localStorage.getItem('siteSettings');
-      if (cachedSettings) {
-         let s = JSON.parse(cachedSettings);
-         form1Open = (s.form1 === 'OPEN'); form2Open = (s.form2 === 'OPEN');
-         updateUI();
-      }
-
-      // 2. Fetch Data (Background Update)
+      document.getElementById('globalLoader').style.display = 'flex';
+      
+      // Parallel Fetch All Data
       Promise.all([
          fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()),
          fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()),
          fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json())
       ]).then(([settings, docsData, qaData]) => {
          
-         // Save to Cache
-         localStorage.setItem('siteSettings', JSON.stringify(settings));
-         
-         // Update UI
+         // Process Data
          form1Open = (settings.form1 === 'OPEN');
          form2Open = (settings.form2 === 'OPEN');
          updateUI();
@@ -514,11 +506,20 @@
          docs = docsData;
          qaList = qaData;
          
-         // Re-render if on that page
+         // Render Background
          if(document.getElementById('page-docs').style.display==='block') filterDocs();
          if(document.getElementById('page-qa').style.display==='block') renderQA();
 
-      }).catch(e => console.error(e));
+         // 🟢 Unlock Screen (Fade Out)
+         document.getElementById('globalLoader').style.opacity = '0';
+         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
+
+      }).catch(e => {
+         console.error("Connection Error:", e);
+         // กรณีโหลดไม่ได้ ให้ปิด Loader และแจ้งเตือน
+         document.getElementById('globalLoader').style.display = 'none';
+         Swal.fire('เชื่อมต่อไม่ได้', 'กรุณารีเฟรชหน้าจอ', 'error');
+      });
     }
     
     // Sidebar Toggle
@@ -572,7 +573,7 @@
     }
     function renderDocs() {
       let html = '';
-      if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
+      if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
       else {
         let start = (currentPage - 1) * itemsPerPage;
         let end = start + itemsPerPage;
