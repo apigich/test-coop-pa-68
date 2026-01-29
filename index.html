@@ -15,7 +15,7 @@
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* 🟢 Loader (แบบโหลดเสร็จค่อยโชว์ เพื่อความชัวร์ของข้อมูล) */
+    /* 🟢 Loader */
     #globalLoader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: #ffffff; z-index: 9999;
@@ -30,11 +30,11 @@
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* === HEADER (Re-Designed for Logo & Mobile) === */
+    /* === HEADER === */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
       color: white; position: relative; 
-      padding: 0; /* 🟢 ให้ Flexbox จัดการระยะห่าง */
+      padding: 0;
       height: auto;
       min-height: 250px;
       display: flex; align-items: center;
@@ -44,16 +44,10 @@
     .header-content { 
       position: relative; z-index: 2; width: 100%; padding: 40px; 
       display: flex; align-items: center; justify-content: center;
-      gap: 30px; /* ระยะห่างระหว่างโลโก้กับข้อความ */
     }
     
-    /* 🟢 Logo Styling */
-    .header-logo-img {
-      width: 140px; height: 140px; 
-      object-fit: contain; 
-      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
-      flex-shrink: 0; /* ห้ามหด */
-    }
+    /* 🟢 Icon Box Styling */
+    .header-icon-box { margin-right: 30px; }
 
     .org-title-group { 
       display: flex; flex-direction: column; justify-content: center; 
@@ -81,14 +75,13 @@
         flex-direction: column; /* เรียงลงมา */
         text-align: center; 
         padding: 70px 20px 40px 20px; /* เว้นที่ด้านบนให้ปุ่มเมนู */
-        gap: 15px;
       }
       
-      .header-logo-img { width: 100px; height: 100px; } /* ลดขนาดโลโก้ในมือถือ */
+      .header-icon-box { margin-right: 0 !important; margin-bottom: 15px; } /* ขยับไอคอนในมือถือ */
       
       .org-top-text { font-size: 1.1rem; }
       .org-main-text { font-size: 1.5rem; line-height: 1.4; }
-      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; } /* โชว์อังกฤษแต่เล็กหน่อย */
+      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
 
       /* ปุ่มเมนู (Fixed Position) */
       .sidebar-toggle-btn {
@@ -178,8 +171,8 @@
     <div class="header-content">
       <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
       
-      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Seal_Chiang_Mai.png" 
-           alt="ตราจังหวัดเชียงใหม่" class="header-logo-img">
+      <div class="header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
+      <div class="header-icon-box d-block d-lg-none"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
 
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
@@ -484,7 +477,7 @@
   
   <script>
     let docs = [], qaList = [], filteredDocs = [];
-    let isAdmin = false, form1Open = true, form2Open = true; // 🟢 Default Open เพื่อกันกระพริบ แต่ Loader จะบังอยู่แล้ว
+    let isAdmin = false, form1Open = true, form2Open = true; 
     let currentPage = 1; const itemsPerPage = 10;
 
     // 🟢 Init System: โหลดให้เสร็จก่อนค่อยเปิด
