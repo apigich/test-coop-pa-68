@@ -12,105 +12,108 @@
   
   <style>
     /* === Global Styles === */
+    * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* 🟢 Global Loader (ตัวแก้ปัญหาโหลดไม่ทัน) */
+    /* Global Loader */
     #globalLoader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(255, 255, 255, 0.95); z-index: 9999;
+      background: rgba(255, 255, 255, 0.98); z-index: 9999;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.3s ease;
     }
-    .loader-spinner { width: 50px; height: 50px; border: 5px solid #e0e0e0; border-top: 5px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
+    .loader-spinner { width: 50px; height: 50px; border: 5px solid #e0e0e0; border-top: 5px solid #0d6efd; border-radius: 50%; animation: spin 0.8s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* Header */
+    /* === HEADER (Mobile Fix) === */
     .main-header { 
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
-      color: white; padding: 60px 0; position: relative; 
+      color: white; position: relative; padding: 40px 0;
     }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.95) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
-    .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; }
+    .header-content { position: relative; z-index: 2; padding: 0 40px; display: flex; align-items: center; min-height: 100px; }
     .org-title-group { display: flex; flex-direction: column; justify-content: center; }
     
     .org-top-text { font-weight: 400; font-size: 1.2rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; }
-    .org-main-text { font-weight: 800; line-height: 1.2; text-shadow: 0 4px 6px rgba(0,0,0,0.3); font-size: clamp(1.5rem, 3vw, 2.2rem); }
+    .org-main-text { font-weight: 800; line-height: 1.3; text-shadow: 0 4px 6px rgba(0,0,0,0.3); font-size: clamp(1.4rem, 2.5vw, 2.2rem); }
     .eng-subtitle { font-weight: 300; opacity: 0.8; font-size: 0.9rem; margin-top: 8px; letter-spacing: 0.5px; }
-    
-    /* 🟢 Mobile Header Fixes */
+
+    /* Mobile Header Fixes */
     @media (max-width: 768px) {
-      .main-header { padding: 80px 0 40px 0; /* เพิ่ม Padding บนหลบปุ่มเมนู */ }
-      .header-content { flex-direction: column; text-align: center; padding: 0 20px; }
-      .header-icon-box { margin-bottom: 15px; margin-right: 0 !important; }
-      .org-top-text { font-size: 1rem; margin-bottom: 2px; }
-      .org-main-text { font-size: 1.4rem; line-height: 1.4; /* เพิ่มระยะห่างบรรทัด */ }
-      .eng-subtitle { display: none; /* ซ่อนภาษาอังกฤษบนมือถือเพื่อลดความรก */ }
-      
-      /* 🟢 ปุ่มเมนูบนมือถือ (ทำให้ชัดขึ้น) */
+      .main-header { padding: 0; }
+      .header-content { 
+        flex-direction: column; text-align: center; 
+        padding: 70px 20px 30px 20px; /* เว้นที่ด้านบนให้ปุ่มเมนู */
+      }
+      .header-icon-box { margin-bottom: 10px; margin-right: 0 !important; }
+      .org-top-text { font-size: 1rem; margin-bottom: 5px; }
+      .org-main-text { font-size: 1.3rem; padding: 0 5px; line-height: 1.4; }
+      .eng-subtitle { display: none; } /* ซ่อนภาษาอังกฤษบนมือถือ */
+
+      /* ปุ่มเมนูชัดเจน ไม่กลืน */
       .sidebar-toggle-btn {
         top: 20px !important; left: 20px !important;
-        background-color: #0d6efd !important; /* พื้นหลังสีทึบ */
-        border: 2px solid white !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        background-color: #0d6efd !important;
+        border: 2px solid rgba(255,255,255,0.8) !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        width: 45px; height: 45px;
+        display: flex; align-items: center; justify-content: center;
       }
     }
     
     /* Sidebar */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar {
-      min-width: 250px; max-width: 250px; background: white; border-right: 1px solid #e9ecef;
+      min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef;
       transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000;
-      display: flex; flex-direction: column;
+      display: flex; flex-direction: column; flex-shrink: 0;
     }
     @media (max-width: 768px) {
-      .sidebar { margin-left: -250px; position: fixed; height: 100%; box-shadow: 2px 0 5px rgba(0,0,0,0.1); }
+      .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
       .sidebar.active { margin-left: 0; }
-      .overlay { display: none; position: fixed; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.5s ease-in-out; }
+      .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; }
       .overlay.active { display: block; opacity: 1; }
     }
-    .sidebar-toggle-btn { position: absolute; top: 20px; left: 20px; z-index: 1001; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); color: white; border-radius: 5px; padding: 5px 10px; cursor: pointer; }
-    .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.4); }
-    .nav-link-main { padding: 15px 20px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1.05rem; }
-    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 25px; }
+    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; }
+    
+    .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
+    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
-    .nav-link-sub { padding: 10px 20px 10px 45px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.95rem; transition: 0.2s; position: relative; }
+    .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
-    .sidebar-logout-btn { background: white; border: 1px solid #6c757d; color: #6c757d; border-radius: 5px; padding: 10px; width: 100%; text-align: center; transition: 0.2s; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    .sidebar-logout-btn:hover { background: #f8f9fa; color: #000; border-color: #000; }
+    .sidebar-logout-btn { background: white; border: 1px solid #dc3545; color: #dc3545; border-radius: 8px; padding: 12px; width: 100%; text-align: center; transition: 0.2s; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+    .sidebar-logout-btn:hover { background: #dc3545; color: white; }
 
     /* Content */
-    .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; }
+    .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
 
     /* Banner Buttons */
     .banner-btn {
       display: flex; align-items: center; justify-content: flex-start;
-      padding: 15px 20px; margin-bottom: 20px; border-radius: 15px;
+      padding: 20px; margin-bottom: 20px; border-radius: 15px;
       color: white; cursor: pointer; transition: all 0.3s ease; 
       box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden;
       border: none; width: 100%; text-align: left;
-      background-size: cover !important; background-position: center !important; background-repeat: no-repeat !important;
+      background-size: cover !important; background-position: center !important;
     }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
-    
     .banner-icon { 
-      width: 100px; height: 100px; min-width: 100px; min-height: 100px;
-      border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25);
-      display: flex; align-items: center; justify-content: center; margin-right: 20px;
-      flex-shrink: 0; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; 
+      font-size: 4rem; background: rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center; 
+      margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .banner-text { text-align: center; flex-grow: 1; position: relative; z-index: 2; }
-    .banner-title { font-weight: 800; font-size: 1.6rem; margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .banner-desc { font-size: 1.1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+    .banner-text { flex-grow: 1; position: relative; z-index: 2; overflow: hidden; }
+    .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
     
-    /* Badges */
-    .status-badge { font-size: 0.9rem; padding: 5px 12px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; box-shadow: 0 2px 5px rgba(0,0,0,0.2); display: inline-block; margin-right: 5px; }
-    .date-badge { font-size: 0.9rem; padding: 5px 12px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; }
+    .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
+    .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
 
-    .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; /* 🟢 ป้องกันการกด 100% */ }
-    
-    .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); z-index: 10; display: none; }
+    .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
+    .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
@@ -120,7 +123,6 @@
 
     /* Carousel */
     .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
-    .carousel-caption { display: none !important; }
     .carousel-control-prev-icon, .carousel-control-next-icon { background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%; }
     .carousel-control-prev, .carousel-control-next { width: 10%; opacity: 0.8; }
     .carousel-control-prev:hover, .carousel-control-next:hover { opacity: 1; }
@@ -132,10 +134,8 @@
     .admin-trigger:hover { opacity: 1; color: #fff; }
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
     
-    /* Pagination */
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
-    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; transition: 0.2s; }
-    .page-btn:hover { background: #e9ecef; }
+    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
     .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
@@ -144,7 +144,7 @@
 
   <div id="globalLoader">
     <div class="loader-spinner mb-3"></div>
-    <div class="text-primary fw-bold">กำลังเชื่อมต่อฐานข้อมูลจังหวัด...</div>
+    <div class="text-primary fw-bold">กำลังเชื่อมต่อระบบ...</div>
   </div>
 
   <script>
@@ -168,8 +168,8 @@
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <nav class="sidebar" id="sidebar">
-      <div class="flex-grow-1 pt-3">
-        <h6 class="px-3 text-secondary fw-bold mt-3 mb-2" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
+      <div class="flex-grow-1 pt-4">
+        <h6 class="px-3 text-secondary fw-bold mt-2 mb-3" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
         <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
         <div id="sub-home" class="mb-2">
           <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
@@ -377,14 +377,26 @@
              </div>
              <form onsubmit="submitQA(event)">
                 <input type="hidden" id="qa_id" value="">
-                <div class="mb-2"><input type="text" class="form-control" id="qa_question" placeholder="คำถาม" required></div>
-                <div class="mb-2"><textarea class="form-control" id="qa_answer" rows="3" placeholder="คำตอบ" required></textarea></div>
+                
+                <div class="input-group mb-2">
+                   <select class="form-select" id="qa_emoji" style="max-width: 80px;">
+                      <option value="❓">❓</option><option value="📢">📢</option><option value="📣">📣</option>
+                      <option value="🔴">🔴</option><option value="🟢">🟢</option><option value="🟡">🟡</option>
+                      <option value="🔥">🔥</option><option value="⭐">⭐</option><option value="✨">✨</option>
+                      <option value="📌">📌</option><option value="📍">📍</option><option value="🤔">🤔</option>
+                      <option value="💡">💡</option><option value="🔍">🔍</option><option value="📝">📝</option>
+                      <option value="📂">📂</option><option value="😊">😊</option><option value="👋">👋</option>
+                      <option value="🏢">🏢</option><option value="🏫">🏫</option>
+                   </select>
+                   <input type="text" class="form-control" id="qa_question" placeholder="หัวข้อ / คำถาม" required>
+                </div>
+
+                <div class="mb-2"><textarea class="form-control" id="qa_answer" rows="3" placeholder="รายละเอียดคำตอบ" required></textarea></div>
                 <button type="submit" id="btnSaveQA" class="btn btn-success w-100 fw-bold">บันทึก Q&A</button>
              </form>
           </div>
 
-          <div class="accordion accordion-flush" id="accQA">
-             </div>
+          <div class="accordion accordion-flush" id="accQA"></div>
         </div>
       </div>
 
@@ -452,35 +464,27 @@
     let isAdmin = false, form1Open = false, form2Open = false;
     let currentPage = 1; const itemsPerPage = 10;
 
-    // 🟢 Critical: Global Loader Logic & Parallel Fetch
+    // 🟢 Turbo Init: Lazy Loading & Parallel Fetch
     function initSystem() { 
-      // 1. Show Loader
-      document.getElementById('globalLoader').style.display = 'flex';
+      document.getElementById('globalLoader').style.display = 'flex'; // Show Loader
       
-      // 2. Fetch All Data in Parallel
-      Promise.all([
-         fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()),
-         fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()),
-         fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json())
-      ]).then(([settings, docsData, qaData]) => {
-         
-         // 3. Process All Data
+      // 1. Fetch Settings First (Critical)
+      fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()).then(settings => {
          form1Open = (settings.form1 === 'OPEN');
          form2Open = (settings.form2 === 'OPEN');
          updateUI();
          
-         docs = docsData;
-         
-         qaList = qaData;
-         renderQA();
-
-         // 4. Hide Loader (Everything is ready!)
+         // 🟢 Unlock Screen Immediately
          document.getElementById('globalLoader').style.opacity = '0';
-         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 500);
+         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
+
+         // 2. Lazy Load Others (Background)
+         fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()).then(d => { docs=d; if(document.getElementById('page-docs').style.display==='block') filterDocs(); });
+         fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()).then(q => { qaList=q; renderQA(); });
 
       }).catch(e => {
-         console.error("Error loading system:", e);
-         Swal.fire('เกิดข้อผิดพลาด', 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้ กรุณารีเฟรช', 'error');
+         console.error("Connection Error:", e);
+         Swal.fire('เชื่อมต่อไม่ได้', 'กรุณารีเฟรชหน้าจอ', 'error');
       });
     }
     
@@ -612,7 +616,7 @@
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDoc', id: id }) });
     }
 
-    // --- 🟢 QA SYSTEM (New) ---
+    // --- 🟢 QA SYSTEM ---
     function renderQA() {
        let html = '';
        if(qaList.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูลถาม-ตอบ</div>'; }
@@ -620,45 +624,41 @@
           qaList.forEach((item, index) => {
              let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้ไข</button>` : '';
              let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button>` : '';
-             let adminControls = isAdmin ? `<div class="mt-2 text-end">${editBtn} ${deleteBtn}</div>` : '';
-             
+             let adminControls = isAdmin ? `<div class="mt-2 text-end border-top pt-2">${editBtn} ${deleteBtn}</div>` : '';
              html += `
                <div class="accordion-item border rounded mb-3 shadow-sm">
                  <h2 class="accordion-header">
-                   <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}">
-                     ${item.q}
+                   <button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}">
+                     <span class="me-2 fs-5">${item.emoji}</span> ${item.q}
                    </button>
                  </h2>
                  <div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA">
-                   <div class="accordion-body text-muted bg-light">
-                     ${item.a}
-                     ${adminControls}
-                   </div>
+                   <div class="accordion-body text-muted bg-light">${item.a}${adminControls}</div>
                  </div>
-               </div>
-             `;
+               </div>`;
           });
        }
        document.getElementById('accQA').innerHTML = html;
     }
     function submitQA(e) {
        e.preventDefault();
-       let id = getVal('qa_id'), q = getVal('qa_question'), a = getVal('qa_answer');
+       let id = getVal('qa_id'), q = getVal('qa_question'), a = getVal('qa_answer'), emoji = getVal('qa_emoji');
        let isEdit = (id !== "");
        
        if(isEdit) {
           let idx = qaList.findIndex(x => x.id === id);
-          if(idx !== -1) { qaList[idx].q = q; qaList[idx].a = a; }
+          if(idx !== -1) { qaList[idx].q = q; qaList[idx].a = a; qaList[idx].emoji = emoji; }
        } else {
-          qaList.unshift({ q: q, a: a, id: 'TEMP_'+Date.now() });
+          qaList.unshift({ q: q, a: a, emoji: emoji, id: 'TEMP_'+Date.now() });
        }
        renderQA(); cancelEditQA();
        Swal.fire({ icon: 'success', title: 'บันทึกข้อมูลแล้ว', timer: 1500, showConfirmButton: false });
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveQA', id: id, q: q, a: a }) }).then(r=>r.json()).then(d=>fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()).then(data=>{ qaList=data; renderQA(); }));
+       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveQA', id: id, q: q, a: a, emoji: emoji }) }).then(r=>r.json()).then(d=>fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()).then(data=>{ qaList=data; renderQA(); }));
     }
     function editQA(id) {
        let item = qaList.find(x => x.id === id); if(!item) return;
        document.getElementById('qa_id').value = item.id;
+       document.getElementById('qa_emoji').value = item.emoji || "❓";
        document.getElementById('qa_question').value = item.q;
        document.getElementById('qa_answer').value = item.a;
        document.getElementById('btnSaveQA').innerText = 'บันทึกการแก้ไข';
@@ -680,7 +680,7 @@
     }
 
     // --- Core Functions ---
-    function checkSettings() { /* settings loaded in initSystem */ }
+    function checkSettings() { /* Loaded in initSystem */ }
     function toggleForm(num) {
        let isChecked = document.getElementById('swForm'+num).checked;
        let status = isChecked ? 'OPEN' : 'CLOSED';
@@ -726,18 +726,43 @@
        if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
+    
+    // 🟢 Submit Form with Backend Guard
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText;
       btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
+      
       let topicVal = document.getElementById('f_topic_type').value;
+      let topicKey = (topicVal.includes("ทั่วไป")) ? "FORM_1_STATUS" : "FORM_2_STATUS"; // Map key for backend check
+
       if(topicVal === 'แจ้งปัญหาทั่วไป') {
          let select = document.getElementById('f_topic_select');
          if(select.value === "") { Swal.fire('กรุณาเลือกหมวดหมู่'); btn.disabled = false; btn.innerText = oldText; return; }
          topicVal = select.value;
       }
-      let data = { action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: topicVal };
-      postData(data, () => { Swal.fire('บันทึกสำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); document.getElementById('formModal').querySelector('form').reset(); bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); btn.disabled = false; btn.innerText = oldText; });
+      
+      let data = { 
+         action:'saveForm', 
+         name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), 
+         topic: topicVal,
+         topicKey: topicKey // Send key for validation
+      };
+      
+      postData(data, (response) => { 
+         if (response.status === 'CLOSED_ERROR') {
+            Swal.fire('เสียใจด้วย', 'ฟอร์มนี้เพิ่งปิดรับข้อมูลไปเมื่อสักครู่นี้', 'error');
+            // Force refresh UI
+            if (topicKey === "FORM_1_STATUS") { form1Open = false; } else { form2Open = false; }
+            updateUI();
+            bootstrap.Modal.getInstance(document.getElementById('formModal')).hide();
+         } else {
+            Swal.fire('บันทึกสำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); 
+            document.getElementById('formModal').querySelector('form').reset(); 
+            bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); 
+         }
+         btn.disabled = false; btn.innerText = oldText; 
+      });
     }
     
     // Login System
