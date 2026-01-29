@@ -11,103 +11,35 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   
   <style>
-    /* === Global Styles === */
+    /* === Styles (คงเดิม + เพิ่ม Chat) === */
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
-    
-    /* 🟢 Loader */
-    #globalLoader {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: #ffffff; z-index: 9999;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      transition: opacity 0.3s ease;
-    }
-    .loader-content { text-align: center; }
-    .loader-spinner { 
-      width: 60px; height: 60px; margin: 0 auto 20px;
-      border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; 
-      border-radius: 50%; animation: spin 1s linear infinite; 
-    }
+    #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
+    .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* === HEADER === */
-    .main-header { 
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
-      color: white; position: relative; 
-      padding: 0;
-      height: auto;
-      min-height: 250px;
-      display: flex; align-items: center;
-    }
+    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
-    
-    .header-content { 
-      position: relative; z-index: 2; width: 100%; padding: 40px; 
-      display: flex; align-items: center; justify-content: center;
-    }
-    
-    /* 🟢 Icon Box Styling */
-    .header-icon-box { margin-right: 30px; }
+    .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; gap: 30px; }
+    .header-logo-img { width: 140px; height: 140px; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); flex-shrink: 0; }
+    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
+    .org-top-text { font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
+    .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
 
-    .org-title-group { 
-      display: flex; flex-direction: column; justify-content: center; 
-    }
-    
-    .org-top-text { 
-      font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; 
-      margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-    }
-    .org-main-text { 
-      font-weight: 700; line-height: 1.3; 
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-      font-size: 2.2rem;
-    }
-    .eng-subtitle { 
-      font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; 
-      letter-spacing: 0.5px;
-    }
-
-    /* 🟢 Mobile & Vertical Layout Fixes */
     @media (max-width: 992px) { 
       .main-header { min-height: auto; }
-      
-      .header-content { 
-        flex-direction: column; /* เรียงลงมา */
-        text-align: center; 
-        padding: 70px 20px 40px 20px; /* เว้นที่ด้านบนให้ปุ่มเมนู */
-      }
-      
-      .header-icon-box { margin-right: 0 !important; margin-bottom: 15px; } /* ขยับไอคอนในมือถือ */
-      
+      .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; }
+      .header-logo-img { width: 100px; height: 100px; }
       .org-top-text { font-size: 1.1rem; }
       .org-main-text { font-size: 1.5rem; line-height: 1.4; }
-      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
-
-      /* ปุ่มเมนู (Fixed Position) */
-      .sidebar-toggle-btn {
-        top: 20px !important; left: 20px !important;
-        background-color: transparent !important;
-        border: 2px solid rgba(255,255,255,0.7) !important;
-        box-shadow: none !important;
-      }
+      .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
-    /* === Sidebar === */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
-    .sidebar {
-      min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef;
-      transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000;
-      display: flex; flex-direction: column; flex-shrink: 0;
-    }
-    @media (max-width: 992px) {
-      .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); }
-      .sidebar.active { margin-left: 0; }
-      .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; }
-      .overlay.active { display: block; opacity: 1; }
-    }
+    .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
+    @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
     .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
-    .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.2) !important; }
-    
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
@@ -116,12 +48,9 @@
     .sidebar-logout-btn { background: white; border: 1px solid #dc3545; color: #dc3545; border-radius: 8px; padding: 12px; width: 100%; text-align: center; transition: 0.2s; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; }
     .sidebar-logout-btn:hover { background: #dc3545; color: white; }
 
-    /* Content */
     .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
-
-    /* Banner Buttons */
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -134,13 +63,7 @@
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
-    .has-bg-image.bg-gradient-pink { background: linear-gradient(135deg, rgba(255, 126, 179, 0.85), rgba(255, 117, 140, 0.85)); }
-    .has-bg-image.bg-gradient-yellow { background: linear-gradient(135deg, rgba(252, 227, 138, 0.85), rgba(243, 129, 129, 0.85)); }
-    .bg-gradient-yellow .banner-desc { color: #d63031; font-weight: bold; }
-
-    /* Carousel & Admin & Footer */
-    .carousel-item img { height: 350px; object-fit: cover; border-radius: 10px; }
-    .carousel-control-prev-icon, .carousel-control-next-icon { background-color: rgba(0,0,0,0.5); border-radius: 50%; padding: 25px; background-size: 50% 50%; }
+    
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
@@ -150,6 +73,16 @@
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
     .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 🟢 Chat Window Styles */
+    .chat-container { height: 400px; overflow-y: auto; border: 1px solid #eee; background: #f8f9fa; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+    .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
+    .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
+    .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .chat-ai strong { color: #0d6efd; }
+    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
   </style>
 </head>
 <body onload="initSystem()">
@@ -170,10 +103,7 @@
     <div class="header-overlay"></div>
     <div class="header-content">
       <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
-      
-      <div class="header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
-      <div class="header-icon-box d-block d-lg-none"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
-
+      <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Seal_Chiang_Mai.png" alt="ตราจังหวัดเชียงใหม่" class="header-logo-img">
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
         <h1 class="m-0 org-main-text">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
@@ -446,6 +376,28 @@
     </div>
   </footer>
 
+  <div class="modal fade" id="chatModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title fw-bold"><i class="material-icons align-text-bottom me-2">smart_toy</i> ถาม AI เกี่ยวกับเอกสาร</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div id="chatHistory" class="chat-container">
+             <div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสารฉบับนี้ได้เลยครับ 😊</div>
+          </div>
+          <div class="p-3 border-top bg-light">
+             <div class="input-group">
+                <input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()">
+                <button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="modal fade" id="formModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
@@ -479,6 +431,7 @@
     let docs = [], qaList = [], filteredDocs = [];
     let isAdmin = false, form1Open = true, form2Open = true; 
     let currentPage = 1; const itemsPerPage = 10;
+    let currentDocLink = ""; // สำหรับ Chatbot
 
     // 🟢 Init System: โหลดให้เสร็จก่อนค่อยเปิด
     function initSystem() { 
@@ -509,7 +462,6 @@
 
       }).catch(e => {
          console.error("Connection Error:", e);
-         // กรณีโหลดไม่ได้ ให้ปิด Loader และแจ้งเตือน
          document.getElementById('globalLoader').style.display = 'none';
          Swal.fire('เชื่อมต่อไม่ได้', 'กรุณารีเฟรชหน้าจอ', 'error');
       });
@@ -580,7 +532,11 @@
           let catBadge = getCatBadge(doc.type);
           let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : '';
           let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
-          html += `<div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom"><i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i><div class="flex-grow-1"><a href="${doc.link}" target="_blank" class="text-decoration-none text-dark"><h5 class="mb-1 fw-bold">${doc.title}</h5><div class="mb-2">${catBadge} <span class="text-muted small">${doc.desc || "-"}</span></div><small class="text-secondary">${dateStr}</small></a></div><div class="d-flex align-items-center">${editBtn} ${deleteBtn}</div></div>`;
+          
+          // 🟢 Chat Button (สำหรับทุกคน)
+          let chatBtn = `<button class="btn btn-sm btn-info text-white me-2" onclick="openChat('${doc.id}')"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ถาม AI</button>`;
+
+          html += `<div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom"><i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i><div class="flex-grow-1"><a href="${doc.link}" target="_blank" class="text-decoration-none text-dark"><h5 class="mb-1 fw-bold">${doc.title}</h5><div class="mb-2">${catBadge} <span class="text-muted small">${doc.desc || "-"}</span></div><small class="text-secondary">${dateStr}</small></a></div><div class="d-flex align-items-center">${chatBtn} ${editBtn} ${deleteBtn}</div></div>`;
         });
         renderPagination();
       }
@@ -643,6 +599,51 @@
       if(!confirm('ต้องการลบเอกสารนี้?')) return;
       docs = docs.filter(d => d.id !== id); filterDocs();
       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDoc', id: id }) });
+    }
+
+    // --- 🟢 CHATBOT SYSTEM ---
+    function openChat(docId) {
+       let doc = docs.find(d => d.id === docId);
+       if(!doc) return;
+       currentDocLink = doc.link;
+       document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊</div>`;
+       new bootstrap.Modal(document.getElementById('chatModal')).show();
+    }
+
+    function sendChat() {
+       let input = document.getElementById('chatInput');
+       let question = input.value.trim();
+       if(!question) return;
+       
+       // Add User Msg
+       let history = document.getElementById('chatHistory');
+       history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`;
+       input.value = '';
+       history.scrollTop = history.scrollHeight;
+
+       // Add Typing Indicator
+       let loadingId = 'loading_' + Date.now();
+       history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`;
+       history.scrollTop = history.scrollHeight;
+
+       // Call Backend
+       fetch(SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'chatWithAI', link: currentDocLink, question: question })
+       })
+       .then(r => r.json())
+       .then(data => {
+          document.getElementById(loadingId).remove();
+          let answer = data.status === 'SUCCESS' ? data.answer : "❌ เกิดข้อผิดพลาด: " + data.answer;
+          // Format basic markdown bold
+          answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`;
+          history.scrollTop = history.scrollHeight;
+       })
+       .catch(e => {
+          document.getElementById(loadingId).remove();
+          history.innerHTML += `<div class="chat-ai chat-msg text-danger">เชื่อมต่อไม่สำเร็จ กรุณาลองใหม่</div>`;
+       });
     }
 
     // --- QA SYSTEM ---
