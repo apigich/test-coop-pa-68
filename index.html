@@ -20,7 +20,7 @@
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* === HEADER (ใช้ไอคอนเหมือนเดิม ไม่บัค) === */
+    /* === HEADER === */
     .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
@@ -101,6 +101,7 @@
   </div>
 
   <script>
+    // ** ตรวจสอบ Link นี้ให้ตรงกับ Web App ที่ Deploy ใหม่นะครับ **
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -155,25 +156,45 @@
 
         <div id="adminHomePanel" class="content-section bg-warning-subtle border-warning" style="display:none;">
           <div class="d-flex justify-content-between align-items-center mb-3">
-             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle">admin_panel_settings</i> จัดการสถานะฟอร์ม</h5>
+             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle">admin_panel_settings</i> จัดการหน้าหลัก (Admin)</h5>
              <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
           </div>
           <hr class="border-secondary opacity-25">
           <div class="row">
             <div class="col-md-6 mb-3">
-               <div class="bg-white p-3 rounded shadow-sm h-100">
-                  <div class="form-check form-switch d-flex justify-content-between align-items-center">
-                    <div><label class="form-check-label fw-bold" for="swForm1">🔴 ฟอร์มแจ้งปัญหาทั่วไป</label><div class="small text-muted">เปิด/ปิด รับแจ้งเรื่องร้องเรียน</div></div>
-                    <input class="form-check-input fs-4" type="checkbox" id="swForm1" onchange="toggleForm(1)">
+               <div class="bg-white p-3 rounded shadow-sm h-100 border-start border-4 border-danger">
+                  <h6 class="fw-bold text-danger mb-3">ตั้งค่า: ฟอร์มที่ 1 (สีชมพู)</h6>
+                  <div class="mb-2">
+                    <label class="small text-muted">ชื่อหัวข้อ:</label>
+                    <input type="text" id="admin_title_1" class="form-control form-control-sm">
                   </div>
+                  <div class="mb-3">
+                    <label class="small text-muted">ช่วงวันที่:</label>
+                    <input type="text" id="admin_date_1" class="form-control form-control-sm">
+                  </div>
+                  <div class="form-check form-switch d-flex justify-content-between align-items-center bg-light p-2 rounded">
+                    <label class="form-check-label fw-bold" for="swForm1">สถานะเปิดรับ</label>
+                    <input class="form-check-input fs-5" type="checkbox" id="swForm1">
+                  </div>
+                  <button class="btn btn-sm btn-outline-danger w-100 mt-3" onclick="saveFormConfig(1)">บันทึกการตั้งค่าฟอร์ม 1</button>
                </div>
             </div>
             <div class="col-md-6 mb-3">
-               <div class="bg-white p-3 rounded shadow-sm h-100">
-                  <div class="form-check form-switch d-flex justify-content-between align-items-center">
-                    <div><label class="form-check-label fw-bold" for="swForm2">🟡 ฟอร์มหัวข้อพิเศษ</label><div class="small text-muted">เปิด/ปิด โครงการพิเศษ</div></div>
-                    <input class="form-check-input fs-4" type="checkbox" id="swForm2" onchange="toggleForm(2)">
+               <div class="bg-white p-3 rounded shadow-sm h-100 border-start border-4 border-warning">
+                  <h6 class="fw-bold text-warning text-dark mb-3">ตั้งค่า: ฟอร์มที่ 2 (สีเหลือง)</h6>
+                  <div class="mb-2">
+                    <label class="small text-muted">ชื่อหัวข้อ:</label>
+                    <input type="text" id="admin_title_2" class="form-control form-control-sm">
                   </div>
+                  <div class="mb-3">
+                    <label class="small text-muted">ช่วงวันที่:</label>
+                    <input type="text" id="admin_date_2" class="form-control form-control-sm">
+                  </div>
+                  <div class="form-check form-switch d-flex justify-content-between align-items-center bg-light p-2 rounded">
+                    <label class="form-check-label fw-bold" for="swForm2">สถานะเปิดรับ</label>
+                    <input class="form-check-input fs-5" type="checkbox" id="swForm2">
+                  </div>
+                  <button class="btn btn-sm btn-outline-warning text-dark w-100 mt-3" onclick="saveFormConfig(2)">บันทึกการตั้งค่าฟอร์ม 2</button>
                </div>
             </div>
           </div>
@@ -188,11 +209,11 @@
                 <div id="badge1" class="new-badge">NEW</div>
                 <div class="banner-icon"><i class="material-icons">assignment</i></div>
                 <div class="banner-text">
-                   <div class="banner-title">แบบฟอร์มแจ้งปัญหาทั่วไป</div>
+                   <div class="banner-title" id="disp_title_1">กำลังโหลด...</div>
                    <div class="banner-desc">(รับแจ้งตลอด 24 ชั่วโมง)</div>
                    <div class="mt-2" id="info1">
                       <span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span>
-                      <span class="date-badge">📅 1 ม.ค. 68 - 31 ธ.ค. 68</span>
+                      <span class="date-badge" id="disp_date_1">...</span>
                    </div>
                 </div>
               </div>
@@ -203,11 +224,11 @@
                 <div id="badge2" class="new-badge">NEW</div>
                 <div class="banner-icon"><i class="material-icons">groups</i></div>
                 <div class="banner-text">
-                   <div class="banner-title">เสนอไอเดีย: เชียงใหม่ 2030</div>
+                   <div class="banner-title" id="disp_title_2">กำลังโหลด...</div>
                    <div class="banner-desc">(โครงการพิเศษ/ประชาคม)</div>
                    <div class="mt-2" id="info2">
                       <span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับความคิดเห็น</span>
-                      <span class="date-badge">📅 1 ก.พ. 68 - 28 ก.พ. 68</span>
+                      <span class="date-badge" id="disp_date_2">...</span>
                    </div>
                 </div>
               </div>
@@ -438,8 +459,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
+    // Global Variables
     let docs = [], qaList = [], filteredDocs = [];
-    let isAdmin = false, form1Open = true, form2Open = true; 
+    let isAdmin = false;
+    let form1Open = true, form2Open = true; 
+    let form1Title = "", form1Date = "";
+    let form2Title = "", form2Date = "";
+    
     let currentPage = 1; const itemsPerPage = 10;
     let currentDocLink = "";
 
@@ -452,8 +478,15 @@
          fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json())
       ]).then(([settings, docsData, qaData]) => {
          
-         form1Open = (settings.form1 === 'OPEN');
-         form2Open = (settings.form2 === 'OPEN');
+         // รับค่า Settings จากหลังบ้าน
+         form1Open = (settings.form1_status === 'OPEN');
+         form2Open = (settings.form2_status === 'OPEN');
+         form1Title = settings.form1_title;
+         form1Date = settings.form1_date;
+         form2Title = settings.form2_title;
+         form2Date = settings.form2_date;
+
+         // อัปเดตหน้า UI ด้วยค่าที่รับมา
          updateUI();
          
          docs = docsData;
@@ -497,6 +530,68 @@
        showPage('home');
        setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100);
        if(window.innerWidth <= 992) toggleSidebar();
+    }
+
+    // --- ADMIN CONFIG FORM ---
+    function saveFormConfig(num) {
+       let titleVal = document.getElementById('admin_title_' + num).value;
+       let dateVal = document.getElementById('admin_date_' + num).value;
+       let isChecked = document.getElementById('swForm' + num).checked;
+       let status = isChecked ? 'OPEN' : 'CLOSED';
+       let keyName = (num === 1) ? 'FORM_1' : 'FORM_2';
+
+       // ส่งข้อมูลไปอัปเดตหลังบ้าน
+       postData({
+          action: 'updateFormConfig',
+          key: keyName,
+          title: titleVal,
+          dateText: dateVal,
+          status: status
+       }, (response) => {
+          // อัปเดตตัวแปรในหน้าเว็บทันที ไม่ต้องรีโหลด
+          if (num === 1) {
+             form1Title = titleVal; form1Date = dateVal; form1Open = isChecked;
+          } else {
+             form2Title = titleVal; form2Date = dateVal; form2Open = isChecked;
+          }
+          updateUI();
+          Swal.fire({ icon: 'success', title: 'บันทึกการตั้งค่าเรียบร้อย', timer: 1500, showConfirmButton: false });
+       });
+    }
+
+    function updateUI() {
+       // อัปเดต Text หน้าบ้าน
+       document.getElementById('disp_title_1').innerText = form1Title;
+       document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
+       document.getElementById('disp_title_2').innerText = form2Title;
+       document.getElementById('disp_date_2').innerText = "📅 " + form2Date;
+
+       // อัปเดต Input ในหน้า Admin ให้ตรงกัน
+       document.getElementById('admin_title_1').value = form1Title;
+       document.getElementById('admin_date_1').value = form1Date;
+       document.getElementById('admin_title_2').value = form2Title;
+       document.getElementById('admin_date_2').value = form2Date;
+
+       // อัปเดตสถานะ เปิด/ปิด
+       let b1 = document.getElementById('banner1'), st1 = document.getElementById('statusBadge1');
+       if(form1Open) { 
+          b1.classList.remove('closed'); st1.style.display = 'none'; 
+          document.getElementById('badge1').style.display = 'block';
+       } else { 
+          b1.classList.add('closed'); st1.style.display = 'inline-block';
+          document.getElementById('badge1').style.display = 'none';
+       }
+       document.getElementById('swForm1').checked = form1Open;
+       
+       let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
+       if(form2Open) { 
+          b2.classList.remove('closed'); st2.style.display = 'none';
+          document.getElementById('badge2').style.display = 'block';
+       } else { 
+          b2.classList.add('closed'); st2.style.display = 'inline-block';
+          document.getElementById('badge2').style.display = 'none';
+       }
+       document.getElementById('swForm2').checked = form2Open;
     }
 
     // --- DOCS SYSTEM ---
@@ -596,7 +691,7 @@
       }
       filterDocs(); cancelEditDoc(); 
       Swal.fire({ icon: 'success', title: isEdit ? 'แก้ไขเรียบร้อย' : 'เพิ่มเอกสารแล้ว', timer: 1500, showConfirmButton: false });
-      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat }) }).then(r=>r.json()).then(d=>fetchDocs());
+      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat }) }).then(r=>r.json()).then(d=>fetchDocs()); // fetchDocs is meant to reload but here we rely on local update first
     }
     function deleteDoc(id) {
       if(!confirm('ต้องการลบเอกสารนี้?')) return;
@@ -632,7 +727,7 @@
        .then(data => {
           document.getElementById(loadingId).remove();
           let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer;
-          answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+          answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
           history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`;
           history.scrollTop = history.scrollHeight;
        })
@@ -705,68 +800,59 @@
     }
 
     // --- Core Functions ---
-    function checkSettings() { /* Loaded in initSystem */ }
-    function toggleForm(num) {
-       let isChecked = document.getElementById('swForm'+num).checked;
-       let status = isChecked ? 'OPEN' : 'CLOSED';
-       let key = 'FORM_' + num + '_STATUS';
-       postData({ action: 'toggleForm', key: key, status: status }, () => {
-          if(num===1) form1Open = isChecked; if(num===2) form2Open = isChecked; updateUI();
-          const Toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 3000});
-          Toast.fire({icon: 'success', title: 'บันทึกสถานะเรียบร้อย'});
-       });
-    }
-    function updateUI() {
-       let b1 = document.getElementById('banner1'), st1 = document.getElementById('statusBadge1');
-       if(form1Open) { 
-          b1.classList.remove('closed'); st1.style.display = 'none'; 
-          document.getElementById('badge1').style.display = 'block';
-       } else { 
-          b1.classList.add('closed'); st1.style.display = 'inline-block';
-          document.getElementById('badge1').style.display = 'none';
-       }
-       
-       let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
-       if(form2Open) { 
-          b2.classList.remove('closed'); st2.style.display = 'none';
-          document.getElementById('badge2').style.display = 'block';
-       } else { 
-          b2.classList.add('closed'); st2.style.display = 'inline-block';
-          document.getElementById('badge2').style.display = 'none';
-       }
-       
-       if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
-       if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
-    }
+    
+    // คลิกแบนเนอร์: เช็คสถานะก่อนเปิด
     function handleBannerClick(num) {
        let isOpen = (num === 1) ? form1Open : form2Open;
-       if (isOpen) { openFormModal(num === 1 ? 'general' : 'special'); } 
-       else { Swal.fire({ icon: 'warning', title: 'อยู่นอกระยะเวลาดำเนินการ', text: 'ขณะนี้ปิดรับข้อมูลในหัวข้อนี้แล้ว ขอบคุณที่ให้ความสนใจ', confirmButtonText: 'รับทราบ', confirmButtonColor: '#636e72' }); }
+       let title = (num === 1) ? form1Title : form2Title;
+
+       if (isOpen) { 
+          openFormModal(num === 1 ? 'general' : 'special', title); 
+       } 
+       else { 
+          // 🔥 Popup แจ้งเตือนเมื่อปิด (ตามที่ขอ)
+          Swal.fire({ 
+             icon: 'warning', 
+             title: 'ขออภัย ขณะนี้อยู่นอกเวลาดำเนินการ', 
+             text: 'ระบบปิดรับข้อมูลในหัวข้อนี้ชั่วคราว', 
+             confirmButtonText: 'รับทราบ', 
+             confirmButtonColor: '#d63031' 
+          }); 
+       }
     }
-    function openFormModal(type) {
+
+    function openFormModal(type, titleText) {
        var modalForm = new bootstrap.Modal(document.getElementById('formModal'));
-       let title = (type === 'general') ? 'แจ้งปัญหาทั่วไป' : 'เสนอไอเดีย: เชียงใหม่ 2030';
-       document.getElementById('formTitle').innerText = title;
-       document.getElementById('f_topic_type').value = title;
-       if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; }
+       // ใช้ชื่อ Title จากตัวแปร (ที่ดึงมาจากหลังบ้าน)
+       document.getElementById('formTitle').innerText = titleText; 
+       document.getElementById('f_topic_type').value = titleText;
+       
+       if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } 
+       else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
+
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText;
       btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
       let topicVal = document.getElementById('f_topic_type').value;
-      let topicKey = (topicVal.includes("ทั่วไป")) ? "FORM_1_STATUS" : "FORM_2_STATUS"; 
+      
+      // เช็คว่ากดมาจากฟอร์ม 1 หรือ 2 เพื่อส่ง key สถานะไปเช็ค double check ที่หลังบ้าน
+      let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS"; 
 
-      if(topicVal === 'แจ้งปัญหาทั่วไป') {
+      if(document.getElementById('topicSelectDiv').style.display === 'block') {
          let select = document.getElementById('f_topic_select');
          if(select.value === "") { Swal.fire('กรุณาเลือกหมวดหมู่'); btn.disabled = false; btn.innerText = oldText; return; }
-         topicVal = select.value;
+         topicVal = select.value + " (" + topicVal + ")";
       }
+      
       let data = { action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: topicVal, topicKey: topicKey };
+      
       postData(data, (response) => { 
          if (response.status === 'CLOSED_ERROR') {
             Swal.fire('เสียใจด้วย', 'ฟอร์มนี้เพิ่งปิดรับข้อมูลไปเมื่อสักครู่นี้', 'error');
+            // อัปเดตสถานะทันที
             if (topicKey === "FORM_1_STATUS") { form1Open = false; } else { form2Open = false; }
             updateUI();
             bootstrap.Modal.getInstance(document.getElementById('formModal')).hide();
@@ -798,7 +884,7 @@
     function setAdminMode(status) {
        isAdmin = status;
        if(status) {
-          document.getElementById('adminHomePanel').style.display='block';
+          document.getElementById('adminHomePanel').style.display='block'; // โชว์แผงตั้งค่าหน้าแรก
           document.getElementById('adminDocPanel').style.display='block';
           document.getElementById('adminQAPanel').style.display='block';
           document.getElementById('sidebarLogoutArea').style.display='block';
@@ -808,9 +894,7 @@
           document.getElementById('adminQAPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
-       updateUI(); renderDocs(); renderQA();
-       if(document.getElementById('swForm1')) document.getElementById('swForm1').checked = form1Open;
-       if(document.getElementById('swForm2')) document.getElementById('swForm2').checked = form2Open;
+       renderDocs(); renderQA();
     }
     function postData(data, callback) { fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()).then(d => callback(d)).catch(e => console.error(e)); }
     function getVal(id) { return document.getElementById(id).value; }
