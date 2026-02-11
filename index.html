@@ -20,7 +20,7 @@
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* === HEADER === */
+    /* Header */
     .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
@@ -40,7 +40,7 @@
       .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
-    /* Sidebar */
+    /* Layout & Sidebar */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
@@ -50,12 +50,36 @@
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
     .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
-    .sidebar-logout-btn { background: white; border: 1px solid #dc3545; color: #dc3545; border-radius: 8px; padding: 12px; width: 100%; text-align: center; transition: 0.2s; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-    .sidebar-logout-btn:hover { background: #dc3545; color: white; }
-
+    
     .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
+    
+    /* Carousel Fix for Vertical Images */
+    .carousel-item {
+        background-color: #e9ecef; /* สีพื้นหลังกันว่าง */
+        height: 500px; /* กำหนดความสูงคงที่เพื่อให้ Layout ไม่กระโดด */
+    }
+    .carousel-item img {
+        width: auto !important; /* ปล่อยความกว้างอิสระ */
+        height: 100% !important; /* บังคับสูงเต็มกล่อง */
+        max-width: 100%; /* ไม่ให้กว้างเกินจอ */
+        margin: 0 auto; /* จัดกึ่งกลาง */
+        display: block;
+        object-fit: contain; /* โชว์ภาพครบทุกส่วน */
+    }
+    @media (max-width: 768px) {
+        .carousel-item { height: 400px; } /* มือถือลดความสูงลงหน่อย */
+    }
+
+    /* Footer & Admin Link */
+    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
+    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
+    .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; }
+    .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
+
+    /* Other Styles */
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -68,15 +92,13 @@
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
-    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
-    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
-    .admin-trigger { cursor: pointer; opacity: 0.5; transition: 0.3s; margin-top: 20px; display: inline-block; font-size: 0.85rem; }
-    .admin-trigger:hover { opacity: 1; color: #fff; }
+    
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
     .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+    
     .chat-container { height: 400px; overflow-y: auto; border: 1px solid #eee; background: #f8f9fa; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
     .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
     .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
@@ -85,15 +107,6 @@
     .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-    
-    /* เพิ่ม CSS สำหรับสื่อประชาสัมพันธ์แนวตั้ง */
-    .carousel-item img {
-        width: 100%;
-        height: auto; /* ให้สูงตามสัดส่วนจริง */
-        max-height: 85vh; /* จำกัดความสูงไม่ให้ล้นจอเกินไป แต่ให้สูงได้เยอะสำหรับแนวตั้ง */
-        object-fit: contain; /* โชว์รูปครบถ้วน ไม่โดนตัด */
-        background-color: #f8f9fa; /* พื้นหลังสีเทาอ่อนเผื่อรูปไม่เต็ม */
-    }
   </style>
 </head>
 <body onload="initSystem()">
@@ -153,7 +166,6 @@
     </nav>
 
     <div class="main-content">
-      
       <div id="page-home">
         
         <div id="section-video" class="content-section text-center">
@@ -267,12 +279,12 @@
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="3"></button>
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="4"></button>
             </div>
-            <div class="carousel-inner text-center bg-light rounded" style="min-height: 400px;">
-              <div class="carousel-item active" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg" class="d-block mx-auto"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg" class="d-block mx-auto"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg" class="d-block mx-auto"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Royal_Park_Rajapruek.jpg/1280px-Royal_Park_Rajapruek.jpg" class="d-block mx-auto"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://via.placeholder.com/800x1000/0d6efd/ffffff?text=Vertical+Info+Example" class="d-block mx-auto"></div>
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Royal_Park_Rajapruek.jpg/1280px-Royal_Park_Rajapruek.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://via.placeholder.com/800x1200/0d6efd/ffffff?text=Example+Vertical+Info"></div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span></button>
             <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span></button>
@@ -281,7 +293,6 @@
 
         <div id="sec-facebook" class="content-section">
           <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">newspaper</i> ข่าวประชาสัมพันธ์ (Facebook)</h4>
-          
           <div class="bg-white rounded shadow-sm border p-3">
             <div class="text-center" style="overflow: hidden;">
               <div class="fb-page" 
@@ -298,7 +309,6 @@
                 </blockquote>
               </div>
             </div>
-            
             <div class="text-center mt-3">
                <a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">
                  ดูข่าวสารทั้งหมดบน Facebook <i class="material-icons align-middle fs-6">open_in_new</i>
@@ -312,7 +322,6 @@
       <div id="page-docs" style="display:none;">
         <div class="content-section">
           <h3 class="section-header">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
-          
           <div id="adminDocPanel" class="admin-controls mb-4">
              <div class="d-flex justify-content-between align-items-center mb-3">
                <h5 class="fw-bold m-0"><i class="material-icons align-middle">post_add</i> จัดการเอกสาร/ลิงก์</h5>
@@ -339,7 +348,6 @@
                 </div>
              </form>
           </div>
-
           <div class="row g-2 mb-3">
              <div class="col-md-4"><input type="text" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." onkeyup="filterDocs()"></div>
              <div class="col-md-3">
@@ -352,7 +360,6 @@
                 </select>
              </div>
           </div>
-
           <div id="docListContainer" class="list-group list-group-flush"></div>
           <div id="pagination" class="pagination-container"></div>
         </div>
@@ -371,11 +378,9 @@
            <i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i>
            <h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3>
            <p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p>
-           
            <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
              <i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน
            </a>
-           
            <div class="mt-3 text-muted small">(หน้าต่างใหม่จะเปิดขึ้นเพื่อความปลอดภัยของข้อมูล)</div>
         </div>
       </div>
@@ -421,7 +426,10 @@
         <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูล<br>เพื่อการพัฒนาจังหวัด</h5>
         <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
-        <div id="footerCopyright" class="admin-trigger" onclick="loginToggle()">© 2026 All Rights Reserved.</div>
+        <div id="footerCopyright">© 2026 All Rights Reserved.</div>
+        <div class="admin-link-container">
+           <a onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a>
+        </div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">ช่องทางการติดต่อ</h5>
@@ -841,16 +849,38 @@
          btn.disabled = false; btn.innerText = oldText; 
       });
     }
+    
+    // --- Login System Upgrade (User + Pass) ---
     function loginToggle() {
       if(isAdmin) return logoutSystem();
-      Swal.fire({ title: 'สำหรับเจ้าหน้าที่', input: 'password', confirmButtonText: 'เข้าสู่ระบบ' }).then(res => {
-        if(!res.value) return;
-        postData({action: 'login', password: res.value}, (data) => {
-           if(data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } 
-           else { Swal.fire({icon: 'error', title: 'รหัสผ่านไม่ถูกต้อง'}); }
-        });
+      
+      Swal.fire({
+        title: 'เข้าสู่ระบบผู้ดูแลระบบ',
+        html: 
+          '<input id="swal-input1" class="swal2-input" placeholder="ชื่อผู้ใช้งาน (Username)">' +
+          '<input id="swal-input2" class="swal2-input" placeholder="รหัสผ่าน (Password)" type="password">',
+        focusConfirm: false,
+        confirmButtonText: 'เข้าสู่ระบบ',
+        preConfirm: () => {
+          return [
+            document.getElementById('swal-input1').value,
+            document.getElementById('swal-input2').value
+          ]
+        }
+      }).then((result) => {
+        if (result.value) {
+          const username = result.value[0];
+          const password = result.value[1];
+          if (!username || !password) { Swal.fire('กรุณากรอกข้อมูลให้ครบ'); return; }
+          
+          postData({action: 'login', username: username, password: password}, (data) => {
+             if(data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } 
+             else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
+          });
+        }
       });
     }
+
     function logoutSystem() {
       Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((res) => {
         if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); }
