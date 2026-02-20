@@ -95,6 +95,11 @@
     .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
     .video-title-bar:hover { background-color: #e9ecef; }
+    
+    /* 🟢 CSS สำหรับระบบดาว Rating */
+    .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
+    .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
+    .star-rating i.active { color: #f39c12; }
   </style>
 </head>
 <body onload="initSystem()">
@@ -146,7 +151,10 @@
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
         <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
         <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
+        
+        <a class="nav-link-main text-success" id="menu-hearing" onclick="showPage('hearing')">📋 ประชาพิจารณ์แผนฯ</a>
       </div>
+      
       <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;">
          <button class="sidebar-logout-btn" onclick="logoutSystem()">
            <i class="material-icons align-middle fs-6 me-2">logout</i> ออกจากระบบ
@@ -203,22 +211,51 @@
                </div>
             </div>
           </div>
+          
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-primary">
              <h6 class="fw-bold text-primary mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
              <div class="mb-2">
                <label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label>
-               <input type="text" id="admin_video_title" class="form-control form-control-sm" placeholder="เช่น 📺 วิดีโอแนะนำความสำคัญ...">
+               <input type="text" id="admin_video_title" class="form-control form-control-sm">
              </div>
              <div class="mb-2">
                <label class="small text-muted">ลิงก์ YouTube (Video URL):</label>
-               <input type="text" id="admin_video_url" class="form-control form-control-sm" placeholder="https://www.youtube.com/watch?v=...">
+               <input type="text" id="admin_video_url" class="form-control form-control-sm">
              </div>
              <div class="mb-2">
                <label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label>
-               <input type="text" id="admin_dash_url" class="form-control form-control-sm" placeholder="URL ของ Dashboard (ถ้ามี)">
+               <input type="text" id="admin_dash_url" class="form-control form-control-sm">
              </div>
              <button class="btn btn-sm btn-outline-primary w-100 mt-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
           </div>
+          
+          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-success">
+             <h6 class="fw-bold text-success mb-3">ตั้งค่าระบบ: ประชาพิจารณ์แผนฯ</h6>
+             <div class="mb-2">
+               <label class="small text-muted">ชื่อหัวข้อหลัก (แสดงหน้าเว็บ):</label>
+               <input type="text" id="admin_hearing_title" class="form-control form-control-sm">
+             </div>
+             <div class="mb-2">
+               <label class="small text-muted">คำอธิบายเพิ่มเติม:</label>
+               <input type="text" id="admin_hearing_desc" class="form-control form-control-sm">
+             </div>
+             <div class="row mt-3">
+                 <div class="col-md-6">
+                     <div class="form-check form-switch d-flex justify-content-between align-items-center bg-light p-2 rounded">
+                        <label class="form-check-label fw-bold">ระบบประชาพิจารณ์</label>
+                        <input class="form-check-input fs-5" type="checkbox" id="swHearingStatus">
+                     </div>
+                 </div>
+                 <div class="col-md-6 mt-2 mt-md-0">
+                     <div class="form-check form-switch d-flex justify-content-between align-items-center bg-light p-2 rounded">
+                        <label class="form-check-label fw-bold">ระบบประเมินดาว (ท้ายฟอร์ม)</label>
+                        <input class="form-check-input fs-5" type="checkbox" id="swHearingRating">
+                     </div>
+                 </div>
+             </div>
+             <button class="btn btn-sm btn-outline-success w-100 mt-3" onclick="saveHearingConfig()">บันทึกการตั้งค่าประชาพิจารณ์</button>
+          </div>
+
         </div>
 
         <div id="sec-feedback" class="content-section text-center" style="background: #fff;">
@@ -292,17 +329,9 @@
         <div id="sec-facebook" class="content-section">
           <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">newspaper</i> ข่าวประชาสัมพันธ์ (Facebook)</h4>
           <div class="bg-white rounded shadow-sm border p-3 text-center">
-            
             <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FChiangmaioffice&tabs=timeline&width=500&height=350&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" 
-                    width="100%" 
-                    height="350" 
-                    style="border:none; overflow:hidden; max-width: 500px;" 
-                    scrolling="no" 
-                    frameborder="0" 
-                    allowfullscreen="true" 
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                    width="100%" height="350" style="border:none; overflow:hidden; max-width: 500px;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
             </iframe>
-
             <div class="text-center mt-3">
                <a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">
                  ดูข่าวสารทั้งหมดบน Facebook <i class="material-icons align-middle fs-6">open_in_new</i>
@@ -327,14 +356,9 @@
              </div>
              <form onsubmit="submitVideo(event)">
                 <input type="hidden" id="vid_id" value="">
-                
                 <div class="row g-2 mb-2">
-                   <div class="col-md-9">
-                      <input type="text" class="form-control" id="vid_title" placeholder="ชื่อหัวข้อวิดีโอ" required>
-                   </div>
-                   <div class="col-md-3">
-                      <input type="number" class="form-control" id="vid_order" placeholder="ลำดับ (เช่น 1, 2)">
-                   </div>
+                   <div class="col-md-9"><input type="text" class="form-control" id="vid_title" placeholder="ชื่อหัวข้อวิดีโอ" required></div>
+                   <div class="col-md-3"><input type="number" class="form-control" id="vid_order" placeholder="ลำดับ (เช่น 1, 2)"></div>
                 </div>
                 <div class="row g-2">
                    <div class="col-md-9"><input type="text" class="form-control" id="vid_link" placeholder="ลิงก์ YouTube (เช่น https://youtu.be/...)" required></div>
@@ -365,7 +389,6 @@
                 <input type="hidden" id="doc_id" value="">
                 <div class="mb-2"><input type="text" class="form-control" id="doc_title" placeholder="ชื่อเอกสาร / หัวข้อ" required></div>
                 <div class="mb-2"><input type="text" class="form-control" id="doc_desc" placeholder="คำอธิบายเพิ่มเติม"></div>
-                
                 <div class="row g-2 mb-2">
                    <div class="col-md-6">
                        <select class="form-select" id="doc_cat">
@@ -382,7 +405,6 @@
                        </select>
                    </div>
                 </div>
-
                 <div class="row g-2">
                    <div class="col-md-9"><input type="text" class="form-control" id="doc_link" placeholder="ลิงก์" required></div>
                    <div class="col-md-3"><button type="submit" id="btnSaveDoc" class="btn btn-success w-100 fw-bold">บันทึก</button></div>
@@ -471,6 +493,130 @@
           <div class="accordion accordion-flush" id="accQA"></div>
         </div>
       </div>
+
+      <div id="page-hearing" style="display:none;">
+        <div class="content-section">
+          <h3 class="section-header text-success" id="disp_hearing_title">รับฟังความคิดเห็นร่างแผนพัฒนาจังหวัดเชียงใหม่</h3>
+          <p class="text-muted mb-4" id="disp_hearing_desc">ขอเชิญประชาชนและทุกภาคส่วนร่วมแสดงความคิดเห็นต่อทิศทางการพัฒนาจังหวัด</p>
+          
+          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;">
+              <i class="material-icons fs-1 mb-2">lock</i>
+              <h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5>
+              <p class="mb-0">ขอบพระคุณทุกท่านที่ให้ความร่วมมือในการพัฒนาจังหวัด</p>
+          </div>
+
+          <div id="hearingFormContainer">
+             <form onsubmit="submitHearing(event)" class="bg-light p-4 border rounded shadow-sm">
+                
+                <h5 class="fw-bold text-primary border-bottom pb-2 mb-3">ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม</h5>
+                <div class="row g-3 mb-3">
+                   <div class="col-md-6">
+                      <label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="h_name" required>
+                   </div>
+                   <div class="col-md-6">
+                      <label class="form-label fw-bold">อำเภอที่อยู่อาศัย <span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" id="h_district" required>
+                   </div>
+                   <div class="col-md-12">
+                      <label class="form-label fw-bold">ท่านสังกัดภาคส่วนใด <span class="text-danger">*</span></label>
+                      <select class="form-select" id="h_sector" required>
+                         <option value="" selected disabled>-- เลือกภาคส่วน --</option>
+                         <option value="ภาคประชาชน">ภาคประชาชน / ประชาสังคม</option>
+                         <option value="ภาคธุรกิจเอกชน">ภาคธุรกิจ / เอกชน</option>
+                         <option value="ภาคราชการ">ส่วนราชการ / รัฐวิสาหกิจ / ท้องถิ่น</option>
+                         <option value="สถาบันการศึกษา">สถาบันการศึกษา / นักวิชาการ</option>
+                      </select>
+                   </div>
+                </div>
+
+                <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4">ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)</h5>
+                <div class="mb-3">
+                   <label class="form-label fw-bold">ท่านเห็นด้วยกับเป้าหมายการพัฒนาจังหวัดเชียงใหม่ (ระยะ 5 ปี) ในภาพรวมหรือไม่? <span class="text-danger">*</span></label>
+                   <div class="form-check">
+                      <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required>
+                      <label class="form-check-label">เห็นด้วย</label>
+                   </div>
+                   <div class="form-check">
+                      <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม">
+                      <label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label>
+                   </div>
+                   <div class="form-check">
+                      <input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย">
+                      <label class="form-check-label">ไม่เห็นด้วย</label>
+                   </div>
+                </div>
+
+                <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4">ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)</h5>
+                <div class="table-responsive mb-3">
+                   <table class="table table-bordered table-striped bg-white align-middle text-center">
+                      <thead class="table-light">
+                         <tr>
+                            <th class="text-start">ประเด็นการพัฒนา</th>
+                            <th>เห็นด้วยมาก</th>
+                            <th>เห็นด้วย</th>
+                            <th>ไม่แน่ใจ</th>
+                            <th>ไม่เห็นด้วย</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <tr>
+                            <td class="text-start fw-bold">1. ด้านเศรษฐกิจ (เช่น การยกระดับการท่องเที่ยว, เกษตรมูลค่าสูง)</td>
+                            <td><input class="form-check-input" type="radio" name="h_econ" value="เห็นด้วยมาก" required></td>
+                            <td><input class="form-check-input" type="radio" name="h_econ" value="เห็นด้วย"></td>
+                            <td><input class="form-check-input" type="radio" name="h_econ" value="ไม่แน่ใจ"></td>
+                            <td><input class="form-check-input" type="radio" name="h_econ" value="ไม่เห็นด้วย"></td>
+                         </tr>
+                         <tr>
+                            <td class="text-start fw-bold">2. ด้านสังคมและความมั่นคง (เช่น การลดความเหลื่อมล้ำ, สาธารณสุข)</td>
+                            <td><input class="form-check-input" type="radio" name="h_soc" value="เห็นด้วยมาก" required></td>
+                            <td><input class="form-check-input" type="radio" name="h_soc" value="เห็นด้วย"></td>
+                            <td><input class="form-check-input" type="radio" name="h_soc" value="ไม่แน่ใจ"></td>
+                            <td><input class="form-check-input" type="radio" name="h_soc" value="ไม่เห็นด้วย"></td>
+                         </tr>
+                         <tr>
+                            <td class="text-start fw-bold">3. ด้านทรัพยากรธรรมชาติฯ (เช่น การจัดการฝุ่น PM 2.5, ป่าไม้)</td>
+                            <td><input class="form-check-input" type="radio" name="h_env" value="เห็นด้วยมาก" required></td>
+                            <td><input class="form-check-input" type="radio" name="h_env" value="เห็นด้วย"></td>
+                            <td><input class="form-check-input" type="radio" name="h_env" value="ไม่แน่ใจ"></td>
+                            <td><input class="form-check-input" type="radio" name="h_env" value="ไม่เห็นด้วย"></td>
+                         </tr>
+                      </tbody>
+                   </table>
+                </div>
+
+                <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4">ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ</h5>
+                <div class="mb-3">
+                   <label class="form-label fw-bold">ในมุมมองของท่าน ปัญหาหรือความต้องการเชิงพื้นที่ด้านใด ที่จังหวัดควรเร่งดำเนินการแก้ไขมากที่สุด? <span class="text-danger">*</span></label>
+                   <select class="form-select" id="h_priority" required>
+                      <option value="" selected disabled>-- เลือกประเด็นเร่งด่วนที่สุด --</option>
+                      <option value="ด้านเศรษฐกิจและรายได้">ด้านเศรษฐกิจและรายได้</option>
+                      <option value="ด้านสังคม คุณภาพชีวิต และความมั่นคง">ด้านสังคม คุณภาพชีวิต และความมั่นคง</option>
+                      <option value="ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม">ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม</option>
+                   </select>
+                </div>
+                <div class="mb-3">
+                   <label class="form-label fw-bold">ข้อเสนอแนะอื่นๆ เพื่อนำไปปรับปรุงร่างแผนพัฒนาจังหวัด (ถ้ามี)</label>
+                   <textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติม..."></textarea>
+                </div>
+
+                <div class="alert alert-secondary mt-4 mb-4 small">
+                   <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="h_pdpa" required>
+                      <label class="form-check-label fw-bold text-dark" for="h_pdpa">
+                         ข้าพเจ้ายินยอมให้สำนักงานจังหวัดเชียงใหม่ รวบรวมและประมวลผลข้อมูลส่วนบุคคลและข้อคิดเห็นนี้ เพื่อนำไปใช้เป็นข้อมูลประกอบการพิจารณาปรับปรุงร่างแผนพัฒนาจังหวัดเชียงใหม่เท่านั้น และจะไม่มีการเปิดเผยข้อมูลส่วนบุคคลต่อสาธารณะ
+                      </label>
+                   </div>
+                </div>
+
+                <div class="d-grid">
+                   <button type="submit" class="btn btn-success btn-lg fw-bold shadow-sm" id="btnSubmitHearing">✅ ส่งแบบประเมินความคิดเห็น</button>
+                </div>
+             </form>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -553,6 +699,36 @@
     </div>
   </div>
 
+  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header bg-warning text-dark border-0">
+          <h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5>
+        </div>
+        <div class="modal-body p-4">
+          <h5 class="mb-4 text-success fw-bold">ส่งข้อมูลสำเร็จ ขอบพระคุณอย่างยิ่ง!</h5>
+          <p class="text-muted">โปรดให้คะแนนความพึงพอใจในการใช้งานระบบ S-MAP</p>
+          
+          <div class="star-rating mb-4 d-flex justify-content-center gap-2" id="starContainer">
+             <i class="material-icons" data-val="1" onclick="setStar(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="2" onclick="setStar(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="3" onclick="setStar(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="4" onclick="setStar(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i>
+          </div>
+          <input type="hidden" id="sys_rating_val" value="0">
+
+          <div class="mb-3 text-start">
+             <label class="form-label fw-bold small text-muted">ข้อเสนอแนะเพิ่มเติมเกี่ยวกับการใช้งานระบบ (ไม่บังคับ)</label>
+             <textarea class="form-control" id="sys_feedback" rows="2" placeholder="พิมพ์ข้อเสนอแนะ..."></textarea>
+          </div>
+          
+          <button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
@@ -563,6 +739,10 @@
     let form2Title = "", form2Desc = "", form2Date = "";
     let currentPage = 1; const itemsPerPage = 10;
     let currentDocLink = "";
+    
+    // ตัวแปรระบบประชาพิจารณ์
+    let hearingOpen = true;
+    let hearingRatingOpen = true;
 
     function initSystem() { 
       document.getElementById('globalLoader').style.display = 'flex';
@@ -579,10 +759,32 @@
          form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
          form2Title = settings.form2_title; form2Desc = settings.form2_desc; form2Date = settings.form2_date;
 
+         // ดึงค่าการตั้งค่าหน้า Hearing
+         hearingOpen = (settings.hearing_status === 'OPEN');
+         hearingRatingOpen = (settings.hearing_rating_status === 'ON');
+         
          document.getElementById('disp_video_title').innerText = settings.video_title;
          document.getElementById('admin_video_title').value = settings.video_title;
          updateVideo(settings.video_url);
          updateDashboard(settings.dash_url);
+         
+         // ตั้งค่าหน้า Admin ฝั่ง Hearing
+         document.getElementById('admin_hearing_title').value = settings.hearing_title;
+         document.getElementById('admin_hearing_desc').value = settings.hearing_desc;
+         document.getElementById('swHearingStatus').checked = hearingOpen;
+         document.getElementById('swHearingRating').checked = hearingRatingOpen;
+         
+         // แสดงผลหน้า Hearing UI
+         document.getElementById('disp_hearing_title').innerText = settings.hearing_title;
+         document.getElementById('disp_hearing_desc').innerText = settings.hearing_desc;
+         if(!hearingOpen) {
+            document.getElementById('hearingClosedMsg').style.display = 'block';
+            document.getElementById('hearingFormContainer').style.display = 'none';
+         } else {
+            document.getElementById('hearingClosedMsg').style.display = 'none';
+            document.getElementById('hearingFormContainer').style.display = 'block';
+         }
+
          updateUI();
          
          docs = docsData;
@@ -654,7 +856,7 @@
        overlay.classList.toggle('active');
     }
     function showPage(id) {
-      ['home','docs','calendar','qa', 'videos'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
+      ['home','docs','calendar','qa', 'videos', 'hearing'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
       document.getElementById('page-'+id).style.display = 'block';
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
       document.getElementById('menu-'+id).classList.add('active');
@@ -679,7 +881,6 @@
        let dUrl = document.getElementById('admin_dash_url').value;
        
        if (!vTitle || vTitle.trim() === "") { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อหัวข้อวิดีโอ', 'warning'); return; }
-
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        
        postData({ action: 'updateGeneralConfig', vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
@@ -690,6 +891,23 @@
           } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
+
+    // 🟢 ระบบบันทึกการตั้งค่าหน้าประชาพิจารณ์ (Admin)
+    function saveHearingConfig() {
+       let hTitle = document.getElementById('admin_hearing_title').value;
+       let hDesc = document.getElementById('admin_hearing_desc').value;
+       let hStatus = document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED';
+       let hRating = document.getElementById('swHearingRating').checked ? 'ON' : 'OFF';
+       
+       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       postData({ action: 'updateHearingConfig', hTitle: hTitle, hDesc: hDesc, hStatus: hStatus, hRating: hRating }, (res) => {
+          if(res && res.status === 'SUCCESS') {
+             Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
+             initSystem(); // รีโหลดให้ค่าอัปเดตทั้งหน้า
+          } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
+       });
+    }
+
     function saveFormConfig(num) {
        let titleVal = document.getElementById('admin_title_' + num).value;
        let descVal = document.getElementById('admin_subtitle_' + num).value;
@@ -826,12 +1044,10 @@
        switch(type) { case 'General': label = 'เอกสารทั่วไป'; break; case 'Plan': label = 'แผนพัฒนา'; colorClass = 'bg-primary'; break; case 'Report': label = 'รายงานผล'; colorClass = 'bg-success'; break; case 'Announcement': label = 'ประกาศ/คำสั่ง'; colorClass = 'bg-warning text-dark'; break; }
        return `<span class="badge ${colorClass} me-2">${label}</span>`;
     }
-
-    // 🟢 2. เพิ่มฟังก์ชันล้างข้อมูลค้นหา
     function clearSearch() {
         document.getElementById('searchDoc').value = '';
         document.getElementById('filterCat').value = 'All';
-        filterDocs(); // เรียกตารางใหม่
+        filterDocs(); 
     }
 
     function renderDocs() {
@@ -1026,10 +1242,98 @@
          btn.disabled = false; btn.innerText = oldText; 
       });
     }
+
+    // 🟢 ระบบส่งฟอร์มประชาพิจารณ์
+    function submitHearing(e) {
+       e.preventDefault();
+       
+       let btn = document.getElementById('btnSubmitHearing');
+       let oldText = btn.innerText;
+       btn.disabled = true;
+       btn.innerText = 'กำลังส่งข้อมูล...';
+
+       // ดึงค่า Radio Button ที่ถูกเลือก
+       let visionVal = document.querySelector('input[name="h_vision"]:checked')?.value || "";
+       let econVal = document.querySelector('input[name="h_econ"]:checked')?.value || "";
+       let socVal = document.querySelector('input[name="h_soc"]:checked')?.value || "";
+       let envVal = document.querySelector('input[name="h_env"]:checked')?.value || "";
+
+       let payload = {
+          action: 'saveHearing',
+          name: getVal('h_name'),
+          district: getVal('h_district'),
+          sector: getVal('h_sector'),
+          vision: visionVal,
+          econ: econVal,
+          social: socVal,
+          env: envVal,
+          priority: getVal('h_priority'),
+          feedback: getVal('h_feedback')
+       };
+
+       postData(payload, (res) => {
+          btn.disabled = false;
+          btn.innerText = oldText;
+          
+          if(res && res.status === 'SUCCESS') {
+             e.target.reset(); // ล้างฟอร์ม
+             
+             // 🟢 ตรวจสอบว่าแอดมินเปิดระบบ Rating ไว้หรือไม่
+             if(hearingRatingOpen) {
+                 var rModal = new bootstrap.Modal(document.getElementById('ratingModal'));
+                 rModal.show(); // เด้งให้ดาว
+             } else {
+                 Swal.fire('ขอบพระคุณ!', 'ระบบได้รับความคิดเห็นของท่านเรียบร้อยแล้ว', 'success');
+                 showPage('home'); // กลับหน้าแรกเลยถ้าปิดเรตติ้ง
+             }
+          } else {
+             Swal.fire('เกิดข้อผิดพลาด', 'บันทึกข้อมูลไม่สำเร็จ', 'error');
+          }
+       });
+    }
+
+    // 🟢 ระบบจัดการ UI ดาวประเมิน
+    let stars = [1,2,3,4,5];
+    function hoverStar(val) {
+        let items = document.querySelectorAll('.star-rating i');
+        items.forEach((item, index) => {
+            if(index < val) item.classList.add('hover');
+            else item.classList.remove('hover');
+        });
+    }
+    function resetStar() {
+        let items = document.querySelectorAll('.star-rating i');
+        items.forEach(item => item.classList.remove('hover'));
+    }
+    function setStar(val) {
+        document.getElementById('sys_rating_val').value = val;
+        let items = document.querySelectorAll('.star-rating i');
+        items.forEach((item, index) => {
+            if(index < val) item.classList.add('active');
+            else item.classList.remove('active');
+        });
+    }
+    function submitRating() {
+        let score = document.getElementById('sys_rating_val').value;
+        if(score == 0) { Swal.fire('กรุณาให้คะแนน', 'กรุณากดเลือกดาวเพื่อประเมินความพึงพอใจ', 'warning'); return; }
+        
+        let feedback = document.getElementById('sys_feedback').value;
+        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
+        postData({ action: 'saveRating', stars: score, sysFeedback: feedback }, (res) => {
+            bootstrap.Modal.getInstance(document.getElementById('ratingModal')).hide();
+            Swal.fire('ขอบพระคุณ!', 'ระบบได้รับความคิดเห็นและการประเมินของท่านเรียบร้อยแล้ว', 'success').then(() => {
+                showPage('home');
+            });
+            // Reset modal state
+            document.getElementById('sys_rating_val').value = 0;
+            document.getElementById('sys_feedback').value = '';
+            document.querySelectorAll('.star-rating i').forEach(item => item.classList.remove('active'));
+        });
+    }
     
     function loginToggle() {
       if(isAdmin) return logoutSystem();
-      
       Swal.fire({
         title: 'เข้าสู่ระบบผู้ดูแลระบบ',
         html: 
@@ -1050,15 +1354,12 @@
           const username = result.value[0];
           const password = result.value[1];
           if (!username || !password) { Swal.fire('กรุณากรอกข้อมูลให้ครบ'); return; }
-          
           Swal.fire({ title: 'กำลังตรวจสอบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-
           postData({action: 'login', username: username, password: password}, (data) => {
              if(data && data.status === 'SUCCESS') { 
                 setAdminMode(true); 
                 Swal.fire({icon: 'success', title: 'เข้าสู่ระบบสำเร็จ', timer: 1500, showConfirmButton: false}); 
-             } 
-             else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
+             } else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
           });
         }
       });
