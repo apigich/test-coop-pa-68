@@ -731,7 +731,6 @@
          hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date;
          hRatingOpen = (settings.h_rating === 'ON');
 
-         // แมปข้อมูลลง UI ประชาพิจารณ์
          document.getElementById('disp_h_title').innerText = hTitle;
          document.getElementById('disp_h_info_title').innerText = settings.h_info_title;
          document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
@@ -750,7 +749,6 @@
          let hFullObj = document.getElementById('disp_h_full');
          if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
 
-         // แมปข้อมูลลงหน้า Admin ประชาพิจารณ์
          document.getElementById('h_admin_title').value = hTitle;
          document.getElementById('h_admin_desc').value = hDesc;
          document.getElementById('h_admin_date').value = hDate;
@@ -771,7 +769,6 @@
          document.getElementById('h_admin_s3_2').value = settings.h_s3_2;
          document.getElementById('h_admin_s3_3').value = settings.h_s3_3;
 
-         // จัดการสลับหน้าฟอร์ม (เปิด-ปิด)
          if(!hOpen) {
             document.getElementById('hearingClosedMsg').style.display = 'block';
             document.getElementById('hearingFormContainer').style.display = 'none';
@@ -893,7 +890,6 @@
        });
     }
 
-    // 🟢 ระบบส่งข้อมูลอัปเดตประชาพิจารณ์
     function saveHearingConfig() {
        let payload = {
           action: 'updateHearingConfig',
@@ -905,8 +901,8 @@
           h_img: getVal('h_admin_img'),
           h_sum: getVal('h_admin_sum'),
           h_full: getVal('h_admin_full'),
-          h_info_title: getVal('h_admin_info_title'), // ค่าใหม่
-          h_info_desc: getVal('h_admin_info_desc'),   // ค่าใหม่
+          h_info_title: getVal('h_admin_info_title'), 
+          h_info_desc: getVal('h_admin_info_desc'),   
           h_q1: getVal('h_admin_q1'),
           h_q2: getVal('h_admin_q2'),
           h_q3: getVal('h_admin_q3'),
@@ -950,7 +946,6 @@
        Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' });
     }
 
-    // 🟢 แสดงลำดับวิดีโอในหน้า Admin
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
@@ -992,8 +987,9 @@
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => {
           if (response && response.status === 'SUCCESS') {
-             Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1500, showConfirmButton: false });
-             cancelEditVideo(); initSystem(); 
+             Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(() => {
+                 cancelEditVideo(); initSystem(); 
+             });
           } else { Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้: ' + (response ? response.message : 'Unknown Error'), 'error'); }
        });
     }
@@ -1016,10 +1012,13 @@
        document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEditVid').style.display = 'none';
     }
+    // 🟢 แก้บัคลบวิดีโอหมุนค้าง
     function deleteVideo(id) {
        if(!confirm('ต้องการลบวิดีโอนี้?')) return;
        Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'deleteVideo', id: id }, (res) => { initSystem(); });
+       postData({ action: 'deleteVideo', id: id }, (res) => { 
+           Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+       });
     }
 
     function filterDocs() {
@@ -1118,11 +1117,15 @@
          cancelEditDoc(); initSystem();
       });
     }
+    // 🟢 แก้บัคลบเอกสารหมุนค้าง
     function deleteDoc(id) {
       if(!confirm('ต้องการลบเอกสารนี้?')) return;
       Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-      postData({ action: 'deleteDoc', id: id }, (res) => { initSystem(); });
+      postData({ action: 'deleteDoc', id: id }, (res) => { 
+          Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+      });
     }
+    
     function openChat(docId) {
        let doc = docs.find(d => d.id === docId); if(!doc) return;
        currentDocLink = doc.link;
@@ -1190,10 +1193,13 @@
        document.getElementById('btnSaveQA').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEditQA').style.display = 'none';
     }
+    // 🟢 แก้บัคลบ Q&A หมุนค้าง
     function deleteQA(id) {
        if(!confirm('ต้องการลบหัวข้อนี้?')) return;
        Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'deleteQA', id: id }, (res) => { initSystem(); });
+       postData({ action: 'deleteQA', id: id }, (res) => { 
+           Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+       });
     }
 
     function handleBannerClick(num) {
@@ -1242,11 +1248,9 @@
 
     function submitHearing(e) {
        e.preventDefault();
-       
        let btn = document.getElementById('btnSubmitHearing');
        let oldText = btn.innerText;
-       btn.disabled = true;
-       btn.innerText = 'กำลังส่งข้อมูล...';
+       btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
 
        let visionVal = document.querySelector('input[name="h_vision"]:checked')?.value || "";
        let econVal = document.querySelector('input[name="h_econ"]:checked')?.value || "";
@@ -1267,8 +1271,7 @@
        };
 
        postData(payload, (res) => {
-          btn.disabled = false;
-          btn.innerText = oldText;
+          btn.disabled = false; btn.innerText = oldText;
           
           if(res && res.status === 'SUCCESS') {
              e.target.reset(); 
