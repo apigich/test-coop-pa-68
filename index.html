@@ -254,7 +254,7 @@
                  <div class="ps-3 mb-2"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_3" placeholder="ประเด็นย่อย 3 (เช่น สิ่งแวดล้อม)"></div>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4"></div>
              </div>
-             
+
              <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="saveHearingConfig()">บันทึกการตั้งค่าระบบรับฟังความคิดเห็นแบบมีส่วนร่วมทั้งหมด</button>
           </div>
 
@@ -317,11 +317,15 @@
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="0" class="active"></button>
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="1"></button>
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="2"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="3"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="4"></button>
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg"></div>
               <div class="carousel-item" data-bs-interval="4000"><img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg"></div>
               <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Royal_Park_Rajapruek.jpg/1280px-Royal_Park_Rajapruek.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://via.placeholder.com/800x1200/0d6efd/ffffff?text=Example+Vertical+Info"></div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span></button>
             <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span></button>
@@ -352,14 +356,14 @@
                  </div>
              </div>
 
-             <h5 class="fw-bold text-danger mb-3">1. สถิติการแจ้งปัญหา (ฟอร์มสีชมพู)</h5>
+             <h5 class="fw-bold text-danger mb-3">1. สถิติเรื่องแจ้งและข้อเสนอแนะการพัฒนา (ฟอร์มสีชมพู)</h5>
              <div class="row g-4 mb-5">
                  <div class="col-md-4">
                      <div class="card shadow-sm h-100 dash-card" style="border-left-color: #e91e63;">
                          <div class="card-body d-flex align-items-center">
                              <div class="dash-icon bg-danger me-3"><i class="material-icons">assignment_late</i></div>
                              <div>
-                                 <div class="text-muted small fw-bold">เรื่องร้องเรียนทั้งหมด</div>
+                                 <div class="text-muted small fw-bold">เรื่องรับแจ้งทั้งหมด</div>
                                  <div class="dash-num text-danger" id="stat_issues_total">0</div>
                                  <small class="text-secondary">เรื่อง</small>
                              </div>
@@ -376,7 +380,7 @@
                  </div>
              </div>
 
-             <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลระบบรับฟังความคิดเห็น (ฟอร์มสีเหลือง)</h5>
+             <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (ฟอร์มสีเหลือง)</h5>
              <div class="row g-4">
                  <div class="col-md-3">
                      <div class="card shadow-sm h-100 dash-card" style="border-left-color: #f1c40f;">
@@ -392,24 +396,52 @@
                  </div>
                  <div class="col-md-9">
                      <div class="row g-4">
-                         <div class="col-md-4">
+                         <div class="col-md-6">
                              <div class="card shadow-sm h-100">
-                                 <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">สัดส่วนภาคส่วน</h6><canvas id="chartSector" style="max-height: 150px;"></canvas></div>
+                                 <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">สัดส่วนภาคส่วน</h6><canvas id="chartSector" style="max-height: 180px;"></canvas></div>
                              </div>
                          </div>
-                         <div class="col-md-4">
+                         <div class="col-md-6">
                              <div class="card shadow-sm h-100">
-                                 <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">ความเห็นต่อวิสัยทัศน์</h6><canvas id="chartVision" style="max-height: 150px;"></canvas></div>
-                             </div>
-                         </div>
-                         <div class="col-md-4">
-                             <div class="card shadow-sm h-100">
-                                 <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">ประเด็นเร่งด่วนที่สุด</h6><canvas id="chartPriority" style="max-height: 150px;"></canvas></div>
+                                 <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6><canvas id="chartVision" style="max-height: 180px;"></canvas></div>
                              </div>
                          </div>
                      </div>
                  </div>
              </div>
+             
+             <div class="row g-4 mt-2">
+                 <div class="col-md-12">
+                     <h6 class="fw-bold text-success mb-2 border-bottom pb-2">3. สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)</h6>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="card shadow-sm h-100">
+                         <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-primary">ด้านเศรษฐกิจ</h6><canvas id="chartEcon" style="max-height: 180px;"></canvas></div>
+                     </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="card shadow-sm h-100">
+                         <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-primary">ด้านสังคม</h6><canvas id="chartSocial" style="max-height: 180px;"></canvas></div>
+                     </div>
+                 </div>
+                 <div class="col-md-4">
+                     <div class="card shadow-sm h-100">
+                         <div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-primary">ด้านสิ่งแวดล้อม</h6><canvas id="chartEnv" style="max-height: 180px;"></canvas></div>
+                     </div>
+                 </div>
+             </div>
+             
+             <div class="row g-4 mt-2 mb-5">
+                 <div class="col-md-12">
+                     <div class="card shadow-sm h-100 border-start border-4 border-info">
+                         <div class="card-body p-3">
+                             <h6 class="small fw-bold text-info mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6>
+                             <canvas id="chartPriority" style="max-height: 200px;"></canvas>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
           </div>
       </div>
 
@@ -585,7 +617,7 @@
             <div class="mb-3"><label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input class="form-control" id="f_name" required></div>
             <div class="mb-3"><label class="fw-bold form-label">เบอร์ติดต่อ</label><input class="form-control" id="f_contact"></div>
             <div class="mb-3" id="topicSelectDiv">
-               <label class="fw-bold form-label">หมวดหมู่ปัญหา <span class="text-danger">*</span></label>
+               <label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label>
                <select class="form-select" id="f_topic_select" required><option value="" selected disabled>-- กรุณาเลือก --</option><option>โครงสร้างพื้นฐาน</option><option>สิ่งแวดล้อม/มลพิษ</option><option>เศรษฐกิจ/อาชีพ</option><option>สังคม/ความปลอดภัย</option><option>อื่นๆ</option></select>
             </div>
             <div class="mb-3"><label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label><textarea class="form-control" id="f_detail" rows="5" required></textarea></div>
@@ -698,8 +730,6 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
   <script>
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false;
@@ -707,7 +737,7 @@
     let hOpen = true; let hTitle = "", hDesc = "", hDate = ""; 
     let hPlanName = ""; 
     let hRatingOpen = true;
-    let charts = { issues: null, sector: null, vision: null, priority: null };
+    let charts = { issues: null, sector: null, vision: null, priority: null, econ: null, social: null, env: null };
     let currentPage = 1; const itemsPerPage = 10;
     let currentDocLink = "";
 
@@ -727,7 +757,6 @@
          hPlanName = settings.h_plan_name; 
          hRatingOpen = (settings.h_rating === 'ON');
 
-         // แมปข้อมูลลง UI ประชาพิจารณ์
          document.getElementById('disp_h_title').innerText = hTitle;
          document.getElementById('disp_h_plan_name').innerText = hPlanName; 
          document.getElementById('disp_h_info_title').innerText = settings.h_info_title;
@@ -747,7 +776,6 @@
          let hFullObj = document.getElementById('disp_h_full');
          if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
 
-         // แมปข้อมูลลงหน้า Admin ประชาพิจารณ์
          document.getElementById('h_admin_title').value = hTitle;
          document.getElementById('h_admin_desc').value = hDesc;
          document.getElementById('h_admin_date').value = hDate;
@@ -775,21 +803,13 @@
          updateVideo(settings.video_url);
          updateDashboard(settings.dash_url);
          updateUI();
-         
          docs = docsData; qaList = qaData; videoList = vidData;
-         
          if(document.getElementById('page-docs').style.display==='block') filterDocs();
          if(document.getElementById('page-qa').style.display==='block') renderQA();
          if(document.getElementById('page-videos').style.display==='block') renderVideos();
-
          document.getElementById('globalLoader').style.opacity = '0';
          setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
-
-      }).catch(e => {
-         console.error("Connection Error:", e);
-         document.getElementById('globalLoader').style.display = 'none';
-         Swal.fire('เชื่อมต่อไม่ได้', 'กรุณารีเฟรชหน้าจอ', 'error');
-      });
+      }).catch(e => { console.error(e); document.getElementById('globalLoader').style.display = 'none'; Swal.fire('ข้อผิดพลาด', 'เชื่อมต่อไม่ได้', 'error'); });
     }
 
     function postData(data, callback) { 
@@ -799,6 +819,7 @@
        .catch(e => { console.error("Fetch Error:", e); Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือเช็คการ Deploy', 'error'); }); 
     }
     
+    // 🟢 โหลด Dashboard (เพิ่มกราฟส่วนที่ 3)
     function loadDashboard() {
        Swal.fire({ title: 'กำลังประมวลผล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        fetch(SCRIPT_URL + '?action=getDashboardStats')
@@ -808,10 +829,21 @@
            document.getElementById('btnOpenSheet').href = data.sheetUrl;
            document.getElementById('stat_issues_total').innerText = data.issues.total;
            renderChart('chartIssues', 'bar', Object.keys(data.issues.byCat), Object.values(data.issues.byCat), 'เรื่องร้องเรียน', '#e91e63');
+           
            document.getElementById('stat_hearing_total').innerText = data.hearing.total;
-           renderChart('chartSector', 'pie', Object.keys(data.hearing.bySector), Object.values(data.hearing.bySector), 'ผู้ตอบ', ['#f1c40f','#e67e22','#e74c3c','#9b59b6']);
-           renderChart('chartVision', 'doughnut', Object.keys(data.hearing.byVision), Object.values(data.hearing.byVision), 'วิสัยทัศน์', ['#2ecc71','#3498db','#95a5a6']);
+           renderChart('chartSector', 'pie', Object.keys(data.hearing.bySector), Object.values(data.hearing.bySector), 'ผู้ตอบ', ['#f1c40f','#e67e22','#e74c3c','#9b59b6', '#34495e']);
+           renderChart('chartVision', 'doughnut', Object.keys(data.hearing.byVision), Object.values(data.hearing.byVision), 'วิสัยทัศน์', ['#2ecc71','#f1c40f','#e74c3c']);
            renderChart('chartPriority', 'bar', Object.keys(data.hearing.byPriority), Object.values(data.hearing.byPriority), 'ความสำคัญ', '#34495e');
+
+           // 🟢 กราฟส่วนที่ 3 (ล็อกสีตามความหมายให้สวยงามและอ่านง่าย)
+           const stdLabels = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'];
+           const stdColors = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
+           
+           function getStdData(obj) { return stdLabels.map(l => obj[l] || 0); }
+
+           renderChart('chartEcon', 'doughnut', stdLabels, getStdData(data.hearing.byEcon), 'ด้านเศรษฐกิจ', stdColors);
+           renderChart('chartSocial', 'doughnut', stdLabels, getStdData(data.hearing.bySocial), 'ด้านสังคม', stdColors);
+           renderChart('chartEnv', 'doughnut', stdLabels, getStdData(data.hearing.byEnv), 'ด้านสิ่งแวดล้อม', stdColors);
        })
        .catch(e => { Swal.fire('โหลดข้อมูลไม่สำเร็จ', 'ลองใหม่อีกครั้ง', 'error'); });
     }
@@ -854,15 +886,12 @@
       ['home','docs','calendar','qa', 'videos', 'admin-dash'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
       document.getElementById('page-'+id).style.display = 'block';
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
-      
       if(id === 'admin-dash') {} 
       else { document.getElementById('menu-'+id).classList.add('active'); }
-
       if(id === 'docs') { filterDocs(); } 
       if(id === 'qa') { renderQA(); }
       if(id === 'videos') { renderVideos(); }
       if(id === 'admin-dash') { loadDashboard(); }
-
       window.scrollTo(0,0);
       if(window.innerWidth <= 992) {
          document.getElementById('sidebar').classList.remove('active');
@@ -965,10 +994,7 @@
              let adminControls = isAdmin ? `
                 <div class="p-2 bg-light border-top d-flex justify-content-between align-items-center">
                    <small class="text-muted fw-bold"><i class="material-icons align-middle text-secondary" style="font-size:16px;">sort</i> ลำดับ: <span class="text-primary">${orderBadge}</span></small>
-                   <div>
-                       <button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button>
-                       <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
-                   </div>
+                   <div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div>
                 </div>` : '';
              html += `
              <div class="col-md-6 col-lg-4">
@@ -1010,8 +1036,6 @@
        document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEditVid').style.display = 'none';
     }
-    
-    // 🟢 ลบวิดีโอแบบ SweetAlert (ไม่หมุนค้าง 100%)
     function deleteVideo(id) {
        Swal.fire({ title: 'ยืนยันการลบวิดีโอ?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบวิดีโอ', cancelButtonText: 'ยกเลิก' }).then((result) => {
           if (result.isConfirmed) {
@@ -1020,7 +1044,6 @@
           }
        });
     }
-
     function filterDocs() {
        let searchText = document.getElementById('searchDoc').value.toLowerCase();
        let catFilter = document.getElementById('filterCat').value;
@@ -1104,8 +1127,6 @@
          cancelEditDoc(); initSystem();
       });
     }
-
-    // 🟢 ลบเอกสารแบบ SweetAlert
     function deleteDoc(id) {
        Swal.fire({ title: 'ยืนยันการลบเอกสาร?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบเอกสาร', cancelButtonText: 'ยกเลิก' }).then((result) => {
           if (result.isConfirmed) {
@@ -1114,7 +1135,6 @@
           }
        });
     }
-
     function openChat(docId) {
        let doc = docs.find(d => d.id === docId); if(!doc) return;
        currentDocLink = doc.link;
@@ -1138,7 +1158,6 @@
           history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight;
        });
     }
-
     function renderQA() {
        let html = '';
        if(qaList.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูลถาม-ตอบ</div>'; }
@@ -1179,8 +1198,6 @@
        document.getElementById('btnSaveQA').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEditQA').style.display = 'none';
     }
-
-    // 🟢 ลบ Q&A แบบ SweetAlert
     function deleteQA(id) {
        Swal.fire({ title: 'ยืนยันการลบถาม-ตอบ?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบรายการ', cancelButtonText: 'ยกเลิก' }).then((result) => {
           if (result.isConfirmed) {
@@ -1189,7 +1206,6 @@
           }
        });
     }
-
     function handleBannerClick(num) {
        if(num === 1) {
            if(form1Open) { openFormModal('general', form1Title); }
@@ -1199,7 +1215,6 @@
            else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น', text: 'ขณะนี้อยู่นอกระยะเวลาการดำเนินการ', confirmButtonText: 'รับทราบ', confirmButtonColor: '#d63031' }); }
        }
     }
-    
     function openFormModal(type, titleText) {
        var modalForm = new bootstrap.Modal(document.getElementById('formModal'));
        document.getElementById('formTitle').innerText = titleText; 
@@ -1208,7 +1223,6 @@
        else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
-    
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText;
@@ -1232,6 +1246,7 @@
       });
     }
 
+    // 🟢 ระบบส่งฟอร์มประชาพิจารณ์ พร้อมข้อเสนอแนะเพิ่มเติม
     function submitHearing(e) {
        e.preventDefault();
        let btn = document.getElementById('btnSubmitHearing'); let oldText = btn.innerText;
