@@ -100,7 +100,6 @@
     .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
     .star-rating i.active { color: #f39c12; }
     
-    /* สไตล์เพิ่มเติมสำหรับภาพเงื่อนไขใน Modal */
     .hearing-banner-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
   </style>
 </head>
@@ -203,7 +202,7 @@
              <h6 class="fw-bold text-warning text-dark mb-3">ตั้งค่า: ระบบประชาพิจารณ์แผนฯ (กล่องสีเหลือง)</h6>
              
              <div class="row bg-light p-2 rounded mb-3">
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อแสดงบนกล่องเหลือง:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label><input type="text" id="h_admin_desc" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label><input type="text" id="h_admin_date" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2 d-flex gap-2">
@@ -218,15 +217,17 @@
                  </div>
              </div>
 
-             <div class="mb-3">
-                 <label class="fw-bold text-primary small">สื่อและเอกสารประกอบ (ถ้าไม่ใส่ระบบจะซ่อนอัตโนมัติ)</label>
-                 <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ภาพเงื่อนไข</span><input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพ (เช่น .jpg, .png)"></div>
+             <div class="mb-3 p-2 border rounded border-primary border-opacity-25 bg-white">
+                 <label class="fw-bold text-primary small mb-2">ข้อมูลชี้แจงและเอกสารประกอบ (แสดงก่อนส่วนที่ 2)</label>
+                 <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ภาพเงื่อนไข</span><input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพแบนเนอร์ (ถ้ามี)"></div>
+                 <div class="mb-2"><input type="text" class="form-control form-control-sm" id="h_admin_info_title" placeholder="หัวเรื่อง (เช่น หลักการและเหตุผล / สาระสำคัญ)"></div>
+                 <div class="mb-2"><textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea></div>
                  <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์สรุปย่อ</span><input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป"></div>
                  <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์แผนเต็ม</span><input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์"></div>
              </div>
 
-             <div class="mb-3 p-2 border rounded border-secondary border-opacity-25">
-                 <label class="fw-bold text-success small mb-2">ปรับแต่งข้อความแบบฟอร์ม (แก้ไขได้ 100%)</label>
+             <div class="mb-3 p-2 border rounded border-success border-opacity-25 bg-white">
+                 <label class="fw-bold text-success small mb-2">ปรับแต่งหัวข้อแบบฟอร์ม (แก้ไขได้ 100%)</label>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1"></div>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2"></div>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3"></div>
@@ -239,8 +240,8 @@
              <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="saveHearingConfig()">บันทึกการตั้งค่าระบบประชาพิจารณ์ทั้งหมด</button>
           </div>
 
-          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-primary">
-             <h6 class="fw-bold text-primary mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
+          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-info">
+             <h6 class="fw-bold text-info mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
              <div class="mb-2">
                <label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label>
                <input type="text" id="admin_video_title" class="form-control form-control-sm" placeholder="เช่น 📺 วิดีโอแนะนำความสำคัญ...">
@@ -253,7 +254,7 @@
                <label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label>
                <input type="text" id="admin_dash_url" class="form-control form-control-sm" placeholder="URL ของ Dashboard (ถ้ามี)">
              </div>
-             <button class="btn btn-sm btn-outline-primary w-100 mt-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
+             <button class="btn btn-sm btn-outline-info w-100 mt-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
           </div>
         </div>
 
@@ -347,6 +348,7 @@
       <div id="page-videos" style="display:none;">
         <div class="content-section">
           <h3 class="section-header">▶️ คลังวิดีโอแนะนำสำหรับการพัฒนาจังหวัด และสิ่งน่ารู้</h3>
+          
           <div id="adminVideoPanel" class="admin-controls mb-4">
              <div class="d-flex justify-content-between align-items-center mb-3">
                <h5 class="fw-bold m-0"><i class="material-icons align-middle">video_library</i> จัดการคลังวิดีโอ</h5>
@@ -367,13 +369,17 @@
                 </div>
              </form>
           </div>
-          <div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div>
+
+          <div id="videoListContainer" class="row g-4">
+              <div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div>
+          </div>
         </div>
       </div>
 
       <div id="page-docs" style="display:none;">
         <div class="content-section">
           <h3 class="section-header">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
+          
           <div id="adminDocPanel" class="admin-controls mb-4">
              <div class="d-flex justify-content-between align-items-center mb-3">
                <h5 class="fw-bold m-0"><i class="material-icons align-middle">post_add</i> จัดการเอกสาร/ลิงก์</h5>
@@ -408,6 +414,7 @@
                 </div>
              </form>
           </div>
+          
           <div class="row g-2 mb-3 align-items-center">
              <div class="col-md-4">
                 <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
@@ -427,9 +434,11 @@
                  </button>
              </div>
           </div>
+          
           <div class="text-muted small mb-3 text-start px-2">
              <b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ
           </div>
+
           <div id="docListContainer" class="list-group list-group-flush"></div>
           <div id="pagination" class="pagination-container"></div>
         </div>
@@ -578,15 +587,18 @@
         </div>
         <div class="modal-body bg-light">
           
-          <div class="text-center mb-4">
+          <div class="text-center mb-2">
              <img id="disp_h_img" class="hearing-banner-img shadow-sm" src="" style="display:none;">
-             <div class="d-flex justify-content-center gap-3 flex-wrap mt-2">
-                 <a id="disp_h_sum" href="#" target="_blank" class="btn btn-outline-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">description</i> สรุปอย่างย่อ</a>
-                 <a id="disp_h_full" href="#" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">menu_book</i> ร่างแผนฉบับเต็ม</a>
-             </div>
           </div>
 
-          <form onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
+          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;">
+              <i class="material-icons fs-1 mb-2">lock</i>
+              <h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5>
+              <p class="mb-0">ขอบพระคุณทุกท่านที่ให้ความร่วมมือในการพัฒนาจังหวัด</p>
+          </div>
+
+          <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
+             
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไป</h5>
              <div class="row g-3 mb-4">
                 <div class="col-md-6"><label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input type="text" class="form-control" id="h_name" required></div>
@@ -603,7 +615,22 @@
                 </div>
              </div>
 
-             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q2">ส่วนที่ 2: วิสัยทัศน์</h5>
+             <div class="bg-light border rounded p-4 mb-4 mt-2 shadow-sm border-primary border-opacity-25">
+                 <h5 class="fw-bold text-dark mb-2" id="disp_h_info_title">หลักการและเหตุผล</h5>
+                 <p class="text-muted mb-4" id="disp_h_info_desc" style="white-space: pre-line;">รายละเอียดชี้แจง...</p>
+                 
+                 <div class="d-flex justify-content-start gap-3 flex-wrap mb-4">
+                     <a id="disp_h_sum" href="#" target="_blank" class="btn btn-outline-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">description</i> สรุปอย่างย่อ</a>
+                     <a id="disp_h_full" href="#" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">menu_book</i> ร่างแผนฉบับเต็ม</a>
+                 </div>
+
+                 <div class="form-check border-top pt-3">
+                     <input class="form-check-input" type="checkbox" id="h_info_consent" required>
+                     <label class="form-check-label fw-bold text-danger" for="h_info_consent">ข้าพเจ้าได้อ่านและทำความเข้าใจรายละเอียดและเอกสารร่างแผนฯ เบื้องต้นแล้ว <span class="text-danger">*</span></label>
+                 </div>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4" id="disp_h_q2">ส่วนที่ 2: วิสัยทัศน์</h5>
              <div class="mb-4 ps-2">
                 <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required><label class="form-check-label">เห็นด้วย</label></div>
                 <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม"><label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label></div>
@@ -677,11 +704,9 @@
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false;
     
-    // ตั้งค่าฟอร์ม 1 แจ้งปัญหา
     let form1Open = true; 
     let form1Title = "", form1Desc = "", form1Date = "";
     
-    // ตั้งค่าฟอร์ม 2 ประชาพิจารณ์ (เปลี่ยนตัวแปรให้ชัด)
     let hOpen = true; 
     let hTitle = "", hDesc = "", hDate = "";
     let hRatingOpen = true;
@@ -699,21 +724,17 @@
          fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json())
       ]).then(([settings, docsData, qaData, vidData]) => {
          
-         // Set Data ฟอร์ม 1 (ชมพู)
          form1Open = (settings.form1_status === 'OPEN');
-         form1Title = settings.form1_title; 
-         form1Desc = settings.form1_desc; 
-         form1Date = settings.form1_date;
+         form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
 
-         // 🟢 Set Data ฟอร์ม 2 ประชาพิจารณ์ (เหลือง) แบบ 100% Editable
          hOpen = (settings.h_status === 'OPEN');
-         hTitle = settings.h_title;
-         hDesc = settings.h_desc;
-         hDate = settings.h_date;
+         hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date;
          hRatingOpen = (settings.h_rating === 'ON');
 
-         // แมปข้อมูลลงหน้าผู้ใช้งาน (UI) สำหรับประชาพิจารณ์
+         // แมปข้อมูลลง UI ประชาพิจารณ์
          document.getElementById('disp_h_title').innerText = hTitle;
+         document.getElementById('disp_h_info_title').innerText = settings.h_info_title;
+         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
          document.getElementById('disp_h_q1').innerText = settings.h_q1;
          document.getElementById('disp_h_q2').innerText = settings.h_q2;
          document.getElementById('disp_h_q3').innerText = settings.h_q3;
@@ -722,7 +743,6 @@
          document.getElementById('disp_h_s3_2').innerText = settings.h_s3_2;
          document.getElementById('disp_h_s3_3').innerText = settings.h_s3_3;
 
-         // จัดการภาพและลิงก์
          let hImgObj = document.getElementById('disp_h_img');
          if(settings.h_img) { hImgObj.src = settings.h_img; hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
          let hSumObj = document.getElementById('disp_h_sum');
@@ -730,12 +750,16 @@
          let hFullObj = document.getElementById('disp_h_full');
          if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
 
-         // แมปข้อมูลลงหน้าแอดมิน 
+         // แมปข้อมูลลงหน้า Admin ประชาพิจารณ์
          document.getElementById('h_admin_title').value = hTitle;
          document.getElementById('h_admin_desc').value = hDesc;
          document.getElementById('h_admin_date').value = hDate;
          document.getElementById('swHearingStatus').checked = hOpen;
          document.getElementById('swHearingRating').checked = hRatingOpen;
+         
+         document.getElementById('h_admin_info_title').value = settings.h_info_title;
+         document.getElementById('h_admin_info_desc').value = settings.h_info_desc;
+         
          document.getElementById('h_admin_img').value = settings.h_img;
          document.getElementById('h_admin_sum').value = settings.h_sum;
          document.getElementById('h_admin_full').value = settings.h_full;
@@ -747,7 +771,15 @@
          document.getElementById('h_admin_s3_2').value = settings.h_s3_2;
          document.getElementById('h_admin_s3_3').value = settings.h_s3_3;
 
-         // วิดีโอหลัก
+         // จัดการสลับหน้าฟอร์ม (เปิด-ปิด)
+         if(!hOpen) {
+            document.getElementById('hearingClosedMsg').style.display = 'block';
+            document.getElementById('hearingFormContainer').style.display = 'none';
+         } else {
+            document.getElementById('hearingClosedMsg').style.display = 'none';
+            document.getElementById('hearingFormContainer').style.display = 'block';
+         }
+
          document.getElementById('disp_video_title').innerText = settings.video_title;
          document.getElementById('admin_video_title').value = settings.video_title;
          updateVideo(settings.video_url);
@@ -774,27 +806,13 @@
     }
 
     function postData(data, callback) { 
-       fetch(SCRIPT_URL, { 
-           method: 'POST', 
-           body: JSON.stringify(data) 
-       })
-       .then(response => {
-           if (!response.ok) { throw new Error('Network response was not ok'); }
-           return response.text(); 
-       })
+       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+       .then(response => { if (!response.ok) { throw new Error('Network response was not ok'); } return response.text(); })
        .then(text => {
-           try {
-               let json = JSON.parse(text); 
-               callback(json);
-           } catch(e) {
-               console.error("Parse Error. Server sent:", text);
-               Swal.fire('ข้อผิดพลาด', 'ระบบ Google Apps Script ส่งข้อมูลผิดปกติ', 'error');
-           }
+           try { let json = JSON.parse(text); callback(json); } 
+           catch(e) { console.error("Parse Error. Server sent:", text); Swal.fire('ข้อผิดพลาด', 'ระบบส่งข้อมูลผิดปกติ', 'error'); }
        })
-       .catch(e => {
-          console.error("Fetch Error:", e);
-          Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือเช็คการ Deploy', 'error');
-       }); 
+       .catch(e => { console.error("Fetch Error:", e); Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือเช็คการ Deploy', 'error'); }); 
     }
     
     function updateVideo(url) {
@@ -875,7 +893,7 @@
        });
     }
 
-    // 🟢 ระบบบันทึกการตั้งค่าหน้าประชาพิจารณ์ 100% Editable
+    // 🟢 ระบบส่งข้อมูลอัปเดตประชาพิจารณ์
     function saveHearingConfig() {
        let payload = {
           action: 'updateHearingConfig',
@@ -887,6 +905,8 @@
           h_img: getVal('h_admin_img'),
           h_sum: getVal('h_admin_sum'),
           h_full: getVal('h_admin_full'),
+          h_info_title: getVal('h_admin_info_title'), // ค่าใหม่
+          h_info_desc: getVal('h_admin_info_desc'),   // ค่าใหม่
           h_q1: getVal('h_admin_q1'),
           h_q2: getVal('h_admin_q2'),
           h_q3: getVal('h_admin_q3'),
@@ -905,7 +925,6 @@
     }
 
     function updateUI() {
-       // ฟอร์ม 1 (ชมพู)
        document.getElementById('disp_title_1').innerText = form1Title;
        document.getElementById('disp_desc_1').innerText = form1Desc;
        document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
@@ -918,7 +937,6 @@
        if(form1Open) { b1.classList.remove('closed'); st1.style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } 
        else { b1.classList.add('closed'); st1.style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
        
-       // ฟอร์ม 2 (เหลือง - ประชาพิจารณ์)
        document.getElementById('disp_title_2').innerText = hTitle;
        document.getElementById('disp_desc_2').innerText = hDesc;
        document.getElementById('disp_date_2').innerText = "📅 " + hDate;
@@ -932,6 +950,7 @@
        Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' });
     }
 
+    // 🟢 แสดงลำดับวิดีโอในหน้า Admin
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
@@ -939,11 +958,16 @@
           videoList.forEach(vid => {
              let vidId = extractYouTubeID(vid.link);
              let embedUrl = vidId ? "https://www.youtube.com/embed/" + vidId : "";
+             let orderBadge = vid.order == 999 ? 'ไม่ระบุ' : vid.order;
              let adminControls = isAdmin ? `
-                <div class="p-2 bg-light border-top text-end">
-                   <button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button>
-                   <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
+                <div class="p-2 bg-light border-top d-flex justify-content-between align-items-center">
+                   <small class="text-muted fw-bold"><i class="material-icons align-middle text-secondary" style="font-size:16px;">sort</i> ลำดับ: <span class="text-primary">${orderBadge}</span></small>
+                   <div>
+                       <button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button>
+                       <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
+                   </div>
                 </div>` : '';
+             
              html += `
              <div class="col-md-6 col-lg-4">
                 <div class="video-card">
@@ -1171,8 +1195,7 @@
        Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        postData({ action: 'deleteQA', id: id }, (res) => { initSystem(); });
     }
-    
-    // 🟢 1. อัปเดตฟังก์ชันนี้ ให้แยกปุ่มกล่องสีเหลืองไปเปิด hearingModal แทน
+
     function handleBannerClick(num) {
        if(num === 1) {
            if(form1Open) { openFormModal('general', form1Title); }
@@ -1193,6 +1216,7 @@
        else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
+    
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText;
@@ -1216,7 +1240,6 @@
       });
     }
 
-    // 🟢 ระบบส่งฟอร์มประชาพิจารณ์ (ส่วนของกล่องสีเหลือง)
     function submitHearing(e) {
        e.preventDefault();
        
