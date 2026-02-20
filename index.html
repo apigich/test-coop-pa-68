@@ -199,8 +199,13 @@
           </div>
 
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-warning">
-             <h6 class="fw-bold text-warning text-dark mb-3">ตั้งค่า: ระบบประชาพิจารณ์แผนฯ (กล่องสีเหลือง)</h6>
+             <h6 class="fw-bold text-warning text-dark mb-3">ตั้งค่า: ระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (กล่องสีเหลือง)</h6>
              
+             <div class="mb-3 p-2 bg-warning bg-opacity-10 border border-warning rounded">
+                 <label class="small text-dark fw-bold">ชื่อแผนพัฒนาที่รับฟังความเห็น (แสดงผลตัวใหญ่ในฟอร์ม):</label>
+                 <input type="text" id="h_admin_plan_name" class="form-control" placeholder="เช่น แผนพัฒนาจังหวัดเชียงใหม่ พ.ศ. 2566 - 2570">
+             </div>
+
              <div class="row bg-light p-2 rounded mb-3">
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label><input type="text" id="h_admin_desc" class="form-control form-control-sm"></div>
@@ -599,6 +604,8 @@
 
           <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
              
+             <h4 class="fw-bold text-center text-primary mb-4" id="disp_h_plan_name">แผนพัฒนาจังหวัดเชียงใหม่ พ.ศ. 2566 - 2570</h4>
+
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไป</h5>
              <div class="row g-3 mb-4">
                 <div class="col-md-6"><label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input type="text" class="form-control" id="h_name" required></div>
@@ -635,10 +642,11 @@
                 <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required><label class="form-check-label">เห็นด้วย</label></div>
                 <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม"><label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label></div>
                 <div class="form-check"><input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย"><label class="form-check-label">ไม่เห็นด้วย</label></div>
+                <textarea class="form-control mt-3" id="h_vision_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์/เป้าหมาย (ถ้ามี)..."></textarea>
              </div>
 
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q3">ส่วนที่ 3: ประเด็นยุทธศาสตร์</h5>
-             <div class="table-responsive mb-4">
+             <div class="table-responsive mb-2">
                 <table class="table table-bordered table-striped align-middle text-center small">
                    <thead class="table-light"><tr><th class="text-start">ประเด็นการพัฒนา</th><th>เห็นด้วยมาก</th><th>เห็นด้วย</th><th>ไม่แน่ใจ</th><th>ไม่เห็นด้วย</th></tr></thead>
                    <tbody>
@@ -648,6 +656,7 @@
                    </tbody>
                 </table>
              </div>
+             <textarea class="form-control mb-4" id="h_strategy_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นการพัฒนา (ถ้ามี)..."></textarea>
 
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: ข้อเสนอแนะ</h5>
              <div class="mb-3">
@@ -658,7 +667,7 @@
                    <option value="ด้านทรัพยากรธรรมชาติ">ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม</option>
                 </select>
              </div>
-             <div class="mb-3"><textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติม..."></textarea></div>
+             <div class="mb-3"><textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)..."></textarea></div>
 
              <div class="alert alert-secondary mt-4 mb-4 small">
                 <div class="form-check">
@@ -709,6 +718,7 @@
     
     let hOpen = true; 
     let hTitle = "", hDesc = "", hDate = "";
+    let hPlanName = ""; // ตัวแปรเก็บชื่อแผนใหญ่
     let hRatingOpen = true;
 
     let currentPage = 1; const itemsPerPage = 10;
@@ -729,9 +739,12 @@
 
          hOpen = (settings.h_status === 'OPEN');
          hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date;
+         hPlanName = settings.h_plan_name; // 🟢 ดึงชื่อแผน
          hRatingOpen = (settings.h_rating === 'ON');
 
+         // 🟢 UI ประชาพิจารณ์
          document.getElementById('disp_h_title').innerText = hTitle;
+         document.getElementById('disp_h_plan_name').innerText = hPlanName; // แปะชื่อแผนตัวใหญ่
          document.getElementById('disp_h_info_title').innerText = settings.h_info_title;
          document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
          document.getElementById('disp_h_q1').innerText = settings.h_q1;
@@ -749,9 +762,11 @@
          let hFullObj = document.getElementById('disp_h_full');
          if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
 
+         // 🟢 หน้า Admin ประชาพิจารณ์
          document.getElementById('h_admin_title').value = hTitle;
          document.getElementById('h_admin_desc').value = hDesc;
          document.getElementById('h_admin_date').value = hDate;
+         document.getElementById('h_admin_plan_name').value = hPlanName; // ช่องแอดมินพิมพ์ชื่อแผน
          document.getElementById('swHearingStatus').checked = hOpen;
          document.getElementById('swHearingRating').checked = hRatingOpen;
          
@@ -890,12 +905,14 @@
        });
     }
 
+    // 🟢 ระบบบันทึกการตั้งค่าหน้ารับฟังความคิดเห็น
     function saveHearingConfig() {
        let payload = {
           action: 'updateHearingConfig',
           h_title: getVal('h_admin_title'),
           h_desc: getVal('h_admin_desc'),
           h_date: getVal('h_admin_date'),
+          h_plan_name: getVal('h_admin_plan_name'), // เก็บชื่อแผน
           h_status: document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED',
           h_rating: document.getElementById('swHearingRating').checked ? 'ON' : 'OFF',
           h_img: getVal('h_admin_img'),
@@ -936,6 +953,7 @@
        document.getElementById('disp_title_2').innerText = hTitle;
        document.getElementById('disp_desc_2').innerText = hDesc;
        document.getElementById('disp_date_2').innerText = "📅 " + hDate;
+       document.getElementById('disp_h_plan_name').innerText = hPlanName;
        
        let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
        if(hOpen) { b2.classList.remove('closed'); st2.style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } 
@@ -1012,12 +1030,25 @@
        document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEditVid').style.display = 'none';
     }
-    // 🟢 แก้บัคลบวิดีโอหมุนค้าง
+    
+    // 🟢 ใช้ SweetAlert ยืนยันลบวิดีโอ
     function deleteVideo(id) {
-       if(!confirm('ต้องการลบวิดีโอนี้?')) return;
-       Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'deleteVideo', id: id }, (res) => { 
-           Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+       Swal.fire({
+          title: 'ยืนยันการลบวิดีโอ?',
+          text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'ใช่, ลบวิดีโอ',
+          cancelButtonText: 'ยกเลิก'
+       }).then((result) => {
+          if (result.isConfirmed) {
+             Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+             postData({ action: 'deleteVideo', id: id }, (res) => { 
+                 Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+             });
+          }
        });
     }
 
@@ -1117,13 +1148,26 @@
          cancelEditDoc(); initSystem();
       });
     }
-    // 🟢 แก้บัคลบเอกสารหมุนค้าง
+    
+    // 🟢 ใช้ SweetAlert ยืนยันลบเอกสาร
     function deleteDoc(id) {
-      if(!confirm('ต้องการลบเอกสารนี้?')) return;
-      Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-      postData({ action: 'deleteDoc', id: id }, (res) => { 
-          Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
-      });
+       Swal.fire({
+          title: 'ยืนยันการลบเอกสาร?',
+          text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'ใช่, ลบเอกสาร',
+          cancelButtonText: 'ยกเลิก'
+       }).then((result) => {
+          if (result.isConfirmed) {
+             Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+             postData({ action: 'deleteDoc', id: id }, (res) => { 
+                 Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+             });
+          }
+       });
     }
     
     function openChat(docId) {
@@ -1193,12 +1237,25 @@
        document.getElementById('btnSaveQA').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEditQA').style.display = 'none';
     }
-    // 🟢 แก้บัคลบ Q&A หมุนค้าง
+    
+    // 🟢 ใช้ SweetAlert ยืนยันลบ Q&A
     function deleteQA(id) {
-       if(!confirm('ต้องการลบหัวข้อนี้?')) return;
-       Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'deleteQA', id: id }, (res) => { 
-           Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+       Swal.fire({
+          title: 'ยืนยันการลบถาม-ตอบ?',
+          text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#dc3545',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'ใช่, ลบรายการ',
+          cancelButtonText: 'ยกเลิก'
+       }).then((result) => {
+          if (result.isConfirmed) {
+             Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+             postData({ action: 'deleteQA', id: id }, (res) => { 
+                 Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); 
+             });
+          }
        });
     }
 
@@ -1210,7 +1267,7 @@
            if(hOpen) { 
                var hModal = new bootstrap.Modal(document.getElementById('hearingModal'));
                hModal.show();
-           } else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น', text: 'ขณะนี้อยู่นอกระยะเวลาการทำประชาพิจารณ์', confirmButtonText: 'รับทราบ', confirmButtonColor: '#d63031' }); }
+           } else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น', text: 'ขณะนี้อยู่นอกระยะเวลาการดำเนินการ', confirmButtonText: 'รับทราบ', confirmButtonColor: '#d63031' }); }
        }
     }
     
@@ -1246,11 +1303,14 @@
       });
     }
 
+    // 🟢 ส่งฟอร์มรับฟังความเห็น พร้อมข้อมูลข้อเสนอแนะเพิ่มเติม
     function submitHearing(e) {
        e.preventDefault();
+       
        let btn = document.getElementById('btnSubmitHearing');
        let oldText = btn.innerText;
-       btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
+       btn.disabled = true;
+       btn.innerText = 'กำลังส่งข้อมูล...';
 
        let visionVal = document.querySelector('input[name="h_vision"]:checked')?.value || "";
        let econVal = document.querySelector('input[name="h_econ"]:checked')?.value || "";
@@ -1259,13 +1319,16 @@
 
        let payload = {
           action: 'saveHearing',
+          plan_name: hPlanName, // 🟢 ส่งชื่อแผนไปด้วย
           name: getVal('h_name'),
           district: getVal('h_district'),
           sector: getVal('h_sector'),
           vision: visionVal,
+          vision_fb: getVal('h_vision_fb'), // 🟢 ข้อเสนอแนะวิสัยทัศน์
           econ: econVal,
           social: socVal,
           env: envVal,
+          strategy_fb: getVal('h_strategy_fb'), // 🟢 ข้อเสนอแนะยุทธศาสตร์
           priority: getVal('h_priority'),
           feedback: getVal('h_feedback')
        };
