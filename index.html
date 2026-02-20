@@ -90,7 +90,6 @@
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
 
-    /* Video Card Style */
     .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
     .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
     .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 1rem; }
@@ -137,14 +136,14 @@
         
         <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
         <div id="sub-home" class="mb-2">
-          <a class="nav-link-sub" onclick="scrollToId('section-video')">วิดีโอหลัก (แนะนำ)</a>
+          <a class="nav-link-sub" onclick="scrollToId('section-video')">วิดีโอแนะนำ</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-dash')">📍Dashboard</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-pr')">สื่อประชาสัมพันธ์</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-facebook')">ข่าวประชาสัมพันธ์</a>
         </div>
         
-        <a class="nav-link-main" id="menu-videos" onclick="showPage('videos')">▶️ คลังวิดีโอการพัฒนาฯ</a>
+        <a class="nav-link-main" id="menu-videos" onclick="showPage('videos')">▶️ คลังวิดีโอแนะนำ</a>
         
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
         <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
@@ -173,12 +172,12 @@
         </div>
 
         <div id="adminHomePanel" class="content-section bg-warning-subtle border-warning" style="display:none;">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle">admin_panel_settings</i> จัดการหน้าหลัก (Admin)</h5>
+          <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-warning pb-2">
+             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle text-success">verified_user</i> ยินดีต้อนรับผู้ดูแลระบบ (โหมดจัดการข้อมูล)</h5>
              <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
           </div>
-          <hr class="border-secondary opacity-25">
-          <div class="row">
+          
+          <div class="row mt-3">
             <div class="col-md-6 mb-3">
                <div class="bg-white p-3 rounded shadow-sm h-100 border-start border-4 border-danger">
                   <h6 class="fw-bold text-danger mb-3">ตั้งค่า: ฟอร์มที่ 1 (สีชมพู)</h6>
@@ -322,7 +321,7 @@
 
       <div id="page-videos" style="display:none;">
         <div class="content-section">
-          <h3 class="section-header">▶️ คลังวิดีโอการพัฒนาจังหวัด</h3>
+          <h3 class="section-header">▶️ คลังวิดีโอแนะนำสำหรับการพัฒนาจังหวัด และสิ่งน่ารู้</h3>
           
           <div id="adminVideoPanel" class="admin-controls mb-4">
              <div class="d-flex justify-content-between align-items-center mb-3">
@@ -546,7 +545,7 @@
          fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()),
          fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()),
          fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()),
-         fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json()) // ดึงข้อมูลวิดีโอ
+         fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json())
       ]).then(([settings, docsData, qaData, vidData]) => {
          
          form1Open = (settings.form1_status === 'OPEN');
@@ -554,7 +553,6 @@
          form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
          form2Title = settings.form2_title; form2Desc = settings.form2_desc; form2Date = settings.form2_date;
 
-         // อัปเดตวิดีโอหลัก
          document.getElementById('disp_video_title').innerText = settings.video_title;
          document.getElementById('admin_video_title').value = settings.video_title;
          updateVideo(settings.video_url);
@@ -563,7 +561,7 @@
          
          docs = docsData;
          qaList = qaData;
-         videoList = vidData; // เก็บข้อมูลวิดีโอใหม่
+         videoList = vidData;
          
          if(document.getElementById('page-docs').style.display==='block') filterDocs();
          if(document.getElementById('page-qa').style.display==='block') renderQA();
@@ -578,7 +576,19 @@
          Swal.fire('เชื่อมต่อไม่ได้', 'กรุณารีเฟรชหน้าจอ', 'error');
       });
     }
+
+    // 🟢 แก้บัคค้าง: ฟังก์ชัน Post Data กลางที่มีการจัดการ Error แน่นหนา
+    function postData(data, callback) { 
+       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+       .then(r => r.json())
+       .then(d => callback(d))
+       .catch(e => {
+          console.error(e);
+          Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือเช็คการ Deploy', 'error');
+       }); 
+    }
     
+    // --- Video & Dash Handling ---
     function updateVideo(url) {
        let videoId = extractYouTubeID(url);
        let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : "";
@@ -599,6 +609,7 @@
        else { ph.style.display = 'flex'; frame.style.display = 'none'; }
     }
 
+    // --- Sidebar & Layout ---
     function toggleSidebar() {
        let sidebar = document.getElementById('sidebar');
        let overlay = document.getElementById('sidebarOverlay');
@@ -630,10 +641,15 @@
        let vTitle = document.getElementById('admin_video_title').value;
        let vUrl = document.getElementById('admin_video_url').value;
        let dUrl = document.getElementById('admin_dash_url').value;
+       
+       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       
        postData({ action: 'updateGeneralConfig', vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
-          document.getElementById('disp_video_title').innerText = vTitle;
-          updateVideo(vUrl); updateDashboard(dUrl);
-          Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
+          if(res && res.status === 'SUCCESS') {
+             document.getElementById('disp_video_title').innerText = vTitle;
+             updateVideo(vUrl); updateDashboard(dUrl);
+             Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
+          } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
     function saveFormConfig(num) {
@@ -643,11 +659,16 @@
        let isChecked = document.getElementById('swForm' + num).checked;
        let status = isChecked ? 'OPEN' : 'CLOSED';
        let keyName = (num === 1) ? 'FORM_1' : 'FORM_2';
+       
+       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
        postData({ action: 'updateFormConfig', key: keyName, title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (response) => {
-          if (num === 1) { form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = isChecked; } 
-          else { form2Title = titleVal; form2Desc = descVal; form2Date = dateVal; form2Open = isChecked; }
-          updateUI();
-          Swal.fire({ icon: 'success', title: 'บันทึกการตั้งค่าเรียบร้อย', timer: 1500, showConfirmButton: false });
+          if(response && response.status === 'SUCCESS') {
+             if (num === 1) { form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = isChecked; } 
+             else { form2Title = titleVal; form2Desc = descVal; form2Date = dateVal; form2Open = isChecked; }
+             updateUI();
+             Swal.fire({ icon: 'success', title: 'บันทึกการตั้งค่าเรียบร้อย', timer: 1500, showConfirmButton: false });
+          } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
     function updateUI() {
@@ -676,7 +697,7 @@
        document.getElementById('swForm2').checked = form2Open;
     }
 
-    // --- 🟢 NEW: ระบบคลังวิดีโอ (Video Library) ---
+    // --- 🟢 NEW: ระบบคลังวิดีโอ (แก้บัคการบันทึก) ---
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
@@ -689,7 +710,6 @@
                    <button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button>
                    <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
                 </div>` : '';
-             
              html += `
              <div class="col-md-6 col-lg-4">
                 <div class="video-card">
@@ -704,16 +724,26 @@
        }
        document.getElementById('videoListContainer').innerHTML = html;
     }
+    
+    // 🟢 ฟังก์ชันเพิ่มวิดีโอที่มีระบบ Loading ดักกันเว็บค้าง
     function submitVideo(e) {
        e.preventDefault();
        let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link');
-       let isEdit = (id !== "");
-       if(isEdit) { let idx = videoList.findIndex(x => x.id === id); if(idx !== -1) { videoList[idx].title = title; videoList[idx].link = link; } } 
-       else { videoList.unshift({ title: title, link: link, id: 'TEMP_'+Date.now() }); }
-       renderVideos(); cancelEditVideo();
-       Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1500, showConfirmButton: false });
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveVideo', id: id, title: title, link: link }) }).then(r=>r.json()).then(d=>initSystem());
+       
+       // โชว์ Loading ก่อนยิงข้อมูล
+       Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
+       postData({ action: 'saveVideo', id: id, title: title, link: link }, (response) => {
+          if (response && response.status === 'SUCCESS') {
+             Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1500, showConfirmButton: false });
+             cancelEditVideo();
+             initSystem(); // รันเพื่อดึงข้อมูลใหม่ทั้งหมด
+          } else {
+             Swal.fire('ข้อผิดพลาด', 'ไม่สามารถบันทึกได้: ' + (response ? response.message : 'Unknown Error'), 'error');
+          }
+       });
     }
+
     function editVideo(id) {
        let item = videoList.find(x => x.id === id); if(!item) return;
        document.getElementById('vid_id').value = item.id;
@@ -733,8 +763,8 @@
     }
     function deleteVideo(id) {
        if(!confirm('ต้องการลบวิดีโอนี้?')) return;
-       videoList = videoList.filter(x => x.id !== id); renderVideos();
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteVideo', id: id }) });
+       Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       postData({ action: 'deleteVideo', id: id }, (res) => { initSystem(); });
     }
 
     // --- Core Logic (Docs, Chat, QA, Forms) ---
@@ -810,25 +840,20 @@
        document.getElementById('btnSaveDoc').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEdit').style.display = 'none';
     }
+    // เพิ่ม Loading กันค้าง
     function submitDocument(e) {
       e.preventDefault();
       let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link'), cat = getVal('doc_cat');
-      let isEdit = (id !== "");
-      if(isEdit) {
-         let idx = docs.findIndex(d => d.id === id);
-         if(idx !== -1) { docs[idx].title = title; docs[idx].desc = desc; docs[idx].link = link; docs[idx].type = cat; docs[idx].updated = new Date().toISOString(); }
-      } else {
-         let newId = 'TEMP_' + Date.now(); 
-         docs.unshift({ title: title, desc: desc, link: link, id: newId, type: cat, created: new Date().toISOString() });
-      }
-      filterDocs(); cancelEditDoc(); 
-      Swal.fire({ icon: 'success', title: isEdit ? 'แก้ไขเรียบร้อย' : 'เพิ่มเอกสารแล้ว', timer: 1500, showConfirmButton: false });
-      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat }) }).then(r=>r.json()).then(d=>initSystem());
+      Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+      postData({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat }, (res) => {
+         Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
+         cancelEditDoc(); initSystem();
+      });
     }
     function deleteDoc(id) {
       if(!confirm('ต้องการลบเอกสารนี้?')) return;
-      docs = docs.filter(d => d.id !== id); filterDocs();
-      fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteDoc', id: id }) });
+      Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+      postData({ action: 'deleteDoc', id: id }, (res) => { initSystem(); });
     }
     function openChat(docId) {
        let doc = docs.find(d => d.id === docId); if(!doc) return;
@@ -846,15 +871,11 @@
        let loadingId = 'loading_' + Date.now();
        history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`;
        history.scrollTop = history.scrollHeight;
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'chatWithAI', link: currentDocLink, question: question }) })
-       .then(r => r.json()).then(data => {
+       postData({ action: 'chatWithAI', link: currentDocLink, question: question }, (data) => {
           document.getElementById(loadingId).remove();
           let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer;
           answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
           history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight;
-       }).catch(e => {
-          document.getElementById(loadingId).remove();
-          history.innerHTML += `<div class="chat-ai chat-msg text-danger">เชื่อมต่อไม่สำเร็จ</div>`;
        });
     }
     function renderQA() {
@@ -870,15 +891,15 @@
        }
        document.getElementById('accQA').innerHTML = html;
     }
+    // เพิ่ม Loading กันค้าง
     function submitQA(e) {
        e.preventDefault();
        let id = getVal('qa_id'), q = getVal('qa_question'), a = getVal('qa_answer'), emoji = getVal('qa_emoji');
-       let isEdit = (id !== "");
-       if(isEdit) { let idx = qaList.findIndex(x => x.id === id); if(idx !== -1) { qaList[idx].q = q; qaList[idx].a = a; qaList[idx].emoji = emoji; } } 
-       else { qaList.unshift({ q: q, a: a, emoji: emoji, id: 'TEMP_'+Date.now() }); }
-       renderQA(); cancelEditQA();
-       Swal.fire({ icon: 'success', title: 'บันทึกข้อมูลแล้ว', timer: 1500, showConfirmButton: false });
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveQA', id: id, q: q, a: a, emoji: emoji }) }).then(r=>r.json()).then(d=>initSystem());
+       Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       postData({ action: 'saveQA', id: id, q: q, a: a, emoji: emoji }, (res) => {
+          Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
+          cancelEditQA(); initSystem();
+       });
     }
     function editQA(id) {
        let item = qaList.find(x => x.id === id); if(!item) return;
@@ -900,8 +921,8 @@
     }
     function deleteQA(id) {
        if(!confirm('ต้องการลบหัวข้อนี้?')) return;
-       qaList = qaList.filter(x => x.id !== id); renderQA();
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteQA', id: id }) });
+       Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       postData({ action: 'deleteQA', id: id }, (res) => { initSystem(); });
     }
     function handleBannerClick(num) {
        let isOpen = (num === 1) ? form1Open : form2Open;
@@ -943,6 +964,7 @@
       });
     }
     
+    // --- 🟢 Login System (แก้ยินดีต้อนรับผู้ดูแลระบบ) ---
     function loginToggle() {
       if(isAdmin) return logoutSystem();
       
@@ -953,6 +975,8 @@
           '<input id="swal-input2" class="swal2-input" placeholder="รหัสผ่าน (Password)" type="password">',
         focusConfirm: false,
         confirmButtonText: 'เข้าสู่ระบบ',
+        showCancelButton: true,
+        cancelButtonText: 'ยกเลิก',
         preConfirm: () => {
           return [
             document.getElementById('swal-input1').value,
@@ -960,13 +984,18 @@
           ]
         }
       }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed && result.value) {
           const username = result.value[0];
           const password = result.value[1];
           if (!username || !password) { Swal.fire('กรุณากรอกข้อมูลให้ครบ'); return; }
           
+          Swal.fire({ title: 'กำลังตรวจสอบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+
           postData({action: 'login', username: username, password: password}, (data) => {
-             if(data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', timer: 1500, showConfirmButton: false}); } 
+             if(data.status === 'SUCCESS') { 
+                setAdminMode(true); 
+                Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', text: 'คุณสามารถจัดการข้อมูลได้แล้ว', timer: 2000, showConfirmButton: false}); 
+             } 
              else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
           });
         }
@@ -984,7 +1013,7 @@
           document.getElementById('adminHomePanel').style.display='block';
           document.getElementById('adminDocPanel').style.display='block';
           document.getElementById('adminQAPanel').style.display='block';
-          document.getElementById('adminVideoPanel').style.display='block'; // แสดงกล่องแอดมินวิดีโอ
+          document.getElementById('adminVideoPanel').style.display='block';
           document.getElementById('sidebarLogoutArea').style.display='block';
        } else {
           document.getElementById('adminHomePanel').style.display='none';
@@ -995,7 +1024,6 @@
        }
        renderDocs(); renderQA(); renderVideos();
     }
-    function postData(data, callback) { fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()).then(d => callback(d)).catch(e => console.error(e)); }
     function getVal(id) { return document.getElementById(id).value; }
     function formatDate(isoStr) { if(!isoStr) return ""; let d = new Date(isoStr); return d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); }
   </script>
