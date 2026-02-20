@@ -90,9 +90,30 @@
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
 
+    /* 🟢 อัปเกรด Video Card ให้อ่านง่ายบนมือถือ */
     .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
     .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 1rem; }
+    .video-title-bar { 
+        padding: 12px 15px; 
+        background: #f8f9fa; 
+        border-bottom: 1px solid #eee; 
+        font-weight: bold; 
+        color: #333; 
+        font-size: 0.95rem; 
+        cursor: pointer; /* ทำให้รู้ว่าคลิกได้ */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .video-title-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* 🟢 ให้โชว์ได้ 2 บรรทัด */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex-grow: 1;
+        padding-right: 10px;
+    }
+    .video-title-bar:hover { background-color: #e9ecef; }
   </style>
 </head>
 <body onload="initSystem()">
@@ -144,7 +165,6 @@
         </div>
         
         <a class="nav-link-main" id="menu-videos" onclick="showPage('videos')">▶️ คลังวิดีโอแนะนำ</a>
-        
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
         <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
         <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
@@ -333,7 +353,15 @@
              </div>
              <form onsubmit="submitVideo(event)">
                 <input type="hidden" id="vid_id" value="">
-                <div class="mb-2"><input type="text" class="form-control" id="vid_title" placeholder="ชื่อหัวข้อวิดีโอ" required></div>
+                
+                <div class="row g-2 mb-2">
+                   <div class="col-md-9">
+                      <input type="text" class="form-control" id="vid_title" placeholder="ชื่อหัวข้อวิดีโอ" required>
+                   </div>
+                   <div class="col-md-3">
+                      <input type="number" class="form-control" id="vid_order" placeholder="ลำดับ (เช่น 1, 2)">
+                   </div>
+                </div>
                 <div class="row g-2">
                    <div class="col-md-9"><input type="text" class="form-control" id="vid_link" placeholder="ลิงก์ YouTube (เช่น https://youtu.be/...)" required></div>
                    <div class="col-md-3"><button type="submit" id="btnSaveVid" class="btn btn-success w-100 fw-bold">เพิ่มวิดีโอ</button></div>
@@ -577,25 +605,28 @@
       });
     }
 
-    // 🟢 แก้บัคค้าง (Image 1 & Image 2) ด้วยการเขียน Fetch ใหม่ทั้งหมด ดัก Error ละเอียด
+    // 🟢 ฟังก์ชันนี้เขียนใหม่ อุดรอยรั่ว 100%
     function postData(data, callback) { 
        fetch(SCRIPT_URL, { 
            method: 'POST', 
            body: JSON.stringify(data) 
        })
-       .then(response => response.text()) // แปลงเป็น Text ก่อนเพื่อเช็คว่า Error เป็น HTML หรือไม่
+       .then(response => {
+           if (!response.ok) { throw new Error('Network response was not ok'); }
+           return response.text(); 
+       })
        .then(text => {
            try {
-               let json = JSON.parse(text); // ถ้าเป็น JSON ปกติ จะพาร์สผ่าน
+               let json = JSON.parse(text); 
                callback(json);
            } catch(e) {
-               console.error("Server Returned Non-JSON:", text);
-               Swal.fire('ข้อผิดพลาดของระบบ', 'การส่งข้อมูลล้มเหลว (เช็คการ Deploy Web App)', 'error');
+               console.error("Parse Error. Server sent:", text);
+               Swal.fire('ข้อผิดพลาด', 'ระบบ Google Apps Script ส่งข้อมูลผิดปกติ', 'error');
            }
        })
        .catch(e => {
-          console.error("Network Error:", e);
-          Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือตรวจสอบอินเทอร์เน็ต', 'error');
+          console.error("Fetch Error:", e);
+          Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือเช็คการ Deploy', 'error');
        }); 
     }
     
@@ -707,6 +738,12 @@
        document.getElementById('swForm2').checked = form2Open;
     }
 
+    // --- 🟢 ฟังก์ชันดูชื่อคลิปเต็มบนมือถือ ---
+    function showFullVideoTitle(fullText) {
+       Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' });
+    }
+
+    // --- ระบบคลังวิดีโอ (Video Library) ---
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
@@ -719,10 +756,15 @@
                    <button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button>
                    <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
                 </div>` : '';
+             
+             // 🟢 ใส่คลาสใหม่ให้คลิกดูชื่อเต็มได้
              html += `
              <div class="col-md-6 col-lg-4">
                 <div class="video-card">
-                   <div class="video-title-bar text-truncate" title="${vid.title}">${vid.title}</div>
+                   <div class="video-title-bar" onclick="showFullVideoTitle('${vid.title}')" title="คลิกเพื่อดูชื่อเต็ม">
+                      <div class="video-title-text">${vid.title}</div>
+                      <i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i>
+                   </div>
                    <div class="ratio ratio-16x9">
                       <iframe src="${embedUrl}" allowfullscreen></iframe>
                    </div>
@@ -736,17 +778,17 @@
     
     function submitVideo(e) {
        e.preventDefault();
-       let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link');
+       let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link'), order = getVal('vid_order');
        
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
-       postData({ action: 'saveVideo', id: id, title: title, link: link }, (response) => {
+       postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => {
           if (response && response.status === 'SUCCESS') {
              Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1500, showConfirmButton: false });
              cancelEditVideo();
              initSystem(); 
           } else {
-             // โชว์ข้อความที่ Error ชัดๆ ถ้าสิทธิ์ไม่ได้ หรือ Sheet ไม่มี
+             // 🟢 แจ้งข้อความ Error ชัดเจนให้แอดมินรู้
              Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้: ' + (response ? response.message : 'Unknown Error'), 'error');
           }
        });
@@ -757,6 +799,7 @@
        document.getElementById('vid_id').value = item.id;
        document.getElementById('vid_title').value = item.title;
        document.getElementById('vid_link').value = item.link;
+       document.getElementById('vid_order').value = item.order == 999 ? "" : item.order; // โชว์ลำดับ
        document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข';
        document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning');
        document.getElementById('btnCancelEditVid').style.display = 'inline-block';
@@ -970,7 +1013,6 @@
       });
     }
     
-    // --- 🟢 Login System (แก้ยินดีต้อนรับผู้ดูแลระบบ) ---
     function loginToggle() {
       if(isAdmin) return logoutSystem();
       
