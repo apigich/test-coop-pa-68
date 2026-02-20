@@ -99,9 +99,6 @@
 </head>
 <body onload="initSystem()">
 
-  <div id="fb-root"></div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/th_TH/sdk.js#xfbml=1&version=v18.0"></script>
-
   <div id="globalLoader">
     <div class="loader-content">
       <div class="loader-spinner"></div>
@@ -294,22 +291,18 @@
 
         <div id="sec-facebook" class="content-section">
           <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">newspaper</i> ข่าวประชาสัมพันธ์ (Facebook)</h4>
-          <div class="bg-white rounded shadow-sm border p-3">
-            <div class="text-center" style="overflow: hidden;">
-              <div class="fb-page" 
-                   data-href="https://www.facebook.com/Chiangmaioffice" 
-                   data-tabs="timeline" 
-                   data-width="500" 
-                   data-height="350" 
-                   data-small-header="true" 
-                   data-adapt-container-width="true" 
-                   data-hide-cover="false" 
-                   data-show-facepile="false">
-                <blockquote cite="https://www.facebook.com/Chiangmaioffice" class="fb-xfbml-parse-ignore">
-                  <a href="https://www.facebook.com/Chiangmaioffice">สำนักงานจังหวัดเชียงใหม่</a>
-                </blockquote>
-              </div>
-            </div>
+          <div class="bg-white rounded shadow-sm border p-3 text-center">
+            
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FChiangmaioffice&tabs=timeline&width=500&height=350&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" 
+                    width="100%" 
+                    height="350" 
+                    style="border:none; overflow:hidden; max-width: 500px;" 
+                    scrolling="no" 
+                    frameborder="0" 
+                    allowfullscreen="true" 
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+            </iframe>
+
             <div class="text-center mt-3">
                <a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">
                  ดูข่าวสารทั้งหมดบน Facebook <i class="material-icons align-middle fs-6">open_in_new</i>
@@ -397,8 +390,10 @@
              </form>
           </div>
           
-          <div class="row g-2 mb-3">
-             <div class="col-md-4"><input type="text" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." onkeyup="filterDocs()"></div>
+          <div class="row g-2 mb-3 align-items-center">
+             <div class="col-md-4">
+                <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
+             </div>
              <div class="col-md-3">
                 <select id="filterCat" class="form-select" onchange="filterDocs()">
                    <option value="All">ทุกหมวดหมู่</option>
@@ -407,6 +402,11 @@
                    <option value="Report">รายงานผล</option>
                    <option value="Announcement">ประกาศ/คำสั่ง</option>
                 </select>
+             </div>
+             <div class="col-md-auto col-12 mt-2 mt-md-0">
+                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()">
+                     <i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างข้อมูลค้นหา
+                 </button>
              </div>
           </div>
           
@@ -827,7 +827,13 @@
        return `<span class="badge ${colorClass} me-2">${label}</span>`;
     }
 
-    // 🟢 อัปเดต renderDocs เพื่อแสดง/ซ่อนปุ่มถาม AI แบบรายไฟล์
+    // 🟢 2. เพิ่มฟังก์ชันล้างข้อมูลค้นหา
+    function clearSearch() {
+        document.getElementById('searchDoc').value = '';
+        document.getElementById('filterCat').value = 'All';
+        filterDocs(); // เรียกตารางใหม่
+    }
+
     function renderDocs() {
       let html = '';
       if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML = ''; } 
@@ -842,7 +848,6 @@
           let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : '';
           let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
           
-          // 🟢 เช็คเงื่อนไขเพื่อเปิด-ปิด ปุ่ม AI รายไฟล์
           let chatBtn = '';
           if (doc.ai_status === 'OFF') {
               chatBtn = `<button class="btn btn-sm btn-secondary text-white me-2 opacity-50" style="cursor:not-allowed;" title="ฟังก์ชัน AI ถูกปิดสำหรับไฟล์นี้"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ปิด AI</button>`;
@@ -881,7 +886,6 @@
        document.getElementById('doc_desc').value = doc.desc;
        document.getElementById('doc_link').value = doc.link;
        document.getElementById('doc_cat').value = doc.type;
-       // 🟢 ดึงค่าสถานะ AI ของเก่ามาโชว์ตอน Edit (ถ้าไม่มีใช้ ON)
        document.getElementById('doc_ai_status').value = doc.ai_status || "ON";
        
        document.getElementById('btnSaveDoc').innerText = 'บันทึกการแก้ไข';
@@ -892,7 +896,7 @@
     function cancelEditDoc() {
        document.getElementById('adminDocPanel').querySelector('form').reset();
        document.getElementById('doc_id').value = '';
-       document.getElementById('doc_ai_status').value = 'ON'; // รีเซ็ตเป็นค่าเปิด AI เริ่มต้น
+       document.getElementById('doc_ai_status').value = 'ON'; 
        document.getElementById('btnSaveDoc').innerText = 'บันทึก';
        document.getElementById('btnSaveDoc').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEdit').style.display = 'none';
