@@ -90,29 +90,10 @@
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
 
-    /* 🟢 อัปเกรด Video Card ให้อ่านง่ายบนมือถือ */
     .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
     .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-    .video-title-bar { 
-        padding: 12px 15px; 
-        background: #f8f9fa; 
-        border-bottom: 1px solid #eee; 
-        font-weight: bold; 
-        color: #333; 
-        font-size: 0.95rem; 
-        cursor: pointer; /* ทำให้รู้ว่าคลิกได้ */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .video-title-text {
-        display: -webkit-box;
-        -webkit-line-clamp: 2; /* 🟢 ให้โชว์ได้ 2 บรรทัด */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        flex-grow: 1;
-        padding-right: 10px;
-    }
+    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
     .video-title-bar:hover { background-color: #e9ecef; }
   </style>
 </head>
@@ -515,7 +496,7 @@
         </div>
         <div class="modal-body p-0">
           <div id="chatHistory" class="chat-container">
-             <div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสารฉบับนี้ได้เลยครับ 😊</div>
+             <div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสารฉบับนี้ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ ปัจจุบันยังอยู่ในช่วงของการพัฒนาระบบ การตอบกลับของ AI อาจทำผิดพลาดได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้</small></div>
           </div>
           <div class="p-3 border-top bg-light">
              <div class="input-group">
@@ -605,7 +586,6 @@
       });
     }
 
-    // 🟢 ฟังก์ชันนี้เขียนใหม่ อุดรอยรั่ว 100%
     function postData(data, callback) { 
        fetch(SCRIPT_URL, { 
            method: 'POST', 
@@ -738,12 +718,10 @@
        document.getElementById('swForm2').checked = form2Open;
     }
 
-    // --- 🟢 ฟังก์ชันดูชื่อคลิปเต็มบนมือถือ ---
     function showFullVideoTitle(fullText) {
        Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' });
     }
 
-    // --- ระบบคลังวิดีโอ (Video Library) ---
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
@@ -757,7 +735,6 @@
                    <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
                 </div>` : '';
              
-             // 🟢 ใส่คลาสใหม่ให้คลิกดูชื่อเต็มได้
              html += `
              <div class="col-md-6 col-lg-4">
                 <div class="video-card">
@@ -788,7 +765,6 @@
              cancelEditVideo();
              initSystem(); 
           } else {
-             // 🟢 แจ้งข้อความ Error ชัดเจนให้แอดมินรู้
              Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้: ' + (response ? response.message : 'Unknown Error'), 'error');
           }
        });
@@ -799,7 +775,7 @@
        document.getElementById('vid_id').value = item.id;
        document.getElementById('vid_title').value = item.title;
        document.getElementById('vid_link').value = item.link;
-       document.getElementById('vid_order').value = item.order == 999 ? "" : item.order; // โชว์ลำดับ
+       document.getElementById('vid_order').value = item.order == 999 ? "" : item.order;
        document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข';
        document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning');
        document.getElementById('btnCancelEditVid').style.display = 'inline-block';
@@ -818,7 +794,6 @@
        postData({ action: 'deleteVideo', id: id }, (res) => { initSystem(); });
     }
 
-    // --- Core Logic (Docs, Chat, QA, Forms) ---
     function filterDocs() {
        let searchText = document.getElementById('searchDoc').value.toLowerCase();
        let catFilter = document.getElementById('filterCat').value;
@@ -905,12 +880,19 @@
       Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
       postData({ action: 'deleteDoc', id: id }, (res) => { initSystem(); });
     }
+    
+    // 🟢 ระบบเปิดแชทที่มาพร้อมคำเตือนใน UI ตอนเริ่มต้นเลย
     function openChat(docId) {
        let doc = docs.find(d => d.id === docId); if(!doc) return;
        currentDocLink = doc.link;
-       document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊</div>`;
+       document.getElementById('chatHistory').innerHTML = `
+          <div class="chat-ai chat-msg">
+             สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊
+             <br><br><small class="text-danger">⚠️ ปัจจุบันยังอยู่ในช่วงของการพัฒนาระบบ การตอบกลับของ AI อาจทำผิดพลาดได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้</small>
+          </div>`;
        new bootstrap.Modal(document.getElementById('chatModal')).show();
     }
+    
     function sendChat() {
        let input = document.getElementById('chatInput');
        let question = input.value.trim();
