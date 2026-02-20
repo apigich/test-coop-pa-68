@@ -59,7 +59,7 @@
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; }
+    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block;}
     .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
 
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
@@ -173,7 +173,7 @@
 
         <div id="adminHomePanel" class="content-section bg-warning-subtle border-warning" style="display:none;">
           <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-warning pb-2">
-             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle text-success">verified_user</i> ยินดีต้อนรับผู้ดูแลระบบ (โหมดจัดการข้อมูล)</h5>
+             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle text-success">verified_user</i> ยินดีต้อนรับผู้ดูแลระบบ</h5>
              <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
           </div>
           
@@ -456,7 +456,7 @@
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
         <div id="footerCopyright">© 2026 All Rights Reserved.</div>
         <div class="admin-link-container">
-           <a onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a>
+           <a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a>
         </div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
@@ -577,18 +577,28 @@
       });
     }
 
-    // 🟢 แก้บัคค้าง: ฟังก์ชัน Post Data กลางที่มีการจัดการ Error แน่นหนา
+    // 🟢 แก้บัคค้าง (Image 1 & Image 2) ด้วยการเขียน Fetch ใหม่ทั้งหมด ดัก Error ละเอียด
     function postData(data, callback) { 
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
-       .then(r => r.json())
-       .then(d => callback(d))
+       fetch(SCRIPT_URL, { 
+           method: 'POST', 
+           body: JSON.stringify(data) 
+       })
+       .then(response => response.text()) // แปลงเป็น Text ก่อนเพื่อเช็คว่า Error เป็น HTML หรือไม่
+       .then(text => {
+           try {
+               let json = JSON.parse(text); // ถ้าเป็น JSON ปกติ จะพาร์สผ่าน
+               callback(json);
+           } catch(e) {
+               console.error("Server Returned Non-JSON:", text);
+               Swal.fire('ข้อผิดพลาดของระบบ', 'การส่งข้อมูลล้มเหลว (เช็คการ Deploy Web App)', 'error');
+           }
+       })
        .catch(e => {
-          console.error(e);
-          Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือเช็คการ Deploy', 'error');
+          console.error("Network Error:", e);
+          Swal.fire('ข้อผิดพลาดในการเชื่อมต่อ', 'กรุณาลองใหม่อีกครั้ง หรือตรวจสอบอินเทอร์เน็ต', 'error');
        }); 
     }
     
-    // --- Video & Dash Handling ---
     function updateVideo(url) {
        let videoId = extractYouTubeID(url);
        let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : "";
@@ -609,7 +619,6 @@
        else { ph.style.display = 'flex'; frame.style.display = 'none'; }
     }
 
-    // --- Sidebar & Layout ---
     function toggleSidebar() {
        let sidebar = document.getElementById('sidebar');
        let overlay = document.getElementById('sidebarOverlay');
@@ -636,12 +645,13 @@
        if(window.innerWidth <= 992) toggleSidebar();
     }
 
-    // --- Admin Config ---
     function saveGeneralConfig() {
        let vTitle = document.getElementById('admin_video_title').value;
        let vUrl = document.getElementById('admin_video_url').value;
        let dUrl = document.getElementById('admin_dash_url').value;
        
+       if (!vTitle || vTitle.trim() === "") { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อหัวข้อวิดีโอ', 'warning'); return; }
+
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        
        postData({ action: 'updateGeneralConfig', vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
@@ -697,7 +707,6 @@
        document.getElementById('swForm2').checked = form2Open;
     }
 
-    // --- 🟢 NEW: ระบบคลังวิดีโอ (แก้บัคการบันทึก) ---
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
@@ -725,21 +734,20 @@
        document.getElementById('videoListContainer').innerHTML = html;
     }
     
-    // 🟢 ฟังก์ชันเพิ่มวิดีโอที่มีระบบ Loading ดักกันเว็บค้าง
     function submitVideo(e) {
        e.preventDefault();
        let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link');
        
-       // โชว์ Loading ก่อนยิงข้อมูล
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
        postData({ action: 'saveVideo', id: id, title: title, link: link }, (response) => {
           if (response && response.status === 'SUCCESS') {
              Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1500, showConfirmButton: false });
              cancelEditVideo();
-             initSystem(); // รันเพื่อดึงข้อมูลใหม่ทั้งหมด
+             initSystem(); 
           } else {
-             Swal.fire('ข้อผิดพลาด', 'ไม่สามารถบันทึกได้: ' + (response ? response.message : 'Unknown Error'), 'error');
+             // โชว์ข้อความที่ Error ชัดๆ ถ้าสิทธิ์ไม่ได้ หรือ Sheet ไม่มี
+             Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้: ' + (response ? response.message : 'Unknown Error'), 'error');
           }
        });
     }
@@ -840,7 +848,6 @@
        document.getElementById('btnSaveDoc').classList.replace('btn-warning', 'btn-success');
        document.getElementById('btnCancelEdit').style.display = 'none';
     }
-    // เพิ่ม Loading กันค้าง
     function submitDocument(e) {
       e.preventDefault();
       let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link'), cat = getVal('doc_cat');
@@ -891,7 +898,6 @@
        }
        document.getElementById('accQA').innerHTML = html;
     }
-    // เพิ่ม Loading กันค้าง
     function submitQA(e) {
        e.preventDefault();
        let id = getVal('qa_id'), q = getVal('qa_question'), a = getVal('qa_answer'), emoji = getVal('qa_emoji');
@@ -992,9 +998,9 @@
           Swal.fire({ title: 'กำลังตรวจสอบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
 
           postData({action: 'login', username: username, password: password}, (data) => {
-             if(data.status === 'SUCCESS') { 
+             if(data && data.status === 'SUCCESS') { 
                 setAdminMode(true); 
-                Swal.fire({icon: 'success', title: 'ยินดีต้อนรับผู้ดูแลระบบ', text: 'คุณสามารถจัดการข้อมูลได้แล้ว', timer: 2000, showConfirmButton: false}); 
+                Swal.fire({icon: 'success', title: 'เข้าสู่ระบบสำเร็จ', timer: 1500, showConfirmButton: false}); 
              } 
              else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
           });
