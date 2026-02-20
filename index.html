@@ -14,13 +14,11 @@
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* Loader */
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
     .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* Header */
     .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
@@ -40,7 +38,6 @@
       .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
-    /* Layout & Sidebar */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
@@ -55,31 +52,16 @@
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
     
-    /* Carousel Fix for Vertical Images */
-    .carousel-item {
-        background-color: #e9ecef; /* สีพื้นหลังกันว่าง */
-        height: 500px; /* กำหนดความสูงคงที่เพื่อให้ Layout ไม่กระโดด */
-    }
-    .carousel-item img {
-        width: auto !important; /* ปล่อยความกว้างอิสระ */
-        height: 100% !important; /* บังคับสูงเต็มกล่อง */
-        max-width: 100%; /* ไม่ให้กว้างเกินจอ */
-        margin: 0 auto; /* จัดกึ่งกลาง */
-        display: block;
-        object-fit: contain; /* โชว์ภาพครบทุกส่วน */
-    }
-    @media (max-width: 768px) {
-        .carousel-item { height: 400px; } /* มือถือลดความสูงลงหน่อย */
-    }
+    .carousel-item { background-color: #e9ecef; height: 500px; }
+    .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
+    @media (max-width: 768px) { .carousel-item { height: 400px; } }
 
-    /* Footer & Admin Link */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
     .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; }
     .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
 
-    /* Other Styles */
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -107,6 +89,11 @@
     .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
     .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
     @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+
+    /* Video Card Style */
+    .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
+    .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 1rem; }
   </style>
 </head>
 <body onload="initSystem()">
@@ -123,7 +110,7 @@
   </div>
 
   <script>
-    // ** ใส่ Web App URL ที่ Deploy แล้วตรงนี้ **
+    // ** ใส่ Web App URL ของคุณที่นี่ **
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -147,13 +134,18 @@
     <nav class="sidebar" id="sidebar">
       <div class="flex-grow-1 pt-4">
         <h6 class="px-3 text-secondary fw-bold mt-2 mb-3" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
+        
         <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
         <div id="sub-home" class="mb-2">
+          <a class="nav-link-sub" onclick="scrollToId('section-video')">วิดีโอหลัก (แนะนำ)</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-dash')">📍Dashboard</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-pr')">สื่อประชาสัมพันธ์</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-facebook')">ข่าวประชาสัมพันธ์</a>
         </div>
+        
+        <a class="nav-link-main" id="menu-videos" onclick="showPage('videos')">▶️ คลังวิดีโอการพัฒนาฯ</a>
+        
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
         <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
         <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
@@ -169,9 +161,14 @@
       <div id="page-home">
         
         <div id="section-video" class="content-section text-center">
-          <h3 class="section-header">📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด</h3>
+          <h3 class="section-header" id="disp_video_title">📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด</h3>
           <div class="ratio ratio-16x9 w-100 w-md-75 mx-auto shadow rounded overflow-hidden" style="max-width: 800px;">
             <iframe id="main_video_frame" src="" allowfullscreen></iframe>
+          </div>
+          <div class="mt-4">
+             <button onclick="showPage('videos')" class="btn btn-outline-primary fw-bold rounded-pill px-4">
+                ▶️ ดูวิดีโอเพิ่มเติมเกี่ยวกับการพัฒนาจังหวัด (Click Here)
+             </button>
           </div>
         </div>
 
@@ -210,7 +207,11 @@
             </div>
           </div>
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-primary">
-             <h6 class="fw-bold text-primary mb-3">ตั้งค่าทั่วไป (General Config)</h6>
+             <h6 class="fw-bold text-primary mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
+             <div class="mb-2">
+               <label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label>
+               <input type="text" id="admin_video_title" class="form-control form-control-sm" placeholder="เช่น 📺 วิดีโอแนะนำความสำคัญ...">
+             </div>
              <div class="mb-2">
                <label class="small text-muted">ลิงก์ YouTube (Video URL):</label>
                <input type="text" id="admin_video_url" class="form-control form-control-sm" placeholder="https://www.youtube.com/watch?v=...">
@@ -317,6 +318,34 @@
           </div>
         </div>
 
+      </div>
+
+      <div id="page-videos" style="display:none;">
+        <div class="content-section">
+          <h3 class="section-header">▶️ คลังวิดีโอการพัฒนาจังหวัด</h3>
+          
+          <div id="adminVideoPanel" class="admin-controls mb-4">
+             <div class="d-flex justify-content-between align-items-center mb-3">
+               <h5 class="fw-bold m-0"><i class="material-icons align-middle">video_library</i> จัดการคลังวิดีโอ</h5>
+               <div>
+                 <button id="btnCancelEditVid" class="btn btn-sm btn-secondary me-2" style="display:none;" onclick="cancelEditVideo()">ยกเลิก</button>
+                 <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i></button>
+               </div>
+             </div>
+             <form onsubmit="submitVideo(event)">
+                <input type="hidden" id="vid_id" value="">
+                <div class="mb-2"><input type="text" class="form-control" id="vid_title" placeholder="ชื่อหัวข้อวิดีโอ" required></div>
+                <div class="row g-2">
+                   <div class="col-md-9"><input type="text" class="form-control" id="vid_link" placeholder="ลิงก์ YouTube (เช่น https://youtu.be/...)" required></div>
+                   <div class="col-md-3"><button type="submit" id="btnSaveVid" class="btn btn-success w-100 fw-bold">เพิ่มวิดีโอ</button></div>
+                </div>
+             </form>
+          </div>
+
+          <div id="videoListContainer" class="row g-4">
+              <div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div>
+          </div>
+        </div>
       </div>
 
       <div id="page-docs" style="display:none;">
@@ -502,7 +531,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
-    let docs = [], qaList = [], filteredDocs = [];
+    let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false;
     let form1Open = true, form2Open = true; 
     let form1Title = "", form1Desc = "", form1Date = "";
@@ -516,27 +545,29 @@
       Promise.all([
          fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()),
          fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()),
-         fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json())
-      ]).then(([settings, docsData, qaData]) => {
+         fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()),
+         fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json()) // ดึงข้อมูลวิดีโอ
+      ]).then(([settings, docsData, qaData, vidData]) => {
          
          form1Open = (settings.form1_status === 'OPEN');
          form2Open = (settings.form2_status === 'OPEN');
-         form1Title = settings.form1_title;
-         form1Desc = settings.form1_desc;
-         form1Date = settings.form1_date;
-         form2Title = settings.form2_title;
-         form2Desc = settings.form2_desc;
-         form2Date = settings.form2_date;
+         form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
+         form2Title = settings.form2_title; form2Desc = settings.form2_desc; form2Date = settings.form2_date;
 
+         // อัปเดตวิดีโอหลัก
+         document.getElementById('disp_video_title').innerText = settings.video_title;
+         document.getElementById('admin_video_title').value = settings.video_title;
          updateVideo(settings.video_url);
          updateDashboard(settings.dash_url);
          updateUI();
          
          docs = docsData;
          qaList = qaData;
+         videoList = vidData; // เก็บข้อมูลวิดีโอใหม่
          
          if(document.getElementById('page-docs').style.display==='block') filterDocs();
          if(document.getElementById('page-qa').style.display==='block') renderQA();
+         if(document.getElementById('page-videos').style.display==='block') renderVideos();
 
          document.getElementById('globalLoader').style.opacity = '0';
          setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
@@ -548,7 +579,6 @@
       });
     }
     
-    // --- Video & Dash Handling ---
     function updateVideo(url) {
        let videoId = extractYouTubeID(url);
        let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : "";
@@ -569,7 +599,6 @@
        else { ph.style.display = 'flex'; frame.style.display = 'none'; }
     }
 
-    // --- Sidebar & Layout ---
     function toggleSidebar() {
        let sidebar = document.getElementById('sidebar');
        let overlay = document.getElementById('sidebarOverlay');
@@ -577,12 +606,13 @@
        overlay.classList.toggle('active');
     }
     function showPage(id) {
-      ['home','docs','calendar','qa'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
+      ['home','docs','calendar','qa', 'videos'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
       document.getElementById('page-'+id).style.display = 'block';
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
       document.getElementById('menu-'+id).classList.add('active');
       if(id === 'docs') { filterDocs(); } 
       if(id === 'qa') { renderQA(); }
+      if(id === 'videos') { renderVideos(); }
       window.scrollTo(0,0);
       if(window.innerWidth <= 992) {
          document.getElementById('sidebar').classList.remove('active');
@@ -597,9 +627,11 @@
 
     // --- Admin Config ---
     function saveGeneralConfig() {
+       let vTitle = document.getElementById('admin_video_title').value;
        let vUrl = document.getElementById('admin_video_url').value;
        let dUrl = document.getElementById('admin_dash_url').value;
-       postData({ action: 'updateGeneralConfig', video: vUrl, dash: dUrl }, (res) => {
+       postData({ action: 'updateGeneralConfig', vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
+          document.getElementById('disp_video_title').innerText = vTitle;
           updateVideo(vUrl); updateDashboard(dUrl);
           Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
        });
@@ -644,7 +676,68 @@
        document.getElementById('swForm2').checked = form2Open;
     }
 
-    // --- Core Logic (Docs, Chat, Forms) ---
+    // --- 🟢 NEW: ระบบคลังวิดีโอ (Video Library) ---
+    function renderVideos() {
+       let html = '';
+       if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
+       else {
+          videoList.forEach(vid => {
+             let vidId = extractYouTubeID(vid.link);
+             let embedUrl = vidId ? "https://www.youtube.com/embed/" + vidId : "";
+             let adminControls = isAdmin ? `
+                <div class="p-2 bg-light border-top text-end">
+                   <button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button>
+                   <button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button>
+                </div>` : '';
+             
+             html += `
+             <div class="col-md-6 col-lg-4">
+                <div class="video-card">
+                   <div class="video-title-bar text-truncate" title="${vid.title}">${vid.title}</div>
+                   <div class="ratio ratio-16x9">
+                      <iframe src="${embedUrl}" allowfullscreen></iframe>
+                   </div>
+                   ${adminControls}
+                </div>
+             </div>`;
+          });
+       }
+       document.getElementById('videoListContainer').innerHTML = html;
+    }
+    function submitVideo(e) {
+       e.preventDefault();
+       let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link');
+       let isEdit = (id !== "");
+       if(isEdit) { let idx = videoList.findIndex(x => x.id === id); if(idx !== -1) { videoList[idx].title = title; videoList[idx].link = link; } } 
+       else { videoList.unshift({ title: title, link: link, id: 'TEMP_'+Date.now() }); }
+       renderVideos(); cancelEditVideo();
+       Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1500, showConfirmButton: false });
+       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'saveVideo', id: id, title: title, link: link }) }).then(r=>r.json()).then(d=>initSystem());
+    }
+    function editVideo(id) {
+       let item = videoList.find(x => x.id === id); if(!item) return;
+       document.getElementById('vid_id').value = item.id;
+       document.getElementById('vid_title').value = item.title;
+       document.getElementById('vid_link').value = item.link;
+       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข';
+       document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning');
+       document.getElementById('btnCancelEditVid').style.display = 'inline-block';
+       document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
+    }
+    function cancelEditVideo() {
+       document.getElementById('adminVideoPanel').querySelector('form').reset();
+       document.getElementById('vid_id').value = '';
+       document.getElementById('btnSaveVid').innerText = 'เพิ่มวิดีโอ';
+       document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success');
+       document.getElementById('btnCancelEditVid').style.display = 'none';
+    }
+    function deleteVideo(id) {
+       if(!confirm('ต้องการลบวิดีโอนี้?')) return;
+       videoList = videoList.filter(x => x.id !== id); renderVideos();
+       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'deleteVideo', id: id }) });
+    }
+
+    // --- Core Logic (Docs, Chat, QA, Forms) ---
     function filterDocs() {
        let searchText = document.getElementById('searchDoc').value.toLowerCase();
        let catFilter = document.getElementById('filterCat').value;
@@ -850,7 +943,6 @@
       });
     }
     
-    // --- Login System Upgrade (User + Pass) ---
     function loginToggle() {
       if(isAdmin) return logoutSystem();
       
@@ -892,14 +984,16 @@
           document.getElementById('adminHomePanel').style.display='block';
           document.getElementById('adminDocPanel').style.display='block';
           document.getElementById('adminQAPanel').style.display='block';
+          document.getElementById('adminVideoPanel').style.display='block'; // แสดงกล่องแอดมินวิดีโอ
           document.getElementById('sidebarLogoutArea').style.display='block';
        } else {
           document.getElementById('adminHomePanel').style.display='none';
           document.getElementById('adminDocPanel').style.display='none';
           document.getElementById('adminQAPanel').style.display='none';
+          document.getElementById('adminVideoPanel').style.display='none';
           document.getElementById('sidebarLogoutArea').style.display='none';
        }
-       renderDocs(); renderQA();
+       renderDocs(); renderQA(); renderVideos();
     }
     function postData(data, callback) { fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => r.json()).then(d => callback(d)).catch(e => console.error(e)); }
     function getVal(id) { return document.getElementById(id).value; }
