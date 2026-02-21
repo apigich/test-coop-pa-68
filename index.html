@@ -88,10 +88,15 @@
     .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
     .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .chat-ai strong { color: #0d6efd; }
-    
+    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+
     .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
     .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
     .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
+    .video-title-bar:hover { background-color: #e9ecef; }
     
     .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
     .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
@@ -104,15 +109,18 @@
     .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
     .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
 
+    /* 🟢 สไตล์ปุ่มเมนูลอยตัวสำหรับมือถือ */
     .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
     .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
+    .floating-menu-btn i { font-size: 28px; }
     
+    /* 🟢 สไตล์สำหรับป้ายกำกับ (Badge) เอกสาร */
     .badge-pin { background-color: #34495e; color: white; }
     .badge-new { background-color: #27ae60; color: white; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
   </style>
 </head>
-<body>
+<body onload="initSystem()">
 
   <div id="globalLoader">
     <div class="loader-content">
@@ -123,7 +131,7 @@
   </div>
 
   <script>
-    // 🚨🚨🚨 ใส่ Web App URL ของคุณที่นี่ (สำคัญมาก) 🚨🚨🚨
+    // 🚨 ฝังลิงก์ของคุณให้แล้วครับ (แก้บัคเชื่อมต่อไม่ได้)
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -282,6 +290,24 @@
           </div>
         </div>
 
+        <div id="sec-pr" class="content-section">
+          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์ (Info-Graphics)</h4>
+          <div id="prCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="0" class="active"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="1"></button>
+              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg"></div>
+              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg"></div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span></button>
+          </div>
+        </div>
+
       </div>
 
       <div id="page-admin-dash" style="display:none;">
@@ -392,6 +418,7 @@
                  <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button>
              </div>
           </div>
+
           <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ</div>
           <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
           <div id="pagination" class="pagination-container"></div>
@@ -608,10 +635,12 @@
   </div>
 
   <script>
-    // 🟢 Javascript - ทำการจัดระเบียบให้ใหม่ เพื่อป้องกัน Error จากการบีบอัด 100% 🟢
-    
+    // ==========================================
+    // 🟢 โค้ด Javascript ทำการจัดรูปแบบใหม่ กัน Error 100% 🟢
+    // ==========================================
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
-    let isAdmin = false; let adminToken = "";
+    let isAdmin = false; 
+    let adminToken = "";
     let form1Open = true; let form1Title = "", form1Desc = "", form1Date = "";
     let hOpen = true; let hTitle = "", hDesc = "", hDate = ""; let hPlanName = ""; let hRatingOpen = true;
     let charts = { issues: null, sector: null, vision: null, priority: null, econ: null, social: null, env: null };
@@ -667,7 +696,6 @@
       });
     }
 
-    // 🟢 ปรับระบบ POST ข้อมูลให้แจ้งเตือนได้ตรงจุดมากขึ้น
     function postData(data, callback) { 
        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
        .then(r => r.text())
@@ -988,15 +1016,17 @@
         }); 
     }
 
+    // 🟢 ดักจับ Error ตัวเลขจาก Google Sheets (แก้ปัญหาหมุนค้าง)
     function buildYearFilter() {
        let years = new Set();
        docs.forEach(d => { 
-           if(d.year) { 
-               let parts = d.year.split('-'); 
+           if(d.year !== undefined && d.year !== null && d.year !== "") { 
+               let yearStr = d.year.toString().trim(); // บังคับเป็น Text เสมอ
+               let parts = yearStr.split('-'); 
                if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { 
                    for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) years.add(y.toString()); 
                } else { 
-                   years.add(d.year.trim()); 
+                   years.add(yearStr); 
                } 
            }
        });
@@ -1008,7 +1038,11 @@
 
     function sortDocsLogic(a, b) {
        if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1; 
-       let getYearMax = (yStr) => { if(!yStr) return 0; let p=yStr.split('-'); return p.length===2 ? parseInt(p[1]) : parseInt(yStr); };
+       let getYearMax = (yVal) => { 
+           if(!yVal) return 0; 
+           let p = yVal.toString().split('-'); 
+           return p.length === 2 ? parseInt(p[1]) : parseInt(yVal); 
+       };
        let yA = getYearMax(a.year), yB = getYearMax(b.year);
        if (yA !== yB) return yB - yA;
        let oA = a.order || 999, oB = b.order || 999;
@@ -1016,12 +1050,13 @@
        return new Date(b.created) - new Date(a.created);
     }
 
-    function isYearMatch(targetYear, docYearStr) {
+    function isYearMatch(targetYear, docYearVal) {
        if(targetYear === "All") return true; 
-       if(!docYearStr) return false;
+       if(!docYearVal) return false;
+       let docYearStr = docYearVal.toString().trim();
        let parts = docYearStr.split('-'); 
        if(parts.length === 2) { return parseInt(targetYear) >= parseInt(parts[0]) && parseInt(targetYear) <= parseInt(parts[1]); }
-       return targetYear === docYearStr.trim();
+       return targetYear === docYearStr;
     }
 
     function filterDocs() {
@@ -1208,11 +1243,10 @@
     function setAdminMode(status) {
        isAdmin = status; 
        let display = status ? 'block' : 'none'; 
-       let dFlex = status ? 'flex' : 'none'; // 🟢 เปิดโชว์ปุ่มเป็นกลุ่มแนวนอน (Flex)
+       let dFlex = status ? 'flex' : 'none'; 
        
        ['adminHomePanel', 'adminMenuSection'].forEach(id => document.getElementById(id).style.display = display);
        
-       // 🟢 สั่งโชว์หรือซ่อน ปุ่มเพิ่มข้อมูล + ปุ่มออกจากระบบ ที่อยู่คู่กัน
        ['adminDocBtnGroup', 'adminQABtnGroup', 'adminVideoBtnGroup'].forEach(id => {
            let el = document.getElementById(id);
            if(el) el.style.display = dFlex; 
