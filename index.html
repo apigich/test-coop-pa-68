@@ -320,57 +320,70 @@
                  </div>
              </div>
 
-             <h5 class="fw-bold text-danger mb-3">1. สถิติเรื่องแจ้งและข้อเสนอแนะการพัฒนา (ฟอร์มสีชมพู)</h5>
-             <div class="row g-4 mb-5">
-                 <div class="col-md-4">
-                     <div class="card shadow-sm h-100 dash-card" style="border-left-color: #e91e63;">
-                         <div class="card-body d-flex align-items-center">
-                             <div class="dash-icon bg-danger me-3"><i class="material-icons">assignment_late</i></div>
-                             <div>
-                                 <div class="text-muted small fw-bold">เรื่องรับแจ้งทั้งหมด</div>
-                                 <div class="dash-num text-danger" id="stat_issues_total">0</div>
-                                 <small class="text-secondary">เรื่อง</small>
+             <div class="mb-4">
+                 <h5 class="fw-bold text-danger mb-3">1. สถิติเรื่องแจ้งและข้อเสนอแนะการพัฒนา (ฟอร์มสีชมพู)</h5>
+                 <div class="row g-3">
+                     <div class="col-md-4">
+                         <div class="card shadow-sm h-100 dash-card" style="border-left-color: #e91e63;">
+                             <div class="card-body d-flex align-items-center">
+                                 <div class="dash-icon bg-danger me-3"><i class="material-icons">assignment_late</i></div>
+                                 <div>
+                                     <div class="text-muted small fw-bold">เรื่องรับแจ้งทั้งหมด</div>
+                                     <div class="dash-num text-danger" id="stat_issues_total">0</div>
+                                     <small class="text-secondary">เรื่อง</small>
+                                 </div>
                              </div>
                          </div>
                      </div>
-                 </div>
-                 <div class="col-md-8">
-                     <div class="card shadow-sm h-100"><div class="card-body"><h6 class="card-title fw-bold text-muted small">แยกตามหมวดหมู่</h6><canvas id="chartIssues" style="max-height: 200px;"></canvas></div></div>
+                     <div class="col-md-8">
+                         <div class="card shadow-sm h-100"><div class="card-body"><h6 class="card-title fw-bold text-muted small">แยกตามหมวดหมู่</h6><canvas id="chartIssues" style="max-height: 200px;"></canvas></div></div>
+                     </div>
                  </div>
              </div>
 
-             <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (ฟอร์มสีเหลือง)</h5>
-             <div class="row g-4">
-                 <div class="col-md-3">
-                     <div class="card shadow-sm h-100 dash-card" style="border-left-color: #f1c40f;">
-                         <div class="card-body d-flex align-items-center">
-                             <div class="dash-icon bg-warning text-dark me-3"><i class="material-icons">groups</i></div>
-                             <div>
-                                 <div class="text-muted small fw-bold">ผู้เข้าร่วมทั้งหมด</div>
-                                 <div class="dash-num text-dark" id="stat_hearing_total">0</div>
-                                 <small class="text-secondary">คน</small>
+             <hr class="my-5 border-secondary border-2 opacity-25">
+
+             <div>
+                 <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (ฟอร์มสีเหลือง)</h5>
+                 <div class="row g-3">
+                     <div class="col-md-3">
+                         <div class="card shadow-sm h-100 dash-card" style="border-left-color: #f1c40f;">
+                             <div class="card-body d-flex align-items-center">
+                                 <div class="dash-icon bg-warning text-dark me-3"><i class="material-icons">groups</i></div>
+                                 <div>
+                                     <div class="text-muted small fw-bold">ผู้เข้าร่วมทั้งหมด</div>
+                                     <div class="dash-num text-dark" id="stat_hearing_total">0</div>
+                                     <small class="text-secondary">คน</small>
+                                 </div>
                              </div>
                          </div>
                      </div>
+                     <div class="col-md-9">
+                         <div class="row g-3">
+                             <div class="col-md-6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-muted">สัดส่วนภาคส่วน</h6><canvas id="chartSector" style="max-height: 180px;"></canvas></div></div></div>
+                             <div class="col-md-6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-muted">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6><canvas id="chartVision" style="max-height: 180px;"></canvas></div></div></div>
+                         </div>
+                     </div>
                  </div>
-                 <div class="col-md-9">
-                     <div class="row g-4">
-                         <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">สัดส่วนภาคส่วน</h6><canvas id="chartSector" style="max-height: 180px;"></canvas></div></div></div>
-                         <div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6><canvas id="chartVision" style="max-height: 180px;"></canvas></div></div></div>
+                 
+                 <div class="row g-3 mt-1">
+                     <div class="col-md-12">
+                         <h6 class="fw-bold text-secondary mb-2 border-bottom pb-2"><i class="material-icons align-middle fs-6">bar_chart</i> สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)</h6>
+                     </div>
+                     <div class="col-md-4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark">ด้านเศรษฐกิจ</h6><canvas id="chartEcon" style="max-height: 180px;"></canvas></div></div></div>
+                     <div class="col-md-4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark">ด้านสังคม</h6><canvas id="chartSocial" style="max-height: 180px;"></canvas></div></div></div>
+                     <div class="col-md-4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark">ด้านสิ่งแวดล้อม</h6><canvas id="chartEnv" style="max-height: 180px;"></canvas></div></div></div>
+                 </div>
+                 
+                 <div class="row g-3 mt-1 mb-5">
+                     <div class="col-md-12">
+                         <div class="card shadow-sm h-100 border-start border-4 dash-card" style="border-left-color: #f1c40f !important;">
+                             <div class="card-body p-3"><h6 class="small fw-bold text-dark mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6><canvas id="chartPriority" style="max-height: 200px;"></canvas></div>
+                         </div>
                      </div>
                  </div>
              </div>
-             
-             <div class="row g-4 mt-2">
-                 <div class="col-md-12"><h6 class="fw-bold text-success mb-2 border-bottom pb-2">3. สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)</h6></div>
-                 <div class="col-md-4"><div class="card shadow-sm h-100"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-primary">ด้านเศรษฐกิจ</h6><canvas id="chartEcon" style="max-height: 180px;"></canvas></div></div></div>
-                 <div class="col-md-4"><div class="card shadow-sm h-100"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-primary">ด้านสังคม</h6><canvas id="chartSocial" style="max-height: 180px;"></canvas></div></div></div>
-                 <div class="col-md-4"><div class="card shadow-sm h-100"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-primary">ด้านสิ่งแวดล้อม</h6><canvas id="chartEnv" style="max-height: 180px;"></canvas></div></div></div>
-             </div>
-             
-             <div class="row g-4 mt-2 mb-5">
-                 <div class="col-md-12"><div class="card shadow-sm h-100 border-start border-4 border-info"><div class="card-body p-3"><h6 class="small fw-bold text-info mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6><canvas id="chartPriority" style="max-height: 200px;"></canvas></div></div></div>
-             </div>
+
           </div>
       </div>
 
@@ -489,9 +502,7 @@
         <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
         <div id="footerCopyright">© 2026 All Rights Reserved.</div>
-        <div class="admin-link-container">
-           <a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a>
-        </div>
+        <div class="admin-link-container"><a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a></div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">ช่องทางการติดต่อ</h5>
@@ -662,11 +673,9 @@
     let isAdmin = false;
     let form1Open = true; let form1Title = "", form1Desc = "", form1Date = "";
     let hOpen = true; let hTitle = "", hDesc = "", hDate = ""; 
-    let hPlanName = ""; 
-    let hRatingOpen = true;
+    let hPlanName = ""; let hRatingOpen = true;
     let charts = { issues: null, sector: null, vision: null, priority: null, econ: null, social: null, env: null };
-    let currentPage = 1; const itemsPerPage = 10;
-    let currentDocLink = "";
+    let currentPage = 1; const itemsPerPage = 10; let currentDocLink = "";
 
     function initSystem() { 
       document.getElementById('globalLoader').style.display = 'flex';
@@ -676,60 +685,31 @@
          fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()),
          fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json())
       ]).then(([settings, docsData, qaData, vidData]) => {
-         form1Open = (settings.form1_status === 'OPEN');
-         form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
+         form1Open = (settings.form1_status === 'OPEN'); form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
+         hOpen = (settings.h_status === 'OPEN'); hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date; hPlanName = settings.h_plan_name; hRatingOpen = (settings.h_rating === 'ON');
 
-         hOpen = (settings.h_status === 'OPEN');
-         hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date;
-         hPlanName = settings.h_plan_name; 
-         hRatingOpen = (settings.h_rating === 'ON');
+         document.getElementById('disp_h_title').innerText = hTitle; document.getElementById('disp_h_plan_name').innerText = hPlanName; 
+         document.getElementById('disp_h_info_title').innerText = settings.h_info_title; document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
+         document.getElementById('disp_h_q1').innerText = settings.h_q1; document.getElementById('disp_h_q2').innerText = settings.h_q2; document.getElementById('disp_h_q3').innerText = settings.h_q3; document.getElementById('disp_h_q4').innerText = settings.h_q4;
+         document.getElementById('disp_h_s3_1').innerText = settings.h_s3_1; document.getElementById('disp_h_s3_2').innerText = settings.h_s3_2; document.getElementById('disp_h_s3_3').innerText = settings.h_s3_3;
 
-         document.getElementById('disp_h_title').innerText = hTitle;
-         document.getElementById('disp_h_plan_name').innerText = hPlanName; 
-         document.getElementById('disp_h_info_title').innerText = settings.h_info_title;
-         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
-         document.getElementById('disp_h_q1').innerText = settings.h_q1;
-         document.getElementById('disp_h_q2').innerText = settings.h_q2;
-         document.getElementById('disp_h_q3').innerText = settings.h_q3;
-         document.getElementById('disp_h_q4').innerText = settings.h_q4;
-         document.getElementById('disp_h_s3_1').innerText = settings.h_s3_1;
-         document.getElementById('disp_h_s3_2').innerText = settings.h_s3_2;
-         document.getElementById('disp_h_s3_3').innerText = settings.h_s3_3;
+         let hImgObj = document.getElementById('disp_h_img'); if(settings.h_img) { hImgObj.src = settings.h_img; hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
+         let hSumObj = document.getElementById('disp_h_sum'); if(settings.h_sum) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else { hSumObj.style.display = 'none'; }
+         let hFullObj = document.getElementById('disp_h_full'); if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
 
-         let hImgObj = document.getElementById('disp_h_img');
-         if(settings.h_img) { hImgObj.src = settings.h_img; hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
-         let hSumObj = document.getElementById('disp_h_sum');
-         if(settings.h_sum) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else { hSumObj.style.display = 'none'; }
-         let hFullObj = document.getElementById('disp_h_full');
-         if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
-
-         document.getElementById('h_admin_title').value = hTitle;
-         document.getElementById('h_admin_desc').value = hDesc;
-         document.getElementById('h_admin_date').value = hDate;
-         document.getElementById('h_admin_plan_name').value = hPlanName; 
-         document.getElementById('swHearingStatus').checked = hOpen;
-         document.getElementById('swHearingRating').checked = hRatingOpen;
-         document.getElementById('h_admin_info_title').value = settings.h_info_title;
-         document.getElementById('h_admin_info_desc').value = settings.h_info_desc;
-         document.getElementById('h_admin_img').value = settings.h_img;
-         document.getElementById('h_admin_sum').value = settings.h_sum;
-         document.getElementById('h_admin_full').value = settings.h_full;
-         document.getElementById('h_admin_q1').value = settings.h_q1;
-         document.getElementById('h_admin_q2').value = settings.h_q2;
-         document.getElementById('h_admin_q3').value = settings.h_q3;
-         document.getElementById('h_admin_q4').value = settings.h_q4;
-         document.getElementById('h_admin_s3_1').value = settings.h_s3_1;
-         document.getElementById('h_admin_s3_2').value = settings.h_s3_2;
-         document.getElementById('h_admin_s3_3').value = settings.h_s3_3;
+         document.getElementById('h_admin_title').value = hTitle; document.getElementById('h_admin_desc').value = hDesc; document.getElementById('h_admin_date').value = hDate; document.getElementById('h_admin_plan_name').value = hPlanName; 
+         document.getElementById('swHearingStatus').checked = hOpen; document.getElementById('swHearingRating').checked = hRatingOpen;
+         document.getElementById('h_admin_info_title').value = settings.h_info_title; document.getElementById('h_admin_info_desc').value = settings.h_info_desc;
+         document.getElementById('h_admin_img').value = settings.h_img; document.getElementById('h_admin_sum').value = settings.h_sum; document.getElementById('h_admin_full').value = settings.h_full;
+         document.getElementById('h_admin_q1').value = settings.h_q1; document.getElementById('h_admin_q2').value = settings.h_q2; document.getElementById('h_admin_q3').value = settings.h_q3; document.getElementById('h_admin_q4').value = settings.h_q4;
+         document.getElementById('h_admin_s3_1').value = settings.h_s3_1; document.getElementById('h_admin_s3_2').value = settings.h_s3_2; document.getElementById('h_admin_s3_3').value = settings.h_s3_3;
 
          if(!hOpen) { document.getElementById('hearingClosedMsg').style.display = 'block'; document.getElementById('hearingFormContainer').style.display = 'none'; } 
          else { document.getElementById('hearingClosedMsg').style.display = 'none'; document.getElementById('hearingFormContainer').style.display = 'block'; }
 
-         document.getElementById('disp_video_title').innerText = settings.video_title;
-         document.getElementById('admin_video_title').value = settings.video_title;
-         updateVideo(settings.video_url);
-         updateDashboard(settings.dash_url);
-         updateUI();
+         document.getElementById('disp_video_title').innerText = settings.video_title; document.getElementById('admin_video_title').value = settings.video_title;
+         updateVideo(settings.video_url); updateDashboard(settings.dash_url); updateUI();
+         
          docs = docsData; qaList = qaData; videoList = vidData;
          if(document.getElementById('page-docs').style.display==='block') filterDocs();
          if(document.getElementById('page-qa').style.display==='block') renderQA();
@@ -748,9 +728,7 @@
     
     function loadDashboard() {
        Swal.fire({ title: 'กำลังประมวลผล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       fetch(SCRIPT_URL + '?action=getDashboardStats')
-       .then(r => r.json())
-       .then(data => {
+       fetch(SCRIPT_URL + '?action=getDashboardStats').then(r => r.json()).then(data => {
            Swal.close();
            document.getElementById('btnOpenSheet').href = data.sheetUrl;
            document.getElementById('stat_issues_total').innerText = data.issues.total;
@@ -764,12 +742,10 @@
            const stdLabels = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'];
            const stdColors = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
            function getStdData(obj) { return stdLabels.map(l => obj[l] || 0); }
-
            renderChart('chartEcon', 'doughnut', stdLabels, getStdData(data.hearing.byEcon), 'ด้านเศรษฐกิจ', stdColors);
            renderChart('chartSocial', 'doughnut', stdLabels, getStdData(data.hearing.bySocial), 'ด้านสังคม', stdColors);
            renderChart('chartEnv', 'doughnut', stdLabels, getStdData(data.hearing.byEnv), 'ด้านสิ่งแวดล้อม', stdColors);
-       })
-       .catch(e => { Swal.fire('โหลดข้อมูลไม่สำเร็จ', 'ลองใหม่อีกครั้ง', 'error'); });
+       }).catch(e => { Swal.fire('โหลดข้อมูลไม่สำเร็จ', 'ลองใหม่อีกครั้ง', 'error'); });
     }
 
     function renderChart(canvasId, type, labels, data, label, colors) {
@@ -781,74 +757,43 @@
     }
     
     function updateVideo(url) {
-       let videoId = extractYouTubeID(url);
-       let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : "";
-       document.getElementById('main_video_frame').src = embedUrl;
-       document.getElementById('admin_video_url').value = url || "";
+       let videoId = extractYouTubeID(url); let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : "";
+       document.getElementById('main_video_frame').src = embedUrl; document.getElementById('admin_video_url').value = url || "";
     }
     function extractYouTubeID(url) {
-       if (!url) return null;
-       var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-       var match = url.match(regExp);
-       return (match && match[2].length == 11) ? match[2] : null;
+       if (!url) return null; var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; var match = url.match(regExp); return (match && match[2].length == 11) ? match[2] : null;
     }
     function updateDashboard(url) {
-       let ph = document.getElementById('dash_placeholder');
-       let frame = document.getElementById('main_dash_frame');
-       document.getElementById('admin_dash_url').value = url || "";
-       if (url && url.length > 5) { ph.style.display = 'none'; frame.style.display = 'block'; frame.src = url; } 
-       else { ph.style.display = 'flex'; frame.style.display = 'none'; }
+       let ph = document.getElementById('dash_placeholder'); let frame = document.getElementById('main_dash_frame'); document.getElementById('admin_dash_url').value = url || "";
+       if (url && url.length > 5) { ph.style.display = 'none'; frame.style.display = 'block'; frame.src = url; } else { ph.style.display = 'flex'; frame.style.display = 'none'; }
     }
-
-    function toggleSidebar() {
-       let sidebar = document.getElementById('sidebar');
-       let overlay = document.getElementById('sidebarOverlay');
-       sidebar.classList.toggle('active');
-       overlay.classList.toggle('active');
-    }
+    function toggleSidebar() { let sidebar = document.getElementById('sidebar'); let overlay = document.getElementById('sidebarOverlay'); sidebar.classList.toggle('active'); overlay.classList.toggle('active'); }
     function showPage(id) {
       ['home','docs','calendar','qa', 'videos', 'admin-dash'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
       document.getElementById('page-'+id).style.display = 'block';
       document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
-      if(id === 'admin-dash') {} 
-      else { document.getElementById('menu-'+id).classList.add('active'); }
-      if(id === 'docs') { filterDocs(); } 
-      if(id === 'qa') { renderQA(); }
-      if(id === 'videos') { renderVideos(); }
-      if(id === 'admin-dash') { loadDashboard(); }
+      if(id === 'admin-dash') {} else { document.getElementById('menu-'+id).classList.add('active'); }
+      if(id === 'docs') { filterDocs(); } if(id === 'qa') { renderQA(); } if(id === 'videos') { renderVideos(); } if(id === 'admin-dash') { loadDashboard(); }
       window.scrollTo(0,0);
       if(window.innerWidth <= 992) { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
     }
-    function scrollToId(id) {
-       showPage('home');
-       setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100);
-       if(window.innerWidth <= 992) toggleSidebar();
-    }
+    function scrollToId(id) { showPage('home'); setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); if(window.innerWidth <= 992) toggleSidebar(); }
+    
     function saveGeneralConfig() {
-       let vTitle = document.getElementById('admin_video_title').value;
-       let vUrl = document.getElementById('admin_video_url').value;
-       let dUrl = document.getElementById('admin_dash_url').value;
+       let vTitle = document.getElementById('admin_video_title').value; let vUrl = document.getElementById('admin_video_url').value; let dUrl = document.getElementById('admin_dash_url').value;
        if (!vTitle || vTitle.trim() === "") { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อหัวข้อวิดีโอ', 'warning'); return; }
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        postData({ action: 'updateGeneralConfig', vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
-          if(res && res.status === 'SUCCESS') {
-             document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl);
-             Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
-          } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
+          if(res && res.status === 'SUCCESS') { document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } 
+          else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
     function saveFormConfig(num) {
-       let titleVal = document.getElementById('admin_title_1').value;
-       let descVal = document.getElementById('admin_subtitle_1').value;
-       let dateVal = document.getElementById('admin_date_1').value;
-       let isChecked = document.getElementById('swForm1').checked;
-       let status = isChecked ? 'OPEN' : 'CLOSED';
+       let titleVal = document.getElementById('admin_title_1').value; let descVal = document.getElementById('admin_subtitle_1').value; let dateVal = document.getElementById('admin_date_1').value; let isChecked = document.getElementById('swForm1').checked; let status = isChecked ? 'OPEN' : 'CLOSED';
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
        postData({ action: 'updateFormConfig', key: 'FORM_1', title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (response) => {
-          if(response && response.status === 'SUCCESS') {
-             form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = isChecked; updateUI();
-             Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false });
-          } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
+          if(response && response.status === 'SUCCESS') { form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = isChecked; updateUI(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } 
+          else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
     function saveHearingConfig() {
@@ -861,32 +806,26 @@
           h_s3_1: getVal('h_admin_s3_1'), h_s3_2: getVal('h_admin_s3_2'), h_s3_3: getVal('h_admin_s3_3')
        };
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData(payload, (res) => {
-          if(res && res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } 
-          else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
-       });
+       postData(payload, (res) => { if(res && res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); } });
     }
     function updateUI() {
        document.getElementById('disp_title_1').innerText = form1Title; document.getElementById('disp_desc_1').innerText = form1Desc; document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
-       document.getElementById('admin_title_1').value = form1Title; document.getElementById('admin_subtitle_1').value = form1Desc; document.getElementById('admin_date_1').value = form1Date;
-       document.getElementById('swForm1').checked = form1Open;
+       document.getElementById('admin_title_1').value = form1Title; document.getElementById('admin_subtitle_1').value = form1Desc; document.getElementById('admin_date_1').value = form1Date; document.getElementById('swForm1').checked = form1Open;
        let b1 = document.getElementById('banner1'), st1 = document.getElementById('statusBadge1');
-       if(form1Open) { b1.classList.remove('closed'); st1.style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } 
-       else { b1.classList.add('closed'); st1.style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
+       if(form1Open) { b1.classList.remove('closed'); st1.style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } else { b1.classList.add('closed'); st1.style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
        
        document.getElementById('disp_title_2').innerText = hTitle; document.getElementById('disp_desc_2').innerText = hDesc; document.getElementById('disp_date_2').innerText = "📅 " + hDate; document.getElementById('disp_h_plan_name').innerText = hPlanName;
        let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
-       if(hOpen) { b2.classList.remove('closed'); st2.style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } 
-       else { b2.classList.add('closed'); st2.style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
+       if(hOpen) { b2.classList.remove('closed'); st2.style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } else { b2.classList.add('closed'); st2.style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
     }
+    
     function showFullVideoTitle(fullText) { Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' }); }
     function renderVideos() {
        let html = '';
        if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; }
        else {
           videoList.forEach(vid => {
-             let vidId = extractYouTubeID(vid.link); let embedUrl = vidId ? "https://www.youtube.com/embed/" + vidId : "";
-             let orderBadge = vid.order == 999 ? 'ไม่ระบุ' : vid.order;
+             let vidId = extractYouTubeID(vid.link); let embedUrl = vidId ? "https://www.youtube.com/embed/" + vidId : ""; let orderBadge = vid.order == 999 ? 'ไม่ระบุ' : vid.order;
              let adminControls = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between align-items-center"><small class="text-muted fw-bold"><i class="material-icons align-middle text-secondary" style="font-size:16px;">sort</i> ลำดับ: <span class="text-primary">${orderBadge}</span></small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : '';
              html += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar" onclick="showFullVideoTitle('${vid.title}')" title="คลิกเพื่อดูชื่อเต็ม"><div class="video-title-text">${vid.title}</div><i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adminControls}</div></div>`;
           });
@@ -894,30 +833,22 @@
        document.getElementById('videoListContainer').innerHTML = html;
     }
     function submitVideo(e) {
-       e.preventDefault();
-       let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link'), order = getVal('vid_order');
+       e.preventDefault(); let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link'), order = getVal('vid_order');
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => {
-          if (response && response.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(() => { cancelEditVideo(); initSystem(); }); } 
-          else { Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้', 'error'); }
-       });
+       postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => { if (response && response.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(() => { cancelEditVideo(); initSystem(); }); } else { Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้', 'error'); } });
     }
     function editVideo(id) {
        let item = videoList.find(x => x.id === id); if(!item) return;
        document.getElementById('vid_id').value = item.id; document.getElementById('vid_title').value = item.title; document.getElementById('vid_link').value = item.link; document.getElementById('vid_order').value = item.order == 999 ? "" : item.order;
-       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข'; document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning');
-       document.getElementById('btnCancelEditVid').style.display = 'inline-block'; document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
+       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข'; document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning'); document.getElementById('btnCancelEditVid').style.display = 'inline-block'; document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
     }
-    function cancelEditVideo() {
-       document.getElementById('adminVideoPanel').querySelector('form').reset(); document.getElementById('vid_id').value = '';
-       document.getElementById('btnSaveVid').innerText = 'เพิ่มวิดีโอ'; document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success');
-       document.getElementById('btnCancelEditVid').style.display = 'none';
-    }
+    function cancelEditVideo() { document.getElementById('adminVideoPanel').querySelector('form').reset(); document.getElementById('vid_id').value = ''; document.getElementById('btnSaveVid').innerText = 'เพิ่มวิดีโอ'; document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEditVid').style.display = 'none'; }
     function deleteVideo(id) {
        Swal.fire({ title: 'ยืนยันการลบวิดีโอ?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบวิดีโอ', cancelButtonText: 'ยกเลิก' }).then((result) => {
           if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteVideo', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
        });
     }
+
     function filterDocs() {
        let searchText = document.getElementById('searchDoc').value.toLowerCase(); let catFilter = document.getElementById('filterCat').value;
        filteredDocs = docs.filter(d => { let matchesSearch = d.title.toLowerCase().includes(searchText) || (d.desc && d.desc.toLowerCase().includes(searchText)); let matchesCat = (catFilter === 'All') || (d.type === catFilter); return matchesSearch && matchesCat; });
@@ -935,11 +866,9 @@
       else {
         let start = (currentPage - 1) * itemsPerPage; let end = start + itemsPerPage; let paginatedItems = filteredDocs.slice(start, end);
         paginatedItems.forEach(doc => {
-          let icon = 'description', color = 'text-primary';
-          if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
+          let icon = 'description', color = 'text-primary'; if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
           let dateStr = "เผยแพร่: " + formatDate(doc.created);
-          let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : '';
-          let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
+          let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : ''; let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
           let chatBtn = doc.ai_status === 'OFF' ? `<button class="btn btn-sm btn-secondary text-white me-2 opacity-50" style="cursor:not-allowed;" title="ฟังก์ชัน AI ถูกปิดสำหรับไฟล์นี้"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ปิด AI</button>` : `<button class="btn btn-sm btn-info text-white me-2" onclick="openChat('${doc.id}')"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ถาม AI</button>`;
           html += `<div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom"><i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i><div class="flex-grow-1"><a href="${doc.link}" target="_blank" class="text-decoration-none text-dark"><h5 class="mb-1 fw-bold">${doc.title}</h5><div class="mb-2">${getCatBadge(doc.type)} <span class="text-muted small">${doc.desc || "-"}</span></div><small class="text-secondary">${dateStr}</small></a></div><div class="d-flex align-items-center">${chatBtn} ${editBtn} ${deleteBtn}</div></div>`;
         });
@@ -960,16 +889,11 @@
     function editDoc(id) {
        let doc = docs.find(d => d.id === id); if(!doc) return;
        document.getElementById('doc_id').value = doc.id; document.getElementById('doc_title').value = doc.title; document.getElementById('doc_desc').value = doc.desc; document.getElementById('doc_link').value = doc.link; document.getElementById('doc_cat').value = doc.type; document.getElementById('doc_ai_status').value = doc.ai_status || "ON";
-       document.getElementById('btnSaveDoc').innerText = 'บันทึกการแก้ไข'; document.getElementById('btnSaveDoc').classList.replace('btn-success', 'btn-warning');
-       document.getElementById('btnCancelEdit').style.display = 'inline-block'; document.getElementById('adminDocPanel').scrollIntoView({behavior: 'smooth'});
+       document.getElementById('btnSaveDoc').innerText = 'บันทึกการแก้ไข'; document.getElementById('btnSaveDoc').classList.replace('btn-success', 'btn-warning'); document.getElementById('btnCancelEdit').style.display = 'inline-block'; document.getElementById('adminDocPanel').scrollIntoView({behavior: 'smooth'});
     }
-    function cancelEditDoc() {
-       document.getElementById('adminDocPanel').querySelector('form').reset(); document.getElementById('doc_id').value = ''; document.getElementById('doc_ai_status').value = 'ON'; 
-       document.getElementById('btnSaveDoc').innerText = 'บันทึก'; document.getElementById('btnSaveDoc').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEdit').style.display = 'none';
-    }
+    function cancelEditDoc() { document.getElementById('adminDocPanel').querySelector('form').reset(); document.getElementById('doc_id').value = ''; document.getElementById('doc_ai_status').value = 'ON'; document.getElementById('btnSaveDoc').innerText = 'บันทึก'; document.getElementById('btnSaveDoc').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEdit').style.display = 'none'; }
     function submitDocument(e) {
-      e.preventDefault();
-      let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link'), cat = getVal('doc_cat'), ai_status = getVal('doc_ai_status');
+      e.preventDefault(); let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link'), cat = getVal('doc_cat'), ai_status = getVal('doc_ai_status');
       Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
       postData({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat, ai_status: ai_status }, (res) => { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); cancelEditDoc(); initSystem(); });
     }
@@ -978,6 +902,7 @@
           if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteDoc', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
        });
     }
+    
     function openChat(docId) {
        let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link;
        document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ ปัจจุบันยังอยู่ในช่วงของการพัฒนาระบบ การตอบกลับของ AI อาจทำผิดพลาดได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้</small></div>`;
@@ -992,6 +917,7 @@
           history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight;
        });
     }
+
     function renderQA() {
        let html = '';
        if(qaList.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูลถาม-ตอบ</div>'; }
@@ -1011,8 +937,7 @@
     function editQA(id) {
        let item = qaList.find(x => x.id === id); if(!item) return;
        document.getElementById('qa_id').value = item.id; document.getElementById('qa_emoji').value = item.emoji || "❓"; document.getElementById('qa_question').value = item.q; document.getElementById('qa_answer').value = item.a;
-       document.getElementById('btnSaveQA').innerText = 'บันทึกการแก้ไข'; document.getElementById('btnSaveQA').classList.replace('btn-success', 'btn-warning');
-       document.getElementById('btnCancelEditQA').style.display = 'inline-block'; document.getElementById('adminQAPanel').scrollIntoView({behavior: 'smooth'});
+       document.getElementById('btnSaveQA').innerText = 'บันทึกการแก้ไข'; document.getElementById('btnSaveQA').classList.replace('btn-success', 'btn-warning'); document.getElementById('btnCancelEditQA').style.display = 'inline-block'; document.getElementById('adminQAPanel').scrollIntoView({behavior: 'smooth'});
     }
     function cancelEditQA() { document.getElementById('adminQAPanel').querySelector('form').reset(); document.getElementById('qa_id').value = ''; document.getElementById('btnSaveQA').innerText = 'บันทึก Q&A'; document.getElementById('btnSaveQA').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEditQA').style.display = 'none'; }
     function deleteQA(id) {
@@ -1020,6 +945,7 @@
           if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteQA', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
        });
     }
+
     function handleBannerClick(num) {
        if(num === 1) {
            if(form1Open) { openFormModal('general', form1Title); } else { Swal.fire({ icon: 'warning', title: 'ขออภัย', text: 'ปิดรับแจ้งข้อมูลชั่วคราว', confirmButtonText: 'รับทราบ' }); }
@@ -1027,12 +953,14 @@
            if(hOpen) { var hModal = new bootstrap.Modal(document.getElementById('hearingModal')); hModal.show(); } else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น', text: 'ขณะนี้อยู่นอกระยะเวลาการดำเนินการ', confirmButtonText: 'รับทราบ', confirmButtonColor: '#d63031' }); }
        }
     }
+    
     function openFormModal(type, titleText) {
        var modalForm = new bootstrap.Modal(document.getElementById('formModal'));
        document.getElementById('formTitle').innerText = titleText; document.getElementById('f_topic_type').value = titleText;
        if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
+    
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
@@ -1100,6 +1028,7 @@
     }
 
     function logoutSystem() { Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((res) => { if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); } }); }
+    
     function setAdminMode(status) {
        isAdmin = status;
        let display = status ? 'block' : 'none';
