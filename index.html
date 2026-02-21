@@ -108,32 +108,9 @@
     .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
     .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
 
-    /* 🟢 สไตล์ปุ่มเมนูลอยตัว (Floating Button) สำหรับมือถือ */
-    .floating-menu-btn {
-        position: fixed;
-        bottom: 30px;
-        right: 20px;
-        width: 55px;
-        height: 55px;
-        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
-        color: white;
-        border-radius: 50%;
-        border: none;
-        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 997; /* ให้อยู่ใต้ Overlay เวลาเมนูเปิด */
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-    .floating-menu-btn:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6);
-    }
-    .floating-menu-btn i {
-        font-size: 28px;
-    }
+    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
+    .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
+    .floating-menu-btn i { font-size: 28px; }
   </style>
 </head>
 <body onload="initSystem()">
@@ -165,9 +142,7 @@
     </div>
   </header>
 
-  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()">
-     <i class="material-icons">menu</i>
-  </button>
+  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
 
   <div class="wrapper">
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -523,7 +498,10 @@
         </div>
       </div>
 
-    </div> </div> <footer class="main-footer container-fluid p-0">
+    </div> 
+  </div> 
+
+  <footer class="main-footer container-fluid p-0">
     <div class="row m-0">
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูล<br>เพื่อการพัฒนาจังหวัด</h5>
@@ -699,6 +677,7 @@
   <script>
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false;
+    let adminToken = ""; // 🛡️ ตัวแปรเก็บกุญแจตรวจสอบสิทธิ์ (Security Token)
     let form1Open = true; let form1Title = "", form1Desc = "", form1Date = "";
     let hOpen = true; let hTitle = "", hDesc = "", hDate = ""; 
     let hPlanName = ""; let hRatingOpen = true;
@@ -808,26 +787,27 @@
     }
     function scrollToId(id) { showPage('home'); setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); if(window.innerWidth <= 992) toggleSidebar(); }
     
+    // 🛡️ เสียบ Token ไปกับคำสั่งแอดมินทั้งหมด
     function saveGeneralConfig() {
        let vTitle = document.getElementById('admin_video_title').value; let vUrl = document.getElementById('admin_video_url').value; let dUrl = document.getElementById('admin_dash_url').value;
        if (!vTitle || vTitle.trim() === "") { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อหัวข้อวิดีโอ', 'warning'); return; }
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateGeneralConfig', vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
+       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => {
           if(res && res.status === 'SUCCESS') { document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } 
-          else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
+          else { Swal.fire('เกิดข้อผิดพลาด', res.message || 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
     function saveFormConfig(num) {
        let titleVal = document.getElementById('admin_title_1').value; let descVal = document.getElementById('admin_subtitle_1').value; let dateVal = document.getElementById('admin_date_1').value; let isChecked = document.getElementById('swForm1').checked; let status = isChecked ? 'OPEN' : 'CLOSED';
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateFormConfig', key: 'FORM_1', title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (response) => {
+       postData({ action: 'updateFormConfig', token: adminToken, key: 'FORM_1', title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (response) => {
           if(response && response.status === 'SUCCESS') { form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = isChecked; updateUI(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } 
-          else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); }
+          else { Swal.fire('เกิดข้อผิดพลาด', response.message || 'บันทึกไม่สำเร็จ', 'error'); }
        });
     }
     function saveHearingConfig() {
        let payload = {
-          action: 'updateHearingConfig',
+          action: 'updateHearingConfig', token: adminToken,
           h_title: getVal('h_admin_title'), h_desc: getVal('h_admin_desc'), h_date: getVal('h_admin_date'), h_plan_name: getVal('h_admin_plan_name'), 
           h_status: document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED', h_rating: document.getElementById('swHearingRating').checked ? 'ON' : 'OFF',
           h_img: getVal('h_admin_img'), h_sum: getVal('h_admin_sum'), h_full: getVal('h_admin_full'), h_info_title: getVal('h_admin_info_title'), h_info_desc: getVal('h_admin_info_desc'),   
@@ -835,7 +815,7 @@
           h_s3_1: getVal('h_admin_s3_1'), h_s3_2: getVal('h_admin_s3_2'), h_s3_3: getVal('h_admin_s3_3')
        };
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData(payload, (res) => { if(res && res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('เกิดข้อผิดพลาด', 'บันทึกไม่สำเร็จ', 'error'); } });
+       postData(payload, (res) => { if(res && res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('เกิดข้อผิดพลาด', res.message || 'บันทึกไม่สำเร็จ', 'error'); } });
     }
     function updateUI() {
        document.getElementById('disp_title_1').innerText = form1Title; document.getElementById('disp_desc_1').innerText = form1Desc; document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
@@ -848,6 +828,7 @@
        let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
        if(hOpen) { b2.classList.remove('closed'); st2.style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } else { b2.classList.add('closed'); st2.style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
     }
+    
     function showFullVideoTitle(fullText) { Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' }); }
     function renderVideos() {
        let html = '';
@@ -864,23 +845,23 @@
     function submitVideo(e) {
        e.preventDefault(); let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link'), order = getVal('vid_order');
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => {
+       postData({ action: 'saveVideo', token: adminToken, id: id, title: title, link: link, order: order }, (response) => {
           if (response && response.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(() => { cancelEditVideo(); initSystem(); }); } 
-          else { Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้', 'error'); }
+          else { Swal.fire('ข้อผิดพลาด', response.message || 'บันทึกไม่ได้', 'error'); }
        });
     }
     function editVideo(id) {
        let item = videoList.find(x => x.id === id); if(!item) return;
        document.getElementById('vid_id').value = item.id; document.getElementById('vid_title').value = item.title; document.getElementById('vid_link').value = item.link; document.getElementById('vid_order').value = item.order == 999 ? "" : item.order;
-       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข'; document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning');
-       document.getElementById('btnCancelEditVid').style.display = 'inline-block'; document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
+       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข'; document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning'); document.getElementById('btnCancelEditVid').style.display = 'inline-block'; document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
     }
     function cancelEditVideo() { document.getElementById('adminVideoPanel').querySelector('form').reset(); document.getElementById('vid_id').value = ''; document.getElementById('btnSaveVid').innerText = 'เพิ่มวิดีโอ'; document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEditVid').style.display = 'none'; }
     function deleteVideo(id) {
        Swal.fire({ title: 'ยืนยันการลบวิดีโอ?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบวิดีโอ', cancelButtonText: 'ยกเลิก' }).then((result) => {
-          if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteVideo', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
+          if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS') { Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); });} else { Swal.fire('Error', res.message, 'error'); } }); }
        });
     }
+
     function filterDocs() {
        let searchText = document.getElementById('searchDoc').value.toLowerCase(); let catFilter = document.getElementById('filterCat').value;
        filteredDocs = docs.filter(d => { let matchesSearch = d.title.toLowerCase().includes(searchText) || (d.desc && d.desc.toLowerCase().includes(searchText)); let matchesCat = (catFilter === 'All') || (d.type === catFilter); return matchesSearch && matchesCat; });
@@ -927,11 +908,11 @@
     function submitDocument(e) {
       e.preventDefault(); let id = getVal('doc_id'), title = getVal('doc_title'), desc = getVal('doc_desc'), link = getVal('doc_link'), cat = getVal('doc_cat'), ai_status = getVal('doc_ai_status');
       Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-      postData({ action: 'saveDoc', id: id, title: title, desc: desc, link: link, type: cat, ai_status: ai_status }, (res) => { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); cancelEditDoc(); initSystem(); });
+      postData({ action: 'saveDoc', token: adminToken, id: id, title: title, desc: desc, link: link, type: cat, ai_status: ai_status }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); cancelEditDoc(); initSystem(); } else { Swal.fire('Error', res.message, 'error'); }});
     }
     function deleteDoc(id) {
        Swal.fire({ title: 'ยืนยันการลบเอกสาร?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบเอกสาร', cancelButtonText: 'ยกเลิก' }).then((result) => {
-          if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteDoc', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
+          if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteDoc', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); });} else { Swal.fire('Error', res.message, 'error'); }}); }
        });
     }
     function openChat(docId) {
@@ -963,7 +944,7 @@
     function submitQA(e) {
        e.preventDefault(); let id = getVal('qa_id'), q = getVal('qa_question'), a = getVal('qa_answer'), emoji = getVal('qa_emoji');
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'saveQA', id: id, q: q, a: a, emoji: emoji }, (res) => { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); cancelEditQA(); initSystem(); });
+       postData({ action: 'saveQA', token: adminToken, id: id, q: q, a: a, emoji: emoji }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); cancelEditQA(); initSystem(); } else { Swal.fire('Error', res.message, 'error'); }});
     }
     function editQA(id) {
        let item = qaList.find(x => x.id === id); if(!item) return;
@@ -974,7 +955,7 @@
     function cancelEditQA() { document.getElementById('adminQAPanel').querySelector('form').reset(); document.getElementById('qa_id').value = ''; document.getElementById('btnSaveQA').innerText = 'บันทึก Q&A'; document.getElementById('btnSaveQA').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEditQA').style.display = 'none'; }
     function deleteQA(id) {
        Swal.fire({ title: 'ยืนยันการลบถาม-ตอบ?', text: "คุณไม่สามารถกู้คืนข้อมูลนี้ได้!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#dc3545', cancelButtonColor: '#6c757d', confirmButtonText: 'ใช่, ลบรายการ', cancelButtonText: 'ยกเลิก' }).then((result) => {
-          if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteQA', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
+          if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); });} else { Swal.fire('Error', res.message, 'error'); } }); }
        });
     }
 
@@ -1051,13 +1032,25 @@
           if (!username || !password) { Swal.fire('กรุณากรอกข้อมูลให้ครบ'); return; }
           Swal.fire({ title: 'กำลังตรวจสอบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
           postData({action: 'login', username: username, password: password}, (data) => {
-             if(data && data.status === 'SUCCESS') { setAdminMode(true); Swal.fire({icon: 'success', title: 'เข้าสู่ระบบสำเร็จ', timer: 1500, showConfirmButton: false}); } else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
+             if(data && data.status === 'SUCCESS') { 
+                adminToken = password; // 🛡️ เก็บกุญแจหลังล็อกอินผ่าน
+                setAdminMode(true); 
+                Swal.fire({icon: 'success', title: 'เข้าสู่ระบบสำเร็จ', timer: 1500, showConfirmButton: false}); 
+             } else { Swal.fire({icon: 'error', title: 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง'}); }
           });
         }
       });
     }
 
-    function logoutSystem() { Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((res) => { if(res.isConfirmed) { setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); } }); }
+    function logoutSystem() { 
+        Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((res) => { 
+            if(res.isConfirmed) { 
+                adminToken = ""; // 🛡️ ลบกุญแจทิ้งเมื่อออกจากระบบ
+                setAdminMode(false); 
+                Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); 
+            } 
+        }); 
+    }
     
     function setAdminMode(status) {
        isAdmin = status;
