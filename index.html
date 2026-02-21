@@ -16,7 +16,6 @@
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
-    .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -29,6 +28,9 @@
     .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
     .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
 
+    /* 🟢 แก้ไขปุ่มซ้ายบนที่หายไป ให้กลับมาตรึงอยู่ที่เดิม */
+    .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
+
     @media (max-width: 992px) { 
       .main-header { min-height: auto; }
       .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; }
@@ -36,12 +38,14 @@
       .org-top-text { font-size: 1.1rem; }
       .org-main-text { font-size: 1.5rem; line-height: 1.4; }
       .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
+      /* 🟢 ตรึงปุ่มบนมือถือให้ชิดซ้ายบนสุดๆ */
+      .sidebar-toggle-btn { top: 15px !important; left: 15px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
-    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
+    
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
@@ -85,15 +89,11 @@
     .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
     .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .chat-ai strong { color: #0d6efd; }
-    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
-
+    
     .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
     .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
     .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
     .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
-    .video-title-bar:hover { background-color: #e9ecef; }
     
     .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
     .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
@@ -109,7 +109,6 @@
     .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
     .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
     
-    /* 🟢 สไตล์สำหรับป้ายกำกับ (Badge) เอกสาร */
     .badge-pin { background-color: #34495e; color: white; }
     .badge-new { background-color: #27ae60; color: white; animation: pulse 2s infinite; }
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
@@ -133,7 +132,8 @@
   <header class="main-header container-fluid">
     <div class="header-overlay"></div>
     <div class="header-content">
-      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+      <button class="sidebar-toggle-btn d-lg-none" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+      
       <div class="header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
       <div class="header-icon-box d-block d-lg-none"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
       <div class="org-title-group">
@@ -667,8 +667,23 @@
       }).catch(e => { console.error(e); document.getElementById('globalLoader').style.display = 'none'; Swal.fire('ข้อผิดพลาด', 'เชื่อมต่อไม่ได้', 'error'); });
     }
 
+    // 🟢 อัปเดตฟังก์ชัน postData เพื่อดักจับ Error ที่ชัดเจนขึ้น
     function postData(data, callback) { 
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) }).then(r => { if (!r.ok) throw new Error('Network error'); return r.text(); }).then(text => { try { callback(JSON.parse(text)); } catch(e) { console.error(text); Swal.fire('Error', 'ระบบส่งข้อมูลผิดปกติ', 'error'); } }).catch(e => { console.error(e); Swal.fire('Error', 'เชื่อมต่อขัดข้อง', 'error'); }); 
+       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+       .then(r => r.text())
+       .then(text => { 
+           try { 
+               let json = JSON.parse(text); 
+               callback(json); 
+           } catch(e) { 
+               console.error("Server returned non-JSON:", text); 
+               Swal.fire('ข้อผิดพลาดของระบบ', 'เกิดข้อผิดพลาดที่ฐานข้อมูล<br>กรุณาตรวจสอบว่าคุณได้กด Deploy แบบ New Version แล้วหรือยัง', 'error'); 
+           } 
+       })
+       .catch(e => { 
+           console.error(e); 
+           Swal.fire('การเชื่อมต่อขัดข้อง', 'โปรดตรวจสอบการ Deploy หรือการเชื่อมต่ออินเทอร์เน็ต', 'error'); 
+       }); 
     }
 
     function loadDashboard() {
@@ -705,7 +720,6 @@
     }
     function scrollToId(id) { showPage('home'); setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); if(window.innerWidth <= 992) toggleSidebar(); }
     
-    // ตั้งค่าทั่วไป (Saves Settings)
     function saveGeneralConfig() {
        let vTitle = getVal('admin_video_title'); let vUrl = getVal('admin_video_url'); let dUrl = getVal('admin_dash_url');
        if (!vTitle) { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อ', 'warning'); return; }
@@ -735,7 +749,6 @@
        if(hOpen) { document.getElementById('banner2').classList.remove('closed'); document.getElementById('statusBadge2').style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } else { document.getElementById('banner2').classList.add('closed'); document.getElementById('statusBadge2').style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
     }
 
-    // 🟢 วิดีโอ: จัดการผ่าน Pop-up Modal
     function openVideoModal() { resetVidForm(); new bootstrap.Modal(document.getElementById('adminVideoModal')).show(); }
     function resetVidForm() { document.getElementById('vid_id').value=''; document.getElementById('vid_title').value=''; document.getElementById('vid_link').value=''; document.getElementById('vid_order').value=''; document.getElementById('vidModalTitle').innerText='เพิ่มวิดีโอ'; document.getElementById('btnSaveVidModal').innerText='บันทึก'; document.getElementById('btnSaveVidModal').classList.replace('btn-warning','btn-success'); }
     function editVideo(id) {
@@ -756,7 +769,6 @@
        } document.getElementById('videoListContainer').innerHTML = html;
     }
 
-    // 🟢 ถาม-ตอบ: จัดการผ่าน Pop-up Modal
     function openQAModal() { resetQAForm(); new bootstrap.Modal(document.getElementById('adminQAModal')).show(); }
     function resetQAForm() { document.getElementById('qa_id').value=''; document.getElementById('qa_emoji').value='❓'; document.getElementById('qa_question').value=''; document.getElementById('qa_answer').value=''; document.getElementById('qaModalTitle').innerText='เพิ่ม Q&A'; document.getElementById('btnSaveQAModal').innerText='บันทึก'; document.getElementById('btnSaveQAModal').classList.replace('btn-warning','btn-success'); }
     function editQA(id) {
@@ -777,7 +789,6 @@
        } document.getElementById('accQA').innerHTML = html;
     }
 
-    // 🟢 เอกสาร: จัดการผ่าน Pop-up Modal + Year + Cascading Filter
     function openDocModal() { resetDocForm(); new bootstrap.Modal(document.getElementById('adminDocModal')).show(); }
     function resetDocForm() { 
        document.getElementById('doc_id').value=''; document.getElementById('doc_title').value=''; document.getElementById('doc_year').value=''; document.getElementById('doc_desc').value=''; document.getElementById('doc_link').value=''; document.getElementById('doc_cat').value='General'; document.getElementById('doc_ai_status').value='ON'; document.getElementById('doc_order').value=''; document.getElementById('doc_is_pinned').checked=false; document.getElementById('doc_is_important').checked=false;
@@ -796,24 +807,14 @@
     }
     function deleteDoc(id) { Swal.fire({ title: 'ลบเอกสาร?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteDoc', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); }}); } }); }
 
-    // Logic ดึงปีอัตโนมัติมาใส่ Filter
     function buildYearFilter() {
        let years = new Set();
        docs.forEach(d => { 
-           if(d.year) {
-               let parts = d.year.split('-');
-               if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
-                   for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) years.add(y.toString());
-               } else { years.add(d.year.trim()); }
-           }
+           if(d.year) { let parts = d.year.split('-'); if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) years.add(y.toString()); } else { years.add(d.year.trim()); } }
        });
-       let sortedYears = Array.from(years).sort((a,b) => b - a);
-       let html = '<option value="All">ทุกปีงบประมาณ</option>';
-       sortedYears.forEach(y => html += `<option value="${y}">ปี ${y}</option>`);
-       document.getElementById('filterYear').innerHTML = html;
+       let sortedYears = Array.from(years).sort((a,b) => b - a); let html = '<option value="All">ทุกปีงบประมาณ</option>'; sortedYears.forEach(y => html += `<option value="${y}">ปี ${y}</option>`); document.getElementById('filterYear').innerHTML = html;
     }
 
-    // Logic จัดเรียง (Sort) 4 ชั้น
     function sortDocsLogic(a, b) {
        if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1; 
        let getYearMax = (yStr) => { if(!yStr) return 0; let p=yStr.split('-'); return p.length===2 ? parseInt(p[1]) : parseInt(yStr); };
@@ -826,8 +827,7 @@
 
     function isYearMatch(targetYear, docYearStr) {
        if(targetYear === "All") return true; if(!docYearStr) return false;
-       let parts = docYearStr.split('-');
-       if(parts.length === 2) { return parseInt(targetYear) >= parseInt(parts[0]) && parseInt(targetYear) <= parseInt(parts[1]); }
+       let parts = docYearStr.split('-'); if(parts.length === 2) { return parseInt(targetYear) >= parseInt(parts[0]) && parseInt(targetYear) <= parseInt(parts[1]); }
        return targetYear === docYearStr.trim();
     }
 
@@ -835,16 +835,13 @@
        let sTxt = getVal('searchDoc').toLowerCase(), cat = getVal('filterCat'), yr = getVal('filterYear');
        filteredDocs = docs.filter(d => {
           let mTxt = d.title.toLowerCase().includes(sTxt) || (d.desc && d.desc.toLowerCase().includes(sTxt));
-          let mCat = (cat === 'All') || (d.type === cat);
-          let mYr = isYearMatch(yr, d.year);
+          let mCat = (cat === 'All') || (d.type === cat); let mYr = isYearMatch(yr, d.year);
           return mTxt && mCat && mYr;
        });
-       filteredDocs.sort(sortDocsLogic); // จับเรียงก่อนแสดงผล
-       currentPage = 1; renderDocs();
+       filteredDocs.sort(sortDocsLogic); currentPage = 1; renderDocs();
     }
     
     function clearSearch() { document.getElementById('searchDoc').value=''; document.getElementById('filterCat').value='All'; document.getElementById('filterYear').value='All'; filterDocs(); }
-    
     function getCatBadge(type) { let l = type, c = 'bg-secondary'; switch(type){ case 'General': l='เอกสารทั่วไป'; break; case 'Plan': l='แผนพัฒนา'; c='bg-primary'; break; case 'Report': l='รายงานผล'; c='bg-success'; break; case 'Announcement': l='ประกาศ/คำสั่ง'; c='bg-warning text-dark'; break; } return `<span class="badge ${c} me-1">${l}</span>`; }
     
     function renderDocs() {
@@ -852,9 +849,8 @@
         let start = (currentPage - 1) * itemsPerPage; let end = start + itemsPerPage; let paginatedItems = filteredDocs.slice(start, end);
         paginatedItems.forEach(doc => {
           let icon = 'description', color = 'text-primary'; if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
-          let dateStr = "อัปเดต: " + formatDate(doc.created); let yrStr = doc.year ? ` | ปี ${doc.year}` : '';
+          let dateStr = "อัปเดต: " + formatDate(doc.created); let yrStr = doc.year ? ` | ปีงบประมาณ ${doc.year}` : '';
           
-          // ระบบ Badges (📌, ⭐, 🆕)
           let badges = '';
           if(doc.is_pinned) badges += `<span class="badge badge-pin me-1">📌 ปักหมุด</span>`;
           if(doc.is_important) badges += `<span class="badge bg-danger me-1">⭐ สำคัญ</span>`;
