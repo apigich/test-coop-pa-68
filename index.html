@@ -29,11 +29,9 @@
     .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
     .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
 
-    .sidebar-toggle-btn { position: absolute; top: 25px; left: 25px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); }
-
     @media (max-width: 992px) { 
       .main-header { min-height: auto; }
-      .header-content { flex-direction: column; text-align: center; padding: 80px 20px 40px 20px; gap: 15px; }
+      .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; }
       .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; }
       .org-top-text { font-size: 1.1rem; }
       .org-main-text { font-size: 1.5rem; line-height: 1.4; }
@@ -44,6 +42,9 @@
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
+    
+    /* 🟢 ตรึงปุ่มให้อยู่มุมซ้ายบน 🟢 */
+    .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
     
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
@@ -74,12 +75,14 @@
     .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
     .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
+    
+    /* ป้าย NEW ของแบนเนอร์รับฟังความเห็น */
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     
-    /* ป้าย NEW แบบใหม่ที่ใช้กับเอกสาร */
+    /* 🟢 ป้ายกำกับ NEW ดีไซน์ใหม่ (ตัวหนังสือทอง ขอบเหลือง กรอบแดงกระพริบ) 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -190,11 +193,11 @@
         <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
         <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
 
-        <div id="adminMenuSection" style="display:none;">
+        <div id="adminMenuSection" style="display:none; width: 100%;">
             <hr class="mx-3 text-secondary">
-            <h6 class="px-3 text-secondary fw-bold mt-3 mb-2" style="font-size: 0.8rem; letter-spacing: 1px;">ADMINISTRATOR</h6>
-            <div class="px-3 mb-3">
-                <button class="btn btn-danger w-100 text-start fw-bold shadow-sm d-flex align-items-center justify-content-center" onclick="showPage('admin-dash')" style="border-radius: 10px; padding: 10px 15px;">
+            <h6 class="px-3 text-secondary fw-bold mt-2 mb-3" style="font-size: 0.8rem; letter-spacing: 1px;">ADMINISTRATOR</h6>
+            <div class="px-3 mb-4 w-100">
+                <button class="btn btn-danger w-100 fw-bold shadow-sm d-flex align-items-center justify-content-center" onclick="showPage('admin-dash')" style="border-radius: 8px; padding: 10px;">
                     <i class="material-icons me-2">analytics</i> สรุปผลข้อมูล
                 </button>
             </div>
@@ -225,7 +228,7 @@
                  <div class="col-md-6 mb-2"><label class="small text-muted">คำอธิบาย (Subtitle):</label><input type="text" id="admin_subtitle_1" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2"><label class="small text-muted">ช่วงวันที่:</label><input type="text" id="admin_date_1" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2 d-flex align-items-end">
-                     <div class="form-check form-switch bg-light p-2 rounded w-100 border"><label class="form-check-label fw-bold">สถานะเปิดรับ</label><input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1"></div>
+                     <div class="form-check form-switch bg-light p-2 rounded w-100"><label class="form-check-label fw-bold">สถานะเปิดรับ</label><input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1"></div>
                  </div>
              </div>
              <button class="btn btn-sm btn-outline-danger w-100 mt-2" onclick="saveFormConfig(1)">บันทึกการตั้งค่าฟอร์ม 1</button>
@@ -237,7 +240,7 @@
                  <label class="small text-dark fw-bold">ชื่อแผนพัฒนาที่รับฟังความเห็น (แสดงผลตัวใหญ่ในฟอร์ม):</label>
                  <input type="text" id="h_admin_plan_name" class="form-control" placeholder="เช่น แผนพัฒนาจังหวัดเชียงใหม่ พ.ศ. 2566 - 2570">
              </div>
-             <div class="row bg-light p-2 rounded mb-3 border">
+             <div class="row bg-light p-2 rounded mb-3">
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label><input type="text" id="h_admin_desc" class="form-control form-control-sm"></div>
                  <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label><input type="text" id="h_admin_date" class="form-control form-control-sm"></div>
@@ -272,16 +275,7 @@
              <div class="mb-2"><label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label><input type="text" id="admin_video_title" class="form-control form-control-sm"></div>
              <div class="mb-2"><label class="small text-muted">ลิงก์ YouTube (Video URL):</label><input type="text" id="admin_video_url" class="form-control form-control-sm"></div>
              <div class="mb-2"><label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label><input type="text" id="admin_dash_url" class="form-control form-control-sm"></div>
-             <button class="btn btn-sm btn-outline-info w-100 mt-2 mb-3" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
-          </div>
-          
-          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-success">
-             <h6 class="fw-bold text-success mb-3">ตั้งค่า: ป้ายเอกสารใหม่ (NEW)</h6>
-             <div class="form-check form-switch bg-light p-2 rounded border d-flex justify-content-between align-items-center">
-                 <label class="form-check-label fw-bold text-dark" for="swShowNewBadge">เปิดแสดงป้าย NEW (สำหรับเอกสารอายุไม่เกิน 14 วัน)</label>
-                 <input class="form-check-input fs-5" type="checkbox" id="swShowNewBadge">
-             </div>
-             <button class="btn btn-sm btn-outline-success w-100 mt-3" onclick="saveGeneralConfig()">บันทึกการตั้งค่าเอกสาร</button>
+             <button class="btn btn-sm btn-outline-info w-100 mt-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
           </div>
         </div>
 
@@ -519,9 +513,9 @@
       <div class="col-lg-4">
         <h5 class="footer-title">แผนที่ตั้งหน่วยงาน</h5>
         <div class="map-container mb-3" style="height: 200px; background: #333;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15103.328325992984!2d98.964125!3d18.849033!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3af5273b40eb%3A0x6b1db9d2b2700dc1!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3775.8753234199127!2d98.96191031526435!3d18.84803718721903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3a79d9e9dfbd%3A0xa19f0de1a42b102b!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1708536000000!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a href="https://maps.app.goo.gl/hYm4p74P1hXq4R7W9" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
+        <a href="https://maps.app.goo.gl/g6v4c6M9yYtFw2sM6" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
       </div>
     </div>
   </footer>
@@ -724,20 +718,28 @@
              
              <div class="p-3 border rounded bg-white">
                  <div class="row">
-                     <div class="col-md-4">
-                         <label class="small text-muted fw-bold">ลำดับ (เลขน้อยขึ้นก่อน)</label>
+                     <div class="col-md-12">
+                         <label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label>
                          <input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้">
                      </div>
-                     <div class="col-md-4 pt-4">
+                     
+                     <div class="col-md-4 pt-3">
                          <div class="form-check form-switch">
                              <input class="form-check-input" type="checkbox" id="doc_is_pinned">
                              <label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label>
                          </div>
                      </div>
-                     <div class="col-md-4 pt-4">
+                     <div class="col-md-4 pt-3">
                          <div class="form-check form-switch">
                              <input class="form-check-input" type="checkbox" id="doc_is_important">
                              <label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label>
+                         </div>
+                     </div>
+                     
+                     <div class="col-md-12 pt-3 border-top mt-3" id="newBadgeToggleDiv">
+                         <div class="form-check form-switch">
+                             <input class="form-check-input" type="checkbox" id="doc_hide_new_badge">
+                             <label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW (แม้จะเพิ่งอัปโหลดก็ตาม)</label>
                          </div>
                      </div>
                  </div>
@@ -813,7 +815,7 @@
   
   <script>
     // ==========================================
-    // 🟢 Javascript (ใช้โครงสร้างเดิมของคุณ ดัก Error ไม่ให้ค้าง)
+    // 🟢 Javascript (ใช้ฟังก์ชันที่เสถียรที่สุด ดัก Error ครบถ้วน)
     // ==========================================
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false; 
@@ -823,13 +825,11 @@
     let form1Title = "", form1Desc = "", form1Date = "";
     let hTitle = "", hDesc = "", hDate = "", hPlanName = "", hRatingOpen = true;
     
-    let showNewBadge = true; 
-    
     let currentPage = 1; const itemsPerPage = 10; 
     let currentDocLink = "";
     let charts = { issues: null, sector: null, vision: null, priority: null, econ: null, social: null, env: null };
 
-    // ฟังก์ชันดึงข้อมูลดัก Error หน้าขาว
+    // ดึงข้อมูลแบบปลอดภัย ดักจับ HTML Error 
     async function fetchSafe(url) {
         const response = await fetch(url);
         const text = await response.text();
@@ -839,7 +839,7 @@
             return json;
         } catch (e) {
             console.error("Not JSON response:", text);
-            throw new Error("พบข้อผิดพลาดจาก Google Script โปรดตรวจสอบการ Deploy");
+            throw new Error("เซิร์ฟเวอร์ตอบกลับผิดปกติ (โปรดตรวจสอบการ Deploy ให้เป็น New Version)");
         }
     }
 
@@ -859,8 +859,6 @@
          hOpen = (settings.h_status === 'OPEN'); 
          hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date; 
          hPlanName = settings.h_plan_name; hRatingOpen = (settings.h_rating === 'ON');
-         
-         showNewBadge = (settings.show_new_badge === 'ON');
          
          docs = docsData; qaList = qaData; videoList = vidData;
 
@@ -903,8 +901,6 @@
 
          document.getElementById('disp_video_title').innerText = settings.video_title; document.getElementById('admin_video_title').value = settings.video_title;
          
-         document.getElementById('swShowNewBadge').checked = showNewBadge;
-         
          updateVideo(settings.video_url); 
          updateDashboard(settings.dash_url);
 
@@ -930,7 +926,7 @@
        .catch(error => Swal.fire('ขาดการเชื่อมต่อ', 'โปรดตรวจสอบสัญญาณอินเทอร์เน็ตของคุณ', 'error')); 
     }
 
-    // 🟢 ระบบเปิดดูชื่อวิดีโอแบบเต็ม
+    // 🟢 4. กู้คืนฟังก์ชันโชว์ชื่อเต็มวิดีโอ 🟢
     function showFullVideoTitle(fullText) { 
         Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' }); 
     }
@@ -969,13 +965,11 @@
 
     function saveGeneralConfig() {
        let vTitle = getVal('admin_video_title'); let vUrl = getVal('admin_video_url'); let dUrl = getVal('admin_dash_url');
-       let newBadgeStatus = document.getElementById('swShowNewBadge').checked ? 'ON' : 'OFF';
        if (!vTitle) { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); return; }
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl, showNewBadge: newBadgeStatus }, (res) => { 
+       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => { 
            if(res.status === 'SUCCESS') { 
                document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); 
-               showNewBadge = (newBadgeStatus === 'ON'); filterDocs();
                Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
            } else { Swal.fire('Error', res.message, 'error'); } 
        });
@@ -1007,21 +1001,29 @@
        postData(payload, (res) => { if(res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } });
     }
 
+    // 🟢 ระบบจัดการเอกสาร (อัปเดตสวิตช์ NEW)
     function openDocModal() { 
-        document.getElementById('adminDocForm').reset(); document.getElementById('doc_id').value = ''; document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
+        document.getElementById('adminDocForm').reset(); document.getElementById('doc_id').value = ''; 
+        document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
+        document.getElementById('newBadgeToggleDiv').style.display = 'block'; // โชว์ปุ่มสวิตช์ NEW ตอนเพิ่มเอกสาร
+        document.getElementById('doc_hide_new_badge').checked = false; 
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); modalInstance.show();
     }
     
     function editDoc(id) {
        let d = docs.find(x => x.id === id); if(!d) return;
        document.getElementById('doc_id').value = d.id; document.getElementById('doc_title').value = d.title; document.getElementById('doc_year').value = d.year || ''; document.getElementById('doc_desc').value = d.desc; document.getElementById('doc_link').value = d.link; document.getElementById('doc_cat').value = d.type; document.getElementById('doc_ai_status').value = d.ai_status || 'ON'; document.getElementById('doc_order').value = d.order == 999 ? '' : d.order; document.getElementById('doc_is_pinned').checked = d.is_pinned; document.getElementById('doc_is_important').checked = d.is_important;
+       
+       // ซ่อนปุ่มสวิตช์ NEW เมื่ออยู่ในโหมดแก้ไข
+       document.getElementById('newBadgeToggleDiv').style.display = 'none'; 
+       
        document.getElementById('docModalTitle').innerText = 'แก้ไขเอกสาร';
        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); modalInstance.show();
     }
 
     function submitDocument(e) {
       e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-      let payload = { action: 'saveDoc', token: adminToken, id: getVal('doc_id'), title: getVal('doc_title'), desc: getVal('doc_desc'), link: getVal('doc_link'), type: getVal('doc_cat'), ai_status: getVal('doc_ai_status'), year: getVal('doc_year'), order: getVal('doc_order'), is_pinned: document.getElementById('doc_is_pinned').checked, is_important: document.getElementById('doc_is_important').checked };
+      let payload = { action: 'saveDoc', token: adminToken, id: getVal('doc_id'), title: getVal('doc_title'), desc: getVal('doc_desc'), link: getVal('doc_link'), type: getVal('doc_cat'), ai_status: getVal('doc_ai_status'), year: getVal('doc_year'), order: getVal('doc_order'), is_pinned: document.getElementById('doc_is_pinned').checked, is_important: document.getElementById('doc_is_important').checked, hide_new_badge: document.getElementById('doc_hide_new_badge').checked };
       postData(payload, (res) => {
           if(res.status === 'SUCCESS') { 
               let m = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')); if (m) m.hide();
@@ -1097,7 +1099,8 @@
           if(doc.is_important) badges += `<span class="badge bg-danger me-2">⭐ สำคัญ</span>`;
           
           let ageDays = (new Date() - new Date(doc.created)) / (1000 * 60 * 60 * 24);
-          if(ageDays < 14 && showNewBadge === true) badges += `<span class="badge-custom-new me-2">NEW</span>`;
+          // แสดงป้าย NEW ถ้าอายุไม่เกิน 14 วัน และ ไม่ได้ถูกกดซ่อนไว้
+          if(ageDays < 14 && doc.hide_new_badge !== true) badges += `<span class="badge-custom-new me-2">NEW</span>`;
 
           let catBadge = getCatBadge(doc.type);
           let yrBadge = doc.year ? `<span class="badge bg-info text-dark ms-2"><i class="material-icons align-middle" style="font-size: 11px;">event</i> ปีงบประมาณ ${doc.year}</span>` : '';
@@ -1170,10 +1173,16 @@
         }); 
     }
 
+    // 🟢 แก้ไขปุ่มในเมนู Sidebar ให้บล็อกไม่เบี้ยว
     function setAdminMode(status) { 
         isAdmin = status; 
-        document.getElementById('adminHomePanel').style.display = status ? 'block' : 'none'; 
-        ['adminDocBtnGroup','adminMenuSection', 'adminVideoBtnGroup', 'adminQABtnGroup'].forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'flex' : 'none'; } });
+        
+        let blockElements = ['adminHomePanel', 'adminMenuSection'];
+        blockElements.forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'block' : 'none'; } });
+
+        let flexElements = ['adminDocBtnGroup', 'adminVideoBtnGroup', 'adminQABtnGroup'];
+        flexElements.forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'flex' : 'none'; } });
+
         filterDocs(); renderQA(); renderVideos();
     }
 
@@ -1200,19 +1209,15 @@
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); modalInstance.show();
     }
     
-    function editVideo(id) { let v = videoList.find(x => x.id === id); if(!v) return; document.getElementById('vid_id').value = v.id; document.getElementById('vid_title').value = v.title; document.getElementById('vid_link').value = v.link; document.getElementById('vid_order').value = v.order == 999 ? "" : v.order; document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); modalInstance.show(); }
     function submitVideo(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveVideo', token: adminToken, id: getVal('vid_id'), title: getVal('vid_title'), link: getVal('vid_link'), order: getVal('vid_order') }, (res) => { if (res.status === 'SUCCESS') { let m = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')); if(m) m.hide(); Swal.fire('บันทึกวิดีโอแล้ว', '', 'success').then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } }); }
     function deleteVideo(id) { Swal.fire({ title: 'ลบวิดีโอ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
     function renderVideos() { let h = ''; if(videoList.length === 0) { h = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอ</div>'; } else { videoList.forEach(vid => { let vId = extractYouTubeID(vid.link); let embedUrl = vId ? "https://www.youtube.com/embed/" + vId : ""; let adm = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between"><small class="fw-bold text-muted">ลำดับ: ${vid.order==999?'':vid.order}</small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : ''; h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar" onclick="showFullVideoTitle('${vid.title}')" title="คลิกเพื่อดูชื่อเต็ม"><div class="video-title-text">${vid.title}</div><i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; }); } document.getElementById('videoListContainer').innerHTML = h; }
 
-    function editQA(id) { let q = qaList.find(x => x.id === id); if(!q) return; document.getElementById('qa_id').value = q.id; document.getElementById('qa_emoji').value = q.emoji||'❓'; document.getElementById('qa_question').value = q.q; document.getElementById('qa_answer').value = q.a; document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); modalInstance.show(); }
     function submitQA(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { if(res.status==='SUCCESS'){ let m = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')); if(m) m.hide(); Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); } else Swal.fire('Error', res.message, 'error'); }); }
     function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else Swal.fire('Error', res.message, 'error'); }); } }); }
     function renderQA() { let h = ''; if(qaList.length === 0) { h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; } else { qaList.forEach((item, index) => { let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; }); } document.getElementById('accQA').innerHTML = h; }
 
     function openChat(docId) { let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link; document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); modalInstance.show(); }
-    
-    // 🟢 ระบบ AI Chat Bot ดัก Error เผื่อไว้ให้ 🟢
     function sendChat() { 
         let input = document.getElementById('chatInput'); let question = input.value.trim(); if(!question) return; 
         let history = document.getElementById('chatHistory'); history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; input.value = ''; history.scrollTop = history.scrollHeight; 
@@ -1223,9 +1228,7 @@
         .then(text => {
             document.getElementById(loadingId).remove();
             let data;
-            try { data = JSON.parse(text); } 
-            catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (พบปัญหาการตอบกลับจากเซิร์ฟเวอร์)'}; }
-            
+            try { data = JSON.parse(text); } catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (ข้อผิดพลาดจากฝั่งเซิร์ฟเวอร์)'}; }
             let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; 
             answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); 
             history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight; 
@@ -1240,7 +1243,7 @@
     function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
     function submitRating() { let sc = getVal('sys_rating_val'); if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); Swal.fire({ title: 'กำลังส่ง...', didOpen: () => Swal.showLoading() }); postData({ action: 'saveRating', stars: sc, sysFeedback: getVal('sys_feedback') }, (res) => { let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); if(m) m.hide(); Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; setStar(0); }); }
 
-    // 🟢 ระบบ Dashboard อิงจากต้นฉบับ + เพิ่มการแสดงผลเปอร์เซ็นต์ % ในกราฟ 🟢
+    // 🟢 4. เพิ่มการคำนวณและแสดงผล % ในกราฟ Dashboard 🟢
     function loadDashboard() {
        Swal.fire({ title: 'กำลังดึงข้อมูล...', didOpen: () => Swal.showLoading() });
        fetch(SCRIPT_URL + '?action=getDashboardStats').then(r => r.json()).then(data => {
@@ -1266,7 +1269,6 @@
        });
     }
 
-    // ฟังก์ชันสร้างกราฟ พร้อมคำนวณ % เมื่อนำเมาส์ชี้
     function renderChart(canvasId, type, labels, data, label, colors) {
        let chartKey = canvasId.replace('chart', '').toLowerCase();
        if(charts[chartKey]) { charts[chartKey].destroy(); }
@@ -1288,7 +1290,11 @@
                                let total = dataset.data.reduce((a, b) => Number(a) + Number(b), 0);
                                let percentage = total > 0 ? ((value * 100) / total).toFixed(1) + '%' : '0%';
                                let labelText = context.chart.config.type === 'bar' ? (context.dataset.label ? context.dataset.label + ': ' : '') : (context.label ? context.label + ' ' : '');
-                               return labelText + value + ' รายการ (' + percentage + ')';
+                               // 🟢 โชว์เปอร์เซ็นต์ในบรรทัดใหม่
+                               return [
+                                   labelText + value + ' คน',
+                                   'คิดเป็น ' + percentage
+                               ];
                            }
                        }
                    }
