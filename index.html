@@ -6,7 +6,7 @@
   <title>S-MAP Chiang Mai (Smart Movement & Awareness Platform)</title>
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -36,13 +36,18 @@
       .org-top-text { font-size: 1.1rem; }
       .org-main-text { font-size: 1.5rem; line-height: 1.4; }
       .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
+      
+      /* 🟢 ตำแหน่งปุ่มสำหรับโหมดมือถือ ยึดตามของคุณเป๊ะๆ */
       .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
-    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
+    
+    /* 🟢 ตำแหน่งปุ่มบน Desktop (อยู่มุมซ้ายบน) */
+    .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
+    
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
     .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
     .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
@@ -73,33 +78,32 @@
     .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
     
-    /* 🟢 ป้าย NEW: ตัวหนังสือสีทอง ขอบตัวหนังสือสีเหลือง กรอบกระพริบสีแดง 🟢 */
+    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
+    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    
+    /* 🟢 ป้ายกำกับ NEW ดีไซน์ใหม่ 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
-        color: #FFD700; /* สีตัวหนังสือข้างในเป็นสีทอง */
-        -webkit-text-stroke: 0.5px #FF8C00; /* สร้างขอบตัวหนังสือเป็นสีเหลืองเข้ม/ส้ม */
-        text-shadow: 1px 1px 0px #FFD700, -1px -1px 0px #FFD700, 1px -1px 0px #FFD700, -1px 1px 0px #FFD700; 
+        color: #FFD700; /* ตัวหนังสือสีทอง */
+        -webkit-text-stroke: 0.8px #ffb300; /* ขอบตัวหนังสือสีเหลืองเข้ม */
+        text-shadow: 1px 1px 0px #ffff00, -1px -1px 0px #ffff00, 1px -1px 0px #ffff00, -1px 1px 0px #ffff00; 
         font-weight: 900; 
         font-size: 0.8rem;
         letter-spacing: 0.5px;
         padding: 3px 10px;
         border-radius: 20px;
         border: 2px solid #ff0000; /* กรอบสีแดง */
-        animation: pulse-red-border 1.2s infinite; /* อนิเมชั่นกระพริบสีแดง */
+        animation: pulse-red-border 1.2s infinite; /* กรอบกระพริบแวบๆ */
     }
     @keyframes pulse-red-border { 
-        0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 
+        0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 
         70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 
         100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } 
     }
-    
+    /* ป้ายปักหมุด */
     .badge-pin { background-color: #34495e; color: white; }
-    
-    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
-    
-    .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
@@ -130,10 +134,6 @@
     .dash-card:hover { transform: translateY(-3px); }
     .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
     .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
-
-    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
-    .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
-    .floating-menu-btn i { font-size: 28px; }
   </style>
 </head>
 <body onload="initSystem()">
@@ -147,7 +147,7 @@
   </div>
 
   <script>
-    // ** ใส่ Web App URL ของคุณที่นี่ (ฝังลิงก์ให้เรียบร้อยแล้วครับ) **
+    // 🚨 ฝัง URL ของคุณตรงนี้แล้ว 100% 🚨
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -164,8 +164,6 @@
       </div>
     </div>
   </header>
-
-  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
 
   <div class="wrapper">
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -192,8 +190,6 @@
             <a class="nav-link-main text-danger bg-danger bg-opacity-10 border-start border-3 border-danger" onclick="showPage('admin-dash')">📊 สรุปผลข้อมูล (Admin)</a>
         </div>
       </div>
-      
-      <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;"></div>
     </nav>
 
     <div class="main-content">
@@ -335,40 +331,6 @@
 
       </div>
 
-      <div id="page-docs" style="display:none;">
-        <div class="content-section">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-             <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
-             <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
-                 <button class="btn btn-danger fw-bold" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
-             </div>
-          </div>
-          <hr class="text-secondary mt-0 mb-3">
-          
-          <div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border">
-             <div class="col-md-4">
-                 <label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label>
-                 <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
-             </div>
-             <div class="col-md-3">
-                 <label class="small text-muted fw-bold mb-1">หมวดหมู่</label>
-                 <select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select>
-             </div>
-             <div class="col-md-3">
-                 <label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label>
-                 <select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select>
-             </div>
-             <div class="col-md-2 mt-auto">
-                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button>
-             </div>
-          </div>
-          <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ</div>
-          <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
-          <div id="pagination" class="pagination-container"></div>
-        </div>
-      </div>
-
       <div id="page-admin-dash" style="display:none;">
           <div class="content-section">
              <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
@@ -441,14 +403,49 @@
              <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3>
              <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
                  <button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button>
-                 <button class="btn btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
           <div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div>
         </div>
       </div>
-      
+
+      <div id="page-docs" style="display:none;">
+        <div class="content-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
+             <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+             </div>
+          </div>
+          <hr class="text-secondary mt-0 mb-3">
+          
+          <div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border">
+             <div class="col-md-4">
+                 <label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label>
+                 <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
+             </div>
+             <div class="col-md-3">
+                 <label class="small text-muted fw-bold mb-1">หมวดหมู่</label>
+                 <select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select>
+             </div>
+             <div class="col-md-3">
+                 <label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label>
+                 <select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select>
+             </div>
+             <div class="col-md-2 mt-auto">
+                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button>
+             </div>
+          </div>
+
+          <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ</div>
+          <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
+          <div id="pagination" class="pagination-container"></div>
+        </div>
+      </div>
+
       <div id="page-calendar" style="display:none;">
         <div class="content-section border-0 bg-transparent p-0 mb-4 shadow-none">
           <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
@@ -469,7 +466,7 @@
              <h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3>
              <div id="adminQABtnGroup" style="display:none; gap: 8px;">
                  <button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button>
-                 <button class="btn btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
@@ -500,8 +497,8 @@
       </div>
       <div class="col-lg-4">
         <h5 class="footer-title">แผนที่ตั้งหน่วยงาน</h5>
-        <div class="map-container mb-3" style="height: 200px; background: #333;"><iframe src="https://maps.google.com/maps?q=%E0%B8%A8%E0%B8%B2%E0%B8%A5%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%B2%E0%B8%87%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
-        <a href="https://www.google.com/maps/search/?api=1&query=ศาลากลางจังหวัดเชียงใหม่" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
+        <div class="map-container mb-3" style="height: 200px; background: #333;"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3776.326260719875!2d98.9619163!3d18.8415842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3bf2d1c9f95d%3A0x63ce9518d6a36d93!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+        <a href="https://maps.app.goo.gl/P8Z8j1Xz4k8W9H2bA" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
       </div>
     </div>
   </footer>
@@ -664,23 +661,23 @@
              
              <div class="row g-2 mb-2">
                  <div class="col-md-9">
-                     <label class="small fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label>
+                     <label class="small fw-bold text-muted">ชื่อเอกสาร <span class="text-danger">*</span></label>
                      <input type="text" class="form-control" id="doc_title" required>
                  </div>
                  <div class="col-md-3">
-                     <label class="small fw-bold">ปีงบประมาณ</label>
+                     <label class="small fw-bold text-muted">ปีงบประมาณ</label>
                      <input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567, 2566-2570">
                  </div>
              </div>
              
              <div class="mb-2">
-                 <label class="small fw-bold">คำอธิบาย</label>
+                 <label class="small fw-bold text-muted">คำอธิบาย</label>
                  <input type="text" class="form-control" id="doc_desc">
              </div>
              
              <div class="row g-2 mb-2">
                 <div class="col-md-6">
-                    <label class="small fw-bold">หมวดหมู่</label>
+                    <label class="small fw-bold text-muted">หมวดหมู่</label>
                     <select class="form-select" id="doc_cat">
                         <option value="General">เอกสารทั่วไป</option>
                         <option value="Plan">แผนพัฒนา</option>
@@ -689,29 +686,29 @@
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <label class="small fw-bold">AI Chatbot</label>
+                    <label class="small fw-bold text-muted">AI Chatbot</label>
                     <select class="form-select" id="doc_ai_status">
-                        <option value="ON">🟢 เปิดใช้งาน AI Chatbot</option>
+                        <option value="ON">🟢 เปิดใช้งาน AI</option>
                         <option value="OFF">🔴 ปิดใช้งาน AI</option>
                     </select>
                 </div>
              </div>
              
              <div class="mb-3">
-                 <label class="small fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label>
+                 <label class="small fw-bold text-muted">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label>
                  <input type="text" class="form-control" id="doc_link" required>
              </div>
              
              <div class="p-3 border rounded bg-white">
                  <div class="row">
                      <div class="col-md-4">
-                         <label class="small fw-bold">ลำดับ (ใส่ตัวเลข)</label>
+                         <label class="small fw-bold text-muted">ลำดับ (เลขน้อยขึ้นก่อน)</label>
                          <input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้">
                      </div>
                      <div class="col-md-4 pt-4">
                          <div class="form-check form-switch">
                              <input class="form-check-input" type="checkbox" id="doc_is_pinned">
-                             <label class="small fw-bold">📌 ปักหมุดบนสุด</label>
+                             <label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label>
                          </div>
                      </div>
                      <div class="col-md-4 pt-4">
@@ -743,9 +740,9 @@
             <div class="modal-body">
                 <form onsubmit="submitVideo(event)">
                     <input type="hidden" id="vid_id">
-                    <div class="mb-2"><label class="small fw-bold">ชื่อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div>
-                    <div class="mb-2"><label class="small fw-bold">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div>
-                    <div class="mb-3"><label class="small fw-bold">ลำดับ</label><input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้"></div>
+                    <div class="mb-2"><label class="small fw-bold text-muted">ชื่อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div>
+                    <div class="mb-2"><label class="small fw-bold text-muted">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div>
+                    <div class="mb-3"><label class="small fw-bold text-muted">ลำดับ</label><input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้"></div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
                         <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
@@ -768,17 +765,17 @@
                     <input type="hidden" id="qa_id">
                     <div class="row g-2 mb-2">
                         <div class="col-3">
-                            <label class="small fw-bold">ไอคอน</label>
+                            <label class="small fw-bold text-muted">ไอคอน</label>
                             <select class="form-select" id="qa_emoji">
                                 <option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="💡">💡</option>
                             </select>
                         </div>
                         <div class="col-9">
-                            <label class="small fw-bold">คำถาม</label>
+                            <label class="small fw-bold text-muted">คำถาม</label>
                             <input type="text" class="form-control" id="qa_question" required>
                         </div>
                     </div>
-                    <div class="mb-3"><label class="small fw-bold">คำตอบ</label><textarea class="form-control" id="qa_answer" rows="4" required></textarea></div>
+                    <div class="mb-3"><label class="small fw-bold text-muted">คำตอบ</label><textarea class="form-control" id="qa_answer" rows="4" required></textarea></div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
                         <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
@@ -789,9 +786,11 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
   <script>
     // ==========================================
-    // 🟢 ระบบการทำงาน (Javascript) ฉบับสมบูรณ์ กาง 100% 🟢
+    // 🟢 Javascript - ระบบการทำงานหลัก (อิงจากต้นฉบับ 100%)
     // ==========================================
     let docs = [];
     let qaList = [];
@@ -812,7 +811,6 @@
     const itemsPerPage = 10; 
     let currentDocLink = "";
 
-    // 🟢 1. เริ่มต้นระบบและดึงข้อมูลจาก Google Scripts
     function initSystem() { 
       document.getElementById('globalLoader').style.display = 'flex';
       
@@ -823,7 +821,6 @@
           fetch(SCRIPT_URL + '?action=getVideos').then(r => r.json())
       ]).then(([settings, docsData, qaData, vidData]) => {
          
-         // 1. นำข้อมูลลงตัวแปร
          form1Open = (settings.form1_status === 'OPEN'); 
          form1Title = settings.form1_title; 
          hOpen = (settings.h_status === 'OPEN'); 
@@ -835,7 +832,6 @@
          qaList = qaData; 
          videoList = vidData;
 
-         // 2. จัดการหน้าจอ Home
          document.getElementById('disp_title_1').innerText = form1Title;
          document.getElementById('disp_desc_1').innerText = settings.form1_desc;
          document.getElementById('disp_date_1').innerText = "📅 " + settings.form1_date;
@@ -862,13 +858,11 @@
 
          updateVideo(settings.video_url);
 
-         // 3. รันฟังก์ชันย่อยของแต่ละหน้า
          buildYearFilter(); 
          filterDocs();
          renderQA(); 
          renderVideos();
          
-         // 4. ปิดหน้าจอโหลด
          document.getElementById('globalLoader').style.opacity = '0';
          setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
 
@@ -878,12 +872,11 @@
           Swal.fire({
               icon: 'error',
               title: 'ข้อผิดพลาดการเชื่อมต่อ',
-              html: 'ระบบไม่สามารถอ่านข้อมูลจาก Google Script ได้<br>โปรดตรวจสอบการ Deploy <b>ให้เป็น New Version</b>'
+              html: 'ระบบไม่สามารถอ่านข้อมูลจาก Google Script ได้<br>โปรดตรวจสอบการ Deploy สคริปต์ให้เป็น <b>New Version</b> อีกครั้ง'
           });
       });
     }
 
-    // 🟢 2. ระบบส่งข้อมูลไปยัง Google Sheets แบบดักจับ Error รัดกุม
     function postData(data, callback) { 
        fetch(SCRIPT_URL, { 
            method: 'POST', 
@@ -896,7 +889,7 @@
                callback(json); 
            } catch(error) { 
                console.error("JSON Parse Error:", text);
-               Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลที่ตอบกลับมาไม่ถูกต้อง โปรดเช็คการ Deploy ให้เป็น New Version', 'error'); 
+               Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลที่ตอบกลับมาไม่ถูกต้อง', 'error'); 
            } 
        })
        .catch(error => {
@@ -905,7 +898,6 @@
        }); 
     }
 
-    // 🟢 3. จัดการระบบเปิด/ปิดเมนูและหน้าเพจ
     function toggleSidebar() { 
         document.getElementById('sidebar').classList.toggle('active'); 
         document.getElementById('sidebarOverlay').classList.toggle('active'); 
@@ -913,20 +905,12 @@
     
     function showPage(id) {
       let pages = ['page-home','page-docs','page-calendar','page-qa', 'page-videos', 'page-admin-dash'];
-      pages.forEach(page => {
-          document.getElementById(page).style.display = 'none';
-      });
+      pages.forEach(page => { document.getElementById(page).style.display = 'none'; });
       
       document.getElementById('page-' + id).style.display = 'block';
       
-      document.querySelectorAll('.nav-link-main').forEach(el => {
-          el.classList.remove('active');
-      });
-      
-      if(id !== 'admin-dash') {
-          document.getElementById('menu-' + id).classList.add('active');
-      }
-      
+      document.querySelectorAll('.nav-link-main').forEach(el => { el.classList.remove('active'); });
+      if(id !== 'admin-dash') { document.getElementById('menu-' + id).classList.add('active'); }
       if(id === 'docs') filterDocs();
       
       window.scrollTo(0,0);
@@ -941,10 +925,7 @@
         setTimeout(() => { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }, 200); 
     }
 
-    // 🟢 4. ระบบเอกสาร (Documents) - ใช้ Modal ของ Bootstrap
-    function getVal(id) { 
-        return document.getElementById(id).value; 
-    }
+    function getVal(id) { return document.getElementById(id).value; }
 
     function openDocModal() { 
         document.getElementById('adminDocForm').reset(); 
@@ -952,8 +933,7 @@
         document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
         
         let modalElement = document.getElementById('adminDocModal');
-        let modalInstance = bootstrap.Modal.getInstance(modalElement);
-        if (!modalInstance) { modalInstance = new bootstrap.Modal(modalElement); }
+        let modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
         modalInstance.show();
     }
     
@@ -975,8 +955,7 @@
        document.getElementById('docModalTitle').innerText = 'แก้ไขเอกสาร';
        
        let modalElement = document.getElementById('adminDocModal');
-       let modalInstance = bootstrap.Modal.getInstance(modalElement);
-       if (!modalInstance) { modalInstance = new bootstrap.Modal(modalElement); }
+       let modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
        modalInstance.show();
     }
 
@@ -1013,27 +992,18 @@
     }
 
     function deleteDoc(id) { 
-        Swal.fire({ 
-            title: 'ลบเอกสาร?', 
-            icon: 'warning', 
-            showCancelButton: true, 
-            confirmButtonText: 'ใช่', 
-            cancelButtonText: 'ยกเลิก' 
-        }).then((result) => { 
+        Swal.fire({ title: 'ลบเอกสาร?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((result) => { 
             if (result.isConfirmed) { 
                 Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); 
                 postData({ action: 'deleteDoc', token: adminToken, id: id }, (res) => { 
-                    if(res.status === 'SUCCESS') { 
-                        Swal.fire('ลบเรียบร้อย', '', 'success').then(() => initSystem()); 
-                    } else { 
-                        Swal.fire('Error', res.message, 'error'); 
-                    } 
+                    if(res.status === 'SUCCESS') { Swal.fire('ลบเรียบร้อย', '', 'success').then(() => initSystem()); } 
+                    else { Swal.fire('Error', res.message, 'error'); } 
                 }); 
             } 
         }); 
     }
 
-    // 🟢 5. ระบบปีงบประมาณและตัวกรอง (แปลงเป็นข้อความเพื่อกันบัคค้าง)
+    // 🟢 ระบบกรองและจัดเรียงเอกสาร (แก้บัคการอ่านตัวเลข)
     function buildYearFilter() {
        let years = new Set();
        docs.forEach(d => { 
@@ -1052,11 +1022,7 @@
        
        let html = '<option value="All">ทุกปีงบประมาณ</option>';
        let sortedYears = Array.from(years).sort((a,b) => b - a);
-       
-       sortedYears.forEach(y => {
-           html += `<option value="${y}">ปี ${y}</option>`;
-       });
-       
+       sortedYears.forEach(y => { html += `<option value="${y}">ปี ${y}</option>`; });
        document.getElementById('filterYear').innerHTML = html;
     }
 
@@ -1068,12 +1034,10 @@
            let p = y.toString().split('-'); 
            return p.length === 2 ? parseInt(p[1]) : parseInt(y); 
        };
-       let yA = getYearMax(a.year);
-       let yB = getYearMax(b.year);
+       let yA = getYearMax(a.year); let yB = getYearMax(b.year);
        if (yA !== yB) return yB - yA;
        
-       let oA = a.order || 999;
-       let oB = b.order || 999;
+       let oA = a.order || 999; let oB = b.order || 999;
        if (oA !== oB) return oA - oB;
        
        return new Date(b.created) - new Date(a.created);
@@ -1098,7 +1062,6 @@
                   mYr = (yearFilter === docYr); 
               } 
           }
-          
           return mTxt && mCat && mYr;
        });
        
@@ -1125,7 +1088,7 @@
         return `<span class="badge ${colorClass}">${label}</span>`; 
     }
 
-    // 🟢 6. แสดงผลเอกสาร (จัดปีงบประมาณคู่กับหมวดหมู่)
+    // 🟢 แสดงผลเอกสาร (UI)
     function renderDocs() {
       let html = ''; 
       if(filteredDocs.length === 0) { 
@@ -1147,13 +1110,13 @@
           if(doc.is_pinned) badges += `<span class="badge badge-pin me-2">📌 ปักหมุด</span>`;
           if(doc.is_important) badges += `<span class="badge bg-danger me-2">⭐ สำคัญ</span>`;
           
-          // 🌟 ป้าย NEW แบบพิเศษ 🌟
+          // 🌟 ป้าย NEW 
           let ageDays = (new Date() - new Date(doc.created)) / (1000 * 60 * 60 * 24);
           if(ageDays < 14) badges += `<span class="badge-custom-new me-2">NEW</span>`;
 
-          // 🗓️ หมวดหมู่ วางคู่กับ ปีงบประมาณ 🗓️
+          // 🗓️ หมวดหมู่และปีงบประมาณ
           let catBadge = getCatBadge(doc.type);
-          let yrBadge = doc.year ? `<span class="badge bg-info text-dark ms-2"><i class="material-icons align-middle" style="font-size: 11px;">event</i> ปี ${doc.year}</span>` : '';
+          let yrBadge = doc.year ? `<span class="badge bg-info text-dark ms-2"><i class="material-icons align-middle" style="font-size: 11px;">event</i> ปีงบประมาณ ${doc.year}</span>` : '';
 
           let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : ''; 
           let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
@@ -1199,7 +1162,6 @@
         } 
         document.getElementById('pagination').innerHTML = html; 
     }
-    
     function changePage(p) { 
         let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
         if(p < 1 || p > totalPages) return; 
@@ -1262,15 +1224,11 @@
     function setAdminMode(status) { 
         isAdmin = status; 
         document.getElementById('adminHomePanel').style.display = status ? 'block' : 'none'; 
-        
         ['adminDocBtnGroup','adminMenuSection', 'adminVideoBtnGroup', 'adminQABtnGroup'].forEach(id => {
             let element = document.getElementById(id);
             if (element) { element.style.display = status ? 'flex' : 'none'; }
         });
-        
-        filterDocs(); 
-        renderQA(); 
-        renderVideos();
+        filterDocs(); renderQA(); renderVideos();
     }
 
     // Modal Forms Openers
@@ -1280,21 +1238,16 @@
                 document.getElementById('formTitle').innerText = form1Title; 
                 document.getElementById('f_topic_type').value = form1Title; 
                 document.getElementById('topicSelectDiv').style.display = 'block'; 
-                
                 let modalElement = document.getElementById('formModal');
                 let modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
                 modalInstance.show();
-            } else { 
-                Swal.fire('ปิดรับแจ้งชั่วคราว'); 
-            } 
+            } else { Swal.fire('ปิดรับแจ้งชั่วคราว'); } 
         } else if (num === 2) { 
             if(hOpen) { 
                 let modalElement = document.getElementById('hearingModal');
                 let modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
                 modalInstance.show();
-            } else { 
-                Swal.fire('ปิดรับฟังความเห็น'); 
-            } 
+            } else { Swal.fire('ปิดรับฟังความเห็น'); } 
         } 
     }
     
@@ -1321,6 +1274,27 @@
         let modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
         modalInstance.show();
     }
+    
+    // วิดีโอ Functions
+    function editVideo(id) { let v = videoList.find(x => x.id === id); if(!v) return; document.getElementById('vid_id').value = v.id; document.getElementById('vid_title').value = v.title; document.getElementById('vid_link').value = v.link; document.getElementById('vid_order').value = v.order == 999 ? "" : v.order; document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); modalInstance.show(); }
+    function submitVideo(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveVideo', token: adminToken, id: getVal('vid_id'), title: getVal('vid_title'), link: getVal('vid_link'), order: getVal('vid_order') }, (res) => { if (res.status === 'SUCCESS') { let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')); if(modalInstance) modalInstance.hide(); Swal.fire('บันทึกวิดีโอแล้ว', '', 'success').then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } }); }
+    function deleteVideo(id) { Swal.fire({ title: 'ลบวิดีโอ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
+    function renderVideos() { let h = ''; if(videoList.length === 0) { h = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอ</div>'; } else { videoList.forEach(vid => { let vId = extractYouTubeID(vid.link); let embedUrl = vId ? "https://www.youtube.com/embed/" + vId : ""; let adm = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between"><small class="fw-bold text-muted">ลำดับ: ${vid.order==999?'':vid.order}</small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : ''; h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar"><div class="video-title-text">${vid.title}</div></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; }); } document.getElementById('videoListContainer').innerHTML = h; }
+
+    // QA Functions
+    function editQA(id) { let q = qaList.find(x => x.id === id); if(!q) return; document.getElementById('qa_id').value = q.id; document.getElementById('qa_emoji').value = q.emoji||'❓'; document.getElementById('qa_question').value = q.q; document.getElementById('qa_answer').value = q.a; document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); modalInstance.show(); }
+    function submitQA(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { if(res.status==='SUCCESS'){ let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')); if(modalInstance) modalInstance.hide(); Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); } else Swal.fire('Error', res.message, 'error'); }); }
+    function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else Swal.fire('Error', res.message, 'error'); }); } }); }
+    function renderQA() { let h = ''; if(qaList.length === 0) { h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; } else { qaList.forEach((item, index) => { let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; }); } document.getElementById('accQA').innerHTML = h; }
+
+    function openChat(docId) { let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link; document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); modalInstance.show(); }
+    function sendChat() { let input = document.getElementById('chatInput'); let question = input.value.trim(); if(!question) return; let history = document.getElementById('chatHistory'); history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; input.value = ''; history.scrollTop = history.scrollHeight; let loadingId = 'loading_' + Date.now(); history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`; history.scrollTop = history.scrollHeight; postData({ action: 'chatWithAI', link: currentDocLink, question: question }, (data) => { document.getElementById(loadingId).remove(); let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight; }); }
+
+    function submitForm(e) { e.preventDefault(); let btn = e.target.querySelector('button'); btn.disabled = true; btn.innerText = 'กำลังส่ง...'; let top = getVal('f_topic_select') + " (" + getVal('f_topic_type') + ")"; postData({ action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: top }, (res) => { btn.disabled = false; btn.innerText = 'ยืนยัน'; if (res.status === 'SUCCESS') { Swal.fire('สำเร็จ','ขอบคุณครับ','success'); e.target.reset(); let modalInstance = bootstrap.Modal.getInstance(document.getElementById('formModal')); if(modalInstance) modalInstance.hide(); } else Swal.fire('Error', res.message, 'error'); }); }
+    function submitHearing(e) { e.preventDefault(); let btn = document.getElementById('btnSubmitHearing'); btn.disabled = true; btn.innerText = 'กำลังส่ง...'; postData({ action: 'saveHearing', plan_name: hPlanName, name: getVal('h_name'), district: getVal('h_district'), sector: getVal('h_sector'), vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", vision_fb: getVal('h_vision_fb'), econ: document.querySelector('input[name="h_econ"]:checked')?.value || "", social: document.querySelector('input[name="h_soc"]:checked')?.value || "", env: document.querySelector('input[name="h_env"]:checked')?.value || "", strategy_fb: getVal('h_strategy_fb'), priority: getVal('h_priority'), feedback: getVal('h_feedback') }, (res) => { btn.disabled = false; btn.innerText = 'ส่งความเห็น'; if(res.status === 'SUCCESS') { e.target.reset(); let modalInstance = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); if(modalInstance) modalInstance.hide(); if(hRatingOpen) { let rModal = bootstrap.Modal.getInstance(document.getElementById('ratingModal')) || new bootstrap.Modal(document.getElementById('ratingModal')); rModal.show(); } else { Swal.fire('สำเร็จ', 'ส่งความเห็นเรียบร้อย', 'success'); } } else Swal.fire('Error', 'ไม่สามารถบันทึกได้', 'error'); }); }
+    function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
+    function submitRating() { let sc = getVal('sys_rating_val'); if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); Swal.fire({ title: 'กำลังส่ง...', didOpen: () => Swal.showLoading() }); postData({ action: 'saveRating', stars: sc, sysFeedback: getVal('sys_feedback') }, (res) => { let modalInstance = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); if(modalInstance) modalInstance.hide(); Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; setStar(0); }); }
+
   </script>
 </body>
 </html>
