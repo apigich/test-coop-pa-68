@@ -16,6 +16,7 @@
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
+    .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
@@ -28,7 +29,6 @@
     .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
     .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
 
-    /* 🟢 แก้ไขปุ่มซ้ายบนที่หายไป ให้กลับมาตรึงอยู่ที่เดิม */
     .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
 
     @media (max-width: 992px) { 
@@ -38,7 +38,6 @@
       .org-top-text { font-size: 1.1rem; }
       .org-main-text { font-size: 1.5rem; line-height: 1.4; }
       .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
-      /* 🟢 ตรึงปุ่มบนมือถือให้ชิดซ้ายบนสุดๆ */
       .sidebar-toggle-btn { top: 15px !important; left: 15px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
@@ -93,7 +92,6 @@
     .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
     .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
     .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
     
     .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
     .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
@@ -114,7 +112,7 @@
     @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
   </style>
 </head>
-<body onload="initSystem()">
+<body>
 
   <div id="globalLoader">
     <div class="loader-content">
@@ -125,8 +123,8 @@
   </div>
 
   <script>
-    // ** ใส่ Web App URL ของคุณที่นี่ **
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
+    // 🚨🚨🚨 ใส่ Web App URL ของคุณที่นี่ (สำคัญมาก) 🚨🚨🚨
+    const SCRIPT_URL = "https://script.google.com/macros/s/ใส่ลิงก์ของคุณตรงนี้/exec"; 
   </script>
 
   <header class="main-header container-fluid">
@@ -158,7 +156,6 @@
           <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-dash')">📍Dashboard</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-pr')">สื่อประชาสัมพันธ์</a>
-          <a class="nav-link-sub" onclick="scrollToId('sec-facebook')">ข่าวประชาสัมพันธ์</a>
         </div>
         <a class="nav-link-main" id="menu-videos" onclick="showPage('videos')">▶️ คลังวิดีโอแนะนำ</a>
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
@@ -172,9 +169,7 @@
         </div>
       </div>
       
-      <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;">
-         <button class="sidebar-logout-btn" onclick="logoutSystem()"><i class="material-icons align-middle fs-6 me-2">logout</i> ออกจากระบบ</button>
-      </div>
+      <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;"></div>
     </nav>
 
     <div class="main-content">
@@ -287,24 +282,6 @@
           </div>
         </div>
 
-        <div id="sec-pr" class="content-section">
-          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์ (Info-Graphics)</h4>
-          <div id="prCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="0" class="active"></button>
-              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="1"></button>
-              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="2"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg"></div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span></button>
-            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span></button>
-          </div>
-        </div>
-
       </div>
 
       <div id="page-admin-dash" style="display:none;">
@@ -376,8 +353,11 @@
       <div id="page-videos" style="display:none;">
         <div class="content-section">
           <div class="d-flex justify-content-between align-items-center mb-3">
-             <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำสำหรับการพัฒนาจังหวัด</h3>
-             <button id="btnAddVideoBtn" class="btn btn-primary fw-bold" style="display:none;" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button>
+             <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3>
+             <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+             </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
           <div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div>
@@ -388,7 +368,10 @@
         <div class="content-section">
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
-             <button id="btnAddDocBtn" class="btn btn-primary fw-bold" style="display:none;" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
+             <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+             </div>
           </div>
           <hr class="text-secondary mt-0 mb-3">
           
@@ -409,7 +392,6 @@
                  <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button>
              </div>
           </div>
-
           <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ</div>
           <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
           <div id="pagination" class="pagination-container"></div>
@@ -434,7 +416,10 @@
         <div class="content-section">
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3>
-             <button id="btnAddQABtn" class="btn btn-primary fw-bold" style="display:none;" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button>
+             <div id="adminQABtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+             </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
           <div class="accordion accordion-flush border rounded shadow-sm" id="accQA"></div>
@@ -622,9 +607,9 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  
   <script>
+    // 🟢 Javascript - ทำการจัดระเบียบให้ใหม่ เพื่อป้องกัน Error จากการบีบอัด 100% 🟢
+    
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false; let adminToken = "";
     let form1Open = true; let form1Title = "", form1Desc = "", form1Date = "";
@@ -634,8 +619,13 @@
 
     function initSystem() { 
       document.getElementById('globalLoader').style.display = 'flex';
-      Promise.all([fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()), fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()), fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()), fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json())])
-      .then(([settings, docsData, qaData, vidData]) => {
+      Promise.all([
+          fetch(SCRIPT_URL + '?action=getSettings').then(r=>r.json()), 
+          fetch(SCRIPT_URL + '?action=getDocs').then(r=>r.json()), 
+          fetch(SCRIPT_URL + '?action=getQA').then(r=>r.json()), 
+          fetch(SCRIPT_URL + '?action=getVideos').then(r=>r.json())
+      ]).then(([settings, docsData, qaData, vidData]) => {
+         
          form1Open = (settings.form1_status === 'OPEN'); form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
          hOpen = (settings.h_status === 'OPEN'); hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date; hPlanName = settings.h_plan_name; hRatingOpen = (settings.h_rating === 'ON');
 
@@ -650,10 +640,14 @@
 
          document.getElementById('h_admin_title').value = hTitle; document.getElementById('h_admin_desc').value = hDesc; document.getElementById('h_admin_date').value = hDate; document.getElementById('h_admin_plan_name').value = hPlanName; 
          document.getElementById('swHearingStatus').checked = hOpen; document.getElementById('swHearingRating').checked = hRatingOpen;
-         document.getElementById('h_admin_info_title').value = settings.h_info_title; document.getElementById('h_admin_info_desc').value = settings.h_info_desc; document.getElementById('h_admin_img').value = settings.h_img; document.getElementById('h_admin_sum').value = settings.h_sum; document.getElementById('h_admin_full').value = settings.h_full;
-         document.getElementById('h_admin_q1').value = settings.h_q1; document.getElementById('h_admin_q2').value = settings.h_q2; document.getElementById('h_admin_q3').value = settings.h_q3; document.getElementById('h_admin_q4').value = settings.h_q4; document.getElementById('h_admin_s3_1').value = settings.h_s3_1; document.getElementById('h_admin_s3_2').value = settings.h_s3_2; document.getElementById('h_admin_s3_3').value = settings.h_s3_3;
+         document.getElementById('h_admin_info_title').value = settings.h_info_title; document.getElementById('h_admin_info_desc').value = settings.h_info_desc;
+         document.getElementById('h_admin_img').value = settings.h_img; document.getElementById('h_admin_sum').value = settings.h_sum; document.getElementById('h_admin_full').value = settings.h_full;
+         document.getElementById('h_admin_q1').value = settings.h_q1; document.getElementById('h_admin_q2').value = settings.h_q2; document.getElementById('h_admin_q3').value = settings.h_q3; document.getElementById('h_admin_q4').value = settings.h_q4;
+         document.getElementById('h_admin_s3_1').value = settings.h_s3_1; document.getElementById('h_admin_s3_2').value = settings.h_s3_2; document.getElementById('h_admin_s3_3').value = settings.h_s3_3;
 
-         if(!hOpen) { document.getElementById('hearingClosedMsg').style.display = 'block'; document.getElementById('hearingFormContainer').style.display = 'none'; } else { document.getElementById('hearingClosedMsg').style.display = 'none'; document.getElementById('hearingFormContainer').style.display = 'block'; }
+         if(!hOpen) { document.getElementById('hearingClosedMsg').style.display = 'block'; document.getElementById('hearingFormContainer').style.display = 'none'; } 
+         else { document.getElementById('hearingClosedMsg').style.display = 'none'; document.getElementById('hearingFormContainer').style.display = 'block'; }
+
          document.getElementById('disp_video_title').innerText = settings.video_title; document.getElementById('admin_video_title').value = settings.video_title;
          updateVideo(settings.video_url); updateDashboard(settings.dash_url); updateUI();
          
@@ -663,11 +657,17 @@
          if(document.getElementById('page-qa').style.display==='block') renderQA();
          if(document.getElementById('page-videos').style.display==='block') renderVideos();
          
-         document.getElementById('globalLoader').style.opacity = '0'; setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
-      }).catch(e => { console.error(e); document.getElementById('globalLoader').style.display = 'none'; Swal.fire('ข้อผิดพลาด', 'เชื่อมต่อไม่ได้', 'error'); });
+         document.getElementById('globalLoader').style.opacity = '0'; 
+         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
+
+      }).catch(e => { 
+          console.error(e); 
+          document.getElementById('globalLoader').style.display = 'none'; 
+          Swal.fire('ข้อผิดพลาด', 'เชื่อมต่อไม่ได้ กรุณาตรวจสอบการตั้งค่า SCRIPT_URL', 'error'); 
+      });
     }
 
-    // 🟢 อัปเดตฟังก์ชัน postData เพื่อดักจับ Error ที่ชัดเจนขึ้น
+    // 🟢 ปรับระบบ POST ข้อมูลให้แจ้งเตือนได้ตรงจุดมากขึ้น
     function postData(data, callback) { 
        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
        .then(r => r.text())
@@ -676,13 +676,13 @@
                let json = JSON.parse(text); 
                callback(json); 
            } catch(e) { 
-               console.error("Server returned non-JSON:", text); 
-               Swal.fire('ข้อผิดพลาดของระบบ', 'เกิดข้อผิดพลาดที่ฐานข้อมูล<br>กรุณาตรวจสอบว่าคุณได้กด Deploy แบบ New Version แล้วหรือยัง', 'error'); 
+               console.error("Server Error parsing JSON:", text); 
+               Swal.fire('ข้อผิดพลาดของระบบ', 'ไม่สามารถเชื่อมต่อฐานข้อมูลได้<br>1. ตรวจสอบว่าใส่ <b>SCRIPT_URL</b> ถูกต้องแล้ว<br>2. คุณยังไม่ได้ <b>Deploy -> New Version</b>', 'error'); 
            } 
        })
        .catch(e => { 
-           console.error(e); 
-           Swal.fire('การเชื่อมต่อขัดข้อง', 'โปรดตรวจสอบการ Deploy หรือการเชื่อมต่ออินเทอร์เน็ต', 'error'); 
+           console.error("Fetch Error:", e); 
+           Swal.fire('การเชื่อมต่อขัดข้อง', 'โปรดตรวจสอบสัญญาณอินเทอร์เน็ต หรือลิงก์ SCRIPT_URL', 'error'); 
        }); 
     }
 
@@ -691,128 +691,319 @@
        fetch(SCRIPT_URL + '?action=getDashboardStats').then(r => r.json()).then(data => {
            Swal.close(); document.getElementById('btnOpenSheet').href = data.sheetUrl; document.getElementById('stat_issues_total').innerText = data.issues.total;
            renderChart('chartIssues', 'bar', Object.keys(data.issues.byCat), Object.values(data.issues.byCat), 'เรื่องร้องเรียน', '#e91e63');
+           
            document.getElementById('stat_hearing_total').innerText = data.hearing.total;
            renderChart('chartSector', 'pie', Object.keys(data.hearing.bySector), Object.values(data.hearing.bySector), 'ผู้ตอบ', ['#f1c40f','#e67e22','#e74c3c','#9b59b6', '#34495e']);
            renderChart('chartVision', 'doughnut', Object.keys(data.hearing.byVision), Object.values(data.hearing.byVision), 'วิสัยทัศน์', ['#2ecc71','#f1c40f','#e74c3c']);
            renderChart('chartPriority', 'bar', Object.keys(data.hearing.byPriority), Object.values(data.hearing.byPriority), 'ความสำคัญ', '#34495e');
-           const stdLabels = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย']; const stdColors = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; function getStdData(obj) { return stdLabels.map(l => obj[l] || 0); }
-           renderChart('chartEcon', 'doughnut', stdLabels, getStdData(data.hearing.byEcon), 'ด้านเศรษฐกิจ', stdColors); renderChart('chartSocial', 'doughnut', stdLabels, getStdData(data.hearing.bySocial), 'ด้านสังคม', stdColors); renderChart('chartEnv', 'doughnut', stdLabels, getStdData(data.hearing.byEnv), 'ด้านสิ่งแวดล้อม', stdColors);
+
+           const stdLabels = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย']; 
+           const stdColors = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
+           function getStdData(obj) { return stdLabels.map(l => obj[l] || 0); }
+           
+           renderChart('chartEcon', 'doughnut', stdLabels, getStdData(data.hearing.byEcon), 'ด้านเศรษฐกิจ', stdColors); 
+           renderChart('chartSocial', 'doughnut', stdLabels, getStdData(data.hearing.bySocial), 'ด้านสังคม', stdColors); 
+           renderChart('chartEnv', 'doughnut', stdLabels, getStdData(data.hearing.byEnv), 'ด้านสิ่งแวดล้อม', stdColors);
        }).catch(e => { Swal.fire('Error', 'โหลดข้อมูลไม่สำเร็จ', 'error'); });
     }
 
     function renderChart(canvasId, type, labels, data, label, colors) {
-       let chartKey = canvasId.replace('chart', '').toLowerCase(); if(charts[chartKey]) { charts[chartKey].destroy(); }
-       let ctx = document.getElementById(canvasId).getContext('2d'); let config = { type: type, data: { labels: labels, datasets: [{ label: label, data: data, backgroundColor: colors, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: (type !== 'bar'), position: 'bottom' } } } };
+       let chartKey = canvasId.replace('chart', '').toLowerCase(); 
+       if(charts[chartKey]) { charts[chartKey].destroy(); }
+       let ctx = document.getElementById(canvasId).getContext('2d'); 
+       let config = { type: type, data: { labels: labels, datasets: [{ label: label, data: data, backgroundColor: colors, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: (type !== 'bar'), position: 'bottom' } } } };
        charts[chartKey] = new Chart(ctx, config);
     }
     
-    function updateVideo(url) { let videoId = extractYouTubeID(url); let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : ""; document.getElementById('main_video_frame').src = embedUrl; document.getElementById('admin_video_url').value = url || ""; }
-    function extractYouTubeID(url) { if (!url) return null; var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; var match = url.match(regExp); return (match && match[2].length == 11) ? match[2] : null; }
-    function updateDashboard(url) { let ph = document.getElementById('dash_placeholder'); let frame = document.getElementById('main_dash_frame'); document.getElementById('admin_dash_url').value = url || ""; if (url && url.length > 5) { ph.style.display = 'none'; frame.style.display = 'block'; frame.src = url; } else { ph.style.display = 'flex'; frame.style.display = 'none'; } }
-    function toggleSidebar() { let sidebar = document.getElementById('sidebar'); let overlay = document.getElementById('sidebarOverlay'); sidebar.classList.toggle('active'); overlay.classList.toggle('active'); }
+    function updateVideo(url) { 
+        let videoId = extractYouTubeID(url); 
+        let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : ""; 
+        document.getElementById('main_video_frame').src = embedUrl; 
+        document.getElementById('admin_video_url').value = url || ""; 
+    }
+    function extractYouTubeID(url) { 
+        if (!url) return null; 
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; 
+        var match = url.match(regExp); 
+        return (match && match[2].length == 11) ? match[2] : null; 
+    }
+    function updateDashboard(url) { 
+        let ph = document.getElementById('dash_placeholder'); 
+        let frame = document.getElementById('main_dash_frame'); 
+        document.getElementById('admin_dash_url').value = url || ""; 
+        if (url && url.length > 5) { ph.style.display = 'none'; frame.style.display = 'block'; frame.src = url; } 
+        else { ph.style.display = 'flex'; frame.style.display = 'none'; } 
+    }
+    
+    function toggleSidebar() { 
+        let sidebar = document.getElementById('sidebar'); 
+        let overlay = document.getElementById('sidebarOverlay'); 
+        sidebar.classList.toggle('active'); 
+        overlay.classList.toggle('active'); 
+    }
     
     function showPage(id) {
       ['home','docs','calendar','qa', 'videos', 'admin-dash'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
-      document.getElementById('page-'+id).style.display = 'block'; document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
+      document.getElementById('page-'+id).style.display = 'block'; 
+      document.querySelectorAll('.nav-link-main').forEach(el => el.classList.remove('active'));
+      
       if(id !== 'admin-dash') document.getElementById('menu-'+id).classList.add('active');
-      if(id === 'docs') { buildYearFilter(); filterDocs(); } if(id === 'qa') renderQA(); if(id === 'videos') renderVideos(); if(id === 'admin-dash') loadDashboard();
-      window.scrollTo(0,0); if(window.innerWidth <= 992) { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
+      if(id === 'docs') { buildYearFilter(); filterDocs(); } 
+      if(id === 'qa') renderQA(); 
+      if(id === 'videos') renderVideos(); 
+      if(id === 'admin-dash') loadDashboard();
+      
+      window.scrollTo(0,0); 
+      if(window.innerWidth <= 992) { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
     }
-    function scrollToId(id) { showPage('home'); setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); if(window.innerWidth <= 992) toggleSidebar(); }
+    function scrollToId(id) { 
+        showPage('home'); 
+        setTimeout(() => { document.getElementById(id).scrollIntoView({behavior: 'smooth', block: 'start'}); }, 100); 
+        if(window.innerWidth <= 992) toggleSidebar(); 
+    }
     
     function saveGeneralConfig() {
        let vTitle = getVal('admin_video_title'); let vUrl = getVal('admin_video_url'); let dUrl = getVal('admin_dash_url');
        if (!vTitle) { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อ', 'warning'); return; }
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => { if(res.status === 'SUCCESS') { document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } else { Swal.fire('Error', res.message, 'error'); } });
+       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => { 
+           if(res.status === 'SUCCESS') { document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } 
+           else { Swal.fire('Error', res.message, 'error'); } 
+       });
     }
     function saveFormConfig(num) {
        let titleVal = getVal('admin_title_1'); let descVal = getVal('admin_subtitle_1'); let dateVal = getVal('admin_date_1'); let status = document.getElementById('swForm1').checked ? 'OPEN' : 'CLOSED';
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateFormConfig', token: adminToken, key: 'FORM_1', title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (res) => { if(res.status === 'SUCCESS') { form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = status==='OPEN'; updateUI(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } else { Swal.fire('Error', res.message, 'error'); } });
+       postData({ action: 'updateFormConfig', token: adminToken, key: 'FORM_1', title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (res) => { 
+           if(res.status === 'SUCCESS') { form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = status==='OPEN'; updateUI(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); } 
+           else { Swal.fire('Error', res.message, 'error'); } 
+       });
     }
     function saveHearingConfig() {
        let payload = {
-          action: 'updateHearingConfig', token: adminToken, h_title: getVal('h_admin_title'), h_desc: getVal('h_admin_desc'), h_date: getVal('h_admin_date'), h_plan_name: getVal('h_admin_plan_name'), 
+          action: 'updateHearingConfig', token: adminToken, 
+          h_title: getVal('h_admin_title'), h_desc: getVal('h_admin_desc'), h_date: getVal('h_admin_date'), h_plan_name: getVal('h_admin_plan_name'), 
           h_status: document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED', h_rating: document.getElementById('swHearingRating').checked ? 'ON' : 'OFF',
           h_img: getVal('h_admin_img'), h_sum: getVal('h_admin_sum'), h_full: getVal('h_admin_full'), h_info_title: getVal('h_admin_info_title'), h_info_desc: getVal('h_admin_info_desc'),   
           h_q1: getVal('h_admin_q1'), h_q2: getVal('h_admin_q2'), h_q3: getVal('h_admin_q3'), h_q4: getVal('h_admin_q4'), h_s3_1: getVal('h_admin_s3_1'), h_s3_2: getVal('h_admin_s3_2'), h_s3_3: getVal('h_admin_s3_3')
        };
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData(payload, (res) => { if(res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } });
+       postData(payload, (res) => { 
+           if(res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } 
+           else { Swal.fire('Error', res.message, 'error'); } 
+       });
     }
     function updateUI() {
        document.getElementById('disp_title_1').innerText = form1Title; document.getElementById('disp_desc_1').innerText = form1Desc; document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
-       document.getElementById('admin_title_1').value = form1Title; document.getElementById('admin_subtitle_1').value = form1Desc; document.getElementById('admin_date_1').value = form1Date; document.getElementById('swForm1').checked = form1Open;
-       if(form1Open) { document.getElementById('banner1').classList.remove('closed'); document.getElementById('statusBadge1').style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } else { document.getElementById('banner1').classList.add('closed'); document.getElementById('statusBadge1').style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
+       document.getElementById('admin_title_1').value = form1Title; document.getElementById('admin_subtitle_1').value = form1Desc; document.getElementById('admin_date_1').value = form1Date;
+       document.getElementById('swForm1').checked = form1Open;
+       if(form1Open) { document.getElementById('banner1').classList.remove('closed'); document.getElementById('statusBadge1').style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } 
+       else { document.getElementById('banner1').classList.add('closed'); document.getElementById('statusBadge1').style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
+       
        document.getElementById('disp_title_2').innerText = hTitle; document.getElementById('disp_desc_2').innerText = hDesc; document.getElementById('disp_date_2').innerText = "📅 " + hDate; document.getElementById('disp_h_plan_name').innerText = hPlanName;
-       if(hOpen) { document.getElementById('banner2').classList.remove('closed'); document.getElementById('statusBadge2').style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } else { document.getElementById('banner2').classList.add('closed'); document.getElementById('statusBadge2').style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
+       if(hOpen) { document.getElementById('banner2').classList.remove('closed'); document.getElementById('statusBadge2').style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } 
+       else { document.getElementById('banner2').classList.add('closed'); document.getElementById('statusBadge2').style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
     }
 
-    function openVideoModal() { resetVidForm(); new bootstrap.Modal(document.getElementById('adminVideoModal')).show(); }
-    function resetVidForm() { document.getElementById('vid_id').value=''; document.getElementById('vid_title').value=''; document.getElementById('vid_link').value=''; document.getElementById('vid_order').value=''; document.getElementById('vidModalTitle').innerText='เพิ่มวิดีโอ'; document.getElementById('btnSaveVidModal').innerText='บันทึก'; document.getElementById('btnSaveVidModal').classList.replace('btn-warning','btn-success'); }
+    // 🟢 ระบบจัดการ วิดีโอ 🟢
+    function openVideoModal() { 
+        resetVidForm(); 
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('adminVideoModal')).show(); 
+    }
+    function resetVidForm() { 
+        document.getElementById('vid_id').value=''; document.getElementById('vid_title').value=''; document.getElementById('vid_link').value=''; document.getElementById('vid_order').value=''; 
+        document.getElementById('vidModalTitle').innerText='เพิ่มวิดีโอ'; document.getElementById('btnSaveVidModal').innerText='บันทึก'; document.getElementById('btnSaveVidModal').classList.replace('btn-warning','btn-success'); 
+    }
     function editVideo(id) {
-       let item = videoList.find(x => x.id === id); if(!item) return;
-       document.getElementById('vid_id').value = item.id; document.getElementById('vid_title').value = item.title; document.getElementById('vid_link').value = item.link; document.getElementById('vid_order').value = item.order == 999 ? "" : item.order;
-       document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; document.getElementById('btnSaveVidModal').innerText='บันทึกแก้ไข'; document.getElementById('btnSaveVidModal').classList.replace('btn-success','btn-warning');
-       new bootstrap.Modal(document.getElementById('adminVideoModal')).show();
+       let item = videoList.find(x => x.id === id); 
+       if(!item) return;
+       document.getElementById('vid_id').value = item.id; 
+       document.getElementById('vid_title').value = item.title; 
+       document.getElementById('vid_link').value = item.link; 
+       document.getElementById('vid_order').value = item.order == 999 ? "" : item.order;
+       
+       document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; 
+       document.getElementById('btnSaveVidModal').innerText='บันทึกแก้ไข'; 
+       document.getElementById('btnSaveVidModal').classList.replace('btn-success','btn-warning');
+       bootstrap.Modal.getOrCreateInstance(document.getElementById('adminVideoModal')).show();
     }
     function submitVideo(e) {
-       e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'saveVideo', token: adminToken, id: getVal('vid_id'), title: getVal('vid_title'), link: getVal('vid_link'), order: getVal('vid_order') }, (res) => { if (res.status === 'SUCCESS') { bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')).hide(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } });
+       e.preventDefault(); 
+       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       postData({ action: 'saveVideo', token: adminToken, id: getVal('vid_id'), title: getVal('vid_title'), link: getVal('vid_link'), order: getVal('vid_order') }, (res) => { 
+           if (res.status === 'SUCCESS') { 
+               bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')).hide(); 
+               Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(()=>initSystem()); 
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
+       });
     }
-    function deleteVideo(id) { Swal.fire({ title: 'ลบวิดีโอ?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
+    function deleteVideo(id) { 
+        Swal.fire({ title: 'ลบวิดีโอ?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); 
+                postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { 
+                    if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} 
+                    else { Swal.fire('Error', res.message, 'error'); } 
+                }); 
+            } 
+        }); 
+    }
     function renderVideos() {
-       let html = ''; if(videoList.length === 0) { html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; } else {
-          videoList.forEach(vid => { let vidId = extractYouTubeID(vid.link); let embedUrl = vidId ? "https://www.youtube.com/embed/" + vidId : ""; let adminControls = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between align-items-center"><small class="text-muted fw-bold"><i class="material-icons align-middle text-secondary" style="font-size:16px;">sort</i> ลำดับ: <span class="text-primary">${vid.order==999?'':vid.order}</span></small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : '';
-             html += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar"><div class="video-title-text">${vid.title}</div></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adminControls}</div></div>`; });
-       } document.getElementById('videoListContainer').innerHTML = html;
+       let html = ''; 
+       if(videoList.length === 0) { 
+           html = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอในระบบ</div>'; 
+       } else {
+          videoList.forEach(vid => { 
+              let vidId = extractYouTubeID(vid.link); 
+              let embedUrl = vidId ? "https://www.youtube.com/embed/" + vidId : ""; 
+              let adminControls = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between align-items-center"><small class="text-muted fw-bold"><i class="material-icons align-middle text-secondary" style="font-size:16px;">sort</i> ลำดับ: <span class="text-primary">${vid.order==999?'':vid.order}</span></small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้ไข</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : '';
+              html += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar"><div class="video-title-text">${vid.title}</div></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adminControls}</div></div>`; 
+          });
+       } 
+       document.getElementById('videoListContainer').innerHTML = html;
     }
 
-    function openQAModal() { resetQAForm(); new bootstrap.Modal(document.getElementById('adminQAModal')).show(); }
-    function resetQAForm() { document.getElementById('qa_id').value=''; document.getElementById('qa_emoji').value='❓'; document.getElementById('qa_question').value=''; document.getElementById('qa_answer').value=''; document.getElementById('qaModalTitle').innerText='เพิ่ม Q&A'; document.getElementById('btnSaveQAModal').innerText='บันทึก'; document.getElementById('btnSaveQAModal').classList.replace('btn-warning','btn-success'); }
+    // 🟢 ระบบจัดการ QA 🟢
+    function openQAModal() { 
+        resetQAForm(); 
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('adminQAModal')).show(); 
+    }
+    function resetQAForm() { 
+        document.getElementById('qa_id').value=''; document.getElementById('qa_emoji').value='❓'; document.getElementById('qa_question').value=''; document.getElementById('qa_answer').value=''; 
+        document.getElementById('qaModalTitle').innerText='เพิ่ม Q&A'; document.getElementById('btnSaveQAModal').innerText='บันทึก'; document.getElementById('btnSaveQAModal').classList.replace('btn-warning','btn-success'); 
+    }
     function editQA(id) {
-       let item = qaList.find(x => x.id === id); if(!item) return;
-       document.getElementById('qa_id').value = item.id; document.getElementById('qa_emoji').value = item.emoji||'❓'; document.getElementById('qa_question').value = item.q; document.getElementById('qa_answer').value = item.a;
-       document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; document.getElementById('btnSaveQAModal').innerText='บันทึกแก้ไข'; document.getElementById('btnSaveQAModal').classList.replace('btn-success','btn-warning');
-       new bootstrap.Modal(document.getElementById('adminQAModal')).show();
+       let item = qaList.find(x => x.id === id); 
+       if(!item) return;
+       document.getElementById('qa_id').value = item.id; 
+       document.getElementById('qa_emoji').value = item.emoji||'❓'; 
+       document.getElementById('qa_question').value = item.q; 
+       document.getElementById('qa_answer').value = item.a;
+       
+       document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; 
+       document.getElementById('btnSaveQAModal').innerText='บันทึกแก้ไข'; 
+       document.getElementById('btnSaveQAModal').classList.replace('btn-success','btn-warning');
+       bootstrap.Modal.getOrCreateInstance(document.getElementById('adminQAModal')).show();
     }
     function submitQA(e) {
-       e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { if(res.status==='SUCCESS'){ bootstrap.Modal.getInstance(document.getElementById('adminQAModal')).hide(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); }});
+       e.preventDefault(); 
+       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+       postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { 
+           if(res.status==='SUCCESS'){ 
+               bootstrap.Modal.getInstance(document.getElementById('adminQAModal')).hide(); 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); 
+           } else { Swal.fire('Error', res.message, 'error'); }
+       });
     }
-    function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
+    function deleteQA(id) { 
+        Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); 
+                postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { 
+                    if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} 
+                    else { Swal.fire('Error', res.message, 'error'); } 
+                }); 
+            } 
+        }); 
+    }
     function renderQA() {
-       let html = ''; if(qaList.length === 0) { html = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; } else {
-          qaList.forEach((item, index) => { let adminControls = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้ไข</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : '';
-             html += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body text-muted bg-light">${item.a.replace(/\n/g,'<br>')}${adminControls}</div></div></div>`; });
-       } document.getElementById('accQA').innerHTML = html;
+       let html = ''; 
+       if(qaList.length === 0) { 
+           html = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; 
+       } else {
+          qaList.forEach((item, index) => { 
+              let adminControls = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้ไข</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : '';
+              html += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body text-muted bg-light">${item.a.replace(/\n/g,'<br>')}${adminControls}</div></div></div>`; 
+          });
+       } 
+       document.getElementById('accQA').innerHTML = html;
     }
 
-    function openDocModal() { resetDocForm(); new bootstrap.Modal(document.getElementById('adminDocModal')).show(); }
+    // 🟢 ระบบจัดการ เอกสาร (Documents) 🟢
+    function openDocModal() { 
+        resetDocForm(); 
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('adminDocModal')).show(); 
+    }
     function resetDocForm() { 
-       document.getElementById('doc_id').value=''; document.getElementById('doc_title').value=''; document.getElementById('doc_year').value=''; document.getElementById('doc_desc').value=''; document.getElementById('doc_link').value=''; document.getElementById('doc_cat').value='General'; document.getElementById('doc_ai_status').value='ON'; document.getElementById('doc_order').value=''; document.getElementById('doc_is_pinned').checked=false; document.getElementById('doc_is_important').checked=false;
-       document.getElementById('docModalTitle').innerText='เพิ่มเอกสารใหม่'; document.getElementById('btnSaveDocModal').innerText='บันทึกข้อมูล'; document.getElementById('btnSaveDocModal').classList.replace('btn-warning','btn-success'); 
+       document.getElementById('doc_id').value=''; 
+       document.getElementById('doc_title').value=''; 
+       document.getElementById('doc_year').value=''; 
+       document.getElementById('doc_desc').value=''; 
+       document.getElementById('doc_link').value=''; 
+       document.getElementById('doc_cat').value='General'; 
+       document.getElementById('doc_ai_status').value='ON'; 
+       document.getElementById('doc_order').value=''; 
+       document.getElementById('doc_is_pinned').checked=false; 
+       document.getElementById('doc_is_important').checked=false;
+       document.getElementById('docModalTitle').innerText='เพิ่มเอกสารใหม่'; 
+       document.getElementById('btnSaveDocModal').innerText='บันทึกข้อมูล'; 
+       document.getElementById('btnSaveDocModal').classList.replace('btn-warning','btn-success'); 
     }
     function editDoc(id) {
-       let doc = docs.find(d => d.id === id); if(!doc) return;
-       document.getElementById('doc_id').value = doc.id; document.getElementById('doc_title').value = doc.title; document.getElementById('doc_year').value = doc.year || ''; document.getElementById('doc_desc').value = doc.desc; document.getElementById('doc_link').value = doc.link; document.getElementById('doc_cat').value = doc.type; document.getElementById('doc_ai_status').value = doc.ai_status || "ON"; document.getElementById('doc_order').value = doc.order == 999 ? "" : doc.order; document.getElementById('doc_is_pinned').checked = doc.is_pinned; document.getElementById('doc_is_important').checked = doc.is_important;
-       document.getElementById('docModalTitle').innerText='แก้ไขเอกสาร'; document.getElementById('btnSaveDocModal').innerText='บันทึกแก้ไข'; document.getElementById('btnSaveDocModal').classList.replace('btn-success','btn-warning');
-       new bootstrap.Modal(document.getElementById('adminDocModal')).show();
+       let doc = docs.find(d => d.id === id); 
+       if(!doc) return;
+       document.getElementById('doc_id').value = doc.id; 
+       document.getElementById('doc_title').value = doc.title; 
+       document.getElementById('doc_year').value = doc.year || ''; 
+       document.getElementById('doc_desc').value = doc.desc; 
+       document.getElementById('doc_link').value = doc.link; 
+       document.getElementById('doc_cat').value = doc.type; 
+       document.getElementById('doc_ai_status').value = doc.ai_status || "ON"; 
+       document.getElementById('doc_order').value = doc.order == 999 ? "" : doc.order; 
+       document.getElementById('doc_is_pinned').checked = doc.is_pinned; 
+       document.getElementById('doc_is_important').checked = doc.is_important;
+       
+       document.getElementById('docModalTitle').innerText='แก้ไขเอกสาร'; 
+       document.getElementById('btnSaveDocModal').innerText='บันทึกแก้ไข'; 
+       document.getElementById('btnSaveDocModal').classList.replace('btn-success','btn-warning');
+       bootstrap.Modal.getOrCreateInstance(document.getElementById('adminDocModal')).show();
     }
     function submitDocument(e) {
-      e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-      let payload = { action: 'saveDoc', token: adminToken, id: getVal('doc_id'), title: getVal('doc_title'), desc: getVal('doc_desc'), link: getVal('doc_link'), type: getVal('doc_cat'), ai_status: getVal('doc_ai_status'), year: getVal('doc_year'), order: getVal('doc_order'), is_pinned: document.getElementById('doc_is_pinned').checked, is_important: document.getElementById('doc_is_important').checked };
-      postData(payload, (res) => { if(res.status==='SUCCESS'){ bootstrap.Modal.getInstance(document.getElementById('adminDocModal')).hide(); Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); }});
+      e.preventDefault(); 
+      Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+      let payload = { 
+          action: 'saveDoc', token: adminToken, id: getVal('doc_id'), title: getVal('doc_title'), desc: getVal('doc_desc'), 
+          link: getVal('doc_link'), type: getVal('doc_cat'), ai_status: getVal('doc_ai_status'), year: getVal('doc_year'), 
+          order: getVal('doc_order'), is_pinned: document.getElementById('doc_is_pinned').checked, 
+          is_important: document.getElementById('doc_is_important').checked 
+      };
+      postData(payload, (res) => { 
+          if(res.status==='SUCCESS'){ 
+              bootstrap.Modal.getInstance(document.getElementById('adminDocModal')).hide(); 
+              Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); 
+          } else { Swal.fire('Error', res.message, 'error'); }
+      });
     }
-    function deleteDoc(id) { Swal.fire({ title: 'ลบเอกสาร?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteDoc', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); }}); } }); }
+    function deleteDoc(id) { 
+        Swal.fire({ title: 'ลบเอกสาร?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); 
+                postData({ action: 'deleteDoc', token: adminToken, id: id }, (res) => { 
+                    if(res.status==='SUCCESS'){ Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(()=>initSystem());} 
+                    else { Swal.fire('Error', res.message, 'error'); }
+                }); 
+            } 
+        }); 
+    }
 
     function buildYearFilter() {
        let years = new Set();
        docs.forEach(d => { 
-           if(d.year) { let parts = d.year.split('-'); if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) years.add(y.toString()); } else { years.add(d.year.trim()); } }
+           if(d.year) { 
+               let parts = d.year.split('-'); 
+               if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { 
+                   for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) years.add(y.toString()); 
+               } else { 
+                   years.add(d.year.trim()); 
+               } 
+           }
        });
-       let sortedYears = Array.from(years).sort((a,b) => b - a); let html = '<option value="All">ทุกปีงบประมาณ</option>'; sortedYears.forEach(y => html += `<option value="${y}">ปี ${y}</option>`); document.getElementById('filterYear').innerHTML = html;
+       let sortedYears = Array.from(years).sort((a,b) => b - a); 
+       let html = '<option value="All">ทุกปีงบประมาณ</option>'; 
+       sortedYears.forEach(y => html += `<option value="${y}">ปี ${y}</option>`); 
+       document.getElementById('filterYear').innerHTML = html;
     }
 
     function sortDocsLogic(a, b) {
@@ -826,8 +1017,10 @@
     }
 
     function isYearMatch(targetYear, docYearStr) {
-       if(targetYear === "All") return true; if(!docYearStr) return false;
-       let parts = docYearStr.split('-'); if(parts.length === 2) { return parseInt(targetYear) >= parseInt(parts[0]) && parseInt(targetYear) <= parseInt(parts[1]); }
+       if(targetYear === "All") return true; 
+       if(!docYearStr) return false;
+       let parts = docYearStr.split('-'); 
+       if(parts.length === 2) { return parseInt(targetYear) >= parseInt(parts[0]) && parseInt(targetYear) <= parseInt(parts[1]); }
        return targetYear === docYearStr.trim();
     }
 
@@ -835,21 +1028,38 @@
        let sTxt = getVal('searchDoc').toLowerCase(), cat = getVal('filterCat'), yr = getVal('filterYear');
        filteredDocs = docs.filter(d => {
           let mTxt = d.title.toLowerCase().includes(sTxt) || (d.desc && d.desc.toLowerCase().includes(sTxt));
-          let mCat = (cat === 'All') || (d.type === cat); let mYr = isYearMatch(yr, d.year);
+          let mCat = (cat === 'All') || (d.type === cat); 
+          let mYr = isYearMatch(yr, d.year);
           return mTxt && mCat && mYr;
        });
-       filteredDocs.sort(sortDocsLogic); currentPage = 1; renderDocs();
+       filteredDocs.sort(sortDocsLogic); 
+       currentPage = 1; 
+       renderDocs();
     }
     
     function clearSearch() { document.getElementById('searchDoc').value=''; document.getElementById('filterCat').value='All'; document.getElementById('filterYear').value='All'; filterDocs(); }
-    function getCatBadge(type) { let l = type, c = 'bg-secondary'; switch(type){ case 'General': l='เอกสารทั่วไป'; break; case 'Plan': l='แผนพัฒนา'; c='bg-primary'; break; case 'Report': l='รายงานผล'; c='bg-success'; break; case 'Announcement': l='ประกาศ/คำสั่ง'; c='bg-warning text-dark'; break; } return `<span class="badge ${c} me-1">${l}</span>`; }
+    
+    function getCatBadge(type) { 
+        let l = type, c = 'bg-secondary'; 
+        switch(type){ case 'General': l='เอกสารทั่วไป'; break; case 'Plan': l='แผนพัฒนา'; c='bg-primary'; break; case 'Report': l='รายงานผล'; c='bg-success'; break; case 'Announcement': l='ประกาศ/คำสั่ง'; c='bg-warning text-dark'; break; } 
+        return `<span class="badge ${c} me-1">${l}</span>`; 
+    }
     
     function renderDocs() {
-      let html = ''; if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML=''; } else {
-        let start = (currentPage - 1) * itemsPerPage; let end = start + itemsPerPage; let paginatedItems = filteredDocs.slice(start, end);
+      let html = ''; 
+      if(filteredDocs.length === 0) { 
+          html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; 
+          document.getElementById('pagination').innerHTML=''; 
+      } else {
+        let start = (currentPage - 1) * itemsPerPage; 
+        let end = start + itemsPerPage; 
+        let paginatedItems = filteredDocs.slice(start, end);
+        
         paginatedItems.forEach(doc => {
-          let icon = 'description', color = 'text-primary'; if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
-          let dateStr = "อัปเดต: " + formatDate(doc.created); let yrStr = doc.year ? ` | ปีงบประมาณ ${doc.year}` : '';
+          let icon = 'description', color = 'text-primary'; 
+          if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
+          let dateStr = "อัปเดต: " + formatDate(doc.created); 
+          let yrStr = doc.year ? ` | ปีงบประมาณ ${doc.year}` : '';
           
           let badges = '';
           if(doc.is_pinned) badges += `<span class="badge badge-pin me-1">📌 ปักหมุด</span>`;
@@ -857,75 +1067,160 @@
           let ageDays = (new Date() - new Date(doc.created)) / (1000 * 60 * 60 * 24);
           if(ageDays < 14) badges += `<span class="badge badge-new me-1">🆕 ใหม่</span>`;
 
-          let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : ''; let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
+          let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : ''; 
+          let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
           let chatBtn = doc.ai_status === 'OFF' ? `<button class="btn btn-sm btn-secondary text-white me-2 opacity-50" style="cursor:not-allowed;" title="ฟังก์ชัน AI ปิด"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ปิด AI</button>` : `<button class="btn btn-sm btn-info text-white me-2" onclick="openChat('${doc.id}')"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ถาม AI</button>`;
           
           html += `<div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom"><i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i><div class="flex-grow-1"><a href="${doc.link}" target="_blank" class="text-decoration-none text-dark"><div class="mb-1">${badges}</div><h5 class="mb-1 fw-bold">${doc.title}</h5><div class="mb-2">${getCatBadge(doc.type)} <span class="text-muted small">${doc.desc || "-"}</span></div><small class="text-secondary">${dateStr}${yrStr}</small></a></div><div class="d-flex align-items-center">${chatBtn} ${editBtn} ${deleteBtn}</div></div>`;
         });
         renderPagination();
-      } document.getElementById('docListContainer').innerHTML = html;
+      } 
+      document.getElementById('docListContainer').innerHTML = html;
     }
+
     function renderPagination() {
-       let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); let html = '';
+       let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
+       let html = '';
        if(totalPages > 1) {
           html += `<div class="page-btn ${currentPage===1 ? 'disabled' : ''}" onclick="changePage(${currentPage-1})">«</div>`;
-          for(let i=1; i<=totalPages; i++) { if(i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) { html += `<div class="page-btn ${i===currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</div>`; } else if(i === currentPage - 2 || i === currentPage + 2) { html += `<span class="px-2">...</span>`; } }
+          for(let i=1; i<=totalPages; i++) { 
+              if(i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) { 
+                  html += `<div class="page-btn ${i===currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</div>`; 
+              } else if(i === currentPage - 2 || i === currentPage + 2) { 
+                  html += `<span class="px-2">...</span>`; 
+              } 
+          }
           html += `<div class="page-btn ${currentPage===totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage+1})">»</div>`;
-       } document.getElementById('pagination').innerHTML = html;
+       } 
+       document.getElementById('pagination').innerHTML = html;
     }
-    function changePage(page) { let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); if(page < 1 || page > totalPages) return; currentPage = page; renderDocs(); }
+    
+    function changePage(page) { 
+        let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
+        if(page < 1 || page > totalPages) return; 
+        currentPage = page; 
+        renderDocs(); 
+    }
 
-    function openChat(docId) { let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link; document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; new bootstrap.Modal(document.getElementById('chatModal')).show(); }
+    function openChat(docId) { 
+        let doc = docs.find(d => d.id === docId); 
+        if(!doc) return; 
+        currentDocLink = doc.link; 
+        document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; 
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('chatModal')).show(); 
+    }
     function sendChat() {
        let input = document.getElementById('chatInput'); let question = input.value.trim(); if(!question) return;
        let history = document.getElementById('chatHistory'); history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; input.value = ''; history.scrollTop = history.scrollHeight;
        let loadingId = 'loading_' + Date.now(); history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`; history.scrollTop = history.scrollHeight;
-       postData({ action: 'chatWithAI', link: currentDocLink, question: question }, (data) => { document.getElementById(loadingId).remove(); let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight; });
+       postData({ action: 'chatWithAI', link: currentDocLink, question: question }, (data) => { 
+           document.getElementById(loadingId).remove(); 
+           let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; 
+           answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); 
+           history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; 
+           history.scrollTop = history.scrollHeight; 
+       });
     }
 
-    function openFormModal(type, titleText) { var modalForm = new bootstrap.Modal(document.getElementById('formModal')); document.getElementById('formTitle').innerText = titleText; document.getElementById('f_topic_type').value = titleText; if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; } modalForm.show(); }
+    function openFormModal(type, titleText) { 
+        var modalForm = bootstrap.Modal.getOrCreateInstance(document.getElementById('formModal')); 
+        document.getElementById('formTitle').innerText = titleText; 
+        document.getElementById('f_topic_type').value = titleText; 
+        if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; } 
+        modalForm.show(); 
+    }
+
     function submitForm(e) {
       e.preventDefault(); let btn = e.target.querySelector('button'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
       let topicVal = document.getElementById('f_topic_type').value; let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS"; 
-      if(document.getElementById('topicSelectDiv').style.display === 'block') { let select = document.getElementById('f_topic_select'); if(select.value === "") { Swal.fire('กรุณาเลือกหมวดหมู่'); btn.disabled = false; btn.innerText = oldText; return; } topicVal = select.value + " (" + topicVal + ")"; }
-      postData({ action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: topicVal, topicKey: topicKey }, (response) => { if (response.status === 'CLOSED_ERROR') { Swal.fire('เสียใจด้วย', 'ปิดรับข้อมูลแล้ว', 'error'); initSystem(); bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); } else { Swal.fire('บันทึกสำเร็จ','ขอบคุณสำหรับข้อมูล','success'); e.target.reset(); bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); } btn.disabled = false; btn.innerText = oldText; });
+      if(document.getElementById('topicSelectDiv').style.display === 'block') { 
+          let select = document.getElementById('f_topic_select'); 
+          if(select.value === "") { Swal.fire('กรุณาเลือกหมวดหมู่'); btn.disabled = false; btn.innerText = oldText; return; } 
+          topicVal = select.value + " (" + topicVal + ")"; 
+      }
+      postData({ action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: topicVal, topicKey: topicKey }, (response) => { 
+         if (response.status === 'CLOSED_ERROR') { 
+             Swal.fire('เสียใจด้วย', 'ปิดรับข้อมูลแล้ว', 'error'); initSystem(); bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); 
+         } else { 
+             Swal.fire('บันทึกสำเร็จ','ขอบคุณสำหรับข้อมูล','success'); e.target.reset(); bootstrap.Modal.getInstance(document.getElementById('formModal')).hide(); 
+         } 
+         btn.disabled = false; btn.innerText = oldText; 
+      });
     }
 
-    function handleBannerClick(num) { if(num === 1) { if(form1Open) { openFormModal('general', form1Title); } else { Swal.fire({ icon: 'warning', title: 'ปิดรับแจ้ง' }); } } else if (num === 2) { if(hOpen) { new bootstrap.Modal(document.getElementById('hearingModal')).show(); } else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น' }); } } }
+    function handleBannerClick(num) { 
+        if(num === 1) { 
+            if(form1Open) { openFormModal('general', form1Title); } else { Swal.fire({ icon: 'warning', title: 'ปิดรับแจ้ง' }); } 
+        } else if (num === 2) { 
+            if(hOpen) { bootstrap.Modal.getOrCreateInstance(document.getElementById('hearingModal')).show(); } else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น' }); } 
+        } 
+    }
 
     function submitHearing(e) {
        e.preventDefault(); let btn = document.getElementById('btnSubmitHearing'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่ง...';
        let payload = { action: 'saveHearing', plan_name: hPlanName, name: getVal('h_name'), district: getVal('h_district'), sector: getVal('h_sector'), vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", vision_fb: getVal('h_vision_fb'), econ: document.querySelector('input[name="h_econ"]:checked')?.value || "", social: document.querySelector('input[name="h_soc"]:checked')?.value || "", env: document.querySelector('input[name="h_env"]:checked')?.value || "", strategy_fb: getVal('h_strategy_fb'), priority: getVal('h_priority'), feedback: getVal('h_feedback') };
-       postData(payload, (res) => { btn.disabled = false; btn.innerText = oldText; if(res.status === 'SUCCESS') { e.target.reset(); bootstrap.Modal.getInstance(document.getElementById('hearingModal')).hide(); if(hRatingOpen) { new bootstrap.Modal(document.getElementById('ratingModal')).show(); } else { Swal.fire('ขอบพระคุณ!', 'ส่งความเห็นเรียบร้อย', 'success'); } } else { Swal.fire('Error', res.message, 'error'); } });
+       postData(payload, (res) => { 
+           btn.disabled = false; btn.innerText = oldText; 
+           if(res.status === 'SUCCESS') { 
+               e.target.reset(); bootstrap.Modal.getInstance(document.getElementById('hearingModal')).hide(); 
+               if(hRatingOpen) { bootstrap.Modal.getOrCreateInstance(document.getElementById('ratingModal')).show(); } else { Swal.fire('ขอบพระคุณ!', 'ส่งความเห็นเรียบร้อย', 'success'); } 
+           } else { Swal.fire('Error', res.message, 'error'); } 
+       });
     }
 
     function hoverStar(val) { document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('hover'); else item.classList.remove('hover'); }); }
     function resetStar() { document.querySelectorAll('.star-rating i').forEach(item => item.classList.remove('hover')); }
     function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
+    
     function submitRating() {
         let score = document.getElementById('sys_rating_val').value; if(score == 0) { Swal.fire('แจ้งเตือน', 'กรุณากดดาวให้คะแนน', 'warning'); return; }
         Swal.fire({ title: 'กำลังส่ง...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-        postData({ action: 'saveRating', stars: score, sysFeedback: getVal('sys_feedback') }, (res) => { bootstrap.Modal.getInstance(document.getElementById('ratingModal')).hide(); Swal.fire('ขอบพระคุณ!', 'ประเมินเรียบร้อย', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; document.querySelectorAll('.star-rating i').forEach(i => i.classList.remove('active')); });
+        postData({ action: 'saveRating', stars: score, sysFeedback: getVal('sys_feedback') }, (res) => { 
+            bootstrap.Modal.getInstance(document.getElementById('ratingModal')).hide(); 
+            Swal.fire('ขอบพระคุณ!', 'ประเมินเรียบร้อย', 'success'); 
+            document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; document.querySelectorAll('.star-rating i').forEach(i => i.classList.remove('active')); 
+        });
     }
     
     function loginToggle() {
       if(isAdmin) return logoutSystem();
       Swal.fire({ title: 'เข้าสู่ระบบผู้ดูแลระบบ', html: '<input id="swal-input1" class="swal2-input" placeholder="Username">' + '<input id="swal-input2" class="swal2-input" placeholder="Password" type="password">', focusConfirm: false, confirmButtonText: 'เข้าสู่ระบบ', showCancelButton: true, preConfirm: () => { return [getVal('swal-input1'), getVal('swal-input2')] } }).then((result) => {
         if (result.isConfirmed && result.value) {
-          if (!result.value[0] || !result.value[1]) return Swal.fire('กรุณากรอกให้ครบ'); Swal.fire({ title: 'ตรวจสอบ...', didOpen: () => Swal.showLoading() });
-          postData({action: 'login', username: result.value[0], password: result.value[1]}, (data) => { if(data.status === 'SUCCESS') { adminToken = result.value[1]; setAdminMode(true); Swal.fire({icon: 'success', title: 'สำเร็จ', timer: 1500, showConfirmButton: false}); } else { Swal.fire({icon: 'error', title: 'ไม่ถูกต้อง'}); } });
+          if (!result.value[0] || !result.value[1]) return Swal.fire('กรุณากรอกให้ครบ'); 
+          Swal.fire({ title: 'ตรวจสอบ...', didOpen: () => Swal.showLoading() });
+          postData({action: 'login', username: result.value[0], password: result.value[1]}, (data) => { 
+              if(data.status === 'SUCCESS') { 
+                  adminToken = result.value[1]; 
+                  setAdminMode(true); 
+                  Swal.fire({icon: 'success', title: 'สำเร็จ', timer: 1500, showConfirmButton: false}); 
+              } else { Swal.fire({icon: 'error', title: 'ไม่ถูกต้อง'}); } 
+          });
         }
       });
     }
 
-    function logoutSystem() { Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่' }).then((res) => { if(res.isConfirmed) { adminToken = ""; setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); } }); }
+    function logoutSystem() { 
+        Swal.fire({ title: 'ออกจากระบบ?', icon: 'question', showCancelButton: true, confirmButtonText: 'ใช่' }).then((res) => { 
+            if(res.isConfirmed) { adminToken = ""; setAdminMode(false); Swal.fire({icon: 'success', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false}); } 
+        }); 
+    }
     
     function setAdminMode(status) {
-       isAdmin = status; let display = status ? 'block' : 'none'; let iblk = status ? 'inline-block' : 'none';
-       ['adminHomePanel', 'sidebarLogoutArea', 'adminMenuSection'].forEach(id => document.getElementById(id).style.display = display);
-       ['btnAddDocBtn', 'btnAddQABtn', 'btnAddVideoBtn'].forEach(id => document.getElementById(id).style.display = iblk);
+       isAdmin = status; 
+       let display = status ? 'block' : 'none'; 
+       let dFlex = status ? 'flex' : 'none'; // 🟢 เปิดโชว์ปุ่มเป็นกลุ่มแนวนอน (Flex)
+       
+       ['adminHomePanel', 'adminMenuSection'].forEach(id => document.getElementById(id).style.display = display);
+       
+       // 🟢 สั่งโชว์หรือซ่อน ปุ่มเพิ่มข้อมูล + ปุ่มออกจากระบบ ที่อยู่คู่กัน
+       ['adminDocBtnGroup', 'adminQABtnGroup', 'adminVideoBtnGroup'].forEach(id => {
+           let el = document.getElementById(id);
+           if(el) el.style.display = dFlex; 
+       });
+       
        renderDocs(); renderQA(); renderVideos();
     }
+    
     function getVal(id) { return document.getElementById(id).value; }
     function formatDate(isoStr) { if(!isoStr) return ""; let d = new Date(isoStr); return d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); }
   </script>
