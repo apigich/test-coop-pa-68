@@ -107,6 +107,33 @@
     .dash-card:hover { transform: translateY(-3px); }
     .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
     .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
+
+    /* 🟢 สไตล์ปุ่มเมนูลอยตัว (Floating Button) สำหรับมือถือ */
+    .floating-menu-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+        color: white;
+        border-radius: 50%;
+        border: none;
+        box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 997; /* ให้อยู่ใต้ Overlay เวลาเมนูเปิด */
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .floating-menu-btn:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6);
+    }
+    .floating-menu-btn i {
+        font-size: 28px;
+    }
   </style>
 </head>
 <body onload="initSystem()">
@@ -137,6 +164,10 @@
       </div>
     </div>
   </header>
+
+  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()">
+     <i class="material-icons">menu</i>
+  </button>
 
   <div class="wrapper">
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -492,10 +523,7 @@
         </div>
       </div>
 
-    </div> 
-  </div> 
-
-  <footer class="main-footer container-fluid p-0">
+    </div> </div> <footer class="main-footer container-fluid p-0">
     <div class="row m-0">
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูล<br>เพื่อการพัฒนาจังหวัด</h5>
@@ -768,6 +796,7 @@
        if (url && url.length > 5) { ph.style.display = 'none'; frame.style.display = 'block'; frame.src = url; } else { ph.style.display = 'flex'; frame.style.display = 'none'; }
     }
     function toggleSidebar() { let sidebar = document.getElementById('sidebar'); let overlay = document.getElementById('sidebarOverlay'); sidebar.classList.toggle('active'); overlay.classList.toggle('active'); }
+    
     function showPage(id) {
       ['home','docs','calendar','qa', 'videos', 'admin-dash'].forEach(p => document.getElementById('page-'+p).style.display = 'none');
       document.getElementById('page-'+id).style.display = 'block';
@@ -810,7 +839,8 @@
     }
     function updateUI() {
        document.getElementById('disp_title_1').innerText = form1Title; document.getElementById('disp_desc_1').innerText = form1Desc; document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
-       document.getElementById('admin_title_1').value = form1Title; document.getElementById('admin_subtitle_1').value = form1Desc; document.getElementById('admin_date_1').value = form1Date; document.getElementById('swForm1').checked = form1Open;
+       document.getElementById('admin_title_1').value = form1Title; document.getElementById('admin_subtitle_1').value = form1Desc; document.getElementById('admin_date_1').value = form1Date;
+       document.getElementById('swForm1').checked = form1Open;
        let b1 = document.getElementById('banner1'), st1 = document.getElementById('statusBadge1');
        if(form1Open) { b1.classList.remove('closed'); st1.style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } else { b1.classList.add('closed'); st1.style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
        
@@ -818,7 +848,6 @@
        let b2 = document.getElementById('banner2'), st2 = document.getElementById('statusBadge2');
        if(hOpen) { b2.classList.remove('closed'); st2.style.display = 'none'; document.getElementById('badge2').style.display = 'block'; } else { b2.classList.add('closed'); st2.style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; }
     }
-    
     function showFullVideoTitle(fullText) { Swal.fire({ title: 'ชื่อวิดีโอ', text: fullText, icon: 'info', confirmButtonText: 'ปิด' }); }
     function renderVideos() {
        let html = '';
@@ -835,12 +864,16 @@
     function submitVideo(e) {
        e.preventDefault(); let id = getVal('vid_id'), title = getVal('vid_title'), link = getVal('vid_link'), order = getVal('vid_order');
        Swal.fire({ title: 'กำลังบันทึกข้อมูล...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => { if (response && response.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(() => { cancelEditVideo(); initSystem(); }); } else { Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้', 'error'); } });
+       postData({ action: 'saveVideo', id: id, title: title, link: link, order: order }, (response) => {
+          if (response && response.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกวิดีโอแล้ว', timer: 1000, showConfirmButton: false }).then(() => { cancelEditVideo(); initSystem(); }); } 
+          else { Swal.fire('ข้อผิดพลาด', 'บันทึกไม่ได้', 'error'); }
+       });
     }
     function editVideo(id) {
        let item = videoList.find(x => x.id === id); if(!item) return;
        document.getElementById('vid_id').value = item.id; document.getElementById('vid_title').value = item.title; document.getElementById('vid_link').value = item.link; document.getElementById('vid_order').value = item.order == 999 ? "" : item.order;
-       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข'; document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning'); document.getElementById('btnCancelEditVid').style.display = 'inline-block'; document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
+       document.getElementById('btnSaveVid').innerText = 'บันทึกแก้ไข'; document.getElementById('btnSaveVid').classList.replace('btn-success', 'btn-warning');
+       document.getElementById('btnCancelEditVid').style.display = 'inline-block'; document.getElementById('adminVideoPanel').scrollIntoView({behavior: 'smooth'});
     }
     function cancelEditVideo() { document.getElementById('adminVideoPanel').querySelector('form').reset(); document.getElementById('vid_id').value = ''; document.getElementById('btnSaveVid').innerText = 'เพิ่มวิดีโอ'; document.getElementById('btnSaveVid').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEditVid').style.display = 'none'; }
     function deleteVideo(id) {
@@ -848,7 +881,6 @@
           if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteVideo', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบวิดีโอเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
        });
     }
-
     function filterDocs() {
        let searchText = document.getElementById('searchDoc').value.toLowerCase(); let catFilter = document.getElementById('filterCat').value;
        filteredDocs = docs.filter(d => { let matchesSearch = d.title.toLowerCase().includes(searchText) || (d.desc && d.desc.toLowerCase().includes(searchText)); let matchesCat = (catFilter === 'All') || (d.type === catFilter); return matchesSearch && matchesCat; });
@@ -902,7 +934,6 @@
           if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); postData({ action: 'deleteDoc', id: id }, (res) => { Swal.fire({ icon: 'success', title: 'ลบเรียบร้อย', timer: 1000, showConfirmButton: false }).then(() => { initSystem(); }); }); }
        });
     }
-    
     function openChat(docId) {
        let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link;
        document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ ปัจจุบันยังอยู่ในช่วงของการพัฒนาระบบ การตอบกลับของ AI อาจทำผิดพลาดได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้</small></div>`;
@@ -937,7 +968,8 @@
     function editQA(id) {
        let item = qaList.find(x => x.id === id); if(!item) return;
        document.getElementById('qa_id').value = item.id; document.getElementById('qa_emoji').value = item.emoji || "❓"; document.getElementById('qa_question').value = item.q; document.getElementById('qa_answer').value = item.a;
-       document.getElementById('btnSaveQA').innerText = 'บันทึกการแก้ไข'; document.getElementById('btnSaveQA').classList.replace('btn-success', 'btn-warning'); document.getElementById('btnCancelEditQA').style.display = 'inline-block'; document.getElementById('adminQAPanel').scrollIntoView({behavior: 'smooth'});
+       document.getElementById('btnSaveQA').innerText = 'บันทึกการแก้ไข'; document.getElementById('btnSaveQA').classList.replace('btn-success', 'btn-warning');
+       document.getElementById('btnCancelEditQA').style.display = 'inline-block'; document.getElementById('adminQAPanel').scrollIntoView({behavior: 'smooth'});
     }
     function cancelEditQA() { document.getElementById('adminQAPanel').querySelector('form').reset(); document.getElementById('qa_id').value = ''; document.getElementById('btnSaveQA').innerText = 'บันทึก Q&A'; document.getElementById('btnSaveQA').classList.replace('btn-warning', 'btn-success'); document.getElementById('btnCancelEditQA').style.display = 'none'; }
     function deleteQA(id) {
@@ -953,14 +985,12 @@
            if(hOpen) { var hModal = new bootstrap.Modal(document.getElementById('hearingModal')); hModal.show(); } else { Swal.fire({ icon: 'warning', title: 'ปิดรับฟังความเห็น', text: 'ขณะนี้อยู่นอกระยะเวลาการดำเนินการ', confirmButtonText: 'รับทราบ', confirmButtonColor: '#d63031' }); }
        }
     }
-    
     function openFormModal(type, titleText) {
        var modalForm = new bootstrap.Modal(document.getElementById('formModal'));
        document.getElementById('formTitle').innerText = titleText; document.getElementById('f_topic_type').value = titleText;
        if(type === 'general') { document.getElementById('topicSelectDiv').style.display = 'block'; } else { document.getElementById('topicSelectDiv').style.display = 'none'; }
        modalForm.show();
     }
-    
     function submitForm(e) {
       e.preventDefault();
       let btn = e.target.querySelector('button'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่งข้อมูล...';
