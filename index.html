@@ -12,143 +12,151 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
-    /* ================= CSS พื้นฐาน ================= */
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* หน้าจอโหลด (Loader) */
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
     .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* ================= Header ================= */
-    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; min-height: 250px; display: flex; align-items: center; }
+    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
-    
-    /* ปุ่ม Sidebar Toggle มุมซ้ายบน */
-    .sidebar-toggle-btn { position: absolute; top: 25px; left: 25px; z-index: 1050; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(5px); }
-    .sidebar-toggle-btn:hover { background: rgba(255,255,255,0.3); }
-
     .header-icon-box { margin-right: 30px; }
-    .org-title-group { display: flex; flex-direction: column; justify-content: center; text-align: left; }
-    .org-top-text { font-weight: 400; font-size: 1.4rem; color: #ffeb3b; letter-spacing: 1px; margin-bottom: 5px; text-transform: uppercase; }
-    .org-main-text { font-weight: 700; font-size: 2.2rem; line-height: 1.2; text-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; }
+    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
+    .org-top-text { font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
+    .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
 
     @media (max-width: 992px) { 
-      .header-content { flex-direction: column; text-align: center; padding-top: 90px; }
-      .header-icon-box { margin-right: 0; margin-bottom: 15px; }
-      .org-title-group { text-align: center; }
-      .org-main-text { font-size: 1.6rem; }
-      .sidebar-toggle-btn { top: 15px !important; left: 15px !important; }
+      .main-header { min-height: auto; }
+      .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; }
+      .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; }
+      .org-top-text { font-size: 1.1rem; }
+      .org-main-text { font-size: 1.5rem; line-height: 1.4; }
+      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
+      .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
-    /* ================= Sidebar & Layout ================= */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
-    .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; transition: all 0.3s; }
-    @media (max-width: 992px) { .sidebar { position: fixed; left: -260px; top: 0; } .sidebar.active { left: 0; box-shadow: 4px 0 15px rgba(0,0,0,0.15); } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; } .overlay.active { display: block; } }
-    
-    .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; }
-    .nav-link-main:hover, .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; padding-left: 30px; }
+    .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
+    @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
+    .sidebar-toggle-btn { position: absolute; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; }
+    .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
+    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
+    .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
     .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
     
-    /* ================= Content Area ================= */
     .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
-    .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; }
+    .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
     
-    /* แบนเนอร์หน้าแรก */
-    .banner-btn { display: flex; align-items: center; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: none; width: 100%; text-align: left; }
-    .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-    .banner-icon { flex: 0 0 80px; font-size: 3.5rem; margin-right: 20px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.2); border-radius: 50%; width: 80px; height: 80px; }
-    .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; }
-    .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; }
-    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    .carousel-item { background-color: #e9ecef; height: 500px; }
+    .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
+    @media (max-width: 768px) { .carousel-item { height: 400px; } }
+
+    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
+    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
+    .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block;}
+    .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
+
+    .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
+    .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
+    .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .banner-text { flex-grow: 1; position: relative; z-index: 2; overflow: hidden; }
+    .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+    .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
+    .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
-    .status-badge { font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; background: white; color: #d63031; font-weight: bold; }
-    .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); }
     
-    /* ================= 🌟 ป้ายกำกับ (Badges) แบบใหม่ ================= */
-    .badge-pin { background-color: #34495e; color: white; font-weight: bold; }
-    
-    /* ป้าย NEW: ตัวหนังสือสีทอง ขอบเหลือง กรอบกระพริบแดง */
+    /* 🟢 ป้าย NEW: ตัวหนังสือสีทอง ขอบตัวหนังสือสีเหลือง กรอบกระพริบสีแดง 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
         color: #FFD700; /* สีตัวหนังสือข้างในเป็นสีทอง */
-        -webkit-text-stroke: 0.8px #ffb300; /* ขอบตัวหนังสือสีเหลืองเข้ม */
-        text-shadow: 1px 1px 0px #ffff00, -1px -1px 0px #ffff00, 1px -1px 0px #ffff00, -1px 1px 0px #ffff00; /* ดันขอบตัวหนังสือให้ชัด */
+        -webkit-text-stroke: 0.5px #FF8C00; /* สร้างขอบตัวหนังสือเป็นสีเหลืองเข้ม/ส้ม */
+        text-shadow: 1px 1px 0px #FFD700, -1px -1px 0px #FFD700, 1px -1px 0px #FFD700, -1px 1px 0px #FFD700; 
         font-weight: 900; 
         font-size: 0.8rem;
         letter-spacing: 0.5px;
         padding: 3px 10px;
         border-radius: 20px;
         border: 2px solid #ff0000; /* กรอบสีแดง */
-        animation: pulse-red-border 1.2s infinite; /* อนิเมชั่นกระพริบแวบๆ */
+        animation: pulse-red-border 1.2s infinite; /* อนิเมชั่นกระพริบสีแดง */
     }
     @keyframes pulse-red-border { 
-        0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); } 
+        0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 
         70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 
         100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } 
     }
-
-    /* ================= องค์ประกอบอื่นๆ ================= */
-    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; transition: 0.2s; }
+    
+    .badge-pin { background-color: #34495e; color: white; }
+    
+    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
+    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    
+    .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+    .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
+    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
     .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
     
     .chat-container { height: 400px; overflow-y: auto; border: 1px solid #eee; background: #f8f9fa; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
     .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
     .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
-    .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; }
+    .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
     .chat-ai strong { color: #0d6efd; }
-    
-    .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; border: 1px solid #eee; }
-    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; }
-    
-    .dash-card { border-left: 5px solid; }
-    .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
-    .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
+    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+
+    .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
+    .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
+    .video-title-bar:hover { background-color: #e9ecef; }
     
     .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
     .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
     .star-rating i.active { color: #f39c12; }
-
-    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; }
     
-    /* Footer */
-    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
-    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
-    .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; cursor: pointer; transition: color 0.3s; }
-    .admin-trigger:hover { color: #ffffff; text-decoration: underline; }
+    .hearing-banner-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+
+    .dash-card { border-left: 5px solid; transition: transform 0.2s; }
+    .dash-card:hover { transform: translateY(-3px); }
+    .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
+    .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
+
+    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
+    .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
+    .floating-menu-btn i { font-size: 28px; }
   </style>
 </head>
 <body onload="initSystem()">
 
   <div id="globalLoader">
-    <div class="loader-content text-center">
-      <div class="loader-spinner mx-auto"></div>
+    <div class="loader-content">
+      <div class="loader-spinner"></div>
       <h5 class="text-primary fw-bold">แพลตฟอร์ม S-MAP Chiang Mai</h5>
       <div class="text-muted small">กำลังเชื่อมต่อข้อมูลล่าสุด...</div>
     </div>
   </div>
 
   <script>
-    // 🚨🚨🚨 ลิงก์ API เชื่อมต่อฐานข้อมูลของคุณ (ตรวจสอบแล้วว่าตรงกัน 100%) 🚨🚨🚨
+    // ** ใส่ Web App URL ของคุณที่นี่ (ฝังลิงก์ให้เรียบร้อยแล้วครับ) **
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
   <header class="main-header container-fluid">
     <div class="header-overlay"></div>
-    <button class="sidebar-toggle-btn d-lg-none" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
-    
     <div class="header-content">
-      <div class="header-icon-box d-none d-md-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
+      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+      <div class="header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
+      <div class="header-icon-box d-block d-lg-none"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
         <h1 class="m-0 org-main-text">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
@@ -164,26 +172,28 @@
 
     <nav class="sidebar" id="sidebar">
       <div class="flex-grow-1 pt-4">
-        <h6 class="px-3 text-secondary fw-bold mb-3" style="font-size: 0.8rem;">MENU</h6>
+        <h6 class="px-3 text-secondary fw-bold mt-2 mb-3" style="font-size: 0.85rem; letter-spacing: 1px;">MENU</h6>
         <a class="nav-link-main active" id="menu-home" onclick="showPage('home')">🏠 หน้าหลัก</a>
-        <div id="sub-home">
+        <div id="sub-home" class="mb-2">
           <a class="nav-link-sub" onclick="scrollToId('section-video')">วิดีโอแนะนำ</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-feedback')">รับฟังความคิดเห็น</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-dash')">📍Dashboard</a>
           <a class="nav-link-sub" onclick="scrollToId('sec-pr')">สื่อประชาสัมพันธ์</a>
-          <a class="nav-link-sub" onclick="scrollToId('sec-facebook')">ข่าวประชาสัมพันธ์</a> 
+          <a class="nav-link-sub" onclick="scrollToId('sec-facebook')">ข่าวประชาสัมพันธ์</a>
         </div>
         <a class="nav-link-main" id="menu-videos" onclick="showPage('videos')">▶️ คลังวิดีโอแนะนำ</a>
         <a class="nav-link-main" id="menu-docs" onclick="showPage('docs')">📂 เอกสาร/ข้อมูล</a>
-        <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรม</a>
+        <a class="nav-link-main" id="menu-calendar" onclick="showPage('calendar')">📅 ปฏิทินกิจกรรมจังหวัด</a>
         <a class="nav-link-main" id="menu-qa" onclick="showPage('qa')">❓ ถาม-ตอบ (Q&A)</a>
 
         <div id="adminMenuSection" style="display:none;">
-            <hr class="mx-3 border-secondary">
-            <h6 class="px-3 text-danger fw-bold mt-2">ADMINISTRATOR</h6>
-            <a class="nav-link-main text-danger" onclick="showPage('admin-dash')">📊 สรุปข้อมูล (Admin)</a>
+            <hr class="mx-3 text-secondary">
+            <h6 class="px-3 text-danger fw-bold mt-2 mb-2" style="font-size: 0.75rem;">ADMINISTRATOR</h6>
+            <a class="nav-link-main text-danger bg-danger bg-opacity-10 border-start border-3 border-danger" onclick="showPage('admin-dash')">📊 สรุปผลข้อมูล (Admin)</a>
         </div>
       </div>
+      
+      <div id="sidebarLogoutArea" class="px-3 mb-4 mt-auto" style="display:none;"></div>
     </nav>
 
     <div class="main-content">
@@ -191,65 +201,114 @@
       <div id="page-home">
         
         <div id="section-video" class="content-section text-center">
-          <h3 class="section-header" id="disp_video_title">📺 วิดีโอแนะนำความสำคัญ</h3>
-          <div class="ratio ratio-16x9 w-100 mx-auto shadow rounded overflow-hidden" style="max-width: 850px;"><iframe id="main_video_frame" src="" allowfullscreen></iframe></div>
+          <h3 class="section-header" id="disp_video_title">📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด</h3>
+          <div class="ratio ratio-16x9 w-100 w-md-75 mx-auto shadow rounded overflow-hidden" style="max-width: 800px;"><iframe id="main_video_frame" src="" allowfullscreen></iframe></div>
+          <div class="mt-4"><button onclick="showPage('videos')" class="btn btn-outline-primary fw-bold rounded-pill px-4">▶️ ดูวิดีโอเพิ่มเติมเกี่ยวกับการพัฒนาจังหวัด (Click Here)</button></div>
         </div>
 
-        <div id="adminHomePanel" class="content-section bg-warning-subtle" style="display:none;">
-          <div class="d-flex justify-content-between align-items-center border-bottom border-warning pb-2">
-             <h5 class="fw-bold m-0 text-dark">⚙️ ตั้งค่าระบบหน้าหลัก</h5>
+        <div id="adminHomePanel" class="content-section bg-warning-subtle border-warning" style="display:none;">
+          <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-warning pb-2">
+             <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle text-success">verified_user</i> ยินดีต้อนรับผู้ดูแลระบบ</h5>
              <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
           </div>
-          <div class="row mt-3">
-              <div class="col-md-6 mb-2">
-                  <label class="small fw-bold">หัวข้อวิดีโอ:</label>
-                  <input type="text" id="admin_video_title" class="form-control form-control-sm">
-              </div>
-              <div class="col-md-6 mb-2">
-                  <label class="small fw-bold">ลิงก์ YouTube:</label>
-                  <input type="text" id="admin_video_url" class="form-control form-control-sm">
-              </div>
-              <div class="col-md-12">
-                  <button class="btn btn-sm btn-primary w-100 mt-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่า</button>
-              </div>
+          
+          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-danger">
+             <h6 class="fw-bold text-danger mb-3">ตั้งค่า: ฟอร์มรับแจ้งปัญหา (กล่องสีชมพู)</h6>
+             <div class="row">
+                 <div class="col-md-6 mb-2"><label class="small text-muted">ชื่อหัวข้อ:</label><input type="text" id="admin_title_1" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2"><label class="small text-muted">คำอธิบาย (Subtitle):</label><input type="text" id="admin_subtitle_1" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2"><label class="small text-muted">ช่วงวันที่:</label><input type="text" id="admin_date_1" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2 d-flex align-items-end">
+                     <div class="form-check form-switch bg-light p-2 rounded w-100"><label class="form-check-label fw-bold">สถานะเปิดรับ</label><input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1"></div>
+                 </div>
+             </div>
+             <button class="btn btn-sm btn-outline-danger w-100 mt-2" onclick="saveFormConfig(1)">บันทึกการตั้งค่าฟอร์ม 1</button>
+          </div>
+
+          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-warning">
+             <h6 class="fw-bold text-warning text-dark mb-3">ตั้งค่า: ระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (กล่องสีเหลือง)</h6>
+             <div class="mb-3 p-2 bg-warning bg-opacity-10 border border-warning rounded">
+                 <label class="small text-dark fw-bold">ชื่อแผนพัฒนาที่รับฟังความเห็น (แสดงผลตัวใหญ่ในฟอร์ม):</label>
+                 <input type="text" id="h_admin_plan_name" class="form-control" placeholder="เช่น แผนพัฒนาจังหวัดเชียงใหม่ พ.ศ. 2566 - 2570">
+             </div>
+             <div class="row bg-light p-2 rounded mb-3">
+                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label><input type="text" id="h_admin_desc" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label><input type="text" id="h_admin_date" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2 d-flex gap-2">
+                     <div class="form-check form-switch w-50 p-2 border rounded bg-white"><label class="form-check-label small">สถานะเปิดรับ</label><input class="form-check-input float-end" type="checkbox" id="swHearingStatus"></div>
+                     <div class="form-check form-switch w-50 p-2 border rounded bg-white"><label class="form-check-label small">เปิดให้ดาวท้ายฟอร์ม</label><input class="form-check-input float-end" type="checkbox" id="swHearingRating"></div>
+                 </div>
+             </div>
+             <div class="mb-3 p-2 border rounded border-primary border-opacity-25 bg-white">
+                 <label class="fw-bold text-primary small mb-2">ข้อมูลชี้แจงและเอกสารประกอบ (แสดงก่อนส่วนที่ 2)</label>
+                 <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ภาพเงื่อนไข</span><input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพแบนเนอร์ (ถ้ามี)"></div>
+                 <div class="mb-2"><input type="text" class="form-control form-control-sm" id="h_admin_info_title" placeholder="หัวเรื่อง (เช่น หลักการและเหตุผล / สาระสำคัญ)"></div>
+                 <div class="mb-2"><textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea></div>
+                 <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์สรุปย่อ</span><input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป"></div>
+                 <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์แผนเต็ม</span><input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์"></div>
+             </div>
+             <div class="mb-3 p-2 border rounded border-success border-opacity-25 bg-white">
+                 <label class="fw-bold text-success small mb-2">ปรับแต่งหัวข้อแบบฟอร์ม (แก้ไขได้ 100%)</label>
+                 <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1"></div>
+                 <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2"></div>
+                 <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3"></div>
+                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_1" placeholder="ประเด็นย่อย 1 (เช่น เศรษฐกิจ)"></div>
+                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_2" placeholder="ประเด็นย่อย 2 (เช่น สังคม)"></div>
+                 <div class="ps-3 mb-2"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_3" placeholder="ประเด็นย่อย 3 (เช่น สิ่งแวดล้อม)"></div>
+                 <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4"></div>
+             </div>
+             <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="saveHearingConfig()">บันทึกการตั้งค่าระบบรับฟังความคิดเห็นแบบมีส่วนร่วมทั้งหมด</button>
+          </div>
+
+          <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-info">
+             <h6 class="fw-bold text-info mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
+             <div class="mb-2"><label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label><input type="text" id="admin_video_title" class="form-control form-control-sm"></div>
+             <div class="mb-2"><label class="small text-muted">ลิงก์ YouTube (Video URL):</label><input type="text" id="admin_video_url" class="form-control form-control-sm"></div>
+             <div class="mb-2"><label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label><input type="text" id="admin_dash_url" class="form-control form-control-sm"></div>
+             <button class="btn btn-sm btn-outline-info w-100 mt-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
           </div>
         </div>
 
-        <div id="sec-feedback" class="content-section">
-          <h3 class="fw-bold mb-4 text-center">📢 รับฟังความคิดเห็นประชาชน</h3>
+        <div id="sec-feedback" class="content-section text-center" style="background: #fff;">
+          <h3 class="fw-bold mb-5 text-dark" style="letter-spacing: 1px;">📢 รับฟังความคิดเห็นประชาชนในการพัฒนาจังหวัด</h3>
           <div class="row justify-content-center">
-            <div class="col-lg-10">
-              <div id="banner1" class="banner-btn bg-gradient-pink closed" onclick="handleBannerClick(1)">
+            
+            <div class="col-lg-9 mb-4 position-relative">
+              <div id="banner1" class="banner-btn bg-gradient-pink closed" onclick="handleBannerClick(1)" role="button">
                 <div class="banner-icon"><i class="material-icons">assignment</i></div>
                 <div class="banner-text">
-                   <div class="banner-title" id="disp_title_1">แบบแจ้งปัญหาทั่วไป</div>
+                   <div class="banner-title" id="disp_title_1">กำลังโหลด...</div>
                    <div class="banner-desc" id="disp_desc_1">...</div>
-                   <div class="mt-2"><span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span> <span id="disp_date_1" class="small opacity-75"></span></div>
-                </div>
-              </div>
-
-              <div id="banner2" class="banner-btn bg-gradient-yellow closed" onclick="handleBannerClick(2)">
-                <div class="banner-icon"><i class="material-icons">groups</i></div>
-                <div class="banner-text">
-                   <div class="banner-title" id="disp_title_2">รับฟังความคิดเห็นแผนพัฒนา</div>
-                   <div class="banner-desc" id="disp_desc_2">...</div>
-                   <div class="mt-2"><span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับฟัง</span> <span id="disp_date_2" class="small opacity-75"></span></div>
+                   <div class="mt-2" id="info1"><span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span><span class="date-badge" id="disp_date_1">...</span></div>
                 </div>
               </div>
             </div>
+
+            <div class="col-lg-9 mb-3 position-relative">
+              <div id="banner2" class="banner-btn bg-gradient-yellow closed" onclick="handleBannerClick(2)" role="button">
+                <div class="banner-icon"><i class="material-icons">groups</i></div>
+                <div class="banner-text">
+                   <div class="banner-title" id="disp_title_2">กำลังโหลด...</div>
+                   <div class="banner-desc" id="disp_desc_2">...</div>
+                   <div class="mt-2" id="info2"><span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับฟังความเห็น</span><span class="date-badge" id="disp_date_2">...</span></div>
+                </div>
+              </div>
+            </div>
+            
           </div>
         </div>
 
         <div id="sec-dash" class="content-section text-center">
           <h4 class="text-primary mb-4 fw-bold">📊 Dashboard สรุปข้อมูล</h4>
-          <div class="ratio ratio-16x9 w-100 border rounded shadow-sm bg-light overflow-hidden">
+          <div id="dashboard_container" class="ratio ratio-16x9 w-100 border rounded shadow-sm bg-white overflow-hidden">
+             <div id="dash_placeholder" class="d-flex flex-column align-items-center justify-content-center h-100 bg-light text-muted"><i class="material-icons" style="font-size: 4rem;">bar_chart</i><h5 class="mt-3">พื้นที่แสดงผล Dashboard</h5><p>ระบบกำลังอยู่ระหว่างการเชื่อมต่อข้อมูล...</p></div>
              <iframe id="main_dash_frame" src="" allowfullscreen style="display:none;"></iframe>
-             <div id="dash_placeholder" class="d-flex align-items-center justify-content-center h-100 text-muted">กำลังโหลดข้อมูล Dashboard...</div>
           </div>
         </div>
 
         <div id="sec-pr" class="content-section">
-          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์</h4>
+          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์ (Info-Graphics)</h4>
           <div id="prCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="0" class="active"></button>
@@ -267,10 +326,10 @@
         </div>
 
         <div id="sec-facebook" class="content-section">
-          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">newspaper</i> ข่าวประชาสัมพันธ์</h4>
-          <div class="text-center p-3 border rounded bg-white shadow-sm">
-            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FChiangmaioffice&tabs=timeline&width=500&height=400&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" width="100%" height="400" style="border:none; overflow:hidden; max-width: 500px;" scrolling="no" frameborder="0" allowfullscreen="true"></iframe>
-            <div class="mt-3"><a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill px-4">ดูข่าวทั้งหมดบน Facebook</a></div>
+          <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">newspaper</i> ข่าวประชาสัมพันธ์ (Facebook)</h4>
+          <div class="bg-white rounded shadow-sm border p-3 text-center">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FChiangmaioffice&tabs=timeline&width=500&height=350&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" width="100%" height="350" style="border:none; overflow:hidden; max-width: 500px;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+            <div class="text-center mt-3"><a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">ดูข่าวสารทั้งหมดบน Facebook <i class="material-icons align-middle fs-6">open_in_new</i></a></div>
           </div>
         </div>
 
@@ -279,138 +338,318 @@
       <div id="page-docs" style="display:none;">
         <div class="content-section">
           <div class="d-flex justify-content-between align-items-center mb-3">
-             <h3 class="section-header m-0 border-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
+             <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
              <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
                  <button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
                  <button class="btn btn-danger fw-bold" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
              </div>
           </div>
+          <hr class="text-secondary mt-0 mb-3">
           
-          <div class="row g-2 mb-4 p-3 bg-light rounded border align-items-center">
-             <div class="col-md-5">
-                 <label class="small fw-bold">ค้นหาคำสำคัญ</label>
-                 <input type="text" id="searchDoc" class="form-control" oninput="filterDocs()" placeholder="พิมพ์ชื่อเอกสาร...">
+          <div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border">
+             <div class="col-md-4">
+                 <label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label>
+                 <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
              </div>
              <div class="col-md-3">
-                 <label class="small fw-bold">หมวดหมู่</label>
-                 <select id="filterCat" class="form-select" onchange="filterDocs()">
-                     <option value="All">ทั้งหมด</option>
-                     <option value="General">ทั่วไป</option>
-                     <option value="Plan">แผนงาน</option>
-                     <option value="Report">รายงาน</option>
-                     <option value="Announcement">ประกาศ/คำสั่ง</option>
-                 </select>
+                 <label class="small text-muted fw-bold mb-1">หมวดหมู่</label>
+                 <select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select>
              </div>
              <div class="col-md-3">
-                 <label class="small fw-bold">ปีงบประมาณ</label>
-                 <select id="filterYear" class="form-select" onchange="filterDocs()">
-                     <option value="All">ทุกปี</option>
-                 </select>
+                 <label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label>
+                 <select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select>
              </div>
-             <div class="col-md-1 d-flex align-items-end">
-                 <button class="btn btn-secondary w-100" onclick="clearSearch()" title="ล้างค่า"><i class="material-icons">refresh</i></button>
+             <div class="col-md-2 mt-auto">
+                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button>
              </div>
           </div>
-
+          <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ</div>
           <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
-          <div id="pagination" class="pagination-container mt-4 d-flex justify-content-center gap-2"></div>
+          <div id="pagination" class="pagination-container"></div>
         </div>
-      </div>
-
-      <div id="page-videos" style="display:none;">
-        <div class="content-section">
-            <div class="d-flex justify-content-between mb-3">
-                <h3 class="m-0">▶️ คลังวิดีโอ</h3>
-                <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
-                    <button class="btn btn-primary fw-bold" onclick="openVideoModal()">+ เพิ่ม</button>
-                    <button class="btn btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
-                </div>
-            </div>
-            <div id="videoListContainer" class="row g-4"></div>
-        </div>
-      </div>
-      
-      <div id="page-calendar" style="display:none;">
-          <div class="content-section text-center py-5">
-              <h3>📅 ปฏิทินกิจกรรมจังหวัด</h3>
-              <p class="text-muted">กำลังดึงข้อมูลกิจกรรมล่าสุด...</p>
-              <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg mt-3">เปิดดูปฏิทินกลาง</a>
-          </div>
-      </div>
-      
-      <div id="page-qa" style="display:none;">
-          <div class="content-section">
-              <div class="d-flex justify-content-between mb-3">
-                  <h3>❓ ถาม-ตอบ (Q&A)</h3>
-                  <div id="adminQABtnGroup" style="display:none; gap: 8px;">
-                      <button class="btn btn-primary fw-bold" onclick="openQAModal()">+ เพิ่ม</button>
-                      <button class="btn btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
-                  </div>
-              </div>
-              <div id="accQA" class="accordion accordion-flush"></div>
-          </div>
       </div>
 
       <div id="page-admin-dash" style="display:none;">
           <div class="content-section">
              <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-                 <h3 class="m-0 fw-bold text-dark"><i class="material-icons align-middle text-danger">analytics</i> สรุปผลข้อมูล (Admin)</h3>
+                 <h3 class="m-0 fw-bold text-dark"><i class="material-icons align-middle text-danger">analytics</i> สรุปผลข้อมูล (Admin Dashboard)</h3>
                  <div>
-                    <a id="btnOpenSheet" href="#" target="_blank" class="btn btn-success fw-bold me-2"><i class="material-icons align-middle">table_view</i> เปิด Sheets</a>
+                    <a id="btnOpenSheet" href="#" target="_blank" class="btn btn-success fw-bold me-2"><i class="material-icons align-middle">table_view</i> เปิด Google Sheets</a>
                     <button class="btn btn-outline-secondary" onclick="loadDashboard()"><i class="material-icons align-middle">refresh</i> รีโหลด</button>
                  </div>
              </div>
-             
-             <h5 class="fw-bold text-danger mb-3">1. สถิติเรื่องแจ้งปัญหา</h5>
-             <div class="row g-3 mb-5">
-                 <div class="col-md-4"><div class="card shadow-sm h-100 dash-card" style="border-left-color: #e91e63;"><div class="card-body d-flex align-items-center"><div class="dash-icon bg-danger me-3"><i class="material-icons">assignment_late</i></div><div><div class="text-muted small fw-bold">เรื่องทั้งหมด</div><div class="dash-num text-danger" id="stat_issues_total">0</div></div></div></div></div>
-                 <div class="col-md-8"><div class="card shadow-sm h-100"><div class="card-body p-2"><canvas id="chartIssues" style="max-height: 200px;"></canvas></div></div></div>
-             </div>
 
-             <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลรับฟังความคิดเห็น</h5>
-             <div class="row g-3">
-                 <div class="col-md-3"><div class="card shadow-sm h-100 dash-card" style="border-left-color: #f1c40f;"><div class="card-body d-flex align-items-center"><div class="dash-icon bg-warning text-dark me-3"><i class="material-icons">groups</i></div><div><div class="text-muted small fw-bold">ผู้ตอบแบบสอบถาม</div><div class="dash-num text-dark" id="stat_hearing_total">0</div></div></div></div></div>
-                 <div class="col-md-9"><div class="row g-3"><div class="col-md-6"><div class="card shadow-sm h-100 border-0"><div class="card-body p-2"><h6 class="text-center small fw-bold text-muted">ภาคส่วน</h6><canvas id="chartSector" style="max-height: 180px;"></canvas></div></div></div><div class="col-md-6"><div class="card shadow-sm h-100 border-0"><div class="card-body p-2"><h6 class="text-center small fw-bold text-muted">วิสัยทัศน์</h6><canvas id="chartVision" style="max-height: 180px;"></canvas></div></div></div></div></div>
+             <div class="mb-4">
+                 <h5 class="fw-bold text-danger mb-3">1. สถิติเรื่องแจ้งและข้อเสนอแนะการพัฒนา (ฟอร์มสีชมพู)</h5>
+                 <div class="row g-3">
+                     <div class="col-md-4">
+                         <div class="card shadow-sm h-100 dash-card" style="border-left-color: #e91e63;">
+                             <div class="card-body d-flex align-items-center">
+                                 <div class="dash-icon bg-danger me-3"><i class="material-icons">assignment_late</i></div>
+                                 <div>
+                                     <div class="text-muted small fw-bold">เรื่องรับแจ้งทั้งหมด</div>
+                                     <div class="dash-num text-danger" id="stat_issues_total">0</div>
+                                     <small class="text-secondary">เรื่อง</small>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-md-8">
+                         <div class="card shadow-sm h-100"><div class="card-body"><h6 class="card-title fw-bold text-muted small">แยกตามหมวดหมู่</h6><canvas id="chartIssues" style="max-height: 200px;"></canvas></div></div>
+                     </div>
+                 </div>
              </div>
-             <div class="row g-3 mt-1">
-                 <div class="col-md-4"><div class="card shadow-sm border-0"><div class="card-body p-2"><h6 class="text-center small fw-bold text-dark">เศรษฐกิจ</h6><canvas id="chartEcon" style="max-height: 180px;"></canvas></div></div></div>
-                 <div class="col-md-4"><div class="card shadow-sm border-0"><div class="card-body p-2"><h6 class="text-center small fw-bold text-dark">สังคม</h6><canvas id="chartSocial" style="max-height: 180px;"></canvas></div></div></div>
-                 <div class="col-md-4"><div class="card shadow-sm border-0"><div class="card-body p-2"><h6 class="text-center small fw-bold text-dark">สิ่งแวดล้อม</h6><canvas id="chartEnv" style="max-height: 180px;"></canvas></div></div></div>
+             <hr class="my-5 border-secondary border-2 opacity-25">
+             <div>
+                 <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (ฟอร์มสีเหลือง)</h5>
+                 <div class="row g-3">
+                     <div class="col-md-3">
+                         <div class="card shadow-sm h-100 dash-card" style="border-left-color: #f1c40f;">
+                             <div class="card-body d-flex align-items-center">
+                                 <div class="dash-icon bg-warning text-dark me-3"><i class="material-icons">groups</i></div>
+                                 <div>
+                                     <div class="text-muted small fw-bold">ผู้เข้าร่วมทั้งหมด</div>
+                                     <div class="dash-num text-dark" id="stat_hearing_total">0</div>
+                                     <small class="text-secondary">คน</small>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-md-9">
+                         <div class="row g-3">
+                             <div class="col-md-6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-muted">สัดส่วนภาคส่วน</h6><canvas id="chartSector" style="max-height: 180px;"></canvas></div></div></div>
+                             <div class="col-md-6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-muted">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6><canvas id="chartVision" style="max-height: 180px;"></canvas></div></div></div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="row g-3 mt-1">
+                     <div class="col-md-12"><h6 class="fw-bold text-secondary mb-2 border-bottom pb-2"><i class="material-icons align-middle fs-6">bar_chart</i> สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)</h6></div>
+                     <div class="col-md-4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark">ด้านเศรษฐกิจ</h6><canvas id="chartEcon" style="max-height: 180px;"></canvas></div></div></div>
+                     <div class="col-md-4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark">ด้านสังคม</h6><canvas id="chartSocial" style="max-height: 180px;"></canvas></div></div></div>
+                     <div class="col-md-4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark">ด้านสิ่งแวดล้อม</h6><canvas id="chartEnv" style="max-height: 180px;"></canvas></div></div></div>
+                 </div>
+                 <div class="row g-3 mt-1 mb-5">
+                     <div class="col-md-12"><div class="card shadow-sm h-100 border-start border-4 dash-card" style="border-left-color: #f1c40f !important;"><div class="card-body p-3"><h6 class="small fw-bold text-dark mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6><canvas id="chartPriority" style="max-height: 200px;"></canvas></div></div></div>
+                 </div>
              </div>
-             <div class="card shadow-sm mt-3"><div class="card-body p-3"><h6 class="small fw-bold text-dark">ประเด็นเร่งด่วนที่สุด</h6><canvas id="chartPriority" style="max-height: 200px;"></canvas></div></div>
           </div>
+      </div>
+
+      <div id="page-videos" style="display:none;">
+        <div class="content-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3>
+             <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button>
+                 <button class="btn btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
+             </div>
+          </div>
+          <hr class="text-secondary mt-0 mb-4">
+          <div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div>
+        </div>
+      </div>
+      
+      <div id="page-calendar" style="display:none;">
+        <div class="content-section border-0 bg-transparent p-0 mb-4 shadow-none">
+          <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
+          <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
+        </div>
+        <div class="alert alert-info shadow-sm" role="alert"><i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่</div>
+        <div class="content-section text-center py-5 shadow-sm border">
+           <i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i>
+           <h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3>
+           <p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p>
+           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow"><i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน</a>
+        </div>
+      </div>
+
+      <div id="page-qa" style="display:none;">
+        <div class="content-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3>
+             <div id="adminQABtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button>
+                 <button class="btn btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
+             </div>
+          </div>
+          <hr class="text-secondary mt-0 mb-4">
+          <div class="accordion accordion-flush border rounded shadow-sm" id="accQA"></div>
+        </div>
       </div>
 
     </div> 
   </div> 
 
-  <footer class="main-footer container-fluid">
-    <div class="row">
-      <div class="col-lg-4 mb-4">
-        <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูลฯ</h5>
-        <p class="mb-1 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
-        <p class="small opacity-50">ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา ต.ช้างเผือก อ.เมือง จ.เชียงใหม่ 50300</p>
-        <div class="admin-link-container">
-            <a onclick="loginToggle()" class="admin-trigger text-white-50 small text-decoration-none">🔐 เข้าสู่ระบบผู้ดูแล</a>
-        </div>
+  <footer class="main-footer container-fluid p-0">
+    <div class="row m-0">
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <h5 class="footer-title">กลุ่มงานยุทธศาสตร์และข้อมูล<br>เพื่อการพัฒนาจังหวัด</h5>
+        <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
+        <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
+        <div id="footerCopyright">© 2026 All Rights Reserved.</div>
+        <div class="admin-link-container"><a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a></div>
       </div>
-      <div class="col-lg-4 mb-4">
-        <h5 class="footer-title">ติดต่อเรา</h5>
-        <ul class="list-unstyled small text-white-50">
-          <li class="mb-2 d-flex"><span class="me-2">📞</span> <span>053-112-703</span></li>
-          <li class="mb-2 d-flex"><span class="me-2">📧</span> <span>plancm.700@gmail.com</span></li>
-          <li class="mb-2 d-flex"><span class="me-2">🕒</span> <span>จันทร์ - ศุกร์ (08.30 - 16.30 น.)</span></li>
-          <li class="mb-2 d-flex"><span class="me-2">🌐</span> <a href="http://www.chiangmai.go.th" target="_blank" class="text-decoration-none text-white-50">www.chiangmai.go.th</a></li>
+      <div class="col-lg-4 mb-4 mb-lg-0">
+        <h5 class="footer-title">ช่องทางการติดต่อ</h5>
+        <ul class="list-unstyled">
+          <li class="mb-3 d-flex"><span class="me-2">📞</span> <span>053-112-703</span></li>
+          <li class="mb-3 d-flex"><span class="me-2">📧</span> <span>plancm.700@gmail.com</span></li>
+          <li class="mb-3 d-flex"><span class="me-2">🕒</span> <span>จันทร์ - ศุกร์ (08.30 - 16.30 น.)</span></li>
+          <li class="mb-3 d-flex"><span class="me-2">🌐</span> <a href="http://www.chiangmai.go.th" class="text-decoration-none text-white-50">www.chiangmai.go.th</a></li>
         </ul>
       </div>
       <div class="col-lg-4">
-        <h5 class="footer-title">ตำแหน่งที่ตั้ง</h5>
-        <div class="ratio ratio-16x9 rounded overflow-hidden shadow-sm" style="background: #333;">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3776.495204207908!2d98.9619183!3d18.8410261!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3a7e93077717%3A0xc3fce76ab5a6de9e!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1700000000000!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
+        <h5 class="footer-title">แผนที่ตั้งหน่วยงาน</h5>
+        <div class="map-container mb-3" style="height: 200px; background: #333;"><iframe src="https://maps.google.com/maps?q=%E0%B8%A8%E0%B8%B2%E0%B8%A5%E0%B8%B2%E0%B8%81%E0%B8%A5%E0%B8%B2%E0%B8%87%E0%B8%88%E0%B8%B1%E0%B8%87%E0%B8%AB%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe></div>
+        <a href="https://www.google.com/maps/search/?api=1&query=ศาลากลางจังหวัดเชียงใหม่" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
       </div>
     </div>
   </footer>
+
+  <div class="modal fade" id="chatModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title fw-bold"><i class="material-icons align-text-bottom me-2">smart_toy</i> ถาม AI เกี่ยวกับเอกสาร</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div id="chatHistory" class="chat-container"></div>
+          <div class="p-3 border-top bg-light">
+             <div class="input-group">
+                <input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()">
+                <button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="formModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form onsubmit="submitForm(event)">
+            <input type="hidden" id="f_topic_type">
+            <div class="mb-3"><label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input class="form-control" id="f_name" required></div>
+            <div class="mb-3"><label class="fw-bold form-label">เบอร์ติดต่อ</label><input class="form-control" id="f_contact"></div>
+            <div class="mb-3" id="topicSelectDiv">
+               <label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label>
+               <select class="form-select" id="f_topic_select" required><option value="" selected disabled>-- กรุณาเลือก --</option><option>โครงสร้างพื้นฐาน</option><option>สิ่งแวดล้อม/มลพิษ</option><option>เศรษฐกิจ/อาชีพ</option><option>สังคม/ความปลอดภัย</option><option>อื่นๆ</option></select>
+            </div>
+            <div class="mb-3"><label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label><textarea class="form-control" id="f_detail" rows="5" required></textarea></div>
+            <div class="d-grid"><button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="hearingModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title fw-bold" id="disp_h_title">รับฟังความคิดเห็น</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body bg-light">
+          <div class="text-center mb-2"><img id="disp_h_img" class="hearing-banner-img shadow-sm" src="" style="display:none;"></div>
+          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;"><i class="material-icons fs-1 mb-2">lock</i><h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5></div>
+
+          <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
+             <h4 class="fw-bold text-center text-primary mb-4" id="disp_h_plan_name">แผนพัฒนาจังหวัดเชียงใหม่</h4>
+             
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไป</h5>
+             <div class="row g-3 mb-4">
+                <div class="col-md-6"><label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input type="text" class="form-control" id="h_name" required></div>
+                <div class="col-md-6"><label class="form-label fw-bold">อำเภอที่อยู่อาศัย <span class="text-danger">*</span></label><input type="text" class="form-control" id="h_district" required></div>
+                <div class="col-md-12">
+                   <label class="form-label fw-bold">ท่านสังกัดภาคส่วนใด <span class="text-danger">*</span></label>
+                   <select class="form-select" id="h_sector" required><option value="" selected disabled>-- เลือกภาคส่วน --</option><option value="ภาคประชาชน">ภาคประชาชน / ประชาสังคม</option><option value="ภาคธุรกิจเอกชน">ภาคธุรกิจ / เอกชน</option><option value="ภาคราชการ">ส่วนราชการ / รัฐวิสาหกิจ / ท้องถิ่น</option><option value="สถาบันการศึกษา">สถาบันการศึกษา / นักวิชาการ</option></select>
+                </div>
+             </div>
+
+             <div class="bg-light border rounded p-4 mb-4 mt-2 shadow-sm border-primary border-opacity-25">
+                 <h5 class="fw-bold text-dark mb-2" id="disp_h_info_title">หลักการและเหตุผล</h5>
+                 <p class="text-muted mb-4" id="disp_h_info_desc" style="white-space: pre-line;">รายละเอียดชี้แจง...</p>
+                 <div class="d-flex justify-content-start gap-3 flex-wrap mb-4">
+                     <a id="disp_h_sum" href="#" target="_blank" class="btn btn-outline-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">description</i> สรุปอย่างย่อ</a>
+                     <a id="disp_h_full" href="#" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">menu_book</i> ร่างแผนฉบับเต็ม</a>
+                 </div>
+                 <div class="form-check border-top pt-3">
+                     <input class="form-check-input" type="checkbox" id="h_info_consent" required>
+                     <label class="form-check-label fw-bold text-danger" for="h_info_consent">ข้าพเจ้าได้อ่านและทำความเข้าใจรายละเอียดและเอกสารร่างแผนฯ เบื้องต้นแล้ว <span class="text-danger">*</span></label>
+                 </div>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4" id="disp_h_q2">ส่วนที่ 2: วิสัยทัศน์</h5>
+             <div class="mb-4 ps-2">
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required><label class="form-check-label">เห็นด้วย</label></div>
+                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม"><label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label></div>
+                <div class="form-check"><input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย"><label class="form-check-label">ไม่เห็นด้วย</label></div>
+                <textarea class="form-control mt-3" id="h_vision_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์ (ถ้ามี)..."></textarea>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q3">ส่วนที่ 3: ประเด็นยุทธศาสตร์</h5>
+             <div class="table-responsive mb-2">
+                <table class="table table-bordered table-striped align-middle text-center small">
+                   <thead class="table-light"><tr><th class="text-start">ประเด็นการพัฒนา</th><th>เห็นด้วยมาก</th><th>เห็นด้วย</th><th>ไม่แน่ใจ</th><th>ไม่เห็นด้วย</th></tr></thead>
+                   <tbody>
+                      <tr><td class="text-start fw-bold" id="disp_h_s3_1">1. ด้านเศรษฐกิจ</td><td><input class="form-check-input" type="radio" name="h_econ" value="เห็นด้วยมาก" required></td><td><input class="form-check-input" type="radio" name="h_econ" value="เห็นด้วย"></td><td><input class="form-check-input" type="radio" name="h_econ" value="ไม่แน่ใจ"></td><td><input class="form-check-input" type="radio" name="h_econ" value="ไม่เห็นด้วย"></td></tr>
+                      <tr><td class="text-start fw-bold" id="disp_h_s3_2">2. ด้านสังคม</td><td><input class="form-check-input" type="radio" name="h_soc" value="เห็นด้วยมาก" required></td><td><input class="form-check-input" type="radio" name="h_soc" value="เห็นด้วย"></td><td><input class="form-check-input" type="radio" name="h_soc" value="ไม่แน่ใจ"></td><td><input class="form-check-input" type="radio" name="h_soc" value="ไม่เห็นด้วย"></td></tr>
+                      <tr><td class="text-start fw-bold" id="disp_h_s3_3">3. ด้านสิ่งแวดล้อม</td><td><input class="form-check-input" type="radio" name="h_env" value="เห็นด้วยมาก" required></td><td><input class="form-check-input" type="radio" name="h_env" value="เห็นด้วย"></td><td><input class="form-check-input" type="radio" name="h_env" value="ไม่แน่ใจ"></td><td><input class="form-check-input" type="radio" name="h_env" value="ไม่เห็นด้วย"></td></tr>
+                   </tbody>
+                </table>
+             </div>
+             <textarea class="form-control mb-4" id="h_strategy_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นยุทธศาสตร์ (ถ้ามี)..."></textarea>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: ข้อเสนอแนะ</h5>
+             <div class="mb-3">
+                <select class="form-select" id="h_priority" required><option value="" selected disabled>-- เลือกประเด็นที่ควรเร่งด่วนที่สุด --</option><option value="ด้านเศรษฐกิจและรายได้">ด้านเศรษฐกิจและรายได้</option><option value="ด้านสังคม คุณภาพชีวิต">ด้านสังคม คุณภาพชีวิต และความมั่นคง</option><option value="ด้านทรัพยากรธรรมชาติ">ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม</option></select>
+             </div>
+             <div class="mb-3"><textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)..."></textarea></div>
+
+             <div class="alert alert-secondary mt-4 mb-4 small">
+                <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="h_pdpa" required>
+                   <label class="form-check-label text-dark" for="h_pdpa">ข้าพเจ้ายินยอมให้สำนักงานจังหวัดเชียงใหม่ รวบรวมและประมวลผลข้อมูลนี้ เพื่อใช้ประกอบการปรับปรุงร่างแผนฯ เท่านั้น โดยไม่เปิดเผยข้อมูลส่วนบุคคลต่อสาธารณะ</label>
+                </div>
+             </div>
+             <div class="d-grid"><button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm text-dark" id="btnSubmitHearing">✅ ส่งแบบรับฟังความคิดเห็น</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header bg-warning text-dark border-0">
+          <h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5>
+        </div>
+        <div class="modal-body p-4">
+          <h5 class="mb-4 text-success fw-bold">ส่งข้อมูลสำเร็จ ขอบพระคุณอย่างยิ่ง!</h5>
+          <p class="text-muted">โปรดให้คะแนนความพึงพอใจในการใช้งานระบบ S-MAP</p>
+          <div class="star-rating mb-4 d-flex justify-content-center gap-2" id="starContainer">
+             <i class="material-icons" data-val="1" onclick="setStar(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="2" onclick="setStar(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="3" onclick="setStar(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="4" onclick="setStar(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i>
+          </div>
+          <input type="hidden" id="sys_rating_val" value="0">
+          <div class="mb-3 text-start"><textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea></div>
+          <button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="modal fade" id="adminDocModal" tabindex="-1" data-bs-backdrop="static">
     <div class="modal-dialog modal-lg">
@@ -506,7 +745,7 @@
                     <input type="hidden" id="vid_id">
                     <div class="mb-2"><label class="small fw-bold">ชื่อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div>
                     <div class="mb-2"><label class="small fw-bold">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div>
-                    <div class="mb-3"><label class="small fw-bold">ลำดับ</label><input type="number" class="form-control" id="vid_order"></div>
+                    <div class="mb-3"><label class="small fw-bold">ลำดับ</label><input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้"></div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
                         <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
@@ -530,7 +769,9 @@
                     <div class="row g-2 mb-2">
                         <div class="col-3">
                             <label class="small fw-bold">ไอคอน</label>
-                            <select class="form-select" id="qa_emoji"><option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="💡">💡</option></select>
+                            <select class="form-select" id="qa_emoji">
+                                <option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="💡">💡</option>
+                            </select>
                         </div>
                         <div class="col-9">
                             <label class="small fw-bold">คำถาม</label>
@@ -548,139 +789,9 @@
     </div>
   </div>
 
-  <div class="modal fade" id="formModal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-4">
-                <form onsubmit="submitForm(event)">
-                    <input type="hidden" id="f_topic_type">
-                    <div class="mb-3"><label class="fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input class="form-control" id="f_name" required></div>
-                    <div class="mb-3"><label class="fw-bold">เบอร์ติดต่อ</label><input class="form-control" id="f_contact"></div>
-                    <div class="mb-3" id="topicSelectDiv"><label class="fw-bold">หมวดหมู่ <span class="text-danger">*</span></label><select class="form-select" id="f_topic_select" required><option value="" selected disabled>-- เลือก --</option><option>โครงสร้างพื้นฐาน</option><option>สิ่งแวดล้อม</option><option>เศรษฐกิจ</option><option>สังคม</option><option>อื่นๆ</option></select></div>
-                    <div class="mb-3"><label class="fw-bold">รายละเอียด <span class="text-danger">*</span></label><textarea class="form-control" id="f_detail" rows="4" required></textarea></div>
-                    <button class="btn btn-success w-100 fw-bold">ยืนยัน</button>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="hearingModal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header bg-warning text-dark">
-                <h5 class="modal-title fw-bold" id="disp_h_title">รับฟังความเห็น</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body bg-light">
-                <div id="hearingClosedMsg" class="alert alert-danger text-center" style="display:none;"><h5>ปิดรับฟังแล้ว</h5></div>
-                <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-4 border rounded shadow-sm">
-                    <h4 class="fw-bold text-center text-primary mb-4" id="disp_h_plan_name">แผนพัฒนา</h4>
-                    
-                    <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไป</h5>
-                    <div class="row g-3 mb-4">
-                        <div class="col-md-6"><input type="text" class="form-control" id="h_name" placeholder="ชื่อ-นามสกุล *" required></div>
-                        <div class="col-md-6"><input type="text" class="form-control" id="h_district" placeholder="อำเภอ *" required></div>
-                        <div class="col-md-12">
-                            <select class="form-select" id="h_sector" required>
-                                <option value="" selected disabled>-- สังกัดภาคส่วน * --</option>
-                                <option value="ภาคประชาชน">ประชาชน/สังคม</option>
-                                <option value="ภาคเอกชน">ธุรกิจ/เอกชน</option>
-                                <option value="ภาครัฐ">ราชการ/รัฐวิสาหกิจ/ท้องถิ่น</option>
-                                <option value="สถาบันการศึกษา">สถานศึกษา/นักวิชาการ</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="bg-light border rounded p-3 mb-4">
-                        <h6 class="fw-bold text-dark" id="disp_h_info_title">ชี้แจง</h6>
-                        <p class="small text-muted" id="disp_h_info_desc">...</p>
-                        <div class="form-check mt-3 border-top pt-2">
-                            <input class="form-check-input" type="checkbox" id="h_info_consent" required>
-                            <label class="form-check-label small fw-bold text-danger">อ่านและเข้าใจร่างแผนแล้ว *</label>
-                        </div>
-                    </div>
-                    
-                    <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q2">ส่วนที่ 2: วิสัยทัศน์</h5>
-                    <div class="mb-4">
-                        <div class="form-check mb-1"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required><label>เห็นด้วย</label></div>
-                        <div class="form-check mb-1"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม"><label>เห็นด้วย แต่ปรับปรุง</label></div>
-                        <div class="form-check"><input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย"><label>ไม่เห็นด้วย</label></div>
-                        <textarea class="form-control mt-2" id="h_vision_fb" rows="2" placeholder="ข้อเสนอแนะ..."></textarea>
-                    </div>
-                    
-                    <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q3">ส่วนที่ 3: ประเด็น</h5>
-                    <div class="table-responsive mb-2">
-                        <table class="table table-bordered text-center small">
-                            <thead class="table-light"><tr><th class="text-start">ประเด็น</th><th>มาก</th><th>เห็นด้วย</th><th>ไม่แน่ใจ</th><th>ไม่เห็นด้วย</th></tr></thead>
-                            <tbody>
-                                <tr><td class="text-start fw-bold" id="disp_h_s3_1">เศรษฐกิจ</td><td><input type="radio" name="h_econ" value="เห็นด้วยมาก" required></td><td><input type="radio" name="h_econ" value="เห็นด้วย"></td><td><input type="radio" name="h_econ" value="ไม่แน่ใจ"></td><td><input type="radio" name="h_econ" value="ไม่เห็นด้วย"></td></tr>
-                                <tr><td class="text-start fw-bold" id="disp_h_s3_2">สังคม</td><td><input type="radio" name="h_soc" value="เห็นด้วยมาก" required></td><td><input type="radio" name="h_soc" value="เห็นด้วย"></td><td><input type="radio" name="h_soc" value="ไม่แน่ใจ"></td><td><input type="radio" name="h_soc" value="ไม่เห็นด้วย"></td></tr>
-                                <tr><td class="text-start fw-bold" id="disp_h_s3_3">สิ่งแวดล้อม</td><td><input type="radio" name="h_env" value="เห็นด้วยมาก" required></td><td><input type="radio" name="h_env" value="เห็นด้วย"></td><td><input type="radio" name="h_env" value="ไม่แน่ใจ"></td><td><input type="radio" name="h_env" value="ไม่เห็นด้วย"></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: ข้อเสนอแนะ</h5>
-                    <div class="mb-3">
-                        <select class="form-select" id="h_priority" required>
-                            <option value="" selected disabled>-- ประเด็นเร่งด่วนที่สุด --</option>
-                            <option value="ด้านเศรษฐกิจและรายได้">เศรษฐกิจและรายได้</option>
-                            <option value="ด้านสังคม คุณภาพชีวิต">สังคม/คุณภาพชีวิต</option>
-                            <option value="ด้านทรัพยากรธรรมชาติ">สิ่งแวดล้อม</option>
-                        </select>
-                    </div>
-                    <div class="mb-3"><textarea class="form-control" id="h_feedback" rows="3" placeholder="ข้อเสนอแนะอื่นๆ..."></textarea></div>
-                    <div class="form-check mb-4 small"><input class="form-check-input" type="checkbox" id="h_pdpa" required><label>ยินยอมให้ประมวลผลข้อมูล</label></div>
-                    <button type="submit" class="btn btn-warning w-100 fw-bold">ส่งความเห็น</button>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center">
-            <div class="modal-header bg-warning border-0"><h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5></div>
-            <div class="modal-body p-4">
-                <h5 class="mb-3 text-success fw-bold">สำเร็จ ขอบคุณครับ!</h5><p class="text-muted">โปรดให้คะแนนระบบ S-MAP</p>
-                <div class="star-rating mb-3 fs-1"><i data-val="1" onclick="setStar(1)">star</i><i data-val="2" onclick="setStar(2)">star</i><i data-val="3" onclick="setStar(3)">star</i><i data-val="4" onclick="setStar(4)">star</i><i data-val="5" onclick="setStar(5)">star</i></div>
-                <input type="hidden" id="sys_rating_val" value="0">
-                <textarea class="form-control mb-3" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะระบบ (ไม่บังคับ)"></textarea>
-                <button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="chatModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header bg-info text-white">
-                <h5 class="modal-title fw-bold">🤖 ถาม AI</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-0">
-                <div id="chatHistory" class="chat-container"></div>
-                <div class="p-3 bg-light">
-                    <div class="input-group">
-                        <input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()">
-                        <button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-  </div>
-
   <script>
     // ==========================================
-    // 🟢 Javascript โค้ดหลัก (แก้ไขระบบการดึงข้อมูลเพื่อดักจับ Error เชิงลึก)
+    // 🟢 ระบบการทำงาน (Javascript) ฉบับสมบูรณ์ กาง 100% 🟢
     // ==========================================
     let docs = [];
     let qaList = [];
@@ -701,85 +812,78 @@
     const itemsPerPage = 10; 
     let currentDocLink = "";
 
-    // 🟢 1. เริ่มต้นระบบ (ดึงข้อมูล)
-    async function initSystem() { 
+    // 🟢 1. เริ่มต้นระบบและดึงข้อมูลจาก Google Scripts
+    function initSystem() { 
       document.getElementById('globalLoader').style.display = 'flex';
       
-      try {
-          // ใช้การดึงข้อมูลแบบแยกทีละส่วน เพื่อให้รู้ว่าติดปัญหาที่ตัวไหน
-          const [settingsRes, docsRes, qaRes, vidRes] = await Promise.all([
-              fetch(SCRIPT_URL + '?action=getSettings'),
-              fetch(SCRIPT_URL + '?action=getDocs'),
-              fetch(SCRIPT_URL + '?action=getQA'),
-              fetch(SCRIPT_URL + '?action=getVideos')
-          ]);
-
-          const settings = await settingsRes.json();
-          const docsData = await docsRes.json();
-          const qaData = await qaRes.json();
-          const vidData = await vidRes.json();
+      Promise.all([
+          fetch(SCRIPT_URL + '?action=getSettings').then(r => r.json()), 
+          fetch(SCRIPT_URL + '?action=getDocs').then(r => r.json()), 
+          fetch(SCRIPT_URL + '?action=getQA').then(r => r.json()), 
+          fetch(SCRIPT_URL + '?action=getVideos').then(r => r.json())
+      ]).then(([settings, docsData, qaData, vidData]) => {
          
-          // นำข้อมูลลงตัวแปร
-          form1Open = (settings.form1_status === 'OPEN'); 
-          form1Title = settings.form1_title; 
-          hOpen = (settings.h_status === 'OPEN'); 
-          hTitle = settings.h_title; 
-          hPlanName = settings.h_plan_name; 
-          hRatingOpen = (settings.h_rating === 'ON');
+         // 1. นำข้อมูลลงตัวแปร
+         form1Open = (settings.form1_status === 'OPEN'); 
+         form1Title = settings.form1_title; 
+         hOpen = (settings.h_status === 'OPEN'); 
+         hTitle = settings.h_title; 
+         hPlanName = settings.h_plan_name; 
+         hRatingOpen = (settings.h_rating === 'ON');
          
-          docs = docsData; 
-          qaList = qaData; 
-          videoList = vidData;
+         docs = docsData; 
+         qaList = qaData; 
+         videoList = vidData;
 
-          // จัดการหน้าจอ
-          document.getElementById('disp_title_1').innerText = form1Title;
-          document.getElementById('disp_desc_1').innerText = settings.form1_desc;
-          document.getElementById('disp_date_1').innerText = "📅 " + settings.form1_date;
+         // 2. จัดการหน้าจอ Home
+         document.getElementById('disp_title_1').innerText = form1Title;
+         document.getElementById('disp_desc_1').innerText = settings.form1_desc;
+         document.getElementById('disp_date_1').innerText = "📅 " + settings.form1_date;
          
-          if(form1Open) { 
-              document.getElementById('banner1').classList.remove('closed'); 
-              document.getElementById('statusBadge1').style.display = 'none'; 
-          } else { 
-              document.getElementById('banner1').classList.add('closed'); 
-              document.getElementById('statusBadge1').style.display = 'inline-block'; 
-          }
+         if(form1Open) { 
+             document.getElementById('banner1').classList.remove('closed'); 
+             document.getElementById('statusBadge1').style.display = 'none'; 
+         } else { 
+             document.getElementById('banner1').classList.add('closed'); 
+             document.getElementById('statusBadge1').style.display = 'inline-block'; 
+         }
 
-          document.getElementById('disp_title_2').innerText = hTitle;
-          document.getElementById('disp_desc_2').innerText = settings.h_desc;
-          document.getElementById('disp_date_2').innerText = "📅 " + settings.h_date;
+         document.getElementById('disp_title_2').innerText = hTitle;
+         document.getElementById('disp_desc_2').innerText = settings.h_desc;
+         document.getElementById('disp_date_2').innerText = "📅 " + settings.h_date;
          
-          if(hOpen) { 
-              document.getElementById('banner2').classList.remove('closed'); 
-              document.getElementById('statusBadge2').style.display = 'none'; 
-          } else { 
-              document.getElementById('banner2').classList.add('closed'); 
-              document.getElementById('statusBadge2').style.display = 'inline-block'; 
-          }
+         if(hOpen) { 
+             document.getElementById('banner2').classList.remove('closed'); 
+             document.getElementById('statusBadge2').style.display = 'none'; 
+         } else { 
+             document.getElementById('banner2').classList.add('closed'); 
+             document.getElementById('statusBadge2').style.display = 'inline-block'; 
+         }
 
-          updateVideo(settings.video_url);
+         updateVideo(settings.video_url);
 
-          // รันฟังก์ชันย่อย
-          buildYearFilter(); 
-          filterDocs();
-          renderQA(); 
-          renderVideos();
+         // 3. รันฟังก์ชันย่อยของแต่ละหน้า
+         buildYearFilter(); 
+         filterDocs();
+         renderQA(); 
+         renderVideos();
          
-          // ปิดหน้าจอโหลด
-          document.getElementById('globalLoader').style.opacity = '0';
-          setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
+         // 4. ปิดหน้าจอโหลด
+         document.getElementById('globalLoader').style.opacity = '0';
+         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
 
-      } catch (error) {
+      }).catch(error => {
           console.error("InitSystem Error:", error);
           document.getElementById('globalLoader').style.display = 'none';
           Swal.fire({
               icon: 'error',
-              title: 'ข้อผิดพลาดการเชื่อมต่อฐานข้อมูล',
-              html: 'ระบบไม่สามารถอ่านข้อมูลจาก Google Script ได้<br><br><b>วิธีแก้ไข:</b><br>โปรดตรวจสอบว่าคุณได้กด Deploy แบบ <b class="text-danger">New Version</b> ใน Apps Script เรียบร้อยแล้วหรือไม่'
+              title: 'ข้อผิดพลาดการเชื่อมต่อ',
+              html: 'ระบบไม่สามารถอ่านข้อมูลจาก Google Script ได้<br>โปรดตรวจสอบการ Deploy <b>ให้เป็น New Version</b>'
           });
-      }
+      });
     }
 
-    // 🟢 2. ระบบส่งข้อมูลไปยัง Google Sheets
+    // 🟢 2. ระบบส่งข้อมูลไปยัง Google Sheets แบบดักจับ Error รัดกุม
     function postData(data, callback) { 
        fetch(SCRIPT_URL, { 
            method: 'POST', 
@@ -792,7 +896,7 @@
                callback(json); 
            } catch(error) { 
                console.error("JSON Parse Error:", text);
-               Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลที่ตอบกลับมาไม่ถูกต้อง โปรดเช็คการ Deploy', 'error'); 
+               Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลที่ตอบกลับมาไม่ถูกต้อง โปรดเช็คการ Deploy ให้เป็น New Version', 'error'); 
            } 
        })
        .catch(error => {
@@ -837,7 +941,7 @@
         setTimeout(() => { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }, 200); 
     }
 
-    // 🟢 4. ระบบเอกสาร (Documents) 
+    // 🟢 4. ระบบเอกสาร (Documents) - ใช้ Modal ของ Bootstrap
     function getVal(id) { 
         return document.getElementById(id).value; 
     }
@@ -929,12 +1033,12 @@
         }); 
     }
 
-    // 🟢 5. ระบบปีงบประมาณและตัวกรอง
+    // 🟢 5. ระบบปีงบประมาณและตัวกรอง (แปลงเป็นข้อความเพื่อกันบัคค้าง)
     function buildYearFilter() {
        let years = new Set();
        docs.forEach(d => { 
            if(d.year !== undefined && d.year !== null && d.year !== "") { 
-               let yearStr = d.year.toString().trim(); // บังคับให้เป็น String
+               let yearStr = d.year.toString().trim(); // บังคับเป็น String
                let parts = yearStr.split('-'); 
                if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { 
                    for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) {
@@ -957,10 +1061,8 @@
     }
 
     function sortDocsLogic(a, b) {
-       // 1. ปักหมุด
        if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1; 
        
-       // 2. ปีงบประมาณล่าสุด
        let getYearMax = (y) => { 
            if(!y) return 0; 
            let p = y.toString().split('-'); 
@@ -970,12 +1072,10 @@
        let yB = getYearMax(b.year);
        if (yA !== yB) return yB - yA;
        
-       // 3. ลำดับ
        let oA = a.order || 999;
        let oB = b.order || 999;
        if (oA !== oB) return oA - oB;
        
-       // 4. วันที่สร้าง
        return new Date(b.created) - new Date(a.created);
     }
 
@@ -1025,7 +1125,7 @@
         return `<span class="badge ${colorClass}">${label}</span>`; 
     }
 
-    // 🟢 6. แสดงผลเอกสาร (UI) (เพิ่มปีงบประมาณติดกับหมวดหมู่เอกสาร)
+    // 🟢 6. แสดงผลเอกสาร (จัดปีงบประมาณคู่กับหมวดหมู่)
     function renderDocs() {
       let html = ''; 
       if(filteredDocs.length === 0) { 
@@ -1047,12 +1147,13 @@
           if(doc.is_pinned) badges += `<span class="badge badge-pin me-2">📌 ปักหมุด</span>`;
           if(doc.is_important) badges += `<span class="badge bg-danger me-2">⭐ สำคัญ</span>`;
           
+          // 🌟 ป้าย NEW แบบพิเศษ 🌟
           let ageDays = (new Date() - new Date(doc.created)) / (1000 * 60 * 60 * 24);
           if(ageDays < 14) badges += `<span class="badge-custom-new me-2">NEW</span>`;
 
-          // 🗓️ หมวดหมู่ วางคู่กับ ปีงบประมาณ
+          // 🗓️ หมวดหมู่ วางคู่กับ ปีงบประมาณ 🗓️
           let catBadge = getCatBadge(doc.type);
-          let yrBadge = doc.year ? `<span class="badge bg-info text-dark ms-2"><i class="material-icons align-middle" style="font-size: 11px;">event</i> ปีงบประมาณ ${doc.year}</span>` : '';
+          let yrBadge = doc.year ? `<span class="badge bg-info text-dark ms-2"><i class="material-icons align-middle" style="font-size: 11px;">event</i> ปี ${doc.year}</span>` : '';
 
           let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : ''; 
           let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
@@ -1161,15 +1262,18 @@
     function setAdminMode(status) { 
         isAdmin = status; 
         document.getElementById('adminHomePanel').style.display = status ? 'block' : 'none'; 
+        
         ['adminDocBtnGroup','adminMenuSection', 'adminVideoBtnGroup', 'adminQABtnGroup'].forEach(id => {
             let element = document.getElementById(id);
             if (element) { element.style.display = status ? 'flex' : 'none'; }
         });
+        
         filterDocs(); 
         renderQA(); 
         renderVideos();
     }
 
+    // Modal Forms Openers
     function handleBannerClick(num) { 
         if(num === 1) { 
             if(form1Open) { 
@@ -1194,6 +1298,7 @@
         } 
     }
     
+    // วิดีโอ Modals
     function openVideoModal() {
         document.getElementById('vid_id').value = ''; 
         document.getElementById('vid_title').value = ''; 
@@ -1205,6 +1310,7 @@
         modalInstance.show();
     }
 
+    // QA Modals
     function openQAModal() {
         document.getElementById('qa_id').value = ''; 
         document.getElementById('qa_emoji').value = '❓'; 
@@ -1215,23 +1321,6 @@
         let modalInstance = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
         modalInstance.show();
     }
-    
-    // ฟังก์ชันย่อยสำหรับวิดีโอและ QA
-    function editVideo(id) { let v = videoList.find(x => x.id === id); if(!v) return; document.getElementById('vid_id').value = v.id; document.getElementById('vid_title').value = v.title; document.getElementById('vid_link').value = v.link; document.getElementById('vid_order').value = v.order == 999 ? "" : v.order; document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; bootstrap.Modal.getOrCreateInstance(document.getElementById('adminVideoModal')).show(); }
-    function submitVideo(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveVideo', token: adminToken, id: getVal('vid_id'), title: getVal('vid_title'), link: getVal('vid_link'), order: getVal('vid_order') }, (res) => { if (res.status === 'SUCCESS') { bootstrap.Modal.getOrCreateInstance(document.getElementById('adminVideoModal')).hide(); Swal.fire('บันทึกวิดีโอแล้ว', '', 'success').then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } }); }
-    function deleteVideo(id) { Swal.fire({ title: 'ลบวิดีโอ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
-    function renderVideos() { let h = ''; if(videoList.length === 0) { h = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอ</div>'; } else { videoList.forEach(vid => { let vId = extractYouTubeID(vid.link); let embedUrl = vId ? "https://www.youtube.com/embed/" + vId : ""; let adm = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between"><small class="fw-bold text-muted">ลำดับ: ${vid.order==999?'':vid.order}</small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : ''; h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar"><div class="video-title-text">${vid.title}</div></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; }); } document.getElementById('videoListContainer').innerHTML = h; }
-
-    function editQA(id) { let q = qaList.find(x => x.id === id); if(!q) return; document.getElementById('qa_id').value = q.id; document.getElementById('qa_emoji').value = q.emoji||'❓'; document.getElementById('qa_question').value = q.q; document.getElementById('qa_answer').value = q.a; document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; bootstrap.Modal.getOrCreateInstance(document.getElementById('adminQAModal')).show(); }
-    function submitQA(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { if(res.status==='SUCCESS'){ bootstrap.Modal.getOrCreateInstance(document.getElementById('adminQAModal')).hide(); Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); } else Swal.fire('Error', res.message, 'error'); }); }
-    function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else Swal.fire('Error', res.message, 'error'); }); } }); }
-    function renderQA() { let h = ''; if(qaList.length === 0) { h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; } else { qaList.forEach((item, index) => { let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; }); } document.getElementById('accQA').innerHTML = h; }
-
-    function submitForm(e) { e.preventDefault(); let btn = e.target.querySelector('button'); btn.disabled = true; btn.innerText = 'กำลังส่ง...'; let top = getVal('f_topic_select') + " (" + getVal('f_topic_type') + ")"; postData({ action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: top }, (res) => { btn.disabled = false; btn.innerText = 'ยืนยัน'; if (res.status === 'SUCCESS') { Swal.fire('สำเร็จ','ขอบคุณครับ','success'); e.target.reset(); bootstrap.Modal.getOrCreateInstance(document.getElementById('formModal')).hide(); } else Swal.fire('Error', res.message, 'error'); }); }
-    function submitHearing(e) { e.preventDefault(); let btn = document.getElementById('btnSubmitHearing'); btn.disabled = true; btn.innerText = 'กำลังส่ง...'; postData({ action: 'saveHearing', plan_name: hPlanName, name: getVal('h_name'), district: getVal('h_district'), sector: getVal('h_sector'), vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", vision_fb: getVal('h_vision_fb'), econ: document.querySelector('input[name="h_econ"]:checked')?.value || "", social: document.querySelector('input[name="h_soc"]:checked')?.value || "", env: document.querySelector('input[name="h_env"]:checked')?.value || "", strategy_fb: getVal('h_strategy_fb'), priority: getVal('h_priority'), feedback: getVal('h_feedback') }, (res) => { btn.disabled = false; btn.innerText = 'ส่งความเห็น'; if(res.status === 'SUCCESS') { e.target.reset(); bootstrap.Modal.getOrCreateInstance(document.getElementById('hearingModal')).hide(); if(hRatingOpen) { bootstrap.Modal.getOrCreateInstance(document.getElementById('ratingModal')).show(); } else { Swal.fire('สำเร็จ', 'ส่งความเห็นเรียบร้อย', 'success'); } } else Swal.fire('Error', 'ไม่สามารถบันทึกได้', 'error'); }); }
-    function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
-    function submitRating() { let sc = getVal('sys_rating_val'); if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); Swal.fire({ title: 'กำลังส่ง...', didOpen: () => Swal.showLoading() }); postData({ action: 'saveRating', stars: sc, sysFeedback: getVal('sys_feedback') }, (res) => { bootstrap.Modal.getOrCreateInstance(document.getElementById('ratingModal')).hide(); Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; setStar(0); }); }
-
   </script>
 </body>
 </html>
