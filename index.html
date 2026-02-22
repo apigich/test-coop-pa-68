@@ -15,13 +15,11 @@
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
-    /* Loader */
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
     .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* Header */
     .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
@@ -43,7 +41,6 @@
       .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
-    /* Layout */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
@@ -62,14 +59,12 @@
     .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
     @media (max-width: 768px) { .carousel-item { height: 400px; } }
 
-    /* Footer */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
     .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block;}
     .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
 
-    /* Banners */
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -79,12 +74,13 @@
     .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
     .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
+    
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     
-    /* 🟢 ป้ายกำกับ NEW ดีไซน์ใหม่ สำหรับหน้าเอกสาร 🟢 */
+    /* ป้ายกำกับ NEW ของเอกสาร */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -106,7 +102,6 @@
     }
     .badge-pin { background-color: #34495e; color: white; }
 
-    /* UI Components */
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
@@ -157,7 +152,7 @@
   </div>
 
   <script>
-    // 🚨 ใส่ SCRIPT_URL ที่ Deploy ใหม่แล้วตรงนี้นะครับ
+    // 🚨 ใส่ Web App URL ของคุณ 🚨
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -837,7 +832,7 @@
   
   <script>
     // ==========================================
-    // 🟢 Javascript (ดัก Error รัดกุมขั้นสุด ป้องกันหน้าจอหมุนค้าง)
+    // 🟢 Javascript 
     // ==========================================
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false; 
@@ -847,16 +842,13 @@
     let form1Title = "", form1Desc = "", form1Date = "";
     let hTitle = "", hDesc = "", hDate = "", hPlanName = "", hRatingOpen = true;
     
-    // 🟢 ตัวแปรเก็บหัวข้อประเด็นทั้ง 6 ข้อ
     let h_topics = ["", "", "", "", "", ""];
-    
     let showNewBadge = true; 
     
     let currentPage = 1; const itemsPerPage = 10; 
     let currentDocLink = "";
     let charts = { issues: null, sector: null, vision: null, priority: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
 
-    // ฟังก์ชัน Fetch ที่ปลอดภัย ดัก Error ก่อนที่สคริปต์จะพัง
     async function fetchSafe(url) {
         try {
             const response = await fetch(url);
@@ -891,7 +883,6 @@
          hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date; 
          hPlanName = settings.h_plan_name; hRatingOpen = (settings.h_rating === 'ON');
          
-         // ดึงหัวข้อทั้ง 6 ข้อมาเก็บไว้
          h_topics[0] = settings.h_s3_1 || "";
          h_topics[1] = settings.h_s3_2 || "";
          h_topics[2] = settings.h_s3_3 || "";
@@ -903,7 +894,6 @@
          
          docs = docsData; qaList = qaData; videoList = vidData;
 
-         // จัดการหน้าจอ Home
          document.getElementById('disp_title_1').innerText = form1Title;
          document.getElementById('disp_desc_1').innerText = form1Desc;
          document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
@@ -940,13 +930,8 @@
          document.getElementById('h_admin_info_title').value = settings.h_info_title; document.getElementById('h_admin_info_desc').value = settings.h_info_desc; document.getElementById('h_admin_img').value = settings.h_img; document.getElementById('h_admin_sum').value = settings.h_sum; document.getElementById('h_admin_full').value = settings.h_full;
          document.getElementById('h_admin_q1').value = settings.h_q1; document.getElementById('h_admin_q2').value = settings.h_q2; document.getElementById('h_admin_q3').value = settings.h_q3; document.getElementById('h_admin_q4').value = settings.h_q4;
          
-         // ใส่ค่าลงในช่องกรอกของแอดมิน
-         for(let i=0; i<6; i++) {
-             let el = document.getElementById('h_admin_s3_' + (i+1));
-             if(el) el.value = h_topics[i];
-         }
+         for(let i=0; i<6; i++) { let el = document.getElementById('h_admin_s3_' + (i+1)); if(el) el.value = h_topics[i]; }
 
-         // 🟢 สร้างตารางฟอร์มรับฟังความเห็นแบบไดนามิก (สูงสุด 6 ข้อ) 🟢
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
              if(topic && topic.trim() !== "") {
@@ -1033,7 +1018,7 @@
        let vTitle = getVal('admin_video_title'); let vUrl = getVal('admin_video_url'); let dUrl = getVal('admin_dash_url');
        if (!vTitle) { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); return; }
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => { 
+       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl, showNewBadge: showNewBadge ? 'ON' : 'OFF' }, (res) => { 
            if(res.status === 'SUCCESS') { 
                document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); 
                Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
@@ -1055,7 +1040,6 @@
        });
     }
 
-    // 🟢 ระบบบันทึกการตั้งค่า รับฟังความคิดเห็น (เพิ่มเป็น 6 ประเด็น) 🟢
     function saveHearingConfig() {
        let payload = {
           action: 'updateHearingConfig', token: adminToken, 
@@ -1308,7 +1292,6 @@
         });
     }
 
-    // 🟢 ดักจับข้อมูลตอนส่งประเด็นย่อย (รองรับสูงสุด 6 ประเด็น) 🟢
     function submitHearing(e) { 
         e.preventDefault(); let btn = document.getElementById('btnSubmitHearing'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่ง...'; 
         
@@ -1363,7 +1346,6 @@
     function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
     function submitRating() { let sc = getVal('sys_rating_val'); if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); Swal.fire({ title: 'กำลังส่ง...', didOpen: () => Swal.showLoading() }); postData({ action: 'saveRating', stars: sc, sysFeedback: getVal('sys_feedback') }, (res) => { let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); if(m) m.hide(); Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; setStar(0); }); }
 
-    // 🟢 ระบบสร้าง Dashboard แบบ Dynamic (ดึงชื่อหัวข้อจากแอดมิน 6 กราฟ) 🟢
     function loadDashboard() {
        Swal.fire({ title: 'กำลังดึงข้อมูล...', didOpen: () => Swal.showLoading() });
        fetch(SCRIPT_URL + '?action=getDashboardStats').then(r => r.json()).then(data => {
@@ -1380,12 +1362,10 @@
            const stdL = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'], stdC = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
            let getD = (obj) => stdL.map(l => obj[l] || 0);
            
-           // กราฟ 1-3
            if(h_topics[0] !== "") { document.getElementById('lbl_chartT1').innerText = h_topics[0]; renderChart('chartT1', 'doughnut', stdL, getD(data.hearing.byT1), '', stdC); document.getElementById('col_chartT1').style.display = 'block'; } else { document.getElementById('col_chartT1').style.display = 'none'; }
            if(h_topics[1] !== "") { document.getElementById('lbl_chartT2').innerText = h_topics[1]; renderChart('chartT2', 'doughnut', stdL, getD(data.hearing.byT2), '', stdC); document.getElementById('col_chartT2').style.display = 'block'; } else { document.getElementById('col_chartT2').style.display = 'none'; }
            if(h_topics[2] !== "") { document.getElementById('lbl_chartT3').innerText = h_topics[2]; renderChart('chartT3', 'doughnut', stdL, getD(data.hearing.byT3), '', stdC); document.getElementById('col_chartT3').style.display = 'block'; } else { document.getElementById('col_chartT3').style.display = 'none'; }
            
-           // ตรวจสอบกราฟ 4-6 ว่าต้องแสดงปุ่ม Dropdown ไหม
            let hasMore = false;
            if(h_topics[3] !== "") { hasMore = true; document.getElementById('lbl_chartT4').innerText = h_topics[3]; renderChart('chartT4', 'doughnut', stdL, getD(data.hearing.byT4), '', stdC); document.getElementById('col_chartT4').style.display = 'block'; } else { document.getElementById('col_chartT4').style.display = 'none'; }
            if(h_topics[4] !== "") { hasMore = true; document.getElementById('lbl_chartT5').innerText = h_topics[4]; renderChart('chartT5', 'doughnut', stdL, getD(data.hearing.byT5), '', stdC); document.getElementById('col_chartT5').style.display = 'block'; } else { document.getElementById('col_chartT5').style.display = 'none'; }
@@ -1400,7 +1380,6 @@
        });
     }
 
-    // 🟢 ฟังก์ชันสร้างกราฟ พร้อมคำนวณ % เมื่อนำเมาส์ชี้ 🟢
     function renderChart(canvasId, type, labels, data, label, colors) {
        let chartKey = canvasId.toLowerCase();
        if(charts[chartKey]) { charts[chartKey].destroy(); }
@@ -1422,7 +1401,6 @@
                                let total = dataset.data.reduce((a, b) => Number(a) + Number(b), 0);
                                let percentage = total > 0 ? ((value * 100) / total).toFixed(1) + '%' : '0%';
                                let labelText = context.chart.config.type === 'bar' ? (context.dataset.label ? context.dataset.label + ': ' : '') : (context.label ? context.label + ' ' : '');
-                               // 🟢 โชว์เปอร์เซ็นต์ในบรรทัดใหม่
                                return [
                                    labelText + value + ' คน',
                                    'คิดเป็น ' + percentage
