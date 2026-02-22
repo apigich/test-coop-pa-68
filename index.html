@@ -440,7 +440,6 @@
       color: #4a4a4a !important; 
     }
     
-    /* 🟢 ป้าย NEW ของเอกสาร (ดีไซน์กระพริบสีทองขอบแดง) 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -1033,10 +1032,12 @@
                      </div>
                  </div>
              </div>
+             
              <hr class="my-5 border-secondary border-2 opacity-25">
+             
              <div>
                  <h5 class="fw-bold text-warning text-dark mb-3">2. สรุปผลระบบรับฟังความคิดเห็นแบบมีส่วนร่วม (ฟอร์มสีเหลือง)</h5>
-                 <div class="row g-3">
+                 <div class="row g-3 mb-4">
                      <div class="col-md-3">
                          <div class="card shadow-sm h-100 dash-card" style="border-left-color: #f1c40f;">
                              <div class="card-body d-flex align-items-center">
@@ -1070,50 +1071,67 @@
                          </div>
                      </div>
                  </div>
-                 
-                 <div class="row g-3 mt-3">
-                     <div class="col-md-12">
-                       <h6 class="fw-bold text-secondary mb-2 border-bottom pb-2">
-                         <i class="material-icons align-middle fs-6">bar_chart</i> สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)
-                       </h6>
-                     </div>
-                     
-                     <div class="col-md-4" id="col_chartT1">
-                       <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
-                         <div class="card-body p-2">
-                           <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT1">ประเด็นที่ 1</h6>
-                           <canvas id="chartT1" style="max-height: 180px;"></canvas>
-                         </div>
-                       </div>
-                     </div>
-                     
-                     <div class="col-md-4" id="col_chartT2">
-                       <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
-                         <div class="card-body p-2">
-                           <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT2">ประเด็นที่ 2</h6>
-                           <canvas id="chartT2" style="max-height: 180px;"></canvas>
-                         </div>
-                       </div>
-                     </div>
-                     
-                     <div class="col-md-4" id="col_chartT3">
-                       <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
-                         <div class="card-body p-2">
-                           <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT3">ประเด็นที่ 3</h6>
-                           <canvas id="chartT3" style="max-height: 180px;"></canvas>
-                         </div>
-                       </div>
-                     </div>
+
+                 <div class="card shadow-sm border-0 mb-4" style="background: #f8f9fa;">
+                    <div class="card-body text-center p-4">
+                      <h5 class="fw-bold text-primary mb-3"><i class="material-icons align-middle fs-5">pie_chart</i> ภาพรวมความพึงพอใจต่อประเด็นการพัฒนาทั้งหมด (Summary)</h5>
+                      <div style="max-width: 350px; max-height: 350px;" class="mx-auto mb-4">
+                        <canvas id="chartSummary"></canvas>
+                      </div>
+                      
+                      <div class="table-responsive px-md-5">
+                        <table class="table table-bordered table-striped bg-white shadow-sm align-middle">
+                          <thead class="table-primary text-center">
+                            <tr>
+                              <th>ระดับความเห็น</th>
+                              <th>จำนวน (คน)</th>
+                              <th>สัดส่วน (%)</th>
+                            </tr>
+                          </thead>
+                          <tbody id="summaryTableBody" class="text-center fw-bold text-dark">
+                            </tbody>
+                        </table>
+                      </div>
+                    </div>
                  </div>
 
-                 <div class="text-center mt-3 mb-2" id="toggleMoreTopicsDiv" style="display:none;">
-                     <button class="btn btn-outline-secondary btn-sm rounded-pill px-4" type="button" data-bs-toggle="collapse" data-bs-target="#moreTopicsCollapse">
-                         ดูประเด็นยุทธศาสตร์เพิ่มเติม <i class="material-icons align-middle fs-6">expand_more</i>
+                 <div class="text-center mb-4 mt-5">
+                     <button class="btn btn-outline-secondary rounded-pill px-5 fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#detailedChartsCollapse">
+                         🔍 ดูรายละเอียดแยกตามรายประเด็น (1-6) <i class="material-icons align-middle fs-5">expand_more</i>
                      </button>
                  </div>
 
-                 <div class="collapse" id="moreTopicsCollapse">
-                     <div class="row g-3 mt-1">
+                 <div class="collapse" id="detailedChartsCollapse">
+                     <div class="row g-3 mt-1 bg-white p-3 rounded shadow-sm border border-secondary border-opacity-10">
+                         <div class="col-md-12"><h6 class="fw-bold text-secondary mb-3 border-bottom pb-2">สรุปความคิดเห็นแยกรายข้อ (Strategic Issues)</h6></div>
+                         
+                         <div class="col-md-4" id="col_chartT1">
+                           <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                             <div class="card-body p-2">
+                               <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT1">ประเด็นที่ 1</h6>
+                               <canvas id="chartT1" style="max-height: 180px;"></canvas>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         <div class="col-md-4" id="col_chartT2">
+                           <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                             <div class="card-body p-2">
+                               <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT2">ประเด็นที่ 2</h6>
+                               <canvas id="chartT2" style="max-height: 180px;"></canvas>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         <div class="col-md-4" id="col_chartT3">
+                           <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                             <div class="card-body p-2">
+                               <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT3">ประเด็นที่ 3</h6>
+                               <canvas id="chartT3" style="max-height: 180px;"></canvas>
+                             </div>
+                           </div>
+                         </div>
+
                          <div class="col-md-4" id="col_chartT4">
                            <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
                              <div class="card-body p-2">
@@ -1143,7 +1161,7 @@
                      </div>
                  </div>
 
-                 <div class="row g-3 mt-3 mb-5">
+                 <div class="row g-3 mt-4 mb-5">
                      <div class="col-md-12">
                        <div class="card shadow-sm h-100 border-start border-4 dash-card" style="border-left-color: #f1c40f !important;">
                          <div class="card-body p-3">
@@ -1695,9 +1713,9 @@
     
     let currentPage = 1; const itemsPerPage = 10; 
     let currentDocLink = "";
-    let charts = { issues: null, sector: null, vision: null, priority: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
+    let charts = { issues: null, sector: null, vision: null, priority: null, summary: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
 
-    // ฟังก์ชันดึงข้อมูลแบบปลอดภัย ดัก Error ไม่ให้หน้าขาว
+    // 🟢 ฟังก์ชันเชื่อมต่อแบบมี Safety
     async function fetchSafe(url) {
         try {
             const response = await fetch(url);
@@ -1728,18 +1746,17 @@
       ]).then(([settings, docsData, qaData, vidData]) => {
          
          form1Open = (settings.form1_status === 'OPEN'); 
-         form1Title = settings.form1_title; 
-         form1Desc = settings.form1_desc; 
-         form1Date = settings.form1_date;
+         form1Title = settings.form1_title || ""; 
+         form1Desc = settings.form1_desc || ""; 
+         form1Date = settings.form1_date || "";
          
          hOpen = (settings.h_status === 'OPEN'); 
-         hTitle = settings.h_title; 
-         hDesc = settings.h_desc; 
-         hDate = settings.h_date; 
-         hPlanName = settings.h_plan_name; 
+         hTitle = settings.h_title || ""; 
+         hDesc = settings.h_desc || ""; 
+         hDate = settings.h_date || ""; 
+         hPlanName = settings.h_plan_name || ""; 
          hRatingOpen = (settings.h_rating === 'ON');
          
-         // ดึงหัวข้อทั้ง 6 ข้อมาเก็บไว้
          h_topics[0] = settings.h_s3_1 || "";
          h_topics[1] = settings.h_s3_2 || "";
          h_topics[2] = settings.h_s3_3 || "";
@@ -1798,12 +1815,12 @@
              document.getElementById('hearingFormContainer').style.display = 'none'; 
          }
 
-         document.getElementById('disp_h_info_title').innerText = settings.h_info_title; 
-         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
-         document.getElementById('disp_h_q1').innerText = settings.h_q1; 
-         document.getElementById('disp_h_q2').innerText = settings.h_q2; 
-         document.getElementById('disp_h_q3').innerText = settings.h_q3; 
-         document.getElementById('disp_h_q4').innerText = settings.h_q4;
+         document.getElementById('disp_h_info_title').innerText = settings.h_info_title || ""; 
+         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc || "";
+         document.getElementById('disp_h_q1').innerText = settings.h_q1 || ""; 
+         document.getElementById('disp_h_q2').innerText = settings.h_q2 || ""; 
+         document.getElementById('disp_h_q3').innerText = settings.h_q3 || ""; 
+         document.getElementById('disp_h_q4').innerText = settings.h_q4 || "";
 
          let hImgObj = document.getElementById('disp_h_img'); 
          if (settings.h_img) { 
@@ -1829,29 +1846,34 @@
              hFullObj.style.display = 'none'; 
          }
 
-         document.getElementById('h_admin_info_title').value = settings.h_info_title; 
-         document.getElementById('h_admin_info_desc').value = settings.h_info_desc; 
-         document.getElementById('h_admin_img').value = settings.h_img; 
-         document.getElementById('h_admin_sum').value = settings.h_sum; 
-         document.getElementById('h_admin_full').value = settings.h_full;
-         document.getElementById('h_admin_q1').value = settings.h_q1; 
-         document.getElementById('h_admin_q2').value = settings.h_q2; 
-         document.getElementById('h_admin_q3').value = settings.h_q3; 
-         document.getElementById('h_admin_q4').value = settings.h_q4;
+         document.getElementById('h_admin_info_title').value = settings.h_info_title || ""; 
+         document.getElementById('h_admin_info_desc').value = settings.h_info_desc || ""; 
+         document.getElementById('h_admin_img').value = settings.h_img || ""; 
+         document.getElementById('h_admin_sum').value = settings.h_sum || ""; 
+         document.getElementById('h_admin_full').value = settings.h_full || "";
+         document.getElementById('h_admin_q1').value = settings.h_q1 || ""; 
+         document.getElementById('h_admin_q2').value = settings.h_q2 || ""; 
+         document.getElementById('h_admin_q3').value = settings.h_q3 || ""; 
+         document.getElementById('h_admin_q4').value = settings.h_q4 || "";
          
          for(let i=0; i<6; i++) { 
              let el = document.getElementById('h_admin_s3_' + (i+1)); 
              if (el) { el.value = h_topics[i]; } 
          }
 
-         // 🟢 รับค่า Placeholder ที่แอดมินตั้งไว้ และอัปเดตลงหน้าเว็บ 🟢
+         // 🟢 รับค่า Placeholder ที่แอดมินตั้งไว้
          let ph1 = settings.h_fb_ph_1 || "ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์ (ถ้ามี)...";
          let ph2 = settings.h_fb_ph_2 || "ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นยุทธศาสตร์ (ถ้ามี)...";
          let ph3 = settings.h_fb_ph_3 || "พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)...";
          
-         document.getElementById('h_vision_fb').placeholder = ph1;
-         document.getElementById('h_strategy_fb').placeholder = ph2;
-         document.getElementById('h_feedback').placeholder = ph3;
+         let hVisionFb = document.getElementById('h_vision_fb');
+         if(hVisionFb) hVisionFb.placeholder = ph1;
+         
+         let hStrategyFb = document.getElementById('h_strategy_fb');
+         if(hStrategyFb) hStrategyFb.placeholder = ph2;
+         
+         let hFeedback = document.getElementById('h_feedback');
+         if(hFeedback) hFeedback.placeholder = ph3;
 
          let elPh1 = document.getElementById('h_admin_fb_ph_1'); 
          if (elPh1) elPh1.value = ph1;
@@ -1877,11 +1899,11 @@
          });
          document.getElementById('dynamic_topics_body').innerHTML = tableBodyHtml;
 
-         document.getElementById('disp_video_title').innerText = settings.video_title; 
-         document.getElementById('admin_video_title').value = settings.video_title;
+         document.getElementById('disp_video_title').innerText = settings.video_title || "📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด"; 
+         document.getElementById('admin_video_title').value = settings.video_title || "";
          
-         updateVideo(settings.video_url); 
-         updateDashboard(settings.dash_url);
+         updateVideo(settings.video_url || ""); 
+         updateDashboard(settings.dash_url || "");
 
          buildYearFilter(); 
          filterDocs(); 
@@ -1899,7 +1921,7 @@
           Swal.fire({ 
               icon: 'error', 
               title: 'ไม่สามารถโหลดข้อมูลได้', 
-              html: 'พบข้อผิดพลาด: <br><span class="text-danger">' + error.message + '</span>' 
+              html: 'พบข้อผิดพลาด: <br><span class="text-danger">' + error.message + '</span><br>กรุณารีเฟรชหน้าต่างอีกครั้ง' 
           });
       });
     }
@@ -1971,15 +1993,18 @@
     function showPage(id) {
       let pages = ['page-home','page-docs','page-calendar','page-qa', 'page-videos', 'page-admin-dash'];
       pages.forEach(page => { 
-          document.getElementById(page).style.display = 'none'; 
+          let p = document.getElementById(page);
+          if (p) p.style.display = 'none'; 
       });
-      document.getElementById('page-' + id).style.display = 'block';
+      let targetPage = document.getElementById('page-' + id);
+      if (targetPage) targetPage.style.display = 'block';
       
       document.querySelectorAll('.nav-link-main').forEach(el => { 
           el.classList.remove('active'); 
       });
       if (id !== 'admin-dash') { 
-          document.getElementById('menu-' + id).classList.add('active'); 
+          let menuLink = document.getElementById('menu-' + id);
+          if (menuLink) menuLink.classList.add('active'); 
       }
       if (id === 'docs') filterDocs();
       if (id === 'admin-dash') loadDashboard();
@@ -1999,7 +2024,8 @@
     }
 
     function getVal(id) { 
-        return document.getElementById(id).value; 
+        let el = document.getElementById(id);
+        return el ? el.value : ""; 
     }
 
     function saveGeneralConfig() {
@@ -2083,7 +2109,6 @@
        });
     }
 
-    // 🟢 ระบบบันทึกการตั้งค่า รับฟังความคิดเห็น
     function saveHearingConfig() {
        let payload = {
           action: 'updateHearingConfig', 
@@ -2456,7 +2481,8 @@
 
     function setAdminMode(status) { 
         isAdmin = status; 
-        document.getElementById('adminHomePanel').style.display = status ? 'block' : 'none'; 
+        let adminPanel = document.getElementById('adminHomePanel');
+        if(adminPanel) adminPanel.style.display = status ? 'block' : 'none'; 
         
         let blockElements = ['adminMenuSection'];
         blockElements.forEach(id => { 
@@ -2877,6 +2903,7 @@
         }); 
     }
 
+    // 🟢 ระบบสร้าง Dashboard ภาพรวมและตาราง 🟢
     function loadDashboard() {
        Swal.fire({ 
            title: 'กำลังดึงข้อมูล...', 
@@ -2887,6 +2914,7 @@
        .then(r => r.json())
        .then(data => {
            Swal.close(); 
+           
            document.getElementById('btnOpenSheet').href = data.sheetUrl; 
            document.getElementById('stat_issues_total').innerText = data.issues.total; 
            document.getElementById('stat_hearing_total').innerText = data.hearing.total;
@@ -2899,67 +2927,63 @@
            const stdL = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'];
            const stdC = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
            
+           // 🟢 1. สร้างกราฟภาพรวม (Summary)
+           let summaryData = data.hearing.summary;
+           let summaryVals = stdL.map(l => summaryData[l] || 0);
+           renderChart('chartSummary', 'doughnut', stdL, summaryVals, 'ภาพรวม', stdC);
+           
+           // 🟢 2. สร้างตารางสรุปเปอร์เซ็นต์ใต้กราฟ
+           let totalSummary = summaryVals.reduce((a, b) => a + b, 0);
+           let tableHtml = '';
+           stdL.forEach((lbl, idx) => {
+               let val = summaryVals[idx];
+               let pct = totalSummary > 0 ? ((val / totalSummary) * 100).toFixed(1) : 0;
+               tableHtml += `<tr>
+                               <td>${lbl}</td>
+                               <td>${val}</td>
+                               <td class="text-primary">${pct}%</td>
+                             </tr>`;
+           });
+           document.getElementById('summaryTableBody').innerHTML = tableHtml;
+
+           // 🟢 3. สร้างกราฟรายข้อ 1-6
            let getD = (obj) => stdL.map(l => obj[l] || 0);
            
-           // กราฟ 1-3
            if(h_topics[0] !== "") { 
                document.getElementById('lbl_chartT1').innerText = h_topics[0]; 
                renderChart('chartT1', 'doughnut', stdL, getD(data.hearing.byT1), '', stdC); 
                document.getElementById('col_chartT1').style.display = 'block'; 
-           } else { 
-               document.getElementById('col_chartT1').style.display = 'none'; 
-           }
+           } else { document.getElementById('col_chartT1').style.display = 'none'; }
            
            if(h_topics[1] !== "") { 
                document.getElementById('lbl_chartT2').innerText = h_topics[1]; 
                renderChart('chartT2', 'doughnut', stdL, getD(data.hearing.byT2), '', stdC); 
                document.getElementById('col_chartT2').style.display = 'block'; 
-           } else { 
-               document.getElementById('col_chartT2').style.display = 'none'; 
-           }
+           } else { document.getElementById('col_chartT2').style.display = 'none'; }
            
            if(h_topics[2] !== "") { 
                document.getElementById('lbl_chartT3').innerText = h_topics[2]; 
                renderChart('chartT3', 'doughnut', stdL, getD(data.hearing.byT3), '', stdC); 
                document.getElementById('col_chartT3').style.display = 'block'; 
-           } else { 
-               document.getElementById('col_chartT3').style.display = 'none'; 
-           }
+           } else { document.getElementById('col_chartT3').style.display = 'none'; }
            
-           // กราฟ 4-6
-           let hasMore = false;
            if(h_topics[3] !== "") { 
-               hasMore = true; 
                document.getElementById('lbl_chartT4').innerText = h_topics[3]; 
                renderChart('chartT4', 'doughnut', stdL, getD(data.hearing.byT4), '', stdC); 
                document.getElementById('col_chartT4').style.display = 'block'; 
-           } else { 
-               document.getElementById('col_chartT4').style.display = 'none'; 
-           }
+           } else { document.getElementById('col_chartT4').style.display = 'none'; }
            
            if(h_topics[4] !== "") { 
-               hasMore = true; 
                document.getElementById('lbl_chartT5').innerText = h_topics[4]; 
                renderChart('chartT5', 'doughnut', stdL, getD(data.hearing.byT5), '', stdC); 
                document.getElementById('col_chartT5').style.display = 'block'; 
-           } else { 
-               document.getElementById('col_chartT5').style.display = 'none'; 
-           }
+           } else { document.getElementById('col_chartT5').style.display = 'none'; }
            
            if(h_topics[5] !== "") { 
-               hasMore = true; 
                document.getElementById('lbl_chartT6').innerText = h_topics[5]; 
                renderChart('chartT6', 'doughnut', stdL, getD(data.hearing.byT6), '', stdC); 
                document.getElementById('col_chartT6').style.display = 'block'; 
-           } else { 
-               document.getElementById('col_chartT6').style.display = 'none'; 
-           }
-           
-           if(hasMore) { 
-               document.getElementById('toggleMoreTopicsDiv').style.display = 'block'; 
-           } else { 
-               document.getElementById('toggleMoreTopicsDiv').style.display = 'none'; 
-           }
+           } else { document.getElementById('col_chartT6').style.display = 'none'; }
 
        }).catch(e => {
            console.error("Dashboard Load Error:", e);
