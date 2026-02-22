@@ -75,12 +75,13 @@
     .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
     
+    /* ป้าย NEW ของแบนเนอร์รับฟังความเห็น */
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     
-    /* 🟢 ป้าย NEW ของเอกสาร (ตัวหนังสือทอง ขอบเหลือง กรอบแดง) 🟢 */
+    /* 🟢 ป้ายกำกับ NEW ดีไซน์ใหม่ สำหรับหน้าเอกสาร */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -152,7 +153,7 @@
   </div>
 
   <script>
-    // 🚨 ใส่ SCRIPT_URL ที่ Deploy แล้ว
+    // 🚨 ฝัง SCRIPT_URL ที่ถูกต้อง 100%
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -814,7 +815,7 @@
   
   <script>
     // ==========================================
-    // 🟢 Javascript (ดัก Error รัดกุมขั้นสุด เพื่อแก้หน้าจอขาว)
+    // 🟢 Javascript (ใช้ฟังก์ชันเดิมของคุณ ดัก Error ทั้งหมด)
     // ==========================================
     let docs = [], qaList = [], filteredDocs = [], videoList = [];
     let isAdmin = false; 
@@ -1002,17 +1003,22 @@
        postData(payload, (res) => { if(res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } });
     }
 
+    // 🟢 ระบบจัดการเอกสาร (อัปเดตสวิตช์ NEW)
     function openDocModal() { 
-        document.getElementById('adminDocForm').reset(); document.getElementById('doc_id').value = ''; document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
+        document.getElementById('adminDocForm').reset(); document.getElementById('doc_id').value = ''; 
+        document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
         document.getElementById('newBadgeToggleDiv').style.display = 'block'; // 🟢 โชว์ปุ่มซ่อนป้ายตอนเพิ่มใหม่
-        document.getElementById('doc_hide_new_badge').checked = false;
+        document.getElementById('doc_hide_new_badge').checked = false; 
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); modalInstance.show();
     }
     
     function editDoc(id) {
        let d = docs.find(x => x.id === id); if(!d) return;
        document.getElementById('doc_id').value = d.id; document.getElementById('doc_title').value = d.title; document.getElementById('doc_year').value = d.year || ''; document.getElementById('doc_desc').value = d.desc; document.getElementById('doc_link').value = d.link; document.getElementById('doc_cat').value = d.type; document.getElementById('doc_ai_status').value = d.ai_status || 'ON'; document.getElementById('doc_order').value = d.order == 999 ? '' : d.order; document.getElementById('doc_is_pinned').checked = d.is_pinned; document.getElementById('doc_is_important').checked = d.is_important;
+       
        document.getElementById('newBadgeToggleDiv').style.display = 'none'; // 🟢 ซ่อนปุ่มป้าย NEW ในโหมดแก้ไข
+       document.getElementById('doc_hide_new_badge').checked = d.hide_new_badge === true;
+       
        document.getElementById('docModalTitle').innerText = 'แก้ไขเอกสาร';
        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); modalInstance.show();
     }
@@ -1220,7 +1226,9 @@
         .then(text => {
             document.getElementById(loadingId).remove();
             let data;
-            try { data = JSON.parse(text); } catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (ข้อผิดพลาดจากฝั่งเซิร์ฟเวอร์)'}; }
+            try { data = JSON.parse(text); } 
+            catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (ข้อผิดพลาดจากฝั่งเซิร์ฟเวอร์)'}; }
+            
             let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; 
             answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); 
             history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight; 
@@ -1230,7 +1238,6 @@
         });
     }
 
-    // 🟢 แก้ระบบกดปุ่ม Submit เพื่อดัก Error แบบ Real-time
     function submitForm(e) { 
         e.preventDefault(); let btn = e.target.querySelector('button'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่ง...'; 
         let topicVal = document.getElementById('f_topic_type').value; let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS";
@@ -1254,7 +1261,6 @@
         }); 
     }
 
-    // 🟢 แก้ระบบส่งฟอร์ม Hearing เพื่อดัก Error แบบ Real-time
     function submitHearing(e) { 
         e.preventDefault(); let btn = document.getElementById('btnSubmitHearing'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่ง...'; 
         postData({ action: 'saveHearing', plan_name: hPlanName, name: getVal('h_name'), district: getVal('h_district'), sector: getVal('h_sector'), vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", vision_fb: getVal('h_vision_fb'), econ: document.querySelector('input[name="h_econ"]:checked')?.value || "", social: document.querySelector('input[name="h_soc"]:checked')?.value || "", env: document.querySelector('input[name="h_env"]:checked')?.value || "", strategy_fb: getVal('h_strategy_fb'), priority: getVal('h_priority'), feedback: getVal('h_feedback') }, (res) => { 
