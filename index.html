@@ -12,24 +12,137 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
-    * { box-sizing: border-box; }
-    body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
+    * { 
+      box-sizing: border-box; 
+    }
     
-    #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
-    .loader-content { text-align: center; }
-    .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    body { 
+      font-family: 'Sarabun', sans-serif; 
+      background-color: #f0f2f5; 
+      margin: 0; 
+      padding: 0; 
+      overflow-x: hidden; 
+    }
+    
+    /* ================= LOADER ================= */
+    #globalLoader { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #ffffff; 
+      z-index: 9999; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      transition: opacity 0.3s ease; 
+    }
+    
+    .loader-content { 
+      text-align: center; 
+    }
+    
+    .loader-spinner { 
+      width: 60px; 
+      height: 60px; 
+      margin: 0 auto 20px; 
+      border: 6px solid #f3f3f3; 
+      border-top: 6px solid #0d6efd; 
+      border-radius: 50%; 
+      animation: spin 1s linear infinite; 
+    }
+    
+    @keyframes spin { 
+      0% { transform: rotate(0deg); } 
+      100% { transform: rotate(360deg); } 
+    }
 
-    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
-    .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
-    .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
-    .header-icon-box { margin-right: 30px; }
-    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
-    .org-top-text { font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
-    .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
+    /* ================= HEADER ================= */
+    .main-header { 
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
+      color: white; 
+      position: relative; 
+      padding: 0; 
+      height: auto; 
+      min-height: 250px; 
+      display: flex; 
+      align-items: center; 
+    }
+    
+    .header-overlay { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); 
+      z-index: 1; 
+    }
+    
+    .header-content { 
+      position: relative; 
+      z-index: 2; 
+      width: 100%; 
+      padding: 40px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+    
+    .header-icon-box { 
+      margin-right: 30px; 
+    }
+    
+    .org-title-group { 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+    }
+    
+    .org-top-text { 
+      font-weight: 400; 
+      font-size: 1.4rem; 
+      letter-spacing: 1px; 
+      color: #ffeb3b; 
+      margin-bottom: 5px; 
+      text-transform: uppercase; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+    }
+    
+    .org-main-text { 
+      font-weight: 700; 
+      line-height: 1.3; 
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+      font-size: 2.2rem; 
+    }
+    
+    .eng-subtitle { 
+      font-weight: 300; 
+      opacity: 0.9; 
+      font-size: 1rem; 
+      margin-top: 5px; 
+      letter-spacing: 0.5px; 
+    }
 
-    .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
+    .sidebar-toggle-btn { 
+      position: absolute; 
+      top: 30px; 
+      left: 30px; 
+      z-index: 1001; 
+      color: white; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      padding: 5px 10px; 
+      width: 45px; 
+      height: 45px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      background-color: rgba(255,255,255,0.2); 
+      border: 1px solid rgba(255,255,255,0.5); 
+    }
 
     @media (max-width: 992px) { 
       .main-header { min-height: auto; }
@@ -41,45 +154,293 @@
       .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
-    .wrapper { display: flex; width: 100%; align-items: flex-start; }
-    .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
-    @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
+    /* ================= LAYOUT & SIDEBAR ================= */
+    .wrapper { 
+      display: flex; 
+      width: 100%; 
+      align-items: flex-start; 
+    }
     
-    .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
-    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
-    .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
-    .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
-    .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
+    .sidebar { 
+      min-width: 260px; 
+      max-width: 260px; 
+      background: white; 
+      border-right: 1px solid #e9ecef; 
+      transition: all 0.3s; 
+      position: sticky; 
+      top: 0; 
+      height: 100vh; 
+      overflow-y: auto; 
+      z-index: 1000; 
+      display: flex; 
+      flex-direction: column; 
+      flex-shrink: 0; 
+    }
     
-    .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
-    .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
-    .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
+    @media (max-width: 992px) { 
+      .sidebar { 
+        position: fixed; 
+        left: 0; 
+        top: 0; 
+        margin-left: -260px; 
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1); 
+      } 
+      .sidebar.active { margin-left: 0; } 
+      .overlay { 
+        display: none; 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100vw; 
+        height: 100vh; 
+        background: rgba(0,0,0,0.5); 
+        z-index: 998; 
+        opacity: 0; 
+        transition: all 0.3s; 
+      } 
+      .overlay.active { display: block; opacity: 1; } 
+    }
     
-    .carousel-item { background-color: #e9ecef; height: 500px; }
-    .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
-    @media (max-width: 768px) { .carousel-item { height: 400px; } }
+    .nav-link-main { 
+      padding: 15px 25px; 
+      color: #0d6efd; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: block; 
+      text-decoration: none; 
+      border-bottom: 1px solid #f8f9fa; 
+      transition: 0.2s; 
+      font-size: 1rem; 
+    }
+    
+    .nav-link-main:hover { 
+      background-color: #f1f8ff; 
+      color: #0a58ca; 
+      padding-left: 30px; 
+    }
+    
+    .nav-link-main.active { 
+      background-color: #e7f1ff; 
+      border-left: 5px solid #0d6efd; 
+      color: #0d6efd; 
+    }
+    
+    .nav-link-sub { 
+      padding: 10px 25px 10px 50px; 
+      color: #6c757d; 
+      cursor: pointer; 
+      display: block; 
+      text-decoration: none; 
+      font-size: 0.9rem; 
+      transition: 0.2s; 
+    }
+    
+    .nav-link-sub:hover { 
+      color: #0d6efd; 
+      background-color: #f8f9fa; 
+      transform: translateX(5px); 
+    }
+    
+    .main-content { 
+      width: 100%; 
+      padding: 20px; 
+      min-height: 100vh; 
+      background-color: #f0f2f5; 
+      flex-grow: 1; 
+    }
+    
+    .content-section { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+      margin-bottom: 25px; 
+      border: 1px solid #fff; 
+    }
+    
+    .section-header { 
+      padding-bottom: 10px; 
+      margin-bottom: 20px; 
+      color: #0d6efd; 
+      font-weight: 700; 
+      font-size: 1.4rem; 
+      border-bottom: 2px solid #f0f0f0; 
+    }
+    
+    /* ================= CAROUSEL ================= */
+    .carousel-item { 
+      background-color: #e9ecef; 
+      height: 500px; 
+    }
+    
+    .carousel-item img { 
+      width: auto !important; 
+      height: 100% !important; 
+      max-width: 100%; 
+      margin: 0 auto; 
+      display: block; 
+      object-fit: contain; 
+    }
+    
+    @media (max-width: 768px) { 
+      .carousel-item { height: 400px; } 
+    }
 
-    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
-    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
-    .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block;}
-    .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
+    /* ================= FOOTER ================= */
+    .main-footer { 
+      background-color: #1a1d20; 
+      color: #cfd2d6; 
+      padding: 60px 40px; 
+      margin-top: auto; 
+      border-top: 5px solid #0d6efd; 
+    }
+    
+    .footer-title { 
+      color: white; 
+      font-weight: 700; 
+      margin-bottom: 20px; 
+      border-left: 4px solid #0d6efd; 
+      padding-left: 10px; 
+    }
+    
+    .admin-link-container { 
+      margin-top: 20px; 
+      padding-top: 10px; 
+      border-top: 1px solid rgba(255,255,255,0.1); 
+    }
+    
+    .admin-trigger { 
+      color: #6c757d; 
+      font-size: 0.8rem; 
+      text-decoration: none; 
+      transition: 0.3s; 
+      cursor: pointer; 
+      display: inline-block;
+    }
+    
+    .admin-trigger:hover { 
+      color: #adb5bd; 
+      text-decoration: underline; 
+    }
 
-    .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
-    .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
-    .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    .banner-text { flex-grow: 1; position: relative; z-index: 2; overflow: hidden; }
-    .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-    .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
-    .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
-    .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
+    /* ================= BANNERS ================= */
+    .banner-btn { 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-start; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      border-radius: 15px; 
+      color: white; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+      position: relative; 
+      overflow: hidden; 
+      border: none; 
+      width: 100%; 
+      text-align: left; 
+      background-size: cover !important; 
+      background-position: center !important; 
+    }
     
-    .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
+    .banner-btn:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
+      color: white; 
+    }
     
-    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    .banner-icon { 
+      flex: 0 0 100px; 
+      width: 100px; 
+      height: 100px; 
+      border-radius: 50%; 
+      font-size: 4rem; 
+      background: rgba(255,255,255,0.25); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin-right: 20px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    }
     
+    .banner-text { 
+      flex-grow: 1; 
+      position: relative; 
+      z-index: 2; 
+      overflow: hidden; 
+    }
+    
+    .banner-title { 
+      font-weight: 800; 
+      font-size: clamp(1.2rem, 2vw, 1.6rem); 
+      margin-bottom: 5px; 
+      line-height: 1.2; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    }
+    
+    .banner-desc { 
+      font-size: 1rem; 
+      opacity: 0.95; 
+      font-weight: 400; 
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2); 
+    }
+    
+    .status-badge { 
+      font-size: 0.85rem; 
+      padding: 4px 10px; 
+      border-radius: 20px; 
+      font-weight: bold; 
+      background: white; 
+      color: #d63031; 
+      display: inline-block; 
+      margin-right: 5px; 
+      margin-top: 5px; 
+    }
+    
+    .date-badge { 
+      font-size: 0.85rem; 
+      padding: 4px 10px; 
+      border-radius: 20px; 
+      background: rgba(0,0,0,0.3); 
+      color: white; 
+      border: 1px solid rgba(255,255,255,0.5); 
+      display: inline-block; 
+      margin-top: 5px; 
+    }
+    
+    .banner-btn.closed { 
+      filter: grayscale(100%); 
+      opacity: 0.7; 
+      background: #636e72 !important; 
+      cursor: not-allowed; 
+      pointer-events: none; 
+    }
+    
+    .new-badge { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      background: #ff0000; 
+      color: white; 
+      font-size: 0.75rem; 
+      font-weight: bold; 
+      padding: 5px 15px; 
+      border-bottom-right-radius: 10px; 
+      z-index: 10; 
+      display: none; 
+    }
+    
+    .bg-gradient-pink { 
+      background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); 
+    }
+    
+    .bg-gradient-yellow { 
+      background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); 
+      color: #4a4a4a !important; 
+    }
+    
+    /* 🟢 ป้าย NEW ของเอกสาร (ดีไซน์กระพริบสีทองขอบแดง) 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -94,47 +455,232 @@
         border: 2px solid #ff0000; 
         animation: pulse-red-border 1.2s infinite; 
     }
+    
     @keyframes pulse-red-border { 
         0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 
         70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 
         100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } 
     }
-    .badge-pin { background-color: #34495e; color: white; }
-
-    .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-    .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
-    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
-    .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
-    .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
     
-    .chat-container { height: 400px; overflow-y: auto; border: 1px solid #eee; background: #f8f9fa; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
-    .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
-    .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
-    .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .chat-ai strong { color: #0d6efd; }
-    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+    .badge-pin { 
+      background-color: #34495e; 
+      color: white; 
+    }
 
-    .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
-    .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
-    .video-title-bar:hover { background-color: #e9ecef; }
+    /* ================= ADMIN & UI COMPONENTS ================= */
+    .admin-controls { 
+      display: none; 
+      background: #fff3cd; 
+      border: 1px solid #ffeeba; 
+      padding: 20px; 
+      border-radius: 10px; 
+      margin-bottom: 20px; 
+    }
     
-    .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
-    .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
-    .star-rating i.active { color: #f39c12; }
+    .pagination-container { 
+      display: flex; 
+      justify-content: center; 
+      gap: 5px; 
+      margin-top: 20px; 
+    }
     
-    .hearing-banner-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+    .page-btn { 
+      border: 1px solid #dee2e6; 
+      background: white; 
+      color: #0d6efd; 
+      padding: 5px 12px; 
+      cursor: pointer; 
+      border-radius: 5px; 
+    }
+    
+    .page-btn.active { 
+      background: #0d6efd; 
+      color: white; 
+      border-color: #0d6efd; 
+    }
+    
+    .page-btn.disabled { 
+      opacity: 0.5; 
+      cursor: not-allowed; 
+    }
+    
+    /* ================= CHAT AI ================= */
+    .chat-container { 
+      height: 400px; 
+      overflow-y: auto; 
+      border: 1px solid #eee; 
+      background: #f8f9fa; 
+      padding: 15px; 
+      border-radius: 10px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+    }
+    
+    .chat-msg { 
+      max-width: 80%; 
+      padding: 10px 15px; 
+      border-radius: 15px; 
+      font-size: 0.95rem; 
+      line-height: 1.5; 
+      word-wrap: break-word; 
+    }
+    
+    .chat-user { 
+      align-self: flex-end; 
+      background-color: #0d6efd; 
+      color: white; 
+      border-bottom-right-radius: 2px; 
+    }
+    
+    .chat-ai { 
+      align-self: flex-start; 
+      background-color: white; 
+      color: #333; 
+      border: 1px solid #e0e0e0; 
+      border-bottom-left-radius: 2px; 
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+    }
+    
+    .chat-ai strong { 
+      color: #0d6efd; 
+    }
+    
+    .typing-indicator span { 
+      display: inline-block; 
+      width: 6px; 
+      height: 6px; 
+      background-color: #888; 
+      border-radius: 50%; 
+      animation: blink 1.4s infinite both; 
+      margin: 0 2px; 
+    }
+    
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } 
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes blink { 
+      0% { opacity: 0.2; } 
+      20% { opacity: 1; } 
+      100% { opacity: 0.2; } 
+    }
 
-    .dash-card { border-left: 5px solid; transition: transform 0.2s; }
-    .dash-card:hover { transform: translateY(-3px); }
-    .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
-    .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
+    /* ================= VIDEOS ================= */
+    .video-card { 
+      background: white; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+      margin-bottom: 20px; 
+      transition: transform 0.2s; 
+      border: 1px solid #eee; 
+    }
+    
+    .video-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15); 
+    }
+    
+    .video-title-bar { 
+      padding: 12px 15px; 
+      background: #f8f9fa; 
+      border-bottom: 1px solid #eee; 
+      font-weight: bold; 
+      color: #333; 
+      font-size: 0.95rem; 
+      cursor: pointer; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
+    
+    .video-title-text { 
+      display: -webkit-box; 
+      -webkit-line-clamp: 2; 
+      -webkit-box-orient: vertical; 
+      overflow: hidden; 
+      flex-grow: 1; 
+      padding-right: 10px; 
+    }
+    
+    .video-title-bar:hover { 
+      background-color: #e9ecef; 
+    }
+    
+    /* ================= OTHER ================= */
+    .star-rating i { 
+      font-size: 2.5rem; 
+      color: #ccc; 
+      cursor: pointer; 
+      transition: color 0.2s; 
+    }
+    
+    .star-rating i.hover { 
+      color: #f1c40f; 
+      opacity: 0.5; 
+    }
+    
+    .star-rating i.active { 
+      color: #f39c12; 
+    }
+    
+    .hearing-banner-img { 
+      width: 100%; 
+      max-height: 250px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+      margin-bottom: 15px; 
+    }
 
-    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
-    .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
+    .dash-card { 
+      border-left: 5px solid; 
+      transition: transform 0.2s; 
+    }
+    
+    .dash-card:hover { 
+      transform: translateY(-3px); 
+    }
+    
+    .dash-icon { 
+      width: 50px; 
+      height: 50px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 24px; 
+      color: white; 
+    }
+    
+    .dash-num { 
+      font-size: 2rem; 
+      font-weight: bold; 
+      line-height: 1.2; 
+    }
+
+    .floating-menu-btn { 
+      position: fixed; 
+      bottom: 30px; 
+      right: 20px; 
+      width: 55px; 
+      height: 55px; 
+      background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); 
+      color: white; 
+      border-radius: 50%; 
+      border: none; 
+      box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 997; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+    }
+    
+    .floating-menu-btn:hover { 
+      transform: translateY(-3px) scale(1.05); 
+      box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); 
+    }
   </style>
 </head>
 <body onload="initSystem()">
@@ -151,16 +697,22 @@
   </div>
 
   <script>
-    // 🚨 ใส่ SCRIPT_URL ที่ Deploy ใหม่แล้วตรงนี้ 🚨
+    // 🚨 สำคัญมาก: ใส่ Web App URL ที่ Deploy แล้วตรงนี้ 🚨
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
   <header class="main-header container-fluid">
     <div class="header-overlay"></div>
     <div class="header-content">
-      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
-      <div class="header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
-      <div class="header-icon-box d-block d-lg-none"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
+      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()">
+        <i class="material-icons">menu</i>
+      </button>
+      <div class="header-icon-box d-none d-lg-block">
+        <i class="material-icons" style="font-size: 5.5rem;">account_balance</i>
+      </div> 
+      <div class="header-icon-box d-block d-lg-none">
+        <i class="material-icons" style="font-size: 4.5rem;">account_balance</i>
+      </div> 
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
         <h1 class="m-0 org-main-text">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
@@ -169,7 +721,9 @@
     </div>
   </header>
 
-  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()">
+    <i class="material-icons">menu</i>
+  </button>
 
   <div class="wrapper">
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -208,24 +762,42 @@
         
         <div id="section-video" class="content-section text-center">
           <h3 class="section-header" id="disp_video_title">📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด</h3>
-          <div class="ratio ratio-16x9 w-100 w-md-75 mx-auto shadow rounded overflow-hidden" style="max-width: 800px;"><iframe id="main_video_frame" src="" allowfullscreen></iframe></div>
-          <div class="mt-4"><button onclick="showPage('videos')" class="btn btn-outline-primary fw-bold rounded-pill px-4">▶️ ดูวิดีโอเพิ่มเติมเกี่ยวกับการพัฒนาจังหวัด (Click Here)</button></div>
+          <div class="ratio ratio-16x9 w-100 w-md-75 mx-auto shadow rounded overflow-hidden" style="max-width: 800px;">
+            <iframe id="main_video_frame" src="" allowfullscreen></iframe>
+          </div>
+          <div class="mt-4">
+            <button onclick="showPage('videos')" class="btn btn-outline-primary fw-bold rounded-pill px-4">▶️ ดูวิดีโอเพิ่มเติมเกี่ยวกับการพัฒนาจังหวัด (Click Here)</button>
+          </div>
         </div>
 
         <div id="adminHomePanel" class="content-section bg-warning-subtle border-warning" style="display:none;">
           <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-warning pb-2">
              <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle text-success">verified_user</i> ยินดีต้อนรับผู้ดูแลระบบ</h5>
-             <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
+             <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()">
+               <i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ
+             </button>
           </div>
           
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-danger">
              <h6 class="fw-bold text-danger mb-3">ตั้งค่า: ฟอร์มรับแจ้งปัญหา (กล่องสีชมพู)</h6>
              <div class="row">
-                 <div class="col-md-6 mb-2"><label class="small text-muted">ชื่อหัวข้อ:</label><input type="text" id="admin_title_1" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted">คำอธิบาย (Subtitle):</label><input type="text" id="admin_subtitle_1" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted">ช่วงวันที่:</label><input type="text" id="admin_date_1" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted">ชื่อหัวข้อ:</label>
+                   <input type="text" id="admin_title_1" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted">คำอธิบาย (Subtitle):</label>
+                   <input type="text" id="admin_subtitle_1" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted">ช่วงวันที่:</label>
+                   <input type="text" id="admin_date_1" class="form-control form-control-sm">
+                 </div>
                  <div class="col-md-6 mb-2 d-flex align-items-end">
-                     <div class="form-check form-switch bg-light p-2 rounded w-100 border"><label class="form-check-label fw-bold">สถานะเปิดรับ</label><input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1"></div>
+                     <div class="form-check form-switch bg-light p-2 rounded w-100 border">
+                       <label class="form-check-label fw-bold">สถานะเปิดรับ</label>
+                       <input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1">
+                     </div>
                  </div>
              </div>
              <button class="btn btn-sm btn-outline-danger w-100 mt-2" onclick="saveFormConfig(1)">บันทึกการตั้งค่าฟอร์ม 1</button>
@@ -238,50 +810,101 @@
                  <input type="text" id="h_admin_plan_name" class="form-control" placeholder="เช่น แผนพัฒนาจังหวัดเชียงใหม่ พ.ศ. 2566 - 2570">
              </div>
              <div class="row bg-light p-2 rounded mb-3 border">
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label><input type="text" id="h_admin_desc" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label><input type="text" id="h_admin_date" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label>
+                   <input type="text" id="h_admin_title" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label>
+                   <input type="text" id="h_admin_desc" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label>
+                   <input type="text" id="h_admin_date" class="form-control form-control-sm">
+                 </div>
                  <div class="col-md-6 mb-2 d-flex gap-2">
-                     <div class="form-check form-switch w-50 p-2 border rounded bg-white"><label class="form-check-label small">สถานะเปิดรับ</label><input class="form-check-input float-end" type="checkbox" id="swHearingStatus"></div>
-                     <div class="form-check form-switch w-50 p-2 border rounded bg-white"><label class="form-check-label small">เปิดให้ดาวท้ายฟอร์ม</label><input class="form-check-input float-end" type="checkbox" id="swHearingRating"></div>
+                     <div class="form-check form-switch w-50 p-2 border rounded bg-white">
+                       <label class="form-check-label small">สถานะเปิดรับ</label>
+                       <input class="form-check-input float-end" type="checkbox" id="swHearingStatus">
+                     </div>
+                     <div class="form-check form-switch w-50 p-2 border rounded bg-white">
+                       <label class="form-check-label small">เปิดให้ดาวท้ายฟอร์ม</label>
+                       <input class="form-check-input float-end" type="checkbox" id="swHearingRating">
+                     </div>
                  </div>
              </div>
              <div class="mb-3 p-2 border rounded border-primary border-opacity-25 bg-white">
                  <label class="fw-bold text-primary small mb-2">ข้อมูลชี้แจงและเอกสารประกอบ (แสดงก่อนส่วนที่ 2)</label>
-                 <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ภาพเงื่อนไข</span><input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพแบนเนอร์ (ถ้ามี)"></div>
-                 <div class="mb-2"><input type="text" class="form-control form-control-sm" id="h_admin_info_title" placeholder="หัวเรื่อง (เช่น หลักการและเหตุผล / สาระสำคัญ)"></div>
-                 <div class="mb-2"><textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea></div>
-                 <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์สรุปย่อ</span><input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป"></div>
-                 <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์แผนเต็ม</span><input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์"></div>
+                 <div class="input-group input-group-sm mb-2">
+                   <span class="input-group-text bg-light">ภาพเงื่อนไข</span>
+                   <input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพแบนเนอร์ (ถ้ามี)">
+                 </div>
+                 <div class="mb-2">
+                   <input type="text" class="form-control form-control-sm" id="h_admin_info_title" placeholder="หัวเรื่อง (เช่น หลักการและเหตุผล / สาระสำคัญ)">
+                 </div>
+                 <div class="mb-2">
+                   <textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea>
+                 </div>
+                 <div class="input-group input-group-sm mb-1">
+                   <span class="input-group-text bg-light">ลิงก์สรุปย่อ</span>
+                   <input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป">
+                 </div>
+                 <div class="input-group input-group-sm mb-1">
+                   <span class="input-group-text bg-light">ลิงก์แผนเต็ม</span>
+                   <input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์">
+                 </div>
              </div>
              
              <div class="mb-3 p-2 border rounded border-success border-opacity-25 bg-white">
                  <label class="fw-bold text-success small mb-2">ปรับแต่งหัวข้อแบบฟอร์ม และข้อความในกล่องเสนอแนะ</label>
-                 <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1"></div>
+                 <div class="mb-1">
+                   <input type="text" class="form-control form-control-sm" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1">
+                 </div>
                  
-                 <div class="mb-1 mt-2"><input type="text" class="form-control form-control-sm" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_1" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 2"></div>
+                 <div class="mb-1 mt-2">
+                   <input type="text" class="form-control form-control-sm" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2">
+                 </div>
+                 <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_1" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 2">
+                 </div>
                  
-                 <div class="mb-1 mt-2"><input type="text" class="form-control form-control-sm" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3"></div>
+                 <div class="mb-1 mt-2">
+                   <input type="text" class="form-control form-control-sm" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3">
+                 </div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_1" placeholder="ประเด็นย่อย 1 (เช่น เศรษฐกิจ) *บังคับ*"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_2" placeholder="ประเด็นย่อย 2 (เช่น สังคม) *บังคับ*"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_3" placeholder="ประเด็นย่อย 3 (เช่น สิ่งแวดล้อม) *บังคับ*"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_4" placeholder="ประเด็นย่อย 4 (ถ้าไม่ใช้ให้เว้นว่างไว้)"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_5" placeholder="ประเด็นย่อย 5 (ถ้าไม่ใช้ให้เว้นว่างไว้)"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_6" placeholder="ประเด็นย่อย 6 (ถ้าไม่ใช้ให้เว้นว่างไว้)"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_2" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 3"></div>
+                 <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_2" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 3">
+                 </div>
                  
-                 <div class="mb-1 mt-2"><input type="text" class="form-control form-control-sm" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_3" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 4"></div>
+                 <div class="mb-1 mt-2">
+                   <input type="text" class="form-control form-control-sm" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4">
+                 </div>
+                 <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_3" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 4">
+                 </div>
              </div>
              <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="saveHearingConfig()">บันทึกการตั้งค่าระบบรับฟังความคิดเห็นแบบมีส่วนร่วมทั้งหมด</button>
           </div>
 
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-info">
              <h6 class="fw-bold text-info mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
-             <div class="mb-2"><label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label><input type="text" id="admin_video_title" class="form-control form-control-sm"></div>
-             <div class="mb-2"><label class="small text-muted">ลิงก์ YouTube (Video URL):</label><input type="text" id="admin_video_url" class="form-control form-control-sm"></div>
-             <div class="mb-2"><label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label><input type="text" id="admin_dash_url" class="form-control form-control-sm"></div>
+             <div class="mb-2">
+               <label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label>
+               <input type="text" id="admin_video_title" class="form-control form-control-sm">
+             </div>
+             <div class="mb-2">
+               <label class="small text-muted">ลิงก์ YouTube (Video URL):</label>
+               <input type="text" id="admin_video_url" class="form-control form-control-sm">
+             </div>
+             <div class="mb-2">
+               <label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label>
+               <input type="text" id="admin_dash_url" class="form-control form-control-sm">
+             </div>
              <button class="btn btn-sm btn-outline-info w-100 mt-2 mb-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
           </div>
         </div>
@@ -297,7 +920,10 @@
                 <div class="banner-text">
                    <div class="banner-title" id="disp_title_1">กำลังโหลด...</div>
                    <div class="banner-desc" id="disp_desc_1">...</div>
-                   <div class="mt-2" id="info1"><span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span><span class="date-badge" id="disp_date_1">...</span></div>
+                   <div class="mt-2" id="info1">
+                     <span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span>
+                     <span class="date-badge" id="disp_date_1">...</span>
+                   </div>
                 </div>
               </div>
             </div>
@@ -309,7 +935,10 @@
                 <div class="banner-text">
                    <div class="banner-title" id="disp_title_2">กำลังโหลด...</div>
                    <div class="banner-desc" id="disp_desc_2">...</div>
-                   <div class="mt-2" id="info2"><span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับฟังความเห็น</span><span class="date-badge" id="disp_date_2">...</span></div>
+                   <div class="mt-2" id="info2">
+                     <span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับฟังความเห็น</span>
+                     <span class="date-badge" id="disp_date_2">...</span>
+                   </div>
                 </div>
               </div>
             </div>
@@ -320,7 +949,11 @@
         <div id="sec-dash" class="content-section text-center">
           <h4 class="text-primary mb-4 fw-bold">📊 Dashboard สรุปข้อมูล</h4>
           <div id="dashboard_container" class="ratio ratio-16x9 w-100 border rounded shadow-sm bg-white overflow-hidden">
-             <div id="dash_placeholder" class="d-flex flex-column align-items-center justify-content-center h-100 bg-light text-muted"><i class="material-icons" style="font-size: 4rem;">bar_chart</i><h5 class="mt-3">พื้นที่แสดงผล Dashboard</h5><p>ระบบกำลังอยู่ระหว่างการเชื่อมต่อข้อมูล...</p></div>
+             <div id="dash_placeholder" class="d-flex flex-column align-items-center justify-content-center h-100 bg-light text-muted">
+               <i class="material-icons" style="font-size: 4rem;">bar_chart</i>
+               <h5 class="mt-3">พื้นที่แสดงผล Dashboard</h5>
+               <p>ระบบกำลังอยู่ระหว่างการเชื่อมต่อข้อมูล...</p>
+             </div>
              <iframe id="main_dash_frame" src="" allowfullscreen style="display:none;"></iframe>
           </div>
         </div>
@@ -334,12 +967,22 @@
               <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="2"></button>
             </div>
             <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg"></div>
-              <div class="carousel-item" data-bs-interval="4000"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg"></div>
+              <div class="carousel-item active" data-bs-interval="4000">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg">
+              </div>
+              <div class="carousel-item" data-bs-interval="4000">
+                <img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg">
+              </div>
+              <div class="carousel-item" data-bs-interval="4000">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg">
+              </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span></button>
-            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span></button>
+            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+            </button>
           </div>
         </div>
 
@@ -347,7 +990,9 @@
           <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">newspaper</i> ข่าวประชาสัมพันธ์ (Facebook)</h4>
           <div class="bg-white rounded shadow-sm border p-3 text-center">
             <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FChiangmaioffice&tabs=timeline&width=500&height=350&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=false" width="100%" height="350" style="border:none; overflow:hidden; max-width: 500px;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-            <div class="text-center mt-3"><a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">ดูข่าวสารทั้งหมดบน Facebook <i class="material-icons align-middle fs-6">open_in_new</i></a></div>
+            <div class="text-center mt-3">
+              <a href="https://www.facebook.com/Chiangmaioffice" target="_blank" class="btn btn-outline-primary btn-sm rounded-pill">ดูข่าวสารทั้งหมดบน Facebook <i class="material-icons align-middle fs-6">open_in_new</i></a>
+            </div>
           </div>
         </div>
 
@@ -379,7 +1024,12 @@
                          </div>
                      </div>
                      <div class="col-md-8">
-                         <div class="card shadow-sm h-100"><div class="card-body"><h6 class="card-title fw-bold text-muted small">แยกตามหมวดหมู่</h6><canvas id="chartIssues" style="max-height: 200px;"></canvas></div></div>
+                         <div class="card shadow-sm h-100">
+                           <div class="card-body">
+                             <h6 class="card-title fw-bold text-muted small">แยกตามหมวดหมู่</h6>
+                             <canvas id="chartIssues" style="max-height: 200px;"></canvas>
+                           </div>
+                         </div>
                      </div>
                  </div>
              </div>
@@ -401,18 +1051,59 @@
                      </div>
                      <div class="col-md-9">
                          <div class="row g-3">
-                             <div class="col-md-6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-muted">สัดส่วนภาคส่วน</h6><canvas id="chartSector" style="max-height: 180px;"></canvas></div></div></div>
-                             <div class="col-md-6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-muted">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6><canvas id="chartVision" style="max-height: 180px;"></canvas></div></div></div>
+                             <div class="col-md-6">
+                               <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                                 <div class="card-body p-2">
+                                   <h6 class="text-center small fw-bold mt-2 text-muted">สัดส่วนภาคส่วน</h6>
+                                   <canvas id="chartSector" style="max-height: 180px;"></canvas>
+                                 </div>
+                               </div>
+                             </div>
+                             <div class="col-md-6">
+                               <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                                 <div class="card-body p-2">
+                                   <h6 class="text-center small fw-bold mt-2 text-muted">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6>
+                                   <canvas id="chartVision" style="max-height: 180px;"></canvas>
+                                 </div>
+                               </div>
+                             </div>
                          </div>
                      </div>
                  </div>
                  
                  <div class="row g-3 mt-3">
-                     <div class="col-md-12"><h6 class="fw-bold text-secondary mb-2 border-bottom pb-2"><i class="material-icons align-middle fs-6">bar_chart</i> สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)</h6></div>
+                     <div class="col-md-12">
+                       <h6 class="fw-bold text-secondary mb-2 border-bottom pb-2">
+                         <i class="material-icons align-middle fs-6">bar_chart</i> สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)
+                       </h6>
+                     </div>
                      
-                     <div class="col-md-4" id="col_chartT1"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT1">ประเด็นที่ 1</h6><canvas id="chartT1" style="max-height: 180px;"></canvas></div></div></div>
-                     <div class="col-md-4" id="col_chartT2"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT2">ประเด็นที่ 2</h6><canvas id="chartT2" style="max-height: 180px;"></canvas></div></div></div>
-                     <div class="col-md-4" id="col_chartT3"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT3">ประเด็นที่ 3</h6><canvas id="chartT3" style="max-height: 180px;"></canvas></div></div></div>
+                     <div class="col-md-4" id="col_chartT1">
+                       <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                         <div class="card-body p-2">
+                           <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT1">ประเด็นที่ 1</h6>
+                           <canvas id="chartT1" style="max-height: 180px;"></canvas>
+                         </div>
+                       </div>
+                     </div>
+                     
+                     <div class="col-md-4" id="col_chartT2">
+                       <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                         <div class="card-body p-2">
+                           <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT2">ประเด็นที่ 2</h6>
+                           <canvas id="chartT2" style="max-height: 180px;"></canvas>
+                         </div>
+                       </div>
+                     </div>
+                     
+                     <div class="col-md-4" id="col_chartT3">
+                       <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                         <div class="card-body p-2">
+                           <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT3">ประเด็นที่ 3</h6>
+                           <canvas id="chartT3" style="max-height: 180px;"></canvas>
+                         </div>
+                       </div>
+                     </div>
                  </div>
 
                  <div class="text-center mt-3 mb-2" id="toggleMoreTopicsDiv" style="display:none;">
@@ -423,14 +1114,44 @@
 
                  <div class="collapse" id="moreTopicsCollapse">
                      <div class="row g-3 mt-1">
-                         <div class="col-md-4" id="col_chartT4"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT4">ประเด็นที่ 4</h6><canvas id="chartT4" style="max-height: 180px;"></canvas></div></div></div>
-                         <div class="col-md-4" id="col_chartT5"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT5">ประเด็นที่ 5</h6><canvas id="chartT5" style="max-height: 180px;"></canvas></div></div></div>
-                         <div class="col-md-4" id="col_chartT6"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT6">ประเด็นที่ 6</h6><canvas id="chartT6" style="max-height: 180px;"></canvas></div></div></div>
+                         <div class="col-md-4" id="col_chartT4">
+                           <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                             <div class="card-body p-2">
+                               <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT4">ประเด็นที่ 4</h6>
+                               <canvas id="chartT4" style="max-height: 180px;"></canvas>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         <div class="col-md-4" id="col_chartT5">
+                           <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                             <div class="card-body p-2">
+                               <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT5">ประเด็นที่ 5</h6>
+                               <canvas id="chartT5" style="max-height: 180px;"></canvas>
+                             </div>
+                           </div>
+                         </div>
+                         
+                         <div class="col-md-4" id="col_chartT6">
+                           <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
+                             <div class="card-body p-2">
+                               <h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT6">ประเด็นที่ 6</h6>
+                               <canvas id="chartT6" style="max-height: 180px;"></canvas>
+                             </div>
+                           </div>
+                         </div>
                      </div>
                  </div>
 
                  <div class="row g-3 mt-3 mb-5">
-                     <div class="col-md-12"><div class="card shadow-sm h-100 border-start border-4 dash-card" style="border-left-color: #f1c40f !important;"><div class="card-body p-3"><h6 class="small fw-bold text-dark mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6><canvas id="chartPriority" style="max-height: 200px;"></canvas></div></div></div>
+                     <div class="col-md-12">
+                       <div class="card shadow-sm h-100 border-start border-4 dash-card" style="border-left-color: #f1c40f !important;">
+                         <div class="card-body p-3">
+                           <h6 class="small fw-bold text-dark mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6>
+                           <canvas id="chartPriority" style="max-height: 200px;"></canvas>
+                         </div>
+                       </div>
+                     </div>
                  </div>
              </div>
           </div>
@@ -441,12 +1162,18 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3>
              <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button>
-                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()">
+                   <i class="material-icons align-middle">add</i> เพิ่มวิดีโอ
+                 </button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ">
+                   <i class="material-icons align-middle">logout</i>
+                 </button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
-          <div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div>
+          <div id="videoListContainer" class="row g-4">
+            <div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div>
+          </div>
         </div>
       </div>
 
@@ -455,8 +1182,12 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
              <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
-                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+                 <button class="btn btn-primary fw-bold" onclick="openDocModal()">
+                   <i class="material-icons align-middle">add</i> เพิ่มเอกสาร
+                 </button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ">
+                   <i class="material-icons align-middle">logout</i>
+                 </button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-3">
@@ -468,18 +1199,31 @@
              </div>
              <div class="col-md-3">
                  <label class="small text-muted fw-bold mb-1">หมวดหมู่</label>
-                 <select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select>
+                 <select id="filterCat" class="form-select" onchange="filterDocs()">
+                   <option value="All">ทุกหมวดหมู่</option>
+                   <option value="General">เอกสารทั่วไป</option>
+                   <option value="Plan">แผนพัฒนา</option>
+                   <option value="Report">รายงานผล</option>
+                   <option value="Announcement">ประกาศ/คำสั่ง</option>
+                 </select>
              </div>
              <div class="col-md-3">
                  <label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label>
-                 <select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select>
+                 <select id="filterYear" class="form-select" onchange="filterDocs()">
+                   <option value="All">ทุกปีงบประมาณ</option>
+                 </select>
              </div>
              <div class="col-md-2 mt-auto">
-                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button>
+                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()">
+                   <i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า
+                 </button>
              </div>
           </div>
 
-          <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ</div>
+          <div class="text-muted small mb-3 text-start px-2">
+            <b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ
+          </div>
+          
           <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
           <div id="pagination" class="pagination-container"></div>
         </div>
@@ -490,12 +1234,16 @@
           <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
           <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
         </div>
-        <div class="alert alert-info shadow-sm" role="alert"><i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่</div>
+        <div class="alert alert-info shadow-sm" role="alert">
+          <i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่
+        </div>
         <div class="content-section text-center py-5 shadow-sm border">
            <i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i>
            <h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3>
            <p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p>
-           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow"><i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน</a>
+           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
+             <i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน
+           </a>
         </div>
       </div>
 
@@ -504,8 +1252,12 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3>
              <div id="adminQABtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button>
-                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ"><i class="material-icons align-middle">logout</i></button>
+                 <button class="btn btn-primary fw-bold" onclick="openQAModal()">
+                   <i class="material-icons align-middle">add</i> เพิ่ม Q&A
+                 </button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ">
+                   <i class="material-icons align-middle">logout</i>
+                 </button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
@@ -523,7 +1275,11 @@
         <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
         <div id="footerCopyright">© 2026 All Rights Reserved.</div>
-        <div class="admin-link-container"><a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a></div>
+        <div class="admin-link-container">
+          <a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger">
+            <i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ
+          </a>
+        </div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">ช่องทางการติดต่อ</h5>
@@ -539,7 +1295,9 @@
         <div class="map-container mb-3" style="height: 200px; background: #333;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3776.121520722174!2d98.97130430000001!3d18.8372638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3b0703e9939d%3A0x32f88414140cedb9!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1771695612921!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a href="https://maps.app.goo.gl/6GuRPUwyPccXYz778" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
+        <a href="https://maps.app.goo.gl/6GuRPUwyPccXYz778" target="_blank" class="btn btn-outline-light btn-sm w-100">
+          <i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps
+        </a>
       </div>
     </div>
   </footer>
@@ -574,14 +1332,32 @@
         <div class="modal-body p-4">
           <form onsubmit="submitForm(event)">
             <input type="hidden" id="f_topic_type">
-            <div class="mb-3"><label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input class="form-control" id="f_name" required></div>
-            <div class="mb-3"><label class="fw-bold form-label">เบอร์ติดต่อ</label><input class="form-control" id="f_contact"></div>
+            <div class="mb-3">
+              <label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
+              <input class="form-control" id="f_name" required>
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold form-label">เบอร์ติดต่อ</label>
+              <input class="form-control" id="f_contact">
+            </div>
             <div class="mb-3" id="topicSelectDiv">
                <label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label>
-               <select class="form-select" id="f_topic_select" required><option value="" selected disabled>-- กรุณาเลือก --</option><option>โครงสร้างพื้นฐาน</option><option>สิ่งแวดล้อม/มลพิษ</option><option>เศรษฐกิจ/อาชีพ</option><option>สังคม/ความปลอดภัย</option><option>อื่นๆ</option></select>
+               <select class="form-select" id="f_topic_select" required>
+                 <option value="" selected disabled>-- กรุณาเลือก --</option>
+                 <option>โครงสร้างพื้นฐาน</option>
+                 <option>สิ่งแวดล้อม/มลพิษ</option>
+                 <option>เศรษฐกิจ/อาชีพ</option>
+                 <option>สังคม/ความปลอดภัย</option>
+                 <option>อื่นๆ</option>
+               </select>
             </div>
-            <div class="mb-3"><label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label><textarea class="form-control" id="f_detail" rows="5" required></textarea></div>
-            <div class="d-grid"><button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button></div>
+            <div class="mb-3">
+              <label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="f_detail" rows="5" required></textarea>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button>
+            </div>
           </form>
         </div>
       </div>
@@ -596,19 +1372,36 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body bg-light">
-          <div class="text-center mb-2"><img id="disp_h_img" class="hearing-banner-img shadow-sm" src="" style="display:none;"></div>
-          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;"><i class="material-icons fs-1 mb-2">lock</i><h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5></div>
+          <div class="text-center mb-2">
+            <img id="disp_h_img" class="hearing-banner-img shadow-sm" src="" style="display:none;">
+          </div>
+          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;">
+            <i class="material-icons fs-1 mb-2">lock</i>
+            <h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5>
+          </div>
 
           <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
              <h4 class="fw-bold text-center text-primary mb-4" id="disp_h_plan_name">แผนพัฒนาจังหวัดเชียงใหม่</h4>
              
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม</h5>
              <div class="row g-3 mb-4">
-                <div class="col-md-6"><label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input type="text" class="form-control" id="h_name" required></div>
-                <div class="col-md-6"><label class="form-label fw-bold">อำเภอที่อยู่อาศัย <span class="text-danger">*</span></label><input type="text" class="form-control" id="h_district" required></div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="h_name" required>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label fw-bold">อำเภอที่อยู่อาศัย <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="h_district" required>
+                </div>
                 <div class="col-md-12">
                    <label class="form-label fw-bold">ท่านสังกัดภาคส่วนใด <span class="text-danger">*</span></label>
-                   <select class="form-select" id="h_sector" required><option value="" selected disabled>-- เลือกภาคส่วน --</option><option value="ภาคประชาชน">ภาคประชาชน / ประชาสังคม</option><option value="ภาคธุรกิจเอกชน">ภาคธุรกิจ / เอกชน</option><option value="ภาคราชการ">ส่วนราชการ / รัฐวิสาหกิจ / ท้องถิ่น</option><option value="สถาบันการศึกษา">สถาบันการศึกษา / นักวิชาการ</option></select>
+                   <select class="form-select" id="h_sector" required>
+                     <option value="" selected disabled>-- เลือกภาคส่วน --</option>
+                     <option value="ภาคประชาชน">ภาคประชาชน / ประชาสังคม</option>
+                     <option value="ภาคธุรกิจเอกชน">ภาคธุรกิจ / เอกชน</option>
+                     <option value="ภาคราชการ">ส่วนราชการ / รัฐวิสาหกิจ / ท้องถิ่น</option>
+                     <option value="สถาบันการศึกษา">สถาบันการศึกษา / นักวิชาการ</option>
+                   </select>
                 </div>
              </div>
 
@@ -627,26 +1420,51 @@
 
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4" id="disp_h_q2">ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)</h5>
              <div class="mb-4 ps-2">
-                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required><label class="form-check-label">เห็นด้วย</label></div>
-                <div class="form-check mb-2"><input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม"><label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label></div>
-                <div class="form-check"><input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย"><label class="form-check-label">ไม่เห็นด้วย</label></div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required>
+                  <label class="form-check-label">เห็นด้วย</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม">
+                  <label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย">
+                  <label class="form-check-label">ไม่เห็นด้วย</label>
+                </div>
                 <textarea class="form-control mt-3" id="h_vision_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์ (ถ้ามี)..."></textarea>
              </div>
 
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q3">ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)</h5>
              <div class="table-responsive mb-2">
                 <table class="table table-bordered table-striped align-middle text-center small">
-                   <thead class="table-light"><tr><th class="text-start">ประเด็นการพัฒนา</th><th>เห็นด้วยมาก</th><th>เห็นด้วย</th><th>ไม่แน่ใจ</th><th>ไม่เห็นด้วย</th></tr></thead>
-                   <tbody id="dynamic_topics_body"></tbody>
+                   <thead class="table-light">
+                     <tr>
+                       <th class="text-start">ประเด็นการพัฒนา</th>
+                       <th>เห็นด้วยมาก</th>
+                       <th>เห็นด้วย</th>
+                       <th>ไม่แน่ใจ</th>
+                       <th>ไม่เห็นด้วย</th>
+                     </tr>
+                   </thead>
+                   <tbody id="dynamic_topics_body">
+                     </tbody>
                 </table>
              </div>
              <textarea class="form-control mb-4" id="h_strategy_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นยุทธศาสตร์ (ถ้ามี)..."></textarea>
 
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ</h5>
              <div class="mb-3">
-                <select class="form-select" id="h_priority" required><option value="" selected disabled>-- เลือกประเด็นที่ควรเร่งด่วนที่สุด --</option><option value="ด้านเศรษฐกิจและรายได้">ด้านเศรษฐกิจและรายได้</option><option value="ด้านสังคม คุณภาพชีวิต">ด้านสังคม คุณภาพชีวิต และความมั่นคง</option><option value="ด้านทรัพยากรธรรมชาติ">ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม</option></select>
+                <select class="form-select" id="h_priority" required>
+                  <option value="" selected disabled>-- เลือกประเด็นที่ควรเร่งด่วนที่สุด --</option>
+                  <option value="ด้านเศรษฐกิจและรายได้">ด้านเศรษฐกิจและรายได้</option>
+                  <option value="ด้านสังคม คุณภาพชีวิต">ด้านสังคม คุณภาพชีวิต และความมั่นคง</option>
+                  <option value="ด้านทรัพยากรธรรมชาติ">ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม</option>
+                </select>
              </div>
-             <div class="mb-3"><textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)..."></textarea></div>
+             <div class="mb-3">
+               <textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)..."></textarea>
+             </div>
 
              <div class="alert alert-secondary mt-4 mb-4 small">
                 <div class="form-check">
@@ -654,7 +1472,9 @@
                    <label class="form-check-label text-dark" for="h_pdpa">ข้าพเจ้ายินยอมให้สำนักงานจังหวัดเชียงใหม่ รวบรวมและประมวลผลข้อมูลนี้ เพื่อใช้ประกอบการปรับปรุงร่างแผนฯ เท่านั้น โดยไม่เปิดเผยข้อมูลส่วนบุคคลต่อสาธารณะ</label>
                 </div>
              </div>
-             <div class="d-grid"><button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm text-dark" id="btnSubmitHearing">✅ ส่งแบบรับฟังความคิดเห็น</button></div>
+             <div class="d-grid">
+               <button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm text-dark" id="btnSubmitHearing">✅ ส่งแบบรับฟังความคิดเห็น</button>
+             </div>
           </form>
         </div>
       </div>
@@ -678,7 +1498,9 @@
              <i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i>
           </div>
           <input type="hidden" id="sys_rating_val" value="0">
-          <div class="mb-3 text-start"><textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea></div>
+          <div class="mb-3 text-start">
+            <textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea>
+          </div>
           <button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button>
         </div>
       </div>
@@ -695,27 +1517,80 @@
         <div class="modal-body bg-light">
           <form id="adminDocForm" onsubmit="submitDocument(event)">
              <input type="hidden" id="doc_id">
+             
              <div class="row g-2 mb-2">
-                 <div class="col-md-9"><label class="small text-muted fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label><input type="text" class="form-control" id="doc_title" required></div>
-                 <div class="col-md-3"><label class="small text-muted fw-bold">ปีงบประมาณ</label><input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567"></div>
+                 <div class="col-md-9">
+                   <label class="small text-muted fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" id="doc_title" required>
+                 </div>
+                 <div class="col-md-3">
+                   <label class="small text-muted fw-bold">ปีงบประมาณ</label>
+                   <input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567">
+                 </div>
              </div>
-             <div class="mb-2"><label class="small text-muted fw-bold">คำอธิบายเพิ่มเติม</label><input type="text" class="form-control" id="doc_desc"></div>
+             
+             <div class="mb-2">
+               <label class="small text-muted fw-bold">คำอธิบายเพิ่มเติม</label>
+               <input type="text" class="form-control" id="doc_desc">
+             </div>
+             
              <div class="row g-2 mb-2">
-                <div class="col-md-6"><label class="small text-muted fw-bold">หมวดหมู่</label><select class="form-select" id="doc_cat"><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select></div>
-                <div class="col-md-6"><label class="small text-muted fw-bold">AI Chatbot</label><select class="form-select" id="doc_ai_status"><option value="ON">🟢 เปิดใช้งาน AI Chatbot</option><option value="OFF">🔴 ปิดใช้งาน AI</option></select></div>
+                <div class="col-md-6">
+                  <label class="small text-muted fw-bold">หมวดหมู่</label>
+                  <select class="form-select" id="doc_cat">
+                    <option value="General">เอกสารทั่วไป</option>
+                    <option value="Plan">แผนพัฒนา</option>
+                    <option value="Report">รายงานผล</option>
+                    <option value="Announcement">ประกาศ/คำสั่ง</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted fw-bold">AI Chatbot</label>
+                  <select class="form-select" id="doc_ai_status">
+                    <option value="ON">🟢 เปิดใช้งาน AI Chatbot</option>
+                    <option value="OFF">🔴 ปิดใช้งาน AI</option>
+                  </select>
+                </div>
              </div>
-             <div class="mb-3"><label class="small text-muted fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label><input type="text" class="form-control" id="doc_link" required></div>
+             
+             <div class="mb-3">
+                 <label class="small text-muted fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label>
+                 <input type="text" class="form-control" id="doc_link" required>
+             </div>
+             
              <div class="p-3 border rounded bg-white">
                  <div class="row">
-                     <div class="col-md-12"><label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label><input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้"></div>
-                     <div class="col-md-4 pt-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_is_pinned"><label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label></div></div>
-                     <div class="col-md-4 pt-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_is_important"><label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label></div></div>
+                     <div class="col-md-12">
+                       <label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label>
+                       <input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้">
+                     </div>
+                     
+                     <div class="col-md-4 pt-3">
+                       <div class="form-check form-switch">
+                         <input class="form-check-input" type="checkbox" id="doc_is_pinned">
+                         <label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label>
+                       </div>
+                     </div>
+                     <div class="col-md-4 pt-3">
+                       <div class="form-check form-switch">
+                         <input class="form-check-input" type="checkbox" id="doc_is_important">
+                         <label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label>
+                       </div>
+                     </div>
+                     
                      <div class="col-md-12 pt-3 border-top mt-3" id="newBadgeToggleDiv">
-                         <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_hide_new_badge"><label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW (แม้จะเพิ่งอัปโหลดก็ตาม)</label></div>
+                         <div class="form-check form-switch">
+                           <input class="form-check-input" type="checkbox" id="doc_hide_new_badge">
+                           <label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW (แม้จะเพิ่งอัปโหลดก็ตาม)</label>
+                         </div>
                      </div>
                  </div>
              </div>
-             <div class="mt-4 text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึกข้อมูล</button></div>
+             
+             <div class="mt-4 text-end">
+               <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
+               <button type="submit" class="btn btn-success fw-bold px-4">บันทึกข้อมูล</button>
+             </div>
           </form>
         </div>
       </div>
@@ -732,11 +1607,26 @@
             <div class="modal-body">
                 <form onsubmit="submitVideo(event)">
                     <input type="hidden" id="vid_id">
-                    <div class="mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div>
-                    <div class="mb-2"><label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label><textarea class="form-control" id="vid_desc" rows="3" placeholder="สรุปเนื้อหาสั้นๆ ให้ประชาชนอ่าน..."></textarea></div>
-                    <div class="mb-2"><label class="small text-muted fw-bold">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div>
-                    <div class="mb-3"><label class="small text-muted fw-bold">ลำดับ (เลขน้อยขึ้นก่อน)</label><input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้"></div>
-                    <div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div>
+                    <div class="mb-2">
+                      <label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label>
+                      <input type="text" class="form-control" id="vid_title" required>
+                    </div>
+                    <div class="mb-2">
+                      <label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label>
+                      <textarea class="form-control" id="vid_desc" rows="3" placeholder="สรุปเนื้อหาสั้นๆ ให้ประชาชนอ่าน..."></textarea>
+                    </div>
+                    <div class="mb-2">
+                      <label class="small text-muted fw-bold">ลิงก์ YouTube</label>
+                      <input type="text" class="form-control" id="vid_link" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="small text-muted fw-bold">ลำดับ (เลขน้อยขึ้นก่อน)</label>
+                      <input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้">
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
+                      <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -754,11 +1644,32 @@
                 <form onsubmit="submitQA(event)">
                     <input type="hidden" id="qa_id">
                     <div class="row g-2 mb-2">
-                        <div class="col-3"><label class="small text-muted fw-bold">ไอคอน</label><select class="form-select" id="qa_emoji"><option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="🟢">🟢</option><option value="🔥">🔥</option><option value="⭐">⭐</option><option value="📌">📌</option><option value="💡">💡</option></select></div>
-                        <div class="col-9"><label class="small text-muted fw-bold">คำถาม</label><input type="text" class="form-control" id="qa_question" required></div>
+                        <div class="col-3">
+                          <label class="small text-muted fw-bold">ไอคอน</label>
+                          <select class="form-select" id="qa_emoji">
+                            <option value="❓">❓</option>
+                            <option value="📢">📢</option>
+                            <option value="🔴">🔴</option>
+                            <option value="🟢">🟢</option>
+                            <option value="🔥">🔥</option>
+                            <option value="⭐">⭐</option>
+                            <option value="📌">📌</option>
+                            <option value="💡">💡</option>
+                          </select>
+                        </div>
+                        <div class="col-9">
+                          <label class="small text-muted fw-bold">คำถาม</label>
+                          <input type="text" class="form-control" id="qa_question" required>
+                        </div>
                     </div>
-                    <div class="mb-3"><label class="small text-muted fw-bold">คำตอบ</label><textarea class="form-control" id="qa_answer" rows="4" required></textarea></div>
-                    <div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div>
+                    <div class="mb-3">
+                      <label class="small text-muted fw-bold">คำตอบ</label>
+                      <textarea class="form-control" id="qa_answer" rows="4" required></textarea>
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
+                      <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -786,14 +1697,16 @@
     let currentDocLink = "";
     let charts = { issues: null, sector: null, vision: null, priority: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
 
-    // 🟢 ดัก Error หน้าขาวเวลาเชื่อมต่อ
+    // ฟังก์ชันดึงข้อมูลแบบปลอดภัย ดัก Error ไม่ให้หน้าขาว
     async function fetchSafe(url) {
         try {
             const response = await fetch(url);
             const text = await response.text();
             try {
                 const json = JSON.parse(text);
-                if (json && json.status === "ERROR") { throw new Error(json.message); }
+                if (json && json.status === "ERROR") { 
+                    throw new Error(json.message); 
+                }
                 return json;
             } catch (e) {
                 console.error("Not JSON response:", text);
@@ -815,12 +1728,18 @@
       ]).then(([settings, docsData, qaData, vidData]) => {
          
          form1Open = (settings.form1_status === 'OPEN'); 
-         form1Title = settings.form1_title; form1Desc = settings.form1_desc; form1Date = settings.form1_date;
+         form1Title = settings.form1_title; 
+         form1Desc = settings.form1_desc; 
+         form1Date = settings.form1_date;
          
          hOpen = (settings.h_status === 'OPEN'); 
-         hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date; 
-         hPlanName = settings.h_plan_name; hRatingOpen = (settings.h_rating === 'ON');
+         hTitle = settings.h_title; 
+         hDesc = settings.h_desc; 
+         hDate = settings.h_date; 
+         hPlanName = settings.h_plan_name; 
+         hRatingOpen = (settings.h_rating === 'ON');
          
+         // ดึงหัวข้อทั้ง 6 ข้อมาเก็บไว้
          h_topics[0] = settings.h_s3_1 || "";
          h_topics[1] = settings.h_s3_2 || "";
          h_topics[2] = settings.h_s3_3 || "";
@@ -830,7 +1749,9 @@
          
          showNewBadge = (settings.show_new_badge === 'ON');
          
-         docs = docsData; qaList = qaData; videoList = vidData;
+         docs = docsData; 
+         qaList = qaData; 
+         videoList = vidData;
 
          document.getElementById('disp_title_1').innerText = form1Title;
          document.getElementById('disp_desc_1').innerText = form1Desc;
@@ -839,8 +1760,16 @@
          document.getElementById('admin_subtitle_1').value = form1Desc;
          document.getElementById('admin_date_1').value = form1Date;
          document.getElementById('swForm1').checked = form1Open;
-         if(form1Open) { document.getElementById('banner1').classList.remove('closed'); document.getElementById('statusBadge1').style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } 
-         else { document.getElementById('banner1').classList.add('closed'); document.getElementById('statusBadge1').style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
+         
+         if (form1Open) { 
+             document.getElementById('banner1').classList.remove('closed'); 
+             document.getElementById('statusBadge1').style.display = 'none'; 
+             document.getElementById('badge1').style.display = 'block'; 
+         } else { 
+             document.getElementById('banner1').classList.add('closed'); 
+             document.getElementById('statusBadge1').style.display = 'inline-block'; 
+             document.getElementById('badge1').style.display = 'none'; 
+         }
 
          document.getElementById('disp_h_title').innerText = hTitle;
          document.getElementById('disp_title_2').innerText = hTitle;
@@ -855,20 +1784,65 @@
          document.getElementById('swHearingStatus').checked = hOpen;
          document.getElementById('swHearingRating').checked = hRatingOpen;
          
-         if(hOpen) { document.getElementById('banner2').classList.remove('closed'); document.getElementById('statusBadge2').style.display = 'none'; document.getElementById('badge2').style.display = 'block'; document.getElementById('hearingClosedMsg').style.display = 'none'; document.getElementById('hearingFormContainer').style.display = 'block'; } 
-         else { document.getElementById('banner2').classList.add('closed'); document.getElementById('statusBadge2').style.display = 'inline-block'; document.getElementById('badge2').style.display = 'none'; document.getElementById('hearingClosedMsg').style.display = 'block'; document.getElementById('hearingFormContainer').style.display = 'none'; }
+         if (hOpen) { 
+             document.getElementById('banner2').classList.remove('closed'); 
+             document.getElementById('statusBadge2').style.display = 'none'; 
+             document.getElementById('badge2').style.display = 'block'; 
+             document.getElementById('hearingClosedMsg').style.display = 'none'; 
+             document.getElementById('hearingFormContainer').style.display = 'block'; 
+         } else { 
+             document.getElementById('banner2').classList.add('closed'); 
+             document.getElementById('statusBadge2').style.display = 'inline-block'; 
+             document.getElementById('badge2').style.display = 'none'; 
+             document.getElementById('hearingClosedMsg').style.display = 'block'; 
+             document.getElementById('hearingFormContainer').style.display = 'none'; 
+         }
 
-         document.getElementById('disp_h_info_title').innerText = settings.h_info_title; document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
-         document.getElementById('disp_h_q1').innerText = settings.h_q1; document.getElementById('disp_h_q2').innerText = settings.h_q2; document.getElementById('disp_h_q3').innerText = settings.h_q3; document.getElementById('disp_h_q4').innerText = settings.h_q4;
+         document.getElementById('disp_h_info_title').innerText = settings.h_info_title; 
+         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc;
+         document.getElementById('disp_h_q1').innerText = settings.h_q1; 
+         document.getElementById('disp_h_q2').innerText = settings.h_q2; 
+         document.getElementById('disp_h_q3').innerText = settings.h_q3; 
+         document.getElementById('disp_h_q4').innerText = settings.h_q4;
 
-         let hImgObj = document.getElementById('disp_h_img'); if(settings.h_img) { hImgObj.src = settings.h_img; hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
-         let hSumObj = document.getElementById('disp_h_sum'); if(settings.h_sum) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else { hSumObj.style.display = 'none'; }
-         let hFullObj = document.getElementById('disp_h_full'); if(settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
-
-         document.getElementById('h_admin_info_title').value = settings.h_info_title; document.getElementById('h_admin_info_desc').value = settings.h_info_desc; document.getElementById('h_admin_img').value = settings.h_img; document.getElementById('h_admin_sum').value = settings.h_sum; document.getElementById('h_admin_full').value = settings.h_full;
-         document.getElementById('h_admin_q1').value = settings.h_q1; document.getElementById('h_admin_q2').value = settings.h_q2; document.getElementById('h_admin_q3').value = settings.h_q3; document.getElementById('h_admin_q4').value = settings.h_q4;
+         let hImgObj = document.getElementById('disp_h_img'); 
+         if (settings.h_img) { 
+             hImgObj.src = settings.h_img; 
+             hImgObj.style.display = 'block'; 
+         } else { 
+             hImgObj.style.display = 'none'; 
+         }
          
-         for(let i=0; i<6; i++) { let el = document.getElementById('h_admin_s3_' + (i+1)); if(el) el.value = h_topics[i]; }
+         let hSumObj = document.getElementById('disp_h_sum'); 
+         if (settings.h_sum) { 
+             hSumObj.href = settings.h_sum; 
+             hSumObj.style.display = 'inline-block'; 
+         } else { 
+             hSumObj.style.display = 'none'; 
+         }
+         
+         let hFullObj = document.getElementById('disp_h_full'); 
+         if (settings.h_full) { 
+             hFullObj.href = settings.h_full; 
+             hFullObj.style.display = 'inline-block'; 
+         } else { 
+             hFullObj.style.display = 'none'; 
+         }
+
+         document.getElementById('h_admin_info_title').value = settings.h_info_title; 
+         document.getElementById('h_admin_info_desc').value = settings.h_info_desc; 
+         document.getElementById('h_admin_img').value = settings.h_img; 
+         document.getElementById('h_admin_sum').value = settings.h_sum; 
+         document.getElementById('h_admin_full').value = settings.h_full;
+         document.getElementById('h_admin_q1').value = settings.h_q1; 
+         document.getElementById('h_admin_q2').value = settings.h_q2; 
+         document.getElementById('h_admin_q3').value = settings.h_q3; 
+         document.getElementById('h_admin_q4').value = settings.h_q4;
+         
+         for(let i=0; i<6; i++) { 
+             let el = document.getElementById('h_admin_s3_' + (i+1)); 
+             if (el) { el.value = h_topics[i]; } 
+         }
 
          // 🟢 รับค่า Placeholder ที่แอดมินตั้งไว้ และอัปเดตลงหน้าเว็บ 🟢
          let ph1 = settings.h_fb_ph_1 || "ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์ (ถ้ามี)...";
@@ -879,13 +1853,18 @@
          document.getElementById('h_strategy_fb').placeholder = ph2;
          document.getElementById('h_feedback').placeholder = ph3;
 
-         let elPh1 = document.getElementById('h_admin_fb_ph_1'); if(elPh1) elPh1.value = ph1;
-         let elPh2 = document.getElementById('h_admin_fb_ph_2'); if(elPh2) elPh2.value = ph2;
-         let elPh3 = document.getElementById('h_admin_fb_ph_3'); if(elPh3) elPh3.value = ph3;
+         let elPh1 = document.getElementById('h_admin_fb_ph_1'); 
+         if (elPh1) elPh1.value = ph1;
+         
+         let elPh2 = document.getElementById('h_admin_fb_ph_2'); 
+         if (elPh2) elPh2.value = ph2;
+         
+         let elPh3 = document.getElementById('h_admin_fb_ph_3'); 
+         if (elPh3) elPh3.value = ph3;
 
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
-             if(topic && topic.trim() !== "") {
+             if (topic && topic.trim() !== "") {
                  tableBodyHtml += `
                  <tr>
                     <td class="text-start fw-bold" id="disp_h_s3_${idx+1}">${topic}</td>
@@ -904,33 +1883,55 @@
          updateVideo(settings.video_url); 
          updateDashboard(settings.dash_url);
 
-         buildYearFilter(); filterDocs(); renderQA(); renderVideos();
+         buildYearFilter(); 
+         filterDocs(); 
+         renderQA(); 
+         renderVideos();
          
          document.getElementById('globalLoader').style.opacity = '0';
-         setTimeout(() => { document.getElementById('globalLoader').style.display = 'none'; }, 300);
+         setTimeout(() => { 
+             document.getElementById('globalLoader').style.display = 'none'; 
+         }, 300);
 
       }).catch(error => {
           console.error("InitSystem Error:", error);
           document.getElementById('globalLoader').style.display = 'none';
-          Swal.fire({ icon: 'error', title: 'ไม่สามารถโหลดข้อมูลได้', html: 'พบข้อผิดพลาด: <br><span class="text-danger">' + error.message + '</span>' });
+          Swal.fire({ 
+              icon: 'error', 
+              title: 'ไม่สามารถโหลดข้อมูลได้', 
+              html: 'พบข้อผิดพลาด: <br><span class="text-danger">' + error.message + '</span>' 
+          });
       });
     }
 
     function postData(data, callback) { 
-       fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) })
+       fetch(SCRIPT_URL, { 
+           method: 'POST', 
+           body: JSON.stringify(data) 
+       })
        .then(r => r.text())
        .then(text => { 
-           try { callback(JSON.parse(text)); } 
-           catch(error) { Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลตอบกลับไม่ถูกต้อง โปรดเช็คการ Deploy', 'error'); } 
+           try { 
+               callback(JSON.parse(text)); 
+           } catch(error) { 
+               Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลตอบกลับไม่ถูกต้อง โปรดเช็คการ Deploy', 'error'); 
+           } 
        })
-       .catch(error => Swal.fire('ขาดการเชื่อมต่อ', 'โปรดตรวจสอบสัญญาณอินเทอร์เน็ตของคุณ', 'error')); 
+       .catch(error => {
+           Swal.fire('ขาดการเชื่อมต่อ', 'โปรดตรวจสอบสัญญาณอินเทอร์เน็ตของคุณ', 'error');
+       }); 
     }
 
     function showFullVideoTitle(vidId) { 
         let v = videoList.find(x => x.id === vidId);
-        if(!v) return;
+        if (!v) return;
         let descHtml = v.desc ? `<hr><div style="text-align:left; font-size:0.95rem; white-space:pre-wrap;" class="text-muted">${v.desc}</div>` : '';
-        Swal.fire({ title: 'รายละเอียดวิดีโอ', html: `<strong class="text-primary">${v.title}</strong>${descHtml}`, icon: 'info', confirmButtonText: 'ปิด' }); 
+        Swal.fire({ 
+            title: 'รายละเอียดวิดีโอ', 
+            html: `<strong class="text-primary">${v.title}</strong>${descHtml}`, 
+            icon: 'info', 
+            confirmButtonText: 'ปิด' 
+        }); 
     }
 
     function updateVideo(url) { 
@@ -939,109 +1940,290 @@
         document.getElementById('main_video_frame').src = embedUrl; 
         document.getElementById('admin_video_url').value = url || ""; 
     }
+
     function extractYouTubeID(url) { 
         if (!url) return null; 
         var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; 
         var match = url.match(regExp); 
         return (match && match[2].length == 11) ? match[2] : null; 
     }
+
     function updateDashboard(url) { 
-        let ph = document.getElementById('dash_placeholder'); let frame = document.getElementById('main_dash_frame'); document.getElementById('admin_dash_url').value = url || ""; 
-        if (url && url.length > 5) { ph.style.display = 'none'; frame.style.display = 'block'; frame.src = url; } else { ph.style.display = 'flex'; frame.style.display = 'none'; } 
+        let ph = document.getElementById('dash_placeholder'); 
+        let frame = document.getElementById('main_dash_frame'); 
+        document.getElementById('admin_dash_url').value = url || ""; 
+        
+        if (url && url.length > 5) { 
+            ph.style.display = 'none'; 
+            frame.style.display = 'block'; 
+            frame.src = url; 
+        } else { 
+            ph.style.display = 'flex'; 
+            frame.style.display = 'none'; 
+        } 
     }
 
-    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('sidebarOverlay').classList.toggle('active'); }
+    function toggleSidebar() { 
+        document.getElementById('sidebar').classList.toggle('active'); 
+        document.getElementById('sidebarOverlay').classList.toggle('active'); 
+    }
+
     function showPage(id) {
       let pages = ['page-home','page-docs','page-calendar','page-qa', 'page-videos', 'page-admin-dash'];
-      pages.forEach(page => { document.getElementById(page).style.display = 'none'; });
+      pages.forEach(page => { 
+          document.getElementById(page).style.display = 'none'; 
+      });
       document.getElementById('page-' + id).style.display = 'block';
-      document.querySelectorAll('.nav-link-main').forEach(el => { el.classList.remove('active'); });
-      if(id !== 'admin-dash') { document.getElementById('menu-' + id).classList.add('active'); }
-      if(id === 'docs') filterDocs();
-      if(id === 'admin-dash') loadDashboard();
+      
+      document.querySelectorAll('.nav-link-main').forEach(el => { 
+          el.classList.remove('active'); 
+      });
+      if (id !== 'admin-dash') { 
+          document.getElementById('menu-' + id).classList.add('active'); 
+      }
+      if (id === 'docs') filterDocs();
+      if (id === 'admin-dash') loadDashboard();
+      
       window.scrollTo(0,0);
-      if(window.innerWidth <= 992) { document.getElementById('sidebar').classList.remove('active'); document.getElementById('sidebarOverlay').classList.remove('active'); }
+      if (window.innerWidth <= 992) { 
+          document.getElementById('sidebar').classList.remove('active'); 
+          document.getElementById('sidebarOverlay').classList.remove('active'); 
+      }
     }
-    function scrollToId(id) { showPage('home'); setTimeout(() => { document.getElementById(id).scrollIntoView({behavior:'smooth'}); }, 200); }
-    function getVal(id) { return document.getElementById(id).value; }
+
+    function scrollToId(id) { 
+        showPage('home'); 
+        setTimeout(() => { 
+            document.getElementById(id).scrollIntoView({behavior:'smooth'}); 
+        }, 200); 
+    }
+
+    function getVal(id) { 
+        return document.getElementById(id).value; 
+    }
 
     function saveGeneralConfig() {
-       let vTitle = getVal('admin_video_title'); let vUrl = getVal('admin_video_url'); let dUrl = getVal('admin_dash_url');
-       let newBadgeStatus = document.getElementById('swShowNewBadge').checked ? 'ON' : 'OFF';
-       if (!vTitle) { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); return; }
-       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl, showNewBadge: newBadgeStatus }, (res) => { 
+       let vTitle = getVal('admin_video_title'); 
+       let vUrl = getVal('admin_video_url'); 
+       let dUrl = getVal('admin_dash_url');
+       
+       if (!vTitle) { 
+           Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); 
+           return; 
+       }
+       
+       Swal.fire({ 
+           title: 'กำลังบันทึก...', 
+           allowOutsideClick: false, 
+           didOpen: () => { Swal.showLoading(); } 
+       });
+       
+       postData({ 
+           action: 'updateGeneralConfig', 
+           token: adminToken, 
+           vTitle: vTitle, 
+           video: vUrl, 
+           dash: dUrl 
+       }, (res) => { 
            if(res.status === 'SUCCESS') { 
-               document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); 
-               showNewBadge = (newBadgeStatus === 'ON'); filterDocs();
+               document.getElementById('disp_video_title').innerText = vTitle; 
+               updateVideo(vUrl); 
+               updateDashboard(dUrl); 
                Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
-           } else { Swal.fire('Error', res.message, 'error'); } 
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
        });
     }
 
     function saveFormConfig(num) {
-       let titleVal = getVal('admin_title_1'); let descVal = getVal('admin_subtitle_1'); let dateVal = getVal('admin_date_1'); let status = document.getElementById('swForm1').checked ? 'OPEN' : 'CLOSED';
-       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateFormConfig', token: adminToken, key: 'FORM_1', title: titleVal, subtitle: descVal, dateText: dateVal, status: status }, (res) => { 
+       let titleVal = getVal('admin_title_1'); 
+       let descVal = getVal('admin_subtitle_1'); 
+       let dateVal = getVal('admin_date_1'); 
+       let status = document.getElementById('swForm1').checked ? 'OPEN' : 'CLOSED';
+       
+       Swal.fire({ 
+           title: 'กำลังบันทึก...', 
+           allowOutsideClick: false, 
+           didOpen: () => { Swal.showLoading(); } 
+       });
+       
+       postData({ 
+           action: 'updateFormConfig', 
+           token: adminToken, 
+           key: 'FORM_1', 
+           title: titleVal, 
+           subtitle: descVal, 
+           dateText: dateVal, 
+           status: status 
+       }, (res) => { 
            if(res.status === 'SUCCESS') { 
-               form1Title = titleVal; form1Desc = descVal; form1Date = dateVal; form1Open = (status==='OPEN'); 
-               document.getElementById('disp_title_1').innerText = form1Title; document.getElementById('disp_desc_1').innerText = form1Desc; document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
-               if(form1Open) { document.getElementById('banner1').classList.remove('closed'); document.getElementById('statusBadge1').style.display = 'none'; document.getElementById('badge1').style.display = 'block'; } 
-               else { document.getElementById('banner1').classList.add('closed'); document.getElementById('statusBadge1').style.display = 'inline-block'; document.getElementById('badge1').style.display = 'none'; }
+               form1Title = titleVal; 
+               form1Desc = descVal; 
+               form1Date = dateVal; 
+               form1Open = (status === 'OPEN'); 
+               
+               document.getElementById('disp_title_1').innerText = form1Title; 
+               document.getElementById('disp_desc_1').innerText = form1Desc; 
+               document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
+               
+               if (form1Open) { 
+                   document.getElementById('banner1').classList.remove('closed'); 
+                   document.getElementById('statusBadge1').style.display = 'none'; 
+                   document.getElementById('badge1').style.display = 'block'; 
+               } else { 
+                   document.getElementById('banner1').classList.add('closed'); 
+                   document.getElementById('statusBadge1').style.display = 'inline-block'; 
+                   document.getElementById('badge1').style.display = 'none'; 
+               }
                Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
-           } else { Swal.fire('Error', res.message, 'error'); } 
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
        });
     }
 
-    // 🟢 ระบบบันทึกการตั้งค่า รับฟังความคิดเห็น (ส่งค่า Placeholder กลับไปหลังบ้าน) 🟢
+    // 🟢 ระบบบันทึกการตั้งค่า รับฟังความคิดเห็น
     function saveHearingConfig() {
        let payload = {
-          action: 'updateHearingConfig', token: adminToken, 
-          h_title: getVal('h_admin_title'), h_desc: getVal('h_admin_desc'), h_date: getVal('h_admin_date'), h_plan_name: getVal('h_admin_plan_name'), 
-          h_status: document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED', h_rating: document.getElementById('swHearingRating').checked ? 'ON' : 'OFF',
-          h_img: getVal('h_admin_img'), h_sum: getVal('h_admin_sum'), h_full: getVal('h_admin_full'), h_info_title: getVal('h_admin_info_title'), h_info_desc: getVal('h_admin_info_desc'),   
-          h_q1: getVal('h_admin_q1'), h_q2: getVal('h_admin_q2'), h_q3: getVal('h_admin_q3'), h_q4: getVal('h_admin_q4'), 
-          h_s3_1: getVal('h_admin_s3_1'), h_s3_2: getVal('h_admin_s3_2'), h_s3_3: getVal('h_admin_s3_3'),
-          h_s3_4: getVal('h_admin_s3_4'), h_s3_5: getVal('h_admin_s3_5'), h_s3_6: getVal('h_admin_s3_6'),
-          h_fb_ph_1: getVal('h_admin_fb_ph_1'), h_fb_ph_2: getVal('h_admin_fb_ph_2'), h_fb_ph_3: getVal('h_admin_fb_ph_3') // ส่งค่า Placeholder
+          action: 'updateHearingConfig', 
+          token: adminToken, 
+          h_title: getVal('h_admin_title'), 
+          h_desc: getVal('h_admin_desc'), 
+          h_date: getVal('h_admin_date'), 
+          h_plan_name: getVal('h_admin_plan_name'), 
+          h_status: document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED', 
+          h_rating: document.getElementById('swHearingRating').checked ? 'ON' : 'OFF',
+          h_img: getVal('h_admin_img'), 
+          h_sum: getVal('h_admin_sum'), 
+          h_full: getVal('h_admin_full'), 
+          h_info_title: getVal('h_admin_info_title'), 
+          h_info_desc: getVal('h_admin_info_desc'),   
+          h_q1: getVal('h_admin_q1'), 
+          h_q2: getVal('h_admin_q2'), 
+          h_q3: getVal('h_admin_q3'), 
+          h_q4: getVal('h_admin_q4'), 
+          h_s3_1: getVal('h_admin_s3_1'), 
+          h_s3_2: getVal('h_admin_s3_2'), 
+          h_s3_3: getVal('h_admin_s3_3'),
+          h_s3_4: getVal('h_admin_s3_4'), 
+          h_s3_5: getVal('h_admin_s3_5'), 
+          h_s3_6: getVal('h_admin_s3_6'),
+          h_fb_ph_1: getVal('h_admin_fb_ph_1'), 
+          h_fb_ph_2: getVal('h_admin_fb_ph_2'), 
+          h_fb_ph_3: getVal('h_admin_fb_ph_3')
        };
-       Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData(payload, (res) => { if(res.status === 'SUCCESS') { Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } });
+       
+       Swal.fire({ 
+           title: 'กำลังบันทึก...', 
+           allowOutsideClick: false, 
+           didOpen: () => { Swal.showLoading(); } 
+       });
+       
+       postData(payload, (res) => { 
+           if(res.status === 'SUCCESS') { 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); 
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
+       });
     }
 
     function openDocModal() { 
-        document.getElementById('adminDocForm').reset(); document.getElementById('doc_id').value = ''; 
+        document.getElementById('adminDocForm').reset(); 
+        document.getElementById('doc_id').value = ''; 
         document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
         document.getElementById('newBadgeToggleDiv').style.display = 'block'; 
         document.getElementById('doc_hide_new_badge').checked = false; 
-        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); modalInstance.show();
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); 
+        modalInstance.show();
     }
     
     function editDoc(id) {
-       let d = docs.find(x => x.id === id); if(!d) return;
-       document.getElementById('doc_id').value = d.id; document.getElementById('doc_title').value = d.title; document.getElementById('doc_year').value = d.year || ''; document.getElementById('doc_desc').value = d.desc; document.getElementById('doc_link').value = d.link; document.getElementById('doc_cat').value = d.type; document.getElementById('doc_ai_status').value = d.ai_status || 'ON'; document.getElementById('doc_order').value = d.order == 999 ? '' : d.order; document.getElementById('doc_is_pinned').checked = d.is_pinned; document.getElementById('doc_is_important').checked = d.is_important;
+       let d = docs.find(x => x.id === id); 
+       if(!d) return;
+       
+       document.getElementById('doc_id').value = d.id; 
+       document.getElementById('doc_title').value = d.title; 
+       document.getElementById('doc_year').value = d.year || ''; 
+       document.getElementById('doc_desc').value = d.desc; 
+       document.getElementById('doc_link').value = d.link; 
+       document.getElementById('doc_cat').value = d.type; 
+       document.getElementById('doc_ai_status').value = d.ai_status || 'ON'; 
+       document.getElementById('doc_order').value = d.order == 999 ? '' : d.order; 
+       document.getElementById('doc_is_pinned').checked = d.is_pinned; 
+       document.getElementById('doc_is_important').checked = d.is_important;
        
        document.getElementById('newBadgeToggleDiv').style.display = 'none'; 
        document.getElementById('doc_hide_new_badge').checked = d.hide_new_badge === true;
        
        document.getElementById('docModalTitle').innerText = 'แก้ไขเอกสาร';
-       let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); modalInstance.show();
+       let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); 
+       modalInstance.show();
     }
 
     function submitDocument(e) {
-      e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-      let payload = { action: 'saveDoc', token: adminToken, id: getVal('doc_id'), title: getVal('doc_title'), desc: getVal('doc_desc'), link: getVal('doc_link'), type: getVal('doc_cat'), ai_status: getVal('doc_ai_status'), year: getVal('doc_year'), order: getVal('doc_order'), is_pinned: document.getElementById('doc_is_pinned').checked, is_important: document.getElementById('doc_is_important').checked, hide_new_badge: document.getElementById('doc_hide_new_badge').checked };
+      e.preventDefault(); 
+      Swal.fire({ 
+          title: 'กำลังบันทึก...', 
+          allowOutsideClick: false, 
+          didOpen: () => Swal.showLoading() 
+      });
+      
+      let payload = { 
+          action: 'saveDoc', 
+          token: adminToken, 
+          id: getVal('doc_id'), 
+          title: getVal('doc_title'), 
+          desc: getVal('doc_desc'), 
+          link: getVal('doc_link'), 
+          type: getVal('doc_cat'), 
+          ai_status: getVal('doc_ai_status'), 
+          year: getVal('doc_year'), 
+          order: getVal('doc_order'), 
+          is_pinned: document.getElementById('doc_is_pinned').checked, 
+          is_important: document.getElementById('doc_is_important').checked, 
+          hide_new_badge: document.getElementById('doc_hide_new_badge').checked 
+      };
+      
       postData(payload, (res) => {
           if(res.status === 'SUCCESS') { 
-              let m = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')); if (m) m.hide();
+              let m = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')); 
+              if (m) m.hide();
               Swal.fire('สำเร็จ', 'บันทึกข้อมูลแล้ว', 'success').then(() => initSystem()); 
-          } else { Swal.fire('Error', res.message, 'error'); }
+          } else { 
+              Swal.fire('Error', res.message, 'error'); 
+          }
       });
     }
 
     function deleteDoc(id) { 
-        Swal.fire({ title: 'ลบเอกสาร?', icon: 'warning', showCancelButton: true, confirmButtonText: 'ใช่', cancelButtonText: 'ยกเลิก' }).then((result) => { 
-            if (result.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'deleteDoc', token: adminToken, id: id }, (res) => { if(res.status === 'SUCCESS') { Swal.fire('ลบเรียบร้อย', '', 'success').then(() => initSystem()); } else { Swal.fire('Error', res.message, 'error'); } }); } 
+        Swal.fire({ 
+            title: 'ลบเอกสาร?', 
+            icon: 'warning', 
+            showCancelButton: true, 
+            confirmButtonText: 'ใช่', 
+            cancelButtonText: 'ยกเลิก' 
+        }).then((result) => { 
+            if (result.isConfirmed) { 
+                Swal.fire({ 
+                    title: 'กำลังลบ...', 
+                    allowOutsideClick: false, 
+                    didOpen: () => Swal.showLoading() 
+                }); 
+                postData({ 
+                    action: 'deleteDoc', 
+                    token: adminToken, 
+                    id: id 
+                }, (res) => { 
+                    if(res.status === 'SUCCESS') { 
+                        Swal.fire('ลบเรียบร้อย', '', 'success').then(() => initSystem()); 
+                    } else { 
+                        Swal.fire('Error', res.message, 'error'); 
+                    } 
+                }); 
+            } 
         }); 
     }
 
@@ -1049,56 +2231,110 @@
        let years = new Set();
        docs.forEach(d => { 
            if(d.year !== undefined && d.year !== null && d.year !== "") { 
-               let yearStr = d.year.toString().trim(); let parts = yearStr.split('-'); 
-               if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) { years.add(y.toString()); } } 
-               else { years.add(yearStr); } 
+               let yearStr = d.year.toString().trim(); 
+               let parts = yearStr.split('-'); 
+               if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { 
+                   for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) { 
+                       years.add(y.toString()); 
+                   } 
+               } else { 
+                   years.add(yearStr); 
+               } 
            }
        });
+       
        let html = '<option value="All">ทุกปีงบประมาณ</option>';
        let sortedYears = Array.from(years).sort((a,b) => b - a);
-       sortedYears.forEach(y => { html += `<option value="${y}">ปี ${y}</option>`; });
+       sortedYears.forEach(y => { 
+           html += `<option value="${y}">ปี ${y}</option>`; 
+       });
        document.getElementById('filterYear').innerHTML = html;
     }
 
     function sortDocsLogic(a, b) {
        if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1; 
-       let getYearMax = (y) => { if(!y) return 0; let p = y.toString().split('-'); return p.length === 2 ? parseInt(p[1]) : parseInt(y); };
-       let yA = getYearMax(a.year); let yB = getYearMax(b.year);
+       
+       let getYearMax = (y) => { 
+           if (!y) return 0; 
+           let p = y.toString().split('-'); 
+           return p.length === 2 ? parseInt(p[1]) : parseInt(y); 
+       };
+       
+       let yA = getYearMax(a.year); 
+       let yB = getYearMax(b.year);
+       
        if (yA !== yB) return yB - yA;
-       let oA = a.order || 999; let oB = b.order || 999;
+       
+       let oA = a.order || 999; 
+       let oB = b.order || 999;
+       
        if (oA !== oB) return oA - oB;
+       
        return new Date(b.created) - new Date(a.created);
     }
 
     function filterDocs() {
-       let searchText = getVal('searchDoc').toLowerCase(); let catFilter = getVal('filterCat'); let yearFilter = getVal('filterYear');
+       let searchText = getVal('searchDoc').toLowerCase(); 
+       let catFilter = getVal('filterCat'); 
+       let yearFilter = getVal('filterYear');
+       
        filteredDocs = docs.filter(d => {
           let mTxt = d.title.toLowerCase().includes(searchText) || (d.desc && d.desc.toLowerCase().includes(searchText));
           let mCat = (catFilter === 'All') || (d.type === catFilter); 
           let mYr = (yearFilter === 'All');
-          if (!mYr && d.year) { let docYr = d.year.toString().trim(); let p = docYr.split('-'); if (p.length === 2) { mYr = (parseInt(yearFilter) >= parseInt(p[0]) && parseInt(yearFilter) <= parseInt(p[1])); } else { mYr = (yearFilter === docYr); } }
+          
+          if (!mYr && d.year) { 
+              let docYr = d.year.toString().trim(); 
+              let p = docYr.split('-'); 
+              if (p.length === 2) { 
+                  mYr = (parseInt(yearFilter) >= parseInt(p[0]) && parseInt(yearFilter) <= parseInt(p[1])); 
+              } else { 
+                  mYr = (yearFilter === docYr); 
+              } 
+          }
           return mTxt && mCat && mYr;
        });
-       filteredDocs.sort(sortDocsLogic); currentPage = 1; renderDocs();
+       
+       filteredDocs.sort(sortDocsLogic); 
+       currentPage = 1; 
+       renderDocs();
     }
     
-    function clearSearch() { document.getElementById('searchDoc').value = ''; document.getElementById('filterCat').value = 'All'; document.getElementById('filterYear').value = 'All'; filterDocs(); }
+    function clearSearch() { 
+        document.getElementById('searchDoc').value = ''; 
+        document.getElementById('filterCat').value = 'All'; 
+        document.getElementById('filterYear').value = 'All'; 
+        filterDocs(); 
+    }
 
     function getCatBadge(type) { 
         let label = type, colorClass = 'bg-secondary'; 
-        switch(type) { case 'General': label = 'เอกสารทั่วไป'; break; case 'Plan': label = 'แผนพัฒนา'; colorClass = 'bg-primary'; break; case 'Report': label = 'รายงานผล'; colorClass = 'bg-success'; break; case 'Announcement': label = 'ประกาศ/คำสั่ง'; colorClass = 'bg-warning text-dark'; break; } 
+        switch(type) { 
+            case 'General': label = 'เอกสารทั่วไป'; break; 
+            case 'Plan': label = 'แผนพัฒนา'; colorClass = 'bg-primary'; break; 
+            case 'Report': label = 'รายงานผล'; colorClass = 'bg-success'; break; 
+            case 'Announcement': label = 'ประกาศ/คำสั่ง'; colorClass = 'bg-warning text-dark'; break; 
+        } 
         return `<span class="badge ${colorClass}">${label}</span>`; 
     }
 
     function renderDocs() {
       let html = ''; 
-      if(filteredDocs.length === 0) { html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; document.getElementById('pagination').innerHTML=''; } 
-      else {
-        let start = (currentPage - 1) * itemsPerPage; let end = start + itemsPerPage; let paginatedItems = filteredDocs.slice(start, end);
+      if(filteredDocs.length === 0) { 
+          html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; 
+          document.getElementById('pagination').innerHTML=''; 
+      } else {
+        let start = (currentPage - 1) * itemsPerPage; 
+        let end = start + itemsPerPage; 
+        let paginatedItems = filteredDocs.slice(start, end);
         
         paginatedItems.forEach(doc => {
           let icon = 'description', color = 'text-primary'; 
-          if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
+          if(doc.link.includes('drive')) { 
+              icon = 'add_to_drive'; color = 'text-success'; 
+          } else if(doc.link.includes('.pdf')) { 
+              icon = 'picture_as_pdf'; color = 'text-danger'; 
+          }
           let dateStr = "อัปเดต: " + formatDate(doc.created); 
           
           let badges = '';
@@ -1140,22 +2376,39 @@
     }
 
     function renderPagination() { 
-        let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); let html = ''; 
+        let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
+        let html = ''; 
         if(totalPages > 1) { 
             html += `<div class="page-btn ${currentPage===1 ? 'disabled' : ''}" onclick="changePage(${currentPage-1})">«</div>`; 
             for(let i=1; i<=totalPages; i++) { 
-                if(i===1 || i===totalPages || (i>=currentPage-1 && i<=currentPage+1)) { html += `<div class="page-btn ${i===currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</div>`; } 
-                else if(i===currentPage-2 || i===currentPage+2) { html += `<span class="px-2">...</span>`; } 
+                if(i===1 || i===totalPages || (i>=currentPage-1 && i<=currentPage+1)) { 
+                    html += `<div class="page-btn ${i===currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</div>`; 
+                } else if(i===currentPage-2 || i===currentPage+2) { 
+                    html += `<span class="px-2">...</span>`; 
+                } 
             } 
             html += `<div class="page-btn ${currentPage===totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage+1})">»</div>`; 
         } 
         document.getElementById('pagination').innerHTML = html; 
     }
-    function changePage(p) { let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); if(p < 1 || p > totalPages) return; currentPage = p; renderDocs(); }
-    function formatDate(isoStr) { if(!isoStr) return ""; let d = new Date(isoStr); return d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); }
+
+    function changePage(p) { 
+        let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
+        if(p < 1 || p > totalPages) return; 
+        currentPage = p; 
+        renderDocs(); 
+    }
+
+    function formatDate(isoStr) { 
+        if(!isoStr) return ""; 
+        let d = new Date(isoStr); 
+        return d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); 
+    }
 
     function loginToggle() {
-       if(isAdmin) { return logoutSystem(); }
+       if(isAdmin) { 
+           return logoutSystem(); 
+       }
        Swal.fire({ 
            title: 'เข้าสู่ระบบ Admin', 
            html: '<input id="swal-u" class="swal2-input" placeholder="Username"><input id="swal-p" class="swal2-input" type="password" placeholder="Password">', 
@@ -1163,113 +2416,324 @@
            preConfirm: () => [getVal('swal-u'), getVal('swal-p')] 
        }).then((result) => { 
            if (result.isConfirmed) { 
-               if (!result.value[0] || !result.value[1]) return Swal.fire('แจ้งเตือน', 'กรุณากรอกให้ครบ', 'warning');
-               Swal.fire({ title: 'กำลังตรวจสอบ...', didOpen: () => Swal.showLoading() }); 
-               postData({action: 'login', username: result.value[0], password: result.value[1]}, (data) => { 
-                   if(data.status === 'SUCCESS') { adminToken = result.value[1]; setAdminMode(true); Swal.fire('เข้าสู่ระบบสำเร็จ', '', 'success'); } 
-                   else { Swal.fire('เข้าสู่ระบบไม่สำเร็จ', 'ข้อมูลไม่ถูกต้อง', 'error'); } 
+               if (!result.value[0] || !result.value[1]) {
+                   return Swal.fire('แจ้งเตือน', 'กรุณากรอกให้ครบ', 'warning');
+               }
+               Swal.fire({ 
+                   title: 'กำลังตรวจสอบ...', 
+                   didOpen: () => Swal.showLoading() 
+               }); 
+               postData({
+                   action: 'login', 
+                   username: result.value[0], 
+                   password: result.value[1]
+               }, (data) => { 
+                   if(data.status === 'SUCCESS') { 
+                       adminToken = result.value[1]; 
+                       setAdminMode(true); 
+                       Swal.fire('เข้าสู่ระบบสำเร็จ', '', 'success'); 
+                   } else { 
+                       Swal.fire('เข้าสู่ระบบไม่สำเร็จ', 'ข้อมูลไม่ถูกต้อง', 'error'); 
+                   } 
                }); 
            } 
        });
     }
 
     function logoutSystem() { 
-        Swal.fire({ title: 'ต้องการออกจากระบบ?', showCancelButton: true, confirmButtonText: 'ออกจากระบบ' }).then((result) => { 
-            if(result.isConfirmed) { adminToken = ""; setAdminMode(false); Swal.fire('ออกจากระบบแล้ว', '', 'success'); } 
+        Swal.fire({ 
+            title: 'ต้องการออกจากระบบ?', 
+            showCancelButton: true, 
+            confirmButtonText: 'ออกจากระบบ' 
+        }).then((result) => { 
+            if(result.isConfirmed) { 
+                adminToken = ""; 
+                setAdminMode(false); 
+                Swal.fire('ออกจากระบบแล้ว', '', 'success'); 
+            } 
         }); 
     }
 
     function setAdminMode(status) { 
         isAdmin = status; 
         document.getElementById('adminHomePanel').style.display = status ? 'block' : 'none'; 
-        ['adminDocBtnGroup','adminMenuSection', 'adminVideoBtnGroup', 'adminQABtnGroup'].forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'block' : 'none'; } });
+        
+        let blockElements = ['adminMenuSection'];
+        blockElements.forEach(id => { 
+            let element = document.getElementById(id); 
+            if (element) { element.style.display = status ? 'block' : 'none'; } 
+        });
         
         let flexElements = ['adminDocBtnGroup', 'adminVideoBtnGroup', 'adminQABtnGroup'];
-        flexElements.forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'flex' : 'none'; } });
+        flexElements.forEach(id => { 
+            let element = document.getElementById(id); 
+            if (element) { element.style.display = status ? 'flex' : 'none'; } 
+        });
 
-        filterDocs(); renderQA(); renderVideos();
+        filterDocs(); 
+        renderQA(); 
+        renderVideos();
     }
 
     function handleBannerClick(num) { 
         if(num === 1) { 
             if(form1Open) { 
-                document.getElementById('formTitle').innerText = form1Title; document.getElementById('f_topic_type').value = form1Title; document.getElementById('topicSelectDiv').style.display = 'block'; 
-                let modalInstance = bootstrap.Modal.getInstance(document.getElementById('formModal')) || new bootstrap.Modal(document.getElementById('formModal')); modalInstance.show();
-            } else { Swal.fire('ปิดรับแจ้งชั่วคราว'); } 
+                document.getElementById('formTitle').innerText = form1Title; 
+                document.getElementById('f_topic_type').value = form1Title; 
+                document.getElementById('topicSelectDiv').style.display = 'block'; 
+                let modalInstance = bootstrap.Modal.getInstance(document.getElementById('formModal')) || new bootstrap.Modal(document.getElementById('formModal')); 
+                modalInstance.show();
+            } else { 
+                Swal.fire('ปิดรับแจ้งชั่วคราว'); 
+            } 
         } else if (num === 2) { 
             if(hOpen) { 
-                let modalInstance = bootstrap.Modal.getInstance(document.getElementById('hearingModal')) || new bootstrap.Modal(document.getElementById('hearingModal')); modalInstance.show();
-            } else { Swal.fire('ปิดรับฟังความเห็น'); } 
+                let modalInstance = bootstrap.Modal.getInstance(document.getElementById('hearingModal')) || new bootstrap.Modal(document.getElementById('hearingModal')); 
+                modalInstance.show();
+            } else { 
+                Swal.fire('ปิดรับฟังความเห็น'); 
+            } 
         } 
     }
     
     function openVideoModal() {
-        document.getElementById('vid_id').value = ''; document.getElementById('vid_title').value = ''; document.getElementById('vid_desc').value = ''; document.getElementById('vid_link').value = ''; document.getElementById('vid_order').value = ''; document.getElementById('vidModalTitle').innerText = 'เพิ่มวิดีโอ';
-        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); modalInstance.show();
+        document.getElementById('vid_id').value = ''; 
+        document.getElementById('vid_title').value = ''; 
+        document.getElementById('vid_desc').value = ''; 
+        document.getElementById('vid_link').value = ''; 
+        document.getElementById('vid_order').value = ''; 
+        document.getElementById('vidModalTitle').innerText = 'เพิ่มวิดีโอ';
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); 
+        modalInstance.show();
     }
 
     function openQAModal() {
-        document.getElementById('qa_id').value = ''; document.getElementById('qa_emoji').value = '❓'; document.getElementById('qa_question').value = ''; document.getElementById('qa_answer').value = ''; document.getElementById('qaModalTitle').innerText = 'เพิ่ม Q&A';
-        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); modalInstance.show();
+        document.getElementById('qa_id').value = ''; 
+        document.getElementById('qa_emoji').value = '❓'; 
+        document.getElementById('qa_question').value = ''; 
+        document.getElementById('qa_answer').value = ''; 
+        document.getElementById('qaModalTitle').innerText = 'เพิ่ม Q&A';
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); 
+        modalInstance.show();
     }
     
-    function editVideo(id) { let v = videoList.find(x => x.id === id); if(!v) return; document.getElementById('vid_id').value = v.id; document.getElementById('vid_title').value = v.title; document.getElementById('vid_desc').value = v.desc || ""; document.getElementById('vid_link').value = v.link; document.getElementById('vid_order').value = v.order == 999 ? "" : v.order; document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); modalInstance.show(); }
-    function submitVideo(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveVideo', token: adminToken, id: getVal('vid_id'), title: getVal('vid_title'), desc: getVal('vid_desc'), link: getVal('vid_link'), order: getVal('vid_order') }, (res) => { if (res.status === 'SUCCESS') { let m = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')); if(m) m.hide(); Swal.fire('บันทึกวิดีโอแล้ว', '', 'success').then(()=>initSystem()); } else { Swal.fire('Error', res.message, 'error'); } }); }
-    function deleteVideo(id) { Swal.fire({ title: 'ลบวิดีโอ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteVideo', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
-    function renderVideos() { let h = ''; if(videoList.length === 0) { h = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอ</div>'; } else { videoList.forEach(vid => { let vId = extractYouTubeID(vid.link); let embedUrl = vId ? "https://www.youtube.com/embed/" + vId : ""; let adm = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between"><small class="fw-bold text-muted">ลำดับ: ${vid.order==999?'':vid.order}</small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : ''; h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar" onclick="showFullVideoTitle('${vid.id}')" title="คลิกเพื่อดูรายละเอียด"><div class="video-title-text">${vid.title}</div><i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; }); } document.getElementById('videoListContainer').innerHTML = h; }
+    function editVideo(id) { 
+        let v = videoList.find(x => x.id === id); 
+        if(!v) return; 
+        
+        document.getElementById('vid_id').value = v.id; 
+        document.getElementById('vid_title').value = v.title; 
+        document.getElementById('vid_desc').value = v.desc || ""; 
+        document.getElementById('vid_link').value = v.link; 
+        document.getElementById('vid_order').value = v.order == 999 ? "" : v.order; 
+        document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; 
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); 
+        modalInstance.show(); 
+    }
 
-    function editQA(id) { let q = qaList.find(x => x.id === id); if(!q) return; document.getElementById('qa_id').value = q.id; document.getElementById('qa_emoji').value = q.emoji||'❓'; document.getElementById('qa_question').value = q.q; document.getElementById('qa_answer').value = q.a; document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); modalInstance.show(); }
-    function submitQA(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { if(res.status==='SUCCESS'){ let m = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')); if(m) m.hide(); Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); } else Swal.fire('Error', res.message, 'error'); }); }
-    function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else Swal.fire('Error', res.message, 'error'); } }); } }); }
-    function renderQA() { let h = ''; if(qaList.length === 0) { h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; } else { qaList.forEach((item, index) => { let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; }); } document.getElementById('accQA').innerHTML = h; }
+    function submitVideo(e) { 
+        e.preventDefault(); 
+        Swal.fire({ 
+            title: 'กำลังบันทึก...', 
+            allowOutsideClick: false, 
+            didOpen: () => Swal.showLoading() 
+        }); 
+        
+        postData({ 
+            action: 'saveVideo', 
+            token: adminToken, 
+            id: getVal('vid_id'), 
+            title: getVal('vid_title'), 
+            desc: getVal('vid_desc'), 
+            link: getVal('vid_link'), 
+            order: getVal('vid_order') 
+        }, (res) => { 
+            if (res.status === 'SUCCESS') { 
+                let m = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')); 
+                if(m) m.hide(); 
+                Swal.fire('บันทึกวิดีโอแล้ว', '', 'success').then(()=>initSystem()); 
+            } else { 
+                Swal.fire('Error', res.message, 'error'); 
+            } 
+        }); 
+    }
 
-    function openChat(docId) { let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link; document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); modalInstance.show(); }
+    function deleteVideo(id) { 
+        Swal.fire({ 
+            title: 'ลบวิดีโอ?', 
+            icon: 'warning', 
+            showCancelButton: true 
+        }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ 
+                    title: 'กำลังลบ...', 
+                    didOpen: () => Swal.showLoading() 
+                }); 
+                postData({ 
+                    action: 'deleteVideo', 
+                    token: adminToken, 
+                    id: id 
+                }, (res) => { 
+                    if(res.status==='SUCCESS') { 
+                        Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());
+                    } else { 
+                        Swal.fire('Error', res.message, 'error'); 
+                    } 
+                }); 
+            } 
+        }); 
+    }
+
+    function renderVideos() { 
+        let h = ''; 
+        if(videoList.length === 0) { 
+            h = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอ</div>'; 
+        } else { 
+            videoList.forEach(vid => { 
+                let vId = extractYouTubeID(vid.link); 
+                let embedUrl = vId ? "https://www.youtube.com/embed/" + vId : ""; 
+                let adm = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between"><small class="fw-bold text-muted">ลำดับ: ${vid.order==999?'':vid.order}</small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : ''; 
+                h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar" onclick="showFullVideoTitle('${vid.id}')" title="คลิกเพื่อดูรายละเอียด"><div class="video-title-text">${vid.title}</div><i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; 
+            }); 
+        } 
+        document.getElementById('videoListContainer').innerHTML = h; 
+    }
+
+    function editQA(id) { 
+        let q = qaList.find(x => x.id === id); 
+        if(!q) return; 
+        
+        document.getElementById('qa_id').value = q.id; 
+        document.getElementById('qa_emoji').value = q.emoji||'❓'; 
+        document.getElementById('qa_question').value = q.q; 
+        document.getElementById('qa_answer').value = q.a; 
+        document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; 
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); 
+        modalInstance.show(); 
+    }
+
+    function submitQA(e) { 
+        e.preventDefault(); 
+        Swal.fire({ 
+            title: 'กำลังบันทึก...', 
+            allowOutsideClick: false, 
+            didOpen: () => Swal.showLoading() 
+        }); 
+        
+        postData({ 
+            action: 'saveQA', 
+            token: adminToken, 
+            id: getVal('qa_id'), 
+            q: getVal('qa_question'), 
+            a: getVal('qa_answer'), 
+            emoji: getVal('qa_emoji') 
+        }, (res) => { 
+            if(res.status==='SUCCESS') { 
+                let m = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')); 
+                if(m) m.hide(); 
+                Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); 
+            } else {
+                Swal.fire('Error', res.message, 'error');
+            } 
+        }); 
+    }
+
+    function deleteQA(id) { 
+        Swal.fire({ 
+            title: 'ลบถาม-ตอบ?', 
+            icon: 'warning', 
+            showCancelButton: true 
+        }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ 
+                    title: 'กำลังลบ...', 
+                    didOpen: () => Swal.showLoading() 
+                }); 
+                postData({ 
+                    action: 'deleteQA', 
+                    token: adminToken, 
+                    id: id 
+                }, (res) => { 
+                    if(res.status==='SUCCESS') { 
+                        Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());
+                    } else {
+                        Swal.fire('Error', res.message, 'error');
+                    } 
+                }); 
+            } 
+        }); 
+    }
+
+    function renderQA() { 
+        let h = ''; 
+        if(qaList.length === 0) { 
+            h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; 
+        } else { 
+            qaList.forEach((item, index) => { 
+                let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; 
+                h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; 
+            }); 
+        } 
+        document.getElementById('accQA').innerHTML = h; 
+    }
+
+    function openChat(docId) { 
+        let doc = docs.find(d => d.id === docId); 
+        if(!doc) return; 
+        
+        currentDocLink = doc.link; 
+        document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; 
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); 
+        modalInstance.show(); 
+    }
     
     function sendChat() { 
-        let input = document.getElementById('chatInput'); let question = input.value.trim(); if(!question) return; 
-        let history = document.getElementById('chatHistory'); history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; input.value = ''; history.scrollTop = history.scrollHeight; 
-        let loadingId = 'loading_' + Date.now(); history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`; history.scrollTop = history.scrollHeight; 
+        let input = document.getElementById('chatInput'); 
+        let question = input.value.trim(); 
+        if(!question) return; 
         
-        fetch(SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'chatWithAI', link: currentDocLink, question: question }) })
+        let history = document.getElementById('chatHistory'); 
+        history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; 
+        input.value = ''; 
+        history.scrollTop = history.scrollHeight; 
+        
+        let loadingId = 'loading_' + Date.now(); 
+        history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`; 
+        history.scrollTop = history.scrollHeight; 
+        
+        fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: JSON.stringify({ action: 'chatWithAI', link: currentDocLink, question: question }) 
+        })
         .then(r => r.text())
         .then(text => {
             document.getElementById(loadingId).remove();
             let data;
-            try { data = JSON.parse(text); } catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (ข้อผิดพลาดจากฝั่งเซิร์ฟเวอร์)'}; }
+            try { 
+                data = JSON.parse(text); 
+            } catch(e) { 
+                data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (พบปัญหาการตอบกลับจากเซิร์ฟเวอร์)'}; 
+            }
+            
             let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; 
             answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); 
-            history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight; 
+            history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; 
+            history.scrollTop = history.scrollHeight; 
         }).catch(e => {
             document.getElementById(loadingId).remove();
             history.innerHTML += `<div class="chat-ai chat-msg text-danger">การเชื่อมต่อล้มเหลว โปรดตรวจสอบอินเทอร์เน็ต</div>`;
         });
     }
 
-    function submitForm(e) { 
-        e.preventDefault(); let btn = e.target.querySelector('button'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่ง...'; 
-        let topicVal = document.getElementById('f_topic_type').value; let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS";
-        let finalTopic = topicVal;
-        if(document.getElementById('topicSelectDiv').style.display === 'block') {
-            let select = document.getElementById('f_topic_select');
-            if(select.value === "") { Swal.fire('กรุณาเลือกหมวดหมู่'); btn.disabled = false; btn.innerText = oldText; return; }
-            finalTopic = select.value + " (" + topicVal + ")";
-        }
-        
-        postData({ action:'saveForm', name: getVal('f_name'), contact: getVal('f_contact'), detail: getVal('f_detail'), topic: finalTopic, topicKey: topicKey }, (res) => { 
-            btn.disabled = false; btn.innerText = oldText; 
-            if (res.status === 'CLOSED_ERROR') {
-                Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
-                if (topicKey === "FORM_1_STATUS") form1Open = false; else form2Open = false;
-                updateUI(); let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); if(m) m.hide();
-            } else if (res.status === 'SUCCESS') { 
-                Swal.fire('สำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); 
-                e.target.reset(); let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); if(m) m.hide(); 
-            } else { Swal.fire('Error', res.message, 'error'); } 
-        }); 
-    }
-
     function submitHearing(e) { 
-        e.preventDefault(); let btn = document.getElementById('btnSubmitHearing'); let oldText = btn.innerText; btn.disabled = true; btn.innerText = 'กำลังส่ง...'; 
+        e.preventDefault(); 
+        let btn = document.getElementById('btnSubmitHearing'); 
+        let oldText = btn.innerText; 
+        btn.disabled = true; 
+        btn.innerText = 'กำลังส่ง...'; 
         
         let t1Val = document.querySelector('input[name="h_t1"]:checked') ? document.querySelector('input[name="h_t1"]:checked').value : "";
         let t2Val = document.querySelector('input[name="h_t2"]:checked') ? document.querySelector('input[name="h_t2"]:checked').value : "";
@@ -1279,29 +2743,149 @@
         let t6Val = document.querySelector('input[name="h_t6"]:checked') ? document.querySelector('input[name="h_t6"]:checked').value : "";
 
         postData({ 
-            action: 'saveHearing', plan_name: hPlanName, name: getVal('h_name'), district: getVal('h_district'), sector: getVal('h_sector'), 
-            vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", vision_fb: getVal('h_vision_fb'), 
-            t1: t1Val, t2: t2Val, t3: t3Val, t4: t4Val, t5: t5Val, t6: t6Val,
-            strategy_fb: getVal('h_strategy_fb'), priority: getVal('h_priority'), feedback: getVal('h_feedback') 
+            action: 'saveHearing', 
+            plan_name: hPlanName, 
+            name: getVal('h_name'), 
+            district: getVal('h_district'), 
+            sector: getVal('h_sector'), 
+            vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", 
+            vision_fb: getVal('h_vision_fb'), 
+            t1: t1Val, 
+            t2: t2Val, 
+            t3: t3Val, 
+            t4: t4Val, 
+            t5: t5Val, 
+            t6: t6Val,
+            strategy_fb: getVal('h_strategy_fb'), 
+            priority: getVal('h_priority'), 
+            feedback: getVal('h_feedback') 
         }, (res) => { 
-            btn.disabled = false; btn.innerText = oldText; 
+            btn.disabled = false; 
+            btn.innerText = oldText; 
+            
             if(res.status === 'CLOSED_ERROR') {
                 Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
-                hOpen = false; updateUI(); let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); if(m) m.hide();
+                hOpen = false; 
+                
+                document.getElementById('banner2').classList.add('closed'); 
+                document.getElementById('statusBadge2').style.display = 'inline-block'; 
+                document.getElementById('badge2').style.display = 'none'; 
+                
+                let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); 
+                if(m) m.hide();
+                
             } else if(res.status === 'SUCCESS') { 
-                e.target.reset(); let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); if(m) m.hide(); 
-                if(hRatingOpen) { let rModal = bootstrap.Modal.getInstance(document.getElementById('ratingModal')) || new bootstrap.Modal(document.getElementById('ratingModal')); rModal.show(); } 
-                else { Swal.fire('สำเร็จ', 'ส่งความเห็นเรียบร้อย', 'success'); } 
-            } else { Swal.fire('Error', 'ไม่สามารถบันทึกได้', 'error'); } 
+                e.target.reset(); 
+                let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); 
+                if(m) m.hide(); 
+                
+                if(hRatingOpen) { 
+                    let rModal = bootstrap.Modal.getInstance(document.getElementById('ratingModal')) || new bootstrap.Modal(document.getElementById('ratingModal')); 
+                    rModal.show(); 
+                } else { 
+                    Swal.fire('สำเร็จ', 'ส่งความเห็นเรียบร้อย', 'success'); 
+                } 
+            } else { 
+                Swal.fire('Error', 'ไม่สามารถบันทึกได้', 'error'); 
+            } 
+        }); 
+    }
+
+    function submitForm(e) { 
+        e.preventDefault(); 
+        let btn = e.target.querySelector('button'); 
+        let oldText = btn.innerText; 
+        btn.disabled = true; 
+        btn.innerText = 'กำลังส่ง...'; 
+        
+        let topicVal = document.getElementById('f_topic_type').value; 
+        let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS";
+        let finalTopic = topicVal;
+        
+        if(document.getElementById('topicSelectDiv').style.display === 'block') {
+            let select = document.getElementById('f_topic_select');
+            if(select.value === "") { 
+                Swal.fire('กรุณาเลือกหมวดหมู่'); 
+                btn.disabled = false; 
+                btn.innerText = oldText; 
+                return; 
+            }
+            finalTopic = select.value + " (" + topicVal + ")";
+        }
+        
+        postData({ 
+            action:'saveForm', 
+            name: getVal('f_name'), 
+            contact: getVal('f_contact'), 
+            detail: getVal('f_detail'), 
+            topic: finalTopic, 
+            topicKey: topicKey 
+        }, (res) => { 
+            btn.disabled = false; 
+            btn.innerText = oldText; 
+            
+            if (res.status === 'CLOSED_ERROR') {
+                Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
+                if (topicKey === "FORM_1_STATUS") form1Open = false;
+                
+                document.getElementById('banner1').classList.add('closed'); 
+                document.getElementById('statusBadge1').style.display = 'inline-block'; 
+                document.getElementById('badge1').style.display = 'none'; 
+                
+                let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); 
+                if(m) m.hide();
+                
+            } else if (res.status === 'SUCCESS') { 
+                Swal.fire('สำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); 
+                e.target.reset(); 
+                let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); 
+                if(m) m.hide(); 
+            } else { 
+                Swal.fire('Error', res.message, 'error'); 
+            } 
         }); 
     }
     
-    function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
-    function submitRating() { let sc = getVal('sys_rating_val'); if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); Swal.fire({ title: 'กำลังส่ง...', didOpen: () => Swal.showLoading() }); postData({ action: 'saveRating', stars: sc, sysFeedback: getVal('sys_feedback') }, (res) => { let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); if(m) m.hide(); Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; setStar(0); }); }
+    function setStar(val) { 
+        document.getElementById('sys_rating_val').value = val; 
+        document.querySelectorAll('.star-rating i').forEach((item, idx) => { 
+            if(idx < val) item.classList.add('active'); 
+            else item.classList.remove('active'); 
+        }); 
+    }
+
+    function submitRating() { 
+        let sc = getVal('sys_rating_val'); 
+        if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); 
+        
+        Swal.fire({ 
+            title: 'กำลังส่ง...', 
+            didOpen: () => Swal.showLoading() 
+        }); 
+        
+        postData({ 
+            action: 'saveRating', 
+            stars: sc, 
+            sysFeedback: getVal('sys_feedback') 
+        }, (res) => { 
+            let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); 
+            if(m) m.hide(); 
+            Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); 
+            document.getElementById('sys_rating_val').value = 0; 
+            document.getElementById('sys_feedback').value = ''; 
+            setStar(0); 
+        }); 
+    }
 
     function loadDashboard() {
-       Swal.fire({ title: 'กำลังดึงข้อมูล...', didOpen: () => Swal.showLoading() });
-       fetch(SCRIPT_URL + '?action=getDashboardStats').then(r => r.json()).then(data => {
+       Swal.fire({ 
+           title: 'กำลังดึงข้อมูล...', 
+           didOpen: () => Swal.showLoading() 
+       });
+       
+       fetch(SCRIPT_URL + '?action=getDashboardStats')
+       .then(r => r.json())
+       .then(data => {
            Swal.close(); 
            document.getElementById('btnOpenSheet').href = data.sheetUrl; 
            document.getElementById('stat_issues_total').innerText = data.issues.total; 
@@ -1312,20 +2896,70 @@
            renderChart('chartVision', 'doughnut', Object.keys(data.hearing.byVision), Object.values(data.hearing.byVision), 'วิสัยทัศน์', ['#2ecc71','#f1c40f','#e74c3c']); 
            renderChart('chartPriority', 'bar', Object.keys(data.hearing.byPriority), Object.values(data.hearing.byPriority), 'ความสำคัญ', '#34495e');
            
-           const stdL = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'], stdC = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
+           const stdL = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'];
+           const stdC = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
+           
            let getD = (obj) => stdL.map(l => obj[l] || 0);
            
-           if(h_topics[0] !== "") { document.getElementById('lbl_chartT1').innerText = h_topics[0]; renderChart('chartT1', 'doughnut', stdL, getD(data.hearing.byT1), '', stdC); document.getElementById('col_chartT1').style.display = 'block'; } else { document.getElementById('col_chartT1').style.display = 'none'; }
-           if(h_topics[1] !== "") { document.getElementById('lbl_chartT2').innerText = h_topics[1]; renderChart('chartT2', 'doughnut', stdL, getD(data.hearing.byT2), '', stdC); document.getElementById('col_chartT2').style.display = 'block'; } else { document.getElementById('col_chartT2').style.display = 'none'; }
-           if(h_topics[2] !== "") { document.getElementById('lbl_chartT3').innerText = h_topics[2]; renderChart('chartT3', 'doughnut', stdL, getD(data.hearing.byT3), '', stdC); document.getElementById('col_chartT3').style.display = 'block'; } else { document.getElementById('col_chartT3').style.display = 'none'; }
+           // กราฟ 1-3
+           if(h_topics[0] !== "") { 
+               document.getElementById('lbl_chartT1').innerText = h_topics[0]; 
+               renderChart('chartT1', 'doughnut', stdL, getD(data.hearing.byT1), '', stdC); 
+               document.getElementById('col_chartT1').style.display = 'block'; 
+           } else { 
+               document.getElementById('col_chartT1').style.display = 'none'; 
+           }
            
+           if(h_topics[1] !== "") { 
+               document.getElementById('lbl_chartT2').innerText = h_topics[1]; 
+               renderChart('chartT2', 'doughnut', stdL, getD(data.hearing.byT2), '', stdC); 
+               document.getElementById('col_chartT2').style.display = 'block'; 
+           } else { 
+               document.getElementById('col_chartT2').style.display = 'none'; 
+           }
+           
+           if(h_topics[2] !== "") { 
+               document.getElementById('lbl_chartT3').innerText = h_topics[2]; 
+               renderChart('chartT3', 'doughnut', stdL, getD(data.hearing.byT3), '', stdC); 
+               document.getElementById('col_chartT3').style.display = 'block'; 
+           } else { 
+               document.getElementById('col_chartT3').style.display = 'none'; 
+           }
+           
+           // กราฟ 4-6
            let hasMore = false;
-           if(h_topics[3] !== "") { hasMore = true; document.getElementById('lbl_chartT4').innerText = h_topics[3]; renderChart('chartT4', 'doughnut', stdL, getD(data.hearing.byT4), '', stdC); document.getElementById('col_chartT4').style.display = 'block'; } else { document.getElementById('col_chartT4').style.display = 'none'; }
-           if(h_topics[4] !== "") { hasMore = true; document.getElementById('lbl_chartT5').innerText = h_topics[4]; renderChart('chartT5', 'doughnut', stdL, getD(data.hearing.byT5), '', stdC); document.getElementById('col_chartT5').style.display = 'block'; } else { document.getElementById('col_chartT5').style.display = 'none'; }
-           if(h_topics[5] !== "") { hasMore = true; document.getElementById('lbl_chartT6').innerText = h_topics[5]; renderChart('chartT6', 'doughnut', stdL, getD(data.hearing.byT6), '', stdC); document.getElementById('col_chartT6').style.display = 'block'; } else { document.getElementById('col_chartT6').style.display = 'none'; }
+           if(h_topics[3] !== "") { 
+               hasMore = true; 
+               document.getElementById('lbl_chartT4').innerText = h_topics[3]; 
+               renderChart('chartT4', 'doughnut', stdL, getD(data.hearing.byT4), '', stdC); 
+               document.getElementById('col_chartT4').style.display = 'block'; 
+           } else { 
+               document.getElementById('col_chartT4').style.display = 'none'; 
+           }
            
-           if(hasMore) { document.getElementById('toggleMoreTopicsDiv').style.display = 'block'; } 
-           else { document.getElementById('toggleMoreTopicsDiv').style.display = 'none'; }
+           if(h_topics[4] !== "") { 
+               hasMore = true; 
+               document.getElementById('lbl_chartT5').innerText = h_topics[4]; 
+               renderChart('chartT5', 'doughnut', stdL, getD(data.hearing.byT5), '', stdC); 
+               document.getElementById('col_chartT5').style.display = 'block'; 
+           } else { 
+               document.getElementById('col_chartT5').style.display = 'none'; 
+           }
+           
+           if(h_topics[5] !== "") { 
+               hasMore = true; 
+               document.getElementById('lbl_chartT6').innerText = h_topics[5]; 
+               renderChart('chartT6', 'doughnut', stdL, getD(data.hearing.byT6), '', stdC); 
+               document.getElementById('col_chartT6').style.display = 'block'; 
+           } else { 
+               document.getElementById('col_chartT6').style.display = 'none'; 
+           }
+           
+           if(hasMore) { 
+               document.getElementById('toggleMoreTopicsDiv').style.display = 'block'; 
+           } else { 
+               document.getElementById('toggleMoreTopicsDiv').style.display = 'none'; 
+           }
 
        }).catch(e => {
            console.error("Dashboard Load Error:", e);
@@ -1335,17 +2969,31 @@
 
     function renderChart(canvasId, type, labels, data, label, colors) {
        let chartKey = canvasId.toLowerCase();
-       if(charts[chartKey]) { charts[chartKey].destroy(); }
+       if(charts[chartKey]) { 
+           charts[chartKey].destroy(); 
+       }
+       
        let ctx = document.getElementById(canvasId).getContext('2d');
        
        let config = { 
            type: type, 
-           data: { labels: labels, datasets: [{ label: label, data: data, backgroundColor: colors, borderWidth: 1 }] }, 
+           data: { 
+               labels: labels, 
+               datasets: [{ 
+                   label: label, 
+                   data: data, 
+                   backgroundColor: colors, 
+                   borderWidth: 1 
+               }] 
+           }, 
            options: { 
                responsive: true, 
                maintainAspectRatio: false, 
                plugins: { 
-                   legend: { display: (type !== 'bar'), position: 'bottom' },
+                   legend: { 
+                       display: (type !== 'bar'), 
+                       position: 'bottom' 
+                   },
                    tooltip: {
                        callbacks: {
                            label: function(context) {
