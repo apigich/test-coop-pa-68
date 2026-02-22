@@ -832,6 +832,7 @@
                      </div>
                  </div>
              </div>
+             
              <div class="mb-3 p-2 border rounded border-primary border-opacity-25 bg-white">
                  <label class="fw-bold text-primary small mb-2">ข้อมูลชี้แจงและเอกสารประกอบ (แสดงก่อนส่วนที่ 2)</label>
                  <div class="input-group input-group-sm mb-2">
@@ -884,6 +885,19 @@
                    <input type="text" class="form-control form-control-sm" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4">
                  </div>
                  <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_p_ph" placeholder="คำลอยใน Dropdown (เช่น -- เลือกประเด็น --)">
+                 </div>
+                 <div class="ps-3 mb-1">
+                   <div class="row g-2">
+                     <div class="col-md-4"><input type="text" id="h_admin_p_1" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown ข้อที่ 1"></div>
+                     <div class="col-md-4"><input type="text" id="h_admin_p_2" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown ข้อที่ 2"></div>
+                     <div class="col-md-4"><input type="text" id="h_admin_p_3" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown ข้อที่ 3"></div>
+                     <div class="col-md-4"><input type="text" id="h_admin_p_4" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown ข้อที่ 4"></div>
+                     <div class="col-md-4"><input type="text" id="h_admin_p_5" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown ข้อที่ 5"></div>
+                     <div class="col-md-4"><input type="text" id="h_admin_p_6" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown ข้อที่ 6"></div>
+                   </div>
+                 </div>
+                 <div class="ps-3 mb-1 mt-2">
                    <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_3" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 4">
                  </div>
              </div>
@@ -1063,7 +1077,7 @@
                              <div class="col-md-6">
                                <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
                                  <div class="card-body p-2">
-                                   <h6 class="text-center small fw-bold mt-2 text-muted">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6>
+                                   <h6 class="text-center small fw-bold mt-2 text-muted" id="lbl_dash_vision">ความเห็นต่อวิสัยทัศน์/เป้าหมาย</h6>
                                    <canvas id="chartVision" style="max-height: 180px;"></canvas>
                                  </div>
                                </div>
@@ -1074,21 +1088,27 @@
 
                  <div class="card shadow-sm border-0 mb-4" style="background: #f8f9fa;">
                     <div class="card-body text-center p-4">
-                      <h5 class="fw-bold text-primary mb-3"><i class="material-icons align-middle fs-5">pie_chart</i> ภาพรวมความพึงพอใจต่อประเด็นการพัฒนาทั้งหมด (Summary)</h5>
+                      <h5 class="fw-bold text-primary mb-3"><i class="material-icons align-middle fs-5">pie_chart</i> ภาพรวมความคิดเห็นต่อประเด็นทั้งหมด (Summary)</h5>
                       <div style="max-width: 350px; max-height: 350px;" class="mx-auto mb-4">
                         <canvas id="chartSummary"></canvas>
                       </div>
                       
-                      <div class="table-responsive px-md-5">
-                        <table class="table table-bordered table-striped bg-white shadow-sm align-middle">
+                      <div class="table-responsive px-md-3 mt-4">
+                        <table class="table table-bordered table-striped bg-white shadow-sm align-middle" style="font-size: 0.9rem;">
                           <thead class="table-primary text-center">
                             <tr>
-                              <th>ระดับความเห็น</th>
-                              <th>จำนวน (คน)</th>
-                              <th>สัดส่วน (%)</th>
+                              <th rowspan="2" class="align-middle">ประเด็นการพัฒนา</th>
+                              <th colspan="4">ระดับความคิดเห็น: จำนวน (ร้อยละ)</th>
+                              <th rowspan="2" class="align-middle">สรุปผลภาพรวม</th>
+                            </tr>
+                            <tr>
+                              <th>เห็นด้วยมาก</th>
+                              <th>เห็นด้วย</th>
+                              <th>ไม่แน่ใจ</th>
+                              <th>ไม่เห็นด้วย</th>
                             </tr>
                           </thead>
-                          <tbody id="summaryTableBody" class="text-center fw-bold text-dark">
+                          <tbody id="summaryTableBody" class="text-center text-dark">
                             </tbody>
                         </table>
                       </div>
@@ -1103,7 +1123,7 @@
 
                  <div class="collapse" id="detailedChartsCollapse">
                      <div class="row g-3 mt-1 bg-white p-3 rounded shadow-sm border border-secondary border-opacity-10">
-                         <div class="col-md-12"><h6 class="fw-bold text-secondary mb-3 border-bottom pb-2">สรุปความคิดเห็นแยกรายข้อ (Strategic Issues)</h6></div>
+                         <div class="col-md-12"><h6 class="fw-bold text-secondary mb-3 border-bottom pb-2">สรุปความคิดเห็นแยกรายข้อ</h6></div>
                          
                          <div class="col-md-4" id="col_chartT1">
                            <div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;">
@@ -1165,7 +1185,7 @@
                      <div class="col-md-12">
                        <div class="card shadow-sm h-100 border-start border-4 dash-card" style="border-left-color: #f1c40f !important;">
                          <div class="card-body p-3">
-                           <h6 class="small fw-bold text-dark mb-3">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6>
+                           <h6 class="small fw-bold text-dark mb-3" id="lbl_dash_priority">สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข</h6>
                            <canvas id="chartPriority" style="max-height: 200px;"></canvas>
                          </div>
                        </div>
@@ -1474,11 +1494,7 @@
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ</h5>
              <div class="mb-3">
                 <select class="form-select" id="h_priority" required>
-                  <option value="" selected disabled>-- เลือกประเด็นที่ควรเร่งด่วนที่สุด --</option>
-                  <option value="ด้านเศรษฐกิจและรายได้">ด้านเศรษฐกิจและรายได้</option>
-                  <option value="ด้านสังคม คุณภาพชีวิต">ด้านสังคม คุณภาพชีวิต และความมั่นคง</option>
-                  <option value="ด้านทรัพยากรธรรมชาติ">ด้านทรัพยากรธรรมชาติและสิ่งแวดล้อม</option>
-                </select>
+                  </select>
              </div>
              <div class="mb-3">
                <textarea class="form-control" id="h_feedback" rows="3" placeholder="พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)..."></textarea>
@@ -1757,6 +1773,7 @@
          hPlanName = settings.h_plan_name || ""; 
          hRatingOpen = (settings.h_rating === 'ON');
          
+         // ดึงหัวข้อประเด็นส่วนที่ 3
          h_topics[0] = settings.h_s3_1 || "";
          h_topics[1] = settings.h_s3_2 || "";
          h_topics[2] = settings.h_s3_3 || "";
@@ -1765,11 +1782,11 @@
          h_topics[5] = settings.h_s3_6 || "";
          
          showNewBadge = (settings.show_new_badge === 'ON');
-         
          docs = docsData; 
          qaList = qaData; 
          videoList = vidData;
 
+         // 1. นำข้อมูลฟอร์มแจ้งปัญหาลงหน้าจอ
          document.getElementById('disp_title_1').innerText = form1Title;
          document.getElementById('disp_desc_1').innerText = form1Desc;
          document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
@@ -1788,6 +1805,7 @@
              document.getElementById('badge1').style.display = 'none'; 
          }
 
+         // 2. นำข้อมูลฟอร์มความคิดเห็นลงหน้าจอ
          document.getElementById('disp_h_title').innerText = hTitle;
          document.getElementById('disp_title_2').innerText = hTitle;
          document.getElementById('disp_desc_2').innerText = hDesc;
@@ -1815,36 +1833,23 @@
              document.getElementById('hearingFormContainer').style.display = 'none'; 
          }
 
+         // ซิงค์ชื่อหัวข้อ Dashboard ตามแอดมิน
          document.getElementById('disp_h_info_title').innerText = settings.h_info_title || ""; 
          document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc || "";
          document.getElementById('disp_h_q1').innerText = settings.h_q1 || ""; 
          document.getElementById('disp_h_q2').innerText = settings.h_q2 || ""; 
          document.getElementById('disp_h_q3').innerText = settings.h_q3 || ""; 
          document.getElementById('disp_h_q4').innerText = settings.h_q4 || "";
+         
+         document.getElementById('lbl_dash_vision').innerText = settings.h_q2 || "ความเห็นต่อวิสัยทัศน์/เป้าหมาย";
+         document.getElementById('lbl_dash_priority').innerText = settings.h_q4 || "สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข";
 
          let hImgObj = document.getElementById('disp_h_img'); 
-         if (settings.h_img) { 
-             hImgObj.src = settings.h_img; 
-             hImgObj.style.display = 'block'; 
-         } else { 
-             hImgObj.style.display = 'none'; 
-         }
-         
+         if (settings.h_img) { hImgObj.src = settings.h_img; hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
          let hSumObj = document.getElementById('disp_h_sum'); 
-         if (settings.h_sum) { 
-             hSumObj.href = settings.h_sum; 
-             hSumObj.style.display = 'inline-block'; 
-         } else { 
-             hSumObj.style.display = 'none'; 
-         }
-         
+         if (settings.h_sum) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else { hSumObj.style.display = 'none'; }
          let hFullObj = document.getElementById('disp_h_full'); 
-         if (settings.h_full) { 
-             hFullObj.href = settings.h_full; 
-             hFullObj.style.display = 'inline-block'; 
-         } else { 
-             hFullObj.style.display = 'none'; 
-         }
+         if (settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
 
          document.getElementById('h_admin_info_title').value = settings.h_info_title || ""; 
          document.getElementById('h_admin_info_desc').value = settings.h_info_desc || ""; 
@@ -1856,37 +1861,26 @@
          document.getElementById('h_admin_q3').value = settings.h_q3 || ""; 
          document.getElementById('h_admin_q4').value = settings.h_q4 || "";
          
-         for(let i=0; i<6; i++) { 
-             let el = document.getElementById('h_admin_s3_' + (i+1)); 
-             if (el) { el.value = h_topics[i]; } 
-         }
-
-         // 🟢 รับค่า Placeholder ที่แอดมินตั้งไว้
+         // 🟢 รับค่า Placeholder และตั้งค่าลงฟอร์ม 🟢
          let ph1 = settings.h_fb_ph_1 || "ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์ (ถ้ามี)...";
          let ph2 = settings.h_fb_ph_2 || "ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นยุทธศาสตร์ (ถ้ามี)...";
          let ph3 = settings.h_fb_ph_3 || "พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)...";
          
-         let hVisionFb = document.getElementById('h_vision_fb');
-         if(hVisionFb) hVisionFb.placeholder = ph1;
-         
-         let hStrategyFb = document.getElementById('h_strategy_fb');
-         if(hStrategyFb) hStrategyFb.placeholder = ph2;
-         
-         let hFeedback = document.getElementById('h_feedback');
-         if(hFeedback) hFeedback.placeholder = ph3;
+         let hVisionFb = document.getElementById('h_vision_fb'); if(hVisionFb) hVisionFb.placeholder = ph1;
+         let hStrategyFb = document.getElementById('h_strategy_fb'); if(hStrategyFb) hStrategyFb.placeholder = ph2;
+         let hFeedback = document.getElementById('h_feedback'); if(hFeedback) hFeedback.placeholder = ph3;
 
-         let elPh1 = document.getElementById('h_admin_fb_ph_1'); 
-         if (elPh1) elPh1.value = ph1;
-         
-         let elPh2 = document.getElementById('h_admin_fb_ph_2'); 
-         if (elPh2) elPh2.value = ph2;
-         
-         let elPh3 = document.getElementById('h_admin_fb_ph_3'); 
-         if (elPh3) elPh3.value = ph3;
+         let elPh1 = document.getElementById('h_admin_fb_ph_1'); if (elPh1) elPh1.value = ph1;
+         let elPh2 = document.getElementById('h_admin_fb_ph_2'); if (elPh2) elPh2.value = ph2;
+         let elPh3 = document.getElementById('h_admin_fb_ph_3'); if (elPh3) elPh3.value = ph3;
 
+         // 🟢 สร้างตารางประเด็นส่วนที่ 3 อัตโนมัติ 🟢
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
              if (topic && topic.trim() !== "") {
+                 let elAdminTopic = document.getElementById('h_admin_s3_' + (idx+1));
+                 if (elAdminTopic) elAdminTopic.value = topic;
+                 
                  tableBodyHtml += `
                  <tr>
                     <td class="text-start fw-bold" id="disp_h_s3_${idx+1}">${topic}</td>
@@ -1898,6 +1892,24 @@
              }
          });
          document.getElementById('dynamic_topics_body').innerHTML = tableBodyHtml;
+
+         // 🟢 สร้าง Dropdown ตัวเลือกส่วนที่ 4 อัตโนมัติ 🟢
+         let p_topics = [settings.h_p_1, settings.h_p_2, settings.h_p_3, settings.h_p_4, settings.h_p_5, settings.h_p_6].filter(t => t);
+         let p_ph = settings.h_p_ph || "-- เลือกประเด็น --";
+         let pSelect = document.getElementById('h_priority');
+         
+         if (pSelect) {
+             pSelect.innerHTML = `<option value="" selected disabled>${p_ph}</option>`;
+             p_topics.forEach(t => {
+                 pSelect.innerHTML += `<option value="${t}">${t}</option>`;
+             });
+         }
+         
+         let elP_ph = document.getElementById('h_admin_p_ph'); if (elP_ph) elP_ph.value = settings.h_p_ph || "";
+         for(let i=1; i<=6; i++) {
+             let el = document.getElementById('h_admin_p_' + i);
+             if (el) el.value = settings['h_p_' + i] || "";
+         }
 
          document.getElementById('disp_video_title').innerText = settings.video_title || "📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด"; 
          document.getElementById('admin_video_title').value = settings.video_title || "";
@@ -2134,6 +2146,13 @@
           h_s3_4: getVal('h_admin_s3_4'), 
           h_s3_5: getVal('h_admin_s3_5'), 
           h_s3_6: getVal('h_admin_s3_6'),
+          h_p_ph: getVal('h_admin_p_ph'),
+          h_p_1: getVal('h_admin_p_1'),
+          h_p_2: getVal('h_admin_p_2'),
+          h_p_3: getVal('h_admin_p_3'),
+          h_p_4: getVal('h_admin_p_4'),
+          h_p_5: getVal('h_admin_p_5'),
+          h_p_6: getVal('h_admin_p_6'),
           h_fb_ph_1: getVal('h_admin_fb_ph_1'), 
           h_fb_ph_2: getVal('h_admin_fb_ph_2'), 
           h_fb_ph_3: getVal('h_admin_fb_ph_3')
@@ -2927,26 +2946,51 @@
            const stdL = ['เห็นด้วยมาก', 'เห็นด้วย', 'ไม่แน่ใจ', 'ไม่เห็นด้วย'];
            const stdC = ['#27ae60', '#2ecc71', '#f1c40f', '#e74c3c']; 
            
-           // 🟢 1. สร้างกราฟภาพรวม (Summary)
+           // 1. สร้างกราฟภาพรวม (Summary)
            let summaryData = data.hearing.summary;
            let summaryVals = stdL.map(l => summaryData[l] || 0);
            renderChart('chartSummary', 'doughnut', stdL, summaryVals, 'ภาพรวม', stdC);
            
-           // 🟢 2. สร้างตารางสรุปเปอร์เซ็นต์ใต้กราฟ
-           let totalSummary = summaryVals.reduce((a, b) => a + b, 0);
+           // 2. สร้างตารางสรุปรายข้อ (1-6) ใต้กราฟภาพรวม
            let tableHtml = '';
-           stdL.forEach((lbl, idx) => {
-               let val = summaryVals[idx];
-               let pct = totalSummary > 0 ? ((val / totalSummary) * 100).toFixed(1) : 0;
-               tableHtml += `<tr>
-                               <td>${lbl}</td>
-                               <td>${val}</td>
-                               <td class="text-primary">${pct}%</td>
-                             </tr>`;
+           h_topics.forEach((topic, idx) => {
+               if (topic && topic.trim() !== "") {
+                   let key = "byT" + (idx + 1);
+                   let counts = stdL.map(l => data.hearing[key][l] || 0);
+                   let total = counts.reduce((a, b) => a + b, 0);
+                   
+                   // หาค่าที่มากที่สุดเพื่อทำสรุปผล
+                   let maxVal = -1;
+                   let maxIdx = -1;
+                   counts.forEach((v, i) => {
+                       if (v > maxVal) {
+                           maxVal = v;
+                           maxIdx = i;
+                       }
+                   });
+
+                   let summaryCell = "-";
+                   if (total > 0) {
+                       let maxPct = ((maxVal / total) * 100).toFixed(1);
+                       // ล้อสีตามกราฟโดนัท (stdC)
+                       summaryCell = `<span style="color: ${stdC[maxIdx]}; font-weight: bold;">${stdL[maxIdx]} (${maxPct}%)</span>`;
+                   }
+
+                   tableHtml += `<tr>
+                                   <td class="text-start fw-bold">${topic}</td>`;
+                   
+                   counts.forEach(val => {
+                       let pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
+                       tableHtml += `<td>${val} <span class="text-muted small">(${pct}%)</span></td>`;
+                   });
+                   
+                   tableHtml += `<td>${summaryCell}</td>
+                                 </tr>`;
+               }
            });
            document.getElementById('summaryTableBody').innerHTML = tableHtml;
 
-           // 🟢 3. สร้างกราฟรายข้อ 1-6
+           // 3. สร้างกราฟรายข้อ 1-6
            let getD = (obj) => stdL.map(l => obj[l] || 0);
            
            if(h_topics[0] !== "") { 
