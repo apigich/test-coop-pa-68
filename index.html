@@ -15,11 +15,13 @@
     * { box-sizing: border-box; }
     body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
+    /* Loader */
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
     .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+    /* Header */
     .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
@@ -41,6 +43,7 @@
       .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
     }
     
+    /* Layout */
     .wrapper { display: flex; width: 100%; align-items: flex-start; }
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
@@ -59,12 +62,14 @@
     .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
     @media (max-width: 768px) { .carousel-item { height: 400px; } }
 
+    /* Footer */
     .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
     .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
     .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
     .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block;}
     .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
 
+    /* Banners */
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -74,14 +79,12 @@
     .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
     .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
-    
-    /* ป้าย NEW ของแบนเนอร์รับฟังความเห็น */
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
     
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     
-    /* 🟢 ป้าย NEW ของเอกสาร (ตัวหนังสือทอง ขอบเหลือง กรอบแดงกระพริบ) 🟢 */
+    /* 🟢 ป้ายกำกับ NEW ดีไซน์ใหม่ สำหรับหน้าเอกสาร 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -103,6 +106,7 @@
     }
     .badge-pin { background-color: #34495e; color: white; }
 
+    /* UI Components */
     .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
@@ -153,7 +157,7 @@
   </div>
 
   <script>
-    // 🚨 ใส่ Web App URL ของคุณ 🚨
+    // 🚨 ใส่ SCRIPT_URL ที่ Deploy ใหม่แล้วตรงนี้นะครับ
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -256,16 +260,15 @@
                  <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์สรุปย่อ</span><input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป"></div>
                  <div class="input-group input-group-sm mb-1"><span class="input-group-text bg-light">ลิงก์แผนเต็ม</span><input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์"></div>
              </div>
-             
              <div class="mb-3 p-2 border rounded border-success border-opacity-25 bg-white">
                  <label class="fw-bold text-success small mb-2">ปรับแต่งหัวข้อแบบฟอร์ม (รองรับสูงสุด 6 ประเด็น)</label>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1"></div>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2"></div>
                  <div class="mb-1"><input type="text" class="form-control form-control-sm" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3"></div>
                  
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_1" placeholder="ประเด็นย่อย 1 (เช่น เศรษฐกิจ) *บังคับกรอก*"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_2" placeholder="ประเด็นย่อย 2 (เช่น สังคม) *บังคับกรอก*"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_3" placeholder="ประเด็นย่อย 3 (เช่น สิ่งแวดล้อม) *บังคับกรอก*"></div>
+                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_1" placeholder="ประเด็นย่อย 1 (เช่น เศรษฐกิจ) *บังคับ*"></div>
+                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_2" placeholder="ประเด็นย่อย 2 (เช่น สังคม) *บังคับ*"></div>
+                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_3" placeholder="ประเด็นย่อย 3 (เช่น สิ่งแวดล้อม) *บังคับ*"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_4" placeholder="ประเด็นย่อย 4 (ถ้าไม่ใช้ให้เว้นว่างไว้)"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_5" placeholder="ประเด็นย่อย 5 (ถ้าไม่ใช้ให้เว้นว่างไว้)"></div>
                  <div class="ps-3 mb-2"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_6" placeholder="ประเด็นย่อย 6 (ถ้าไม่ใช้ให้เว้นว่างไว้)"></div>
@@ -407,6 +410,7 @@
                  
                  <div class="row g-3 mt-3">
                      <div class="col-md-12"><h6 class="fw-bold text-secondary mb-2 border-bottom pb-2"><i class="material-icons align-middle fs-6">bar_chart</i> สรุปความคิดเห็นรายประเด็นการพัฒนา (Strategic Issues)</h6></div>
+                     
                      <div class="col-md-4" id="col_chartT1"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT1">ประเด็นที่ 1</h6><canvas id="chartT1" style="max-height: 180px;"></canvas></div></div></div>
                      <div class="col-md-4" id="col_chartT2"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT2">ประเด็นที่ 2</h6><canvas id="chartT2" style="max-height: 180px;"></canvas></div></div></div>
                      <div class="col-md-4" id="col_chartT3"><div class="card shadow-sm h-100 border-0" style="border-top: 3px solid #f1c40f !important;"><div class="card-body p-2"><h6 class="text-center small fw-bold mt-2 text-dark" id="lbl_chartT3">ประเด็นที่ 3</h6><canvas id="chartT3" style="max-height: 180px;"></canvas></div></div></div>
@@ -634,9 +638,7 @@
              <div class="table-responsive mb-2">
                 <table class="table table-bordered table-striped align-middle text-center small">
                    <thead class="table-light"><tr><th class="text-start">ประเด็นการพัฒนา</th><th>เห็นด้วยมาก</th><th>เห็นด้วย</th><th>ไม่แน่ใจ</th><th>ไม่เห็นด้วย</th></tr></thead>
-                   
                    <tbody id="dynamic_topics_body"></tbody>
-                   
                 </table>
              </div>
              <textarea class="form-control mb-4" id="h_strategy_fb" rows="2" placeholder="ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นยุทธศาสตร์ (ถ้ามี)..."></textarea>
@@ -944,7 +946,7 @@
              if(el) el.value = h_topics[i];
          }
 
-         // 🟢 สร้างตารางฟอร์มรับฟังความเห็นแบบไดนามิก 🟢
+         // 🟢 สร้างตารางฟอร์มรับฟังความเห็นแบบไดนามิก (สูงสุด 6 ข้อ) 🟢
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
              if(topic && topic.trim() !== "") {
@@ -1031,7 +1033,7 @@
        let vTitle = getVal('admin_video_title'); let vUrl = getVal('admin_video_url'); let dUrl = getVal('admin_dash_url');
        if (!vTitle) { Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); return; }
        Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
-       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl, showNewBadge: showNewBadge ? 'ON' : 'OFF' }, (res) => { 
+       postData({ action: 'updateGeneralConfig', token: adminToken, vTitle: vTitle, video: vUrl, dash: dUrl }, (res) => { 
            if(res.status === 'SUCCESS') { 
                document.getElementById('disp_video_title').innerText = vTitle; updateVideo(vUrl); updateDashboard(dUrl); 
                Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
@@ -1053,6 +1055,7 @@
        });
     }
 
+    // 🟢 ระบบบันทึกการตั้งค่า รับฟังความคิดเห็น (เพิ่มเป็น 6 ประเด็น) 🟢
     function saveHearingConfig() {
        let payload = {
           action: 'updateHearingConfig', token: adminToken, 
@@ -1241,6 +1244,10 @@
         isAdmin = status; 
         document.getElementById('adminHomePanel').style.display = status ? 'block' : 'none'; 
         ['adminDocBtnGroup','adminMenuSection', 'adminVideoBtnGroup', 'adminQABtnGroup'].forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'block' : 'none'; } });
+        
+        let flexElements = ['adminDocBtnGroup', 'adminVideoBtnGroup', 'adminQABtnGroup'];
+        flexElements.forEach(id => { let element = document.getElementById(id); if (element) { element.style.display = status ? 'flex' : 'none'; } });
+
         filterDocs(); renderQA(); renderVideos();
     }
 
@@ -1289,7 +1296,9 @@
         .then(text => {
             document.getElementById(loadingId).remove();
             let data;
-            try { data = JSON.parse(text); } catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (ข้อผิดพลาดจากฝั่งเซิร์ฟเวอร์)'}; }
+            try { data = JSON.parse(text); } 
+            catch(e) { data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (พบปัญหาการตอบกลับจากเซิร์ฟเวอร์)'}; }
+            
             let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; 
             answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); 
             history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; history.scrollTop = history.scrollHeight; 
@@ -1391,7 +1400,7 @@
        });
     }
 
-    // ฟังก์ชันสร้างกราฟ พร้อมคำนวณ % เมื่อนำเมาส์ชี้
+    // 🟢 ฟังก์ชันสร้างกราฟ พร้อมคำนวณ % เมื่อนำเมาส์ชี้ 🟢
     function renderChart(canvasId, type, labels, data, label, colors) {
        let chartKey = canvasId.toLowerCase();
        if(charts[chartKey]) { charts[chartKey].destroy(); }
@@ -1413,6 +1422,7 @@
                                let total = dataset.data.reduce((a, b) => Number(a) + Number(b), 0);
                                let percentage = total > 0 ? ((value * 100) / total).toFixed(1) + '%' : '0%';
                                let labelText = context.chart.config.type === 'bar' ? (context.dataset.label ? context.dataset.label + ': ' : '') : (context.label ? context.label + ' ' : '');
+                               // 🟢 โชว์เปอร์เซ็นต์ในบรรทัดใหม่
                                return [
                                    labelText + value + ' คน',
                                    'คิดเป็น ' + percentage
