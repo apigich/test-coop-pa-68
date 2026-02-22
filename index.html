@@ -76,11 +76,10 @@
     .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
     
     .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
-    
     .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
     .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
     
-    /* ป้ายกำกับ NEW ของเอกสาร */
+    /* 🟢 ป้าย NEW ของเอกสาร (สีทอง ขอบเหลือง กรอบแดงกระพริบ) 🟢 */
     .badge-custom-new { 
         display: inline-block;
         background-color: transparent; 
@@ -152,7 +151,7 @@
   </div>
 
   <script>
-    // 🚨 ใส่ Web App URL ของคุณ 🚨
+    // 🚨 สำคัญมาก: ใส่ Web App URL ที่ Deploy แล้วตรงนี้ 🚨
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwGWDn2t6cPkNDJyuYN_RXvBfB_m7MM1gdHs4-QVKLhRWOhkDjbxeOQxoAc3ZKoJaZFEg/exec"; 
   </script>
 
@@ -849,6 +848,7 @@
     let currentDocLink = "";
     let charts = { issues: null, sector: null, vision: null, priority: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
 
+    // 🟢 ดัก Error หน้าขาวเวลาเชื่อมต่อ 🟢
     async function fetchSafe(url) {
         try {
             const response = await fetch(url);
@@ -883,6 +883,7 @@
          hTitle = settings.h_title; hDesc = settings.h_desc; hDate = settings.h_date; 
          hPlanName = settings.h_plan_name; hRatingOpen = (settings.h_rating === 'ON');
          
+         // ดึงหัวข้อทั้ง 6 ข้อมาเก็บไว้
          h_topics[0] = settings.h_s3_1 || "";
          h_topics[1] = settings.h_s3_2 || "";
          h_topics[2] = settings.h_s3_3 || "";
@@ -894,6 +895,7 @@
          
          docs = docsData; qaList = qaData; videoList = vidData;
 
+         // จัดการหน้าจอ Home
          document.getElementById('disp_title_1').innerText = form1Title;
          document.getElementById('disp_desc_1').innerText = form1Desc;
          document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
@@ -930,8 +932,10 @@
          document.getElementById('h_admin_info_title').value = settings.h_info_title; document.getElementById('h_admin_info_desc').value = settings.h_info_desc; document.getElementById('h_admin_img').value = settings.h_img; document.getElementById('h_admin_sum').value = settings.h_sum; document.getElementById('h_admin_full').value = settings.h_full;
          document.getElementById('h_admin_q1').value = settings.h_q1; document.getElementById('h_admin_q2').value = settings.h_q2; document.getElementById('h_admin_q3').value = settings.h_q3; document.getElementById('h_admin_q4').value = settings.h_q4;
          
+         // โหลดค่าลงฟอร์มแอดมิน
          for(let i=0; i<6; i++) { let el = document.getElementById('h_admin_s3_' + (i+1)); if(el) el.value = h_topics[i]; }
 
+         // 🟢 สร้างตารางฟอร์มรับฟังความเห็นแบบไดนามิก (ถ้าหัวข้อว่างก็ไม่สร้าง) 🟢
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
              if(topic && topic.trim() !== "") {
@@ -975,6 +979,7 @@
        .catch(error => Swal.fire('ขาดการเชื่อมต่อ', 'โปรดตรวจสอบสัญญาณอินเทอร์เน็ตของคุณ', 'error')); 
     }
 
+    // 🟢 ฟังก์ชันดูคำอธิบายวิดีโอ 🟢
     function showFullVideoTitle(vidId) { 
         let v = videoList.find(x => x.id === vidId);
         if(!v) return;
@@ -1265,7 +1270,7 @@
 
     function editQA(id) { let q = qaList.find(x => x.id === id); if(!q) return; document.getElementById('qa_id').value = q.id; document.getElementById('qa_emoji').value = q.emoji||'❓'; document.getElementById('qa_question').value = q.q; document.getElementById('qa_answer').value = q.a; document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); modalInstance.show(); }
     function submitQA(e) { e.preventDefault(); Swal.fire({ title: 'กำลังบันทึก...', allowOutsideClick: false, didOpen: () => Swal.showLoading() }); postData({ action: 'saveQA', token: adminToken, id: getVal('qa_id'), q: getVal('qa_question'), a: getVal('qa_answer'), emoji: getVal('qa_emoji') }, (res) => { if(res.status==='SUCCESS'){ let m = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')); if(m) m.hide(); Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); } else Swal.fire('Error', res.message, 'error'); }); }
-    function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else Swal.fire('Error', res.message, 'error'); } }); } }); }
+    function deleteQA(id) { Swal.fire({ title: 'ลบถาม-ตอบ?', icon: 'warning', showCancelButton: true }).then((r) => { if (r.isConfirmed) { Swal.fire({ title: 'กำลังลบ...', didOpen: () => Swal.showLoading() }); postData({ action: 'deleteQA', token: adminToken, id: id }, (res) => { if(res.status==='SUCCESS'){ Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());} else { Swal.fire('Error', res.message, 'error'); } }); } }); }
     function renderQA() { let h = ''; if(qaList.length === 0) { h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; } else { qaList.forEach((item, index) => { let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; }); } document.getElementById('accQA').innerHTML = h; }
 
     function openChat(docId) { let doc = docs.find(d => d.id === docId); if(!doc) return; currentDocLink = doc.link; document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); modalInstance.show(); }
@@ -1346,6 +1351,7 @@
     function setStar(val) { document.getElementById('sys_rating_val').value = val; document.querySelectorAll('.star-rating i').forEach((item, idx) => { if(idx < val) item.classList.add('active'); else item.classList.remove('active'); }); }
     function submitRating() { let sc = getVal('sys_rating_val'); if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); Swal.fire({ title: 'กำลังส่ง...', didOpen: () => Swal.showLoading() }); postData({ action: 'saveRating', stars: sc, sysFeedback: getVal('sys_feedback') }, (res) => { let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); if(m) m.hide(); Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); document.getElementById('sys_rating_val').value = 0; document.getElementById('sys_feedback').value = ''; setStar(0); }); }
 
+    // 🟢 ระบบสร้าง Dashboard แบบ 2 แถว ไดนามิก และโชว์เปอร์เซ็นต์
     function loadDashboard() {
        Swal.fire({ title: 'กำลังดึงข้อมูล...', didOpen: () => Swal.showLoading() });
        fetch(SCRIPT_URL + '?action=getDashboardStats').then(r => r.json()).then(data => {
