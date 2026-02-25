@@ -799,6 +799,20 @@
                      </div>
                  </div>
              </div>
+             
+             <div class="mt-3 mb-2 p-2 border border-danger border-opacity-25 rounded bg-light">
+                 <label class="small fw-bold text-danger mb-2">ตั้งค่าตัวเลือกหมวดหมู่ปัญหา (สูงสุด 8 ช่อง, เว้นว่างไว้ถ้าไม่ใช้):</label>
+                 <div class="row g-2">
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_1" class="form-control form-control-sm" placeholder="หมวดหมู่ 1"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_2" class="form-control form-control-sm" placeholder="หมวดหมู่ 2"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_3" class="form-control form-control-sm" placeholder="หมวดหมู่ 3"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_4" class="form-control form-control-sm" placeholder="หมวดหมู่ 4"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_5" class="form-control form-control-sm" placeholder="หมวดหมู่ 5"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_6" class="form-control form-control-sm" placeholder="หมวดหมู่ 6"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_7" class="form-control form-control-sm" placeholder="หมวดหมู่ 7"></div>
+                     <div class="col-md-3"><input type="text" id="h_admin_f1_opt_8" class="form-control form-control-sm" placeholder="หมวดหมู่ 8"></div>
+                 </div>
+             </div>
              <button class="btn btn-sm btn-outline-danger w-100 mt-2" onclick="saveFormConfig(1)">บันทึกการตั้งค่าฟอร์ม 1</button>
           </div>
 
@@ -857,19 +871,32 @@
              
              <div class="mb-3 p-2 border rounded border-success border-opacity-25 bg-white">
                  <label class="fw-bold text-success small mb-2">ปรับแต่งหัวข้อแบบฟอร์ม และข้อความในกล่องเสนอแนะ</label>
-                 <div class="mb-1">
-                   <input type="text" class="form-control form-control-sm" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1">
+                 
+                 <div class="mb-1 p-2 bg-light border rounded">
+                   <input type="text" class="form-control form-control-sm fw-bold mb-2 text-primary" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1">
+                   <div class="row g-2">
+                       <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_name" placeholder="ชื่อช่อง: ชื่อ-นามสกุล"></div>
+                       <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_district" placeholder="ชื่อช่อง: อำเภอที่อยู่อาศัย"></div>
+                       <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_sector" placeholder="ชื่อช่อง: ท่านสังกัดภาคส่วนใด"></div>
+                       <div class="col-md-4">
+                           <div class="form-check form-switch p-1 border rounded bg-white mt-1">
+                               <input class="form-check-input ms-2" type="checkbox" id="swReqIdCard">
+                               <label class="form-check-label small ms-1 fw-bold text-danger">บังคับกรอกบัตร ปชช.</label>
+                           </div>
+                       </div>
+                       <div class="col-md-8 mt-1"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_idcard" placeholder="ชื่อช่อง: เลขประจำตัวประชาชน 13 หลัก"></div>
+                   </div>
                  </div>
                  
-                 <div class="mb-1 mt-2">
-                   <input type="text" class="form-control form-control-sm" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2">
+                 <div class="mb-1 mt-3">
+                   <input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2">
                  </div>
                  <div class="ps-3 mb-1">
                    <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_1" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 2">
                  </div>
                  
-                 <div class="mb-1 mt-2">
-                   <input type="text" class="form-control form-control-sm" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3">
+                 <div class="mb-1 mt-3">
+                   <input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3">
                  </div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_1" placeholder="ประเด็นย่อย 1 (เช่น เศรษฐกิจ) *บังคับ*"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_2" placeholder="ประเด็นย่อย 2 (เช่น สังคม) *บังคับ*"></div>
@@ -881,8 +908,8 @@
                    <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_2" placeholder="คำอธิบายในกล่องข้อเสนอแนะ ส่วนที่ 3">
                  </div>
                  
-                 <div class="mb-1 mt-2">
-                   <input type="text" class="form-control form-control-sm" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4">
+                 <div class="mb-1 mt-3">
+                   <input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4">
                  </div>
                  <div class="ps-3 mb-1">
                    <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_p_ph" placeholder="คำลอยใน Dropdown (เช่น -- เลือกประเด็น --)">
@@ -905,7 +932,7 @@
           </div>
 
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-info">
-             <h6 class="fw-bold text-info mb-3">ตั้งค่าทั่วไป (วิดีโอหลัก & Dashboard)</h6>
+             <h6 class="fw-bold text-info mb-3">ตั้งค่าทั่วไป (วิดีโอ, Dashboard & สื่อประชาสัมพันธ์)</h6>
              <div class="mb-2">
                <label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label>
                <input type="text" id="admin_video_title" class="form-control form-control-sm">
@@ -914,11 +941,30 @@
                <label class="small text-muted">ลิงก์ YouTube (Video URL):</label>
                <input type="text" id="admin_video_url" class="form-control form-control-sm">
              </div>
+             <hr class="text-muted">
              <div class="mb-2">
-               <label class="small text-muted">ลิงก์ Dashboard (Dashboard URL):</label>
-               <input type="text" id="admin_dash_url" class="form-control form-control-sm">
+               <label class="small text-muted">ลิงก์ Looker Studio (Embed Dashboard URL):</label>
+               <input type="text" id="admin_dash_url" class="form-control form-control-sm" placeholder="ลิงก์ฝัง iframe...">
              </div>
-             <button class="btn btn-sm btn-outline-info w-100 mt-2 mb-2" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
+             <div class="mb-2">
+               <label class="small fw-bold text-primary">🔗 ลิงก์เว็บไซต์ Dashboard หลัก (เพื่อให้ประชาชนกดปุ่มขยายดูเต็มจอ):</label>
+               <input type="text" id="admin_dash_main_url" class="form-control form-control-sm" placeholder="https://lookerstudio.google.com/reporting/...">
+             </div>
+             <hr class="text-muted">
+             
+             <div class="mb-2">
+                 <label class="small fw-bold text-success">สื่อประชาสัมพันธ์ (รองรับลิงก์ภาพจาก Google Drive หรือเว็บอื่นๆ):</label>
+                 <div class="row g-2 mt-1">
+                     <div class="col-md-12"><input type="text" id="h_admin_pr_1" class="form-control form-control-sm" placeholder="ลิงก์รูปภาพที่ 1"></div>
+                     <div class="col-md-12"><input type="text" id="h_admin_pr_2" class="form-control form-control-sm" placeholder="ลิงก์รูปภาพที่ 2"></div>
+                     <div class="col-md-12"><input type="text" id="h_admin_pr_3" class="form-control form-control-sm" placeholder="ลิงก์รูปภาพที่ 3"></div>
+                     <div class="col-md-12"><input type="text" id="h_admin_pr_4" class="form-control form-control-sm" placeholder="ลิงก์รูปภาพที่ 4 (เว้นว่างได้)"></div>
+                     <div class="col-md-12"><input type="text" id="h_admin_pr_5" class="form-control form-control-sm" placeholder="ลิงก์รูปภาพที่ 5 (เว้นว่างได้)"></div>
+                 </div>
+                 <div class="small text-danger mt-1">* หมายเหตุ: หากใช้ลิงก์จาก Google Drive อย่าลืมตั้งค่าแชร์ไฟล์เป็น "ทุกคนที่มีลิงก์"</div>
+             </div>
+
+             <button class="btn btn-sm btn-outline-info w-100 mt-3 fw-bold" onclick="saveGeneralConfig()">บันทึกการตั้งค่าทั่วไป</button>
           </div>
         </div>
 
@@ -969,27 +1015,21 @@
              </div>
              <iframe id="main_dash_frame" src="" allowfullscreen style="display:none;"></iframe>
           </div>
+          
+          <div class="text-center mt-4" id="dashMainLinkDiv" style="display:none;">
+             <a id="dashMainLinkBtn" href="#" target="_blank" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm">
+                 <i class="material-icons align-middle me-1">open_in_new</i> เปิดดู Dashboard ฉบับเต็ม
+             </a>
+          </div>
         </div>
 
         <div id="sec-pr" class="content-section">
           <h4 class="text-primary mb-4 fw-bold"><i class="material-icons align-middle">campaign</i> สื่อประชาสัมพันธ์ (Info-Graphics)</h4>
           <div id="prCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="0" class="active"></button>
-              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="1"></button>
-              <button type="button" data-bs-target="#prCarousel" data-bs-slide-to="2"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active" data-bs-interval="4000">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1280px-Doi_Suthep_02.jpg">
+            <div class="carousel-indicators" id="pr_indicators">
               </div>
-              <div class="carousel-item" data-bs-interval="4000">
-                <img src="https://thailandtourismdirectory.go.th/assets/upload/2018/01/22/2018012216262947119e830f576313.jpg">
+            <div class="carousel-inner" id="pr_inner">
               </div>
-              <div class="carousel-item" data-bs-interval="4000">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Chiang_Mai_Night_Bazaar.jpg/1280px-Chiang_Mai_Night_Bazaar.jpg">
-              </div>
-            </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev">
               <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
             </button>
@@ -1381,13 +1421,7 @@
             <div class="mb-3" id="topicSelectDiv">
                <label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label>
                <select class="form-select" id="f_topic_select" required>
-                 <option value="" selected disabled>-- กรุณาเลือก --</option>
-                 <option>โครงสร้างพื้นฐาน</option>
-                 <option>สิ่งแวดล้อม/มลพิษ</option>
-                 <option>เศรษฐกิจ/อาชีพ</option>
-                 <option>สังคม/ความปลอดภัย</option>
-                 <option>อื่นๆ</option>
-               </select>
+                 </select>
             </div>
             <div class="mb-3">
               <label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label>
@@ -1424,15 +1458,22 @@
              <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม</h5>
              <div class="row g-3 mb-4">
                 <div class="col-md-6">
-                  <label class="form-label fw-bold">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
+                  <label class="form-label fw-bold"><span id="disp_lbl_name">ชื่อ-นามสกุล</span> <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="h_name" required>
                 </div>
+                
+                <div class="col-md-6" id="div_h_idcard" style="display:none;">
+                   <label class="form-label fw-bold"><span id="disp_lbl_idcard">เลขประจำตัวประชาชน 13 หลัก</span> <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" id="h_idcard" maxlength="13" pattern="^[0-9]{13}$" placeholder="กรอกเฉพาะตัวเลข 13 หลัก">
+                   <div class="invalid-feedback" id="idcard_err">เลขบัตรประชาชนไม่ถูกต้อง</div>
+                </div>
+
                 <div class="col-md-6">
-                  <label class="form-label fw-bold">อำเภอที่อยู่อาศัย <span class="text-danger">*</span></label>
+                  <label class="form-label fw-bold"><span id="disp_lbl_district">อำเภอที่อยู่อาศัย</span> <span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="h_district" required>
                 </div>
                 <div class="col-md-12">
-                   <label class="form-label fw-bold">ท่านสังกัดภาคส่วนใด <span class="text-danger">*</span></label>
+                   <label class="form-label fw-bold"><span id="disp_lbl_sector">ท่านสังกัดภาคส่วนใด</span> <span class="text-danger">*</span></label>
                    <select class="form-select" id="h_sector" required>
                      <option value="" selected disabled>-- เลือกภาคส่วน --</option>
                      <option value="ภาคประชาชน">ภาคประชาชน / ประชาสังคม</option>
@@ -1723,6 +1764,7 @@
     let form1Open = true, hOpen = true; 
     let form1Title = "", form1Desc = "", form1Date = "";
     let hTitle = "", hDesc = "", hDate = "", hPlanName = "", hRatingOpen = true;
+    let hReqIdcard = "OFF";
     
     let h_topics = ["", "", "", "", "", ""];
     let showNewBadge = true; 
@@ -1731,7 +1773,28 @@
     let currentDocLink = "";
     let charts = { issues: null, sector: null, vision: null, priority: null, summary: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
 
-    // 🟢 ฟังก์ชันเชื่อมต่อแบบมี Safety
+    // 🟢 ฟังก์ชันแปลงลิงก์ Google Drive ให้เป็นลิงก์ Direct Image
+    function convertDriveUrl(url) {
+        if (!url) return "";
+        let match = url.match(/\/d\/(.+?)\//);
+        if (match && match[1]) {
+            return "https://drive.google.com/uc?id=" + match[1];
+        }
+        return url;
+    }
+
+    // 🟢 อัลกอริทึมตรวจสอบเลขบัตรประชาชนไทย
+    function checkThaiID(id) {
+        if (id.length != 13) return false;
+        let sum = 0;
+        for (let i = 0; i < 12; i++) {
+            sum += parseFloat(id.charAt(i)) * (13 - i);
+        }
+        if ((11 - sum % 11) % 10 != parseFloat(id.charAt(12))) return false;
+        return true;
+    }
+
+    // ฟังก์ชันเชื่อมต่อแบบมี Safety
     async function fetchSafe(url) {
         try {
             const response = await fetch(url);
@@ -1786,7 +1849,9 @@
          qaList = qaData; 
          videoList = vidData;
 
-         // 1. นำข้อมูลฟอร์มแจ้งปัญหาลงหน้าจอ
+         // ==============================================
+         // 1. นำข้อมูลฟอร์มแจ้งปัญหาลงหน้าจอ (ฟอร์มสีชมพู)
+         // ==============================================
          document.getElementById('disp_title_1').innerText = form1Title;
          document.getElementById('disp_desc_1').innerText = form1Desc;
          document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
@@ -1805,7 +1870,26 @@
              document.getElementById('badge1').style.display = 'none'; 
          }
 
-         // 2. นำข้อมูลฟอร์มความคิดเห็นลงหน้าจอ
+         // ดึงตัวเลือก 8 ช่องมาสร้าง Dropdown
+         let f1_opts = [settings.f1_opt_1, settings.f1_opt_2, settings.f1_opt_3, settings.f1_opt_4, settings.f1_opt_5, settings.f1_opt_6, settings.f1_opt_7, settings.f1_opt_8].filter(Boolean);
+         let f1Select = document.getElementById('f_topic_select');
+         if (f1Select) {
+             f1Select.innerHTML = '<option value="" selected disabled>-- กรุณาเลือก --</option>';
+             f1_opts.forEach(opt => {
+                 f1Select.innerHTML += `<option value="${opt}">${opt}</option>`;
+             });
+         }
+         
+         // นำค่าตัวเลือก 8 ช่องลงฟอร์ม Admin
+         for(let i=1; i<=8; i++) {
+             let el = document.getElementById('h_admin_f1_opt_' + i);
+             if (el) el.value = settings['f1_opt_' + i] || "";
+         }
+
+
+         // ==============================================
+         // 2. นำข้อมูลฟอร์มความคิดเห็นลงหน้าจอ (สีเหลือง)
+         // ==============================================
          document.getElementById('disp_h_title').innerText = hTitle;
          document.getElementById('disp_title_2').innerText = hTitle;
          document.getElementById('disp_desc_2').innerText = hDesc;
@@ -1833,19 +1917,50 @@
              document.getElementById('hearingFormContainer').style.display = 'none'; 
          }
 
-         // ซิงค์ชื่อหัวข้อ Dashboard ตามแอดมิน
-         document.getElementById('disp_h_info_title').innerText = settings.h_info_title || ""; 
-         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc || "";
-         document.getElementById('disp_h_q1').innerText = settings.h_q1 || ""; 
-         document.getElementById('disp_h_q2').innerText = settings.h_q2 || ""; 
-         document.getElementById('disp_h_q3').innerText = settings.h_q3 || ""; 
-         document.getElementById('disp_h_q4').innerText = settings.h_q4 || "";
+         // ซิงค์ชื่อหัวข้อหลัก 1-4
+         document.getElementById('disp_h_q1').innerText = settings.h_q1 || "ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม"; 
+         document.getElementById('disp_h_q2').innerText = settings.h_q2 || "ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)"; 
+         document.getElementById('disp_h_q3').innerText = settings.h_q3 || "ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)"; 
+         document.getElementById('disp_h_q4').innerText = settings.h_q4 || "ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ";
          
+         document.getElementById('h_admin_q1').value = settings.h_q1 || ""; 
+         document.getElementById('h_admin_q2').value = settings.h_q2 || ""; 
+         document.getElementById('h_admin_q3').value = settings.h_q3 || ""; 
+         document.getElementById('h_admin_q4').value = settings.h_q4 || "";
+
+         // 🟢 ซิงค์ชื่อหัวข้อส่วนที่ 1 (Labels) และเปิด/ปิดระบบบัตรประชาชน
+         document.getElementById('disp_lbl_name').innerText = settings.h_lbl_name || "ชื่อ-นามสกุล";
+         document.getElementById('disp_lbl_district').innerText = settings.h_lbl_district || "อำเภอที่อยู่อาศัย";
+         document.getElementById('disp_lbl_sector').innerText = settings.h_lbl_sector || "ท่านสังกัดภาคส่วนใด";
+         document.getElementById('disp_lbl_idcard').innerText = settings.h_lbl_idcard || "เลขประจำตัวประชาชน 13 หลัก";
+         
+         document.getElementById('h_admin_lbl_name').value = settings.h_lbl_name || "";
+         document.getElementById('h_admin_lbl_district').value = settings.h_lbl_district || "";
+         document.getElementById('h_admin_lbl_sector').value = settings.h_lbl_sector || "";
+         document.getElementById('h_admin_lbl_idcard').value = settings.h_lbl_idcard || "";
+
+         hReqIdcard = settings.h_req_idcard || "OFF";
+         document.getElementById('swReqIdCard').checked = (hReqIdcard === 'ON');
+         
+         let divIdCard = document.getElementById('div_h_idcard');
+         let inIdCard = document.getElementById('h_idcard');
+         if (hReqIdcard === 'ON') {
+             divIdCard.style.display = 'block';
+             inIdCard.setAttribute('required', 'required');
+         } else {
+             divIdCard.style.display = 'none';
+             inIdCard.removeAttribute('required');
+         }
+
+         // ซิงค์ชื่อหัวข้อ Dashboard ตามแอดมิน
          document.getElementById('lbl_dash_vision').innerText = settings.h_q2 || "ความเห็นต่อวิสัยทัศน์/เป้าหมาย";
          document.getElementById('lbl_dash_priority').innerText = settings.h_q4 || "สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข";
 
+         document.getElementById('disp_h_info_title').innerText = settings.h_info_title || ""; 
+         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc || "";
+
          let hImgObj = document.getElementById('disp_h_img'); 
-         if (settings.h_img) { hImgObj.src = settings.h_img; hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
+         if (settings.h_img) { hImgObj.src = convertDriveUrl(settings.h_img); hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
          let hSumObj = document.getElementById('disp_h_sum'); 
          if (settings.h_sum) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else { hSumObj.style.display = 'none'; }
          let hFullObj = document.getElementById('disp_h_full'); 
@@ -1856,12 +1971,13 @@
          document.getElementById('h_admin_img').value = settings.h_img || ""; 
          document.getElementById('h_admin_sum').value = settings.h_sum || ""; 
          document.getElementById('h_admin_full').value = settings.h_full || "";
-         document.getElementById('h_admin_q1').value = settings.h_q1 || ""; 
-         document.getElementById('h_admin_q2').value = settings.h_q2 || ""; 
-         document.getElementById('h_admin_q3').value = settings.h_q3 || ""; 
-         document.getElementById('h_admin_q4').value = settings.h_q4 || "";
          
-         // 🟢 รับค่า Placeholder และตั้งค่าลงฟอร์ม 🟢
+         for(let i=0; i<6; i++) { 
+             let el = document.getElementById('h_admin_s3_' + (i+1)); 
+             if (el) { el.value = h_topics[i]; } 
+         }
+
+         // รับค่า Placeholder และตั้งค่าลงฟอร์ม
          let ph1 = settings.h_fb_ph_1 || "ข้อเสนอแนะเพิ่มเติมสำหรับวิสัยทัศน์ (ถ้ามี)...";
          let ph2 = settings.h_fb_ph_2 || "ข้อเสนอแนะเพิ่มเติมสำหรับประเด็นยุทธศาสตร์ (ถ้ามี)...";
          let ph3 = settings.h_fb_ph_3 || "พิมพ์ข้อเสนอแนะเพิ่มเติมอื่นๆ ทั่วไป (ถ้ามี)...";
@@ -1874,7 +1990,7 @@
          let elPh2 = document.getElementById('h_admin_fb_ph_2'); if (elPh2) elPh2.value = ph2;
          let elPh3 = document.getElementById('h_admin_fb_ph_3'); if (elPh3) elPh3.value = ph3;
 
-         // 🟢 สร้างตารางประเด็นส่วนที่ 3 อัตโนมัติ 🟢
+         // สร้างตารางประเด็นส่วนที่ 3 อัตโนมัติ
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
              if (topic && topic.trim() !== "") {
@@ -1893,7 +2009,7 @@
          });
          document.getElementById('dynamic_topics_body').innerHTML = tableBodyHtml;
 
-         // 🟢 สร้าง Dropdown ตัวเลือกส่วนที่ 4 อัตโนมัติ 🟢
+         // สร้าง Dropdown ตัวเลือกส่วนที่ 4 อัตโนมัติ
          let p_topics = [settings.h_p_1, settings.h_p_2, settings.h_p_3, settings.h_p_4, settings.h_p_5, settings.h_p_6].filter(t => t);
          let p_ph = settings.h_p_ph || "-- เลือกประเด็น --";
          let pSelect = document.getElementById('h_priority');
@@ -1911,11 +2027,46 @@
              if (el) el.value = settings['h_p_' + i] || "";
          }
 
+         // ==============================================
+         // 3. ตั้งค่าทั่วไป (Dash, PR, Videos)
+         // ==============================================
          document.getElementById('disp_video_title').innerText = settings.video_title || "📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด"; 
          document.getElementById('admin_video_title').value = settings.video_title || "";
          
          updateVideo(settings.video_url || ""); 
          updateDashboard(settings.dash_url || "");
+         
+         // ลิงก์ Dash Main
+         document.getElementById('admin_dash_main_url').value = settings.dash_main_url || "";
+         if(settings.dash_main_url) {
+             document.getElementById('dashMainLinkDiv').style.display = 'block';
+             document.getElementById('dashMainLinkBtn').href = settings.dash_main_url;
+         } else {
+             document.getElementById('dashMainLinkDiv').style.display = 'none';
+         }
+
+         // 🟢 สร้าง Carousel สื่อประชาสัมพันธ์จาก 5 รูปที่แอดมินใส่ 🟢
+         let pr_imgs = [settings.pr_img_1, settings.pr_img_2, settings.pr_img_3, settings.pr_img_4, settings.pr_img_5].filter(img => img && img.trim() !== "");
+         
+         for(let i=1; i<=5; i++) {
+             let el = document.getElementById('h_admin_pr_' + i);
+             if (el) el.value = settings['pr_img_' + i] || "";
+         }
+
+         if (pr_imgs.length > 0) {
+             let indicatorsHtml = '';
+             let innerHtml = '';
+             pr_imgs.forEach((imgUrl, idx) => {
+                 let finalUrl = convertDriveUrl(imgUrl); // 🟢 แปลงลิงก์ Drive
+                 indicatorsHtml += `<button type="button" data-bs-target="#prCarousel" data-bs-slide-to="${idx}" ${idx === 0 ? 'class="active"' : ''}></button>`;
+                 innerHtml += `<div class="carousel-item ${idx === 0 ? 'active' : ''}" data-bs-interval="4000"><img src="${finalUrl}"></div>`;
+             });
+             document.getElementById('pr_indicators').innerHTML = indicatorsHtml;
+             document.getElementById('pr_inner').innerHTML = innerHtml;
+             document.getElementById('sec-pr').style.display = 'block';
+         } else {
+             document.getElementById('sec-pr').style.display = 'none';
+         }
 
          buildYearFilter(); 
          filterDocs(); 
@@ -2044,6 +2195,7 @@
        let vTitle = getVal('admin_video_title'); 
        let vUrl = getVal('admin_video_url'); 
        let dUrl = getVal('admin_dash_url');
+       let dMainUrl = getVal('admin_dash_main_url');
        
        if (!vTitle) { 
            Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); 
@@ -2061,13 +2213,16 @@
            token: adminToken, 
            vTitle: vTitle, 
            video: vUrl, 
-           dash: dUrl 
+           dash: dUrl,
+           dashMain: dMainUrl,
+           pr_img_1: getVal('h_admin_pr_1'),
+           pr_img_2: getVal('h_admin_pr_2'),
+           pr_img_3: getVal('h_admin_pr_3'),
+           pr_img_4: getVal('h_admin_pr_4'),
+           pr_img_5: getVal('h_admin_pr_5')
        }, (res) => { 
            if(res.status === 'SUCCESS') { 
-               document.getElementById('disp_video_title').innerText = vTitle; 
-               updateVideo(vUrl); 
-               updateDashboard(dUrl); 
-               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); 
            } else { 
                Swal.fire('Error', res.message, 'error'); 
            } 
@@ -2093,28 +2248,18 @@
            title: titleVal, 
            subtitle: descVal, 
            dateText: dateVal, 
-           status: status 
+           status: status,
+           f1_opt_1: getVal('h_admin_f1_opt_1'),
+           f1_opt_2: getVal('h_admin_f1_opt_2'),
+           f1_opt_3: getVal('h_admin_f1_opt_3'),
+           f1_opt_4: getVal('h_admin_f1_opt_4'),
+           f1_opt_5: getVal('h_admin_f1_opt_5'),
+           f1_opt_6: getVal('h_admin_f1_opt_6'),
+           f1_opt_7: getVal('h_admin_f1_opt_7'),
+           f1_opt_8: getVal('h_admin_f1_opt_8')
        }, (res) => { 
            if(res.status === 'SUCCESS') { 
-               form1Title = titleVal; 
-               form1Desc = descVal; 
-               form1Date = dateVal; 
-               form1Open = (status === 'OPEN'); 
-               
-               document.getElementById('disp_title_1').innerText = form1Title; 
-               document.getElementById('disp_desc_1').innerText = form1Desc; 
-               document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
-               
-               if (form1Open) { 
-                   document.getElementById('banner1').classList.remove('closed'); 
-                   document.getElementById('statusBadge1').style.display = 'none'; 
-                   document.getElementById('badge1').style.display = 'block'; 
-               } else { 
-                   document.getElementById('banner1').classList.add('closed'); 
-                   document.getElementById('statusBadge1').style.display = 'inline-block'; 
-                   document.getElementById('badge1').style.display = 'none'; 
-               }
-               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }); 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem());
            } else { 
                Swal.fire('Error', res.message, 'error'); 
            } 
@@ -2140,6 +2285,11 @@
           h_q2: getVal('h_admin_q2'), 
           h_q3: getVal('h_admin_q3'), 
           h_q4: getVal('h_admin_q4'), 
+          h_req_idcard: document.getElementById('swReqIdCard').checked ? 'ON' : 'OFF',
+          h_lbl_idcard: getVal('h_admin_lbl_idcard'),
+          h_lbl_name: getVal('h_admin_lbl_name'),
+          h_lbl_district: getVal('h_admin_lbl_district'),
+          h_lbl_sector: getVal('h_admin_lbl_sector'),
           h_s3_1: getVal('h_admin_s3_1'), 
           h_s3_2: getVal('h_admin_s3_2'), 
           h_s3_3: getVal('h_admin_s3_3'),
@@ -2773,6 +2923,7 @@
         });
     }
 
+    // 🟢 ระบบส่งฟอร์ม (แก้ไขให้ดักตรวจเลขบัตร ปชช ก่อน) 🟢
     function submitHearing(e) { 
         e.preventDefault(); 
         let btn = document.getElementById('btnSubmitHearing'); 
@@ -2780,6 +2931,18 @@
         btn.disabled = true; 
         btn.innerText = 'กำลังส่ง...'; 
         
+        // ตรวจสอบบัตร ปชช. ถ้าเปิดใช้งาน
+        let idcardVal = "";
+        if (hReqIdcard === 'ON') {
+            idcardVal = document.getElementById('h_idcard').value;
+            if (!checkThaiID(idcardVal)) {
+                Swal.fire('ข้อผิดพลาด', 'เลขประจำตัวประชาชน 13 หลัก ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง', 'error');
+                btn.disabled = false;
+                btn.innerText = oldText;
+                return;
+            }
+        }
+
         let t1Val = document.querySelector('input[name="h_t1"]:checked') ? document.querySelector('input[name="h_t1"]:checked').value : "";
         let t2Val = document.querySelector('input[name="h_t2"]:checked') ? document.querySelector('input[name="h_t2"]:checked').value : "";
         let t3Val = document.querySelector('input[name="h_t3"]:checked') ? document.querySelector('input[name="h_t3"]:checked').value : "";
@@ -2793,6 +2956,7 @@
             name: getVal('h_name'), 
             district: getVal('h_district'), 
             sector: getVal('h_sector'), 
+            idcard: idcardVal, // 🟢 ส่งค่าบัตรปชช
             vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", 
             vision_fb: getVal('h_vision_fb'), 
             t1: t1Val, 
@@ -2959,7 +3123,6 @@
                    let counts = stdL.map(l => data.hearing[key][l] || 0);
                    let total = counts.reduce((a, b) => a + b, 0);
                    
-                   // หาค่าที่มากที่สุดเพื่อทำสรุปผล
                    let maxVal = -1;
                    let maxIdx = -1;
                    counts.forEach((v, i) => {
@@ -2972,8 +3135,7 @@
                    let summaryCell = "-";
                    if (total > 0) {
                        let maxPct = ((maxVal / total) * 100).toFixed(1);
-                       // ล้อสีตามกราฟโดนัท (stdC)
-                       summaryCell = `<span style="color: ${stdC[maxIdx]}; font-weight: bold;">${stdL[maxIdx]} (${maxPct}%)</span>`;
+                       summaryCell = `<span style="color: ${stdC[maxIdx]}; font-weight: bold;">${stdL[maxIdx]}<br>(${maxPct}%)</span>`;
                    }
 
                    tableHtml += `<tr>
@@ -2981,10 +3143,10 @@
                    
                    counts.forEach(val => {
                        let pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
-                       tableHtml += `<td>${val} <span class="text-muted small">(${pct}%)</span></td>`;
+                       tableHtml += `<td>${val} <br><span class="text-muted small">(${pct}%)</span></td>`;
                    });
                    
-                   tableHtml += `<td>${summaryCell}</td>
+                   tableHtml += `<td class="align-middle" style="background-color:#f8f9fa;">${summaryCell}</td>
                                  </tr>`;
                }
            });
