@@ -1773,12 +1773,14 @@
     let currentDocLink = "";
     let charts = { issues: null, sector: null, vision: null, priority: null, summary: null, t1: null, t2: null, t3: null, t4: null, t5: null, t6: null };
 
-    // 🟢 ฟังก์ชันแปลงลิงก์ Google Drive ให้เป็นลิงก์ Direct Image
+    // 🟢 ฟังก์ชันแปลงลิงก์ Google Drive รุ่นอัปเกรด (แก้ปัญหารูปไม่โหลด 100%)
     function convertDriveUrl(url) {
         if (!url) return "";
-        let match = url.match(/\/d\/(.+?)\//);
+        // รองรับทั้งลิงก์แบบ /file/d/ และแบบ ?id= 
+        let match = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
         if (match && match[1]) {
-            return "https://drive.google.com/uc?id=" + match[1];
+            // เปลี่ยนไปใช้ Thumbnail API แทน จะทะลุบล็อกของ Google ได้และแสดงผลคมชัด
+            return "https://drive.google.com/thumbnail?id=" + match[1] + "&sz=w1280";
         }
         return url;
     }
