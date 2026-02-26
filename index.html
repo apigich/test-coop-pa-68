@@ -1334,9 +1334,137 @@
   <div class="modal fade" id="adminVideoModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="vidModalTitle">เพิ่มวิดีโอ</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="submitVideo(event)"><input type="hidden" id="vid_id"><div class="mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div><div class="mb-2"><label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label><textarea class="form-control" id="vid_desc" rows="3"></textarea></div><div class="mb-2"><label class="small text-muted fw-bold">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div><div class="mb-3"><label class="small text-muted fw-bold">ลำดับ</label><input type="number" class="form-control" id="vid_order"></div><div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div></form></div></div></div></div>
   <div class="modal fade" id="adminQAModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="qaModalTitle">เพิ่ม Q&A</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="submitQA(event)"><input type="hidden" id="qa_id"><div class="row g-2 mb-2"><div class="col-3"><label class="small text-muted fw-bold">ไอคอน</label><select class="form-select" id="qa_emoji"><option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="🟢">🟢</option><option value="🔥">🔥</option><option value="⭐">⭐</option><option value="📌">📌</option><option value="💡">💡</option></select></div><div class="col-9"><label class="small text-muted fw-bold">คำถาม</label><input type="text" class="form-control" id="qa_question" required></div></div><div class="mb-3"><label class="small text-muted fw-bold">คำตอบ</label><textarea class="form-control" id="qa_answer" rows="4" required></textarea></div><div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div></form></div></div></div></div>
 
+  <div class="modal fade" id="hearingModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title fw-bold" id="disp_h_title">รับฟังความคิดเห็น</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body bg-light">
+          <div class="text-center mb-2">
+            <img id="disp_h_img" class="hearing-banner-img shadow-sm" src="" style="display:none;">
+          </div>
+          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;">
+            <i class="material-icons fs-1 mb-2">lock</i>
+            <h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5>
+          </div>
+
+          <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
+             <h4 class="fw-bold text-center text-primary mb-4" id="disp_h_plan_name">แผนพัฒนาจังหวัดเชียงใหม่</h4>
+             
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม</h5>
+             <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold"><span id="disp_lbl_name">ชื่อ-นามสกุล</span> <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="h_name" required>
+                </div>
+                
+                <div class="col-md-6" id="div_h_idcard" style="display:none;">
+                   <label class="form-label fw-bold"><span id="disp_lbl_idcard">เลขประจำตัวประชาชน 13 หลัก</span> <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" id="h_idcard" maxlength="13" pattern="^[0-9]{13}$" placeholder="กรอกเฉพาะตัวเลข 13 หลัก">
+                   <div class="invalid-feedback" id="idcard_err">เลขบัตรประชาชนไม่ถูกต้อง</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-bold"><span id="disp_lbl_district">อำเภอที่อยู่อาศัย</span> <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="h_district" required>
+                </div>
+                <div class="col-md-12">
+                   <label class="form-label fw-bold"><span id="disp_lbl_sector">ท่านสังกัดภาคส่วนใด</span> <span class="text-danger">*</span></label>
+                   <select class="form-select" id="h_sector" required>
+                     </select>
+                </div>
+             </div>
+
+             <div class="bg-light border rounded p-4 mb-4 mt-2 shadow-sm border-primary border-opacity-25">
+                 <h5 class="fw-bold text-dark mb-2" id="disp_h_info_title">หลักการและเหตุผล</h5>
+                 <p class="text-muted mb-4" id="disp_h_info_desc" style="white-space: pre-line;">รายละเอียดชี้แจง...</p>
+                 <div class="d-flex justify-content-start gap-3 flex-wrap mb-4">
+                     <a id="disp_h_sum" href="#" target="_blank" class="btn btn-outline-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">description</i> สรุปอย่างย่อ</a>
+                     <a id="disp_h_full" href="#" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">menu_book</i> ร่างแผนฉบับเต็ม</a>
+                 </div>
+                 <div class="form-check border-top pt-3">
+                     <input class="form-check-input" type="checkbox" id="h_info_consent" required>
+                     <label class="form-check-label fw-bold text-danger" for="h_info_consent" id="disp_h_consent">
+                         </label>
+                 </div>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4" id="disp_h_q2">ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)</h5>
+             <div class="mb-4 ps-2">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required>
+                  <label class="form-check-label">เห็นด้วย</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม">
+                  <label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย">
+                  <label class="form-check-label">ไม่เห็นด้วย</label>
+                </div>
+                <textarea class="form-control mt-3" id="h_vision_fb" rows="2"></textarea>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q3">ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)</h5>
+             <div class="table-responsive mb-2">
+                <table class="table table-bordered table-striped align-middle text-center small">
+                   <thead class="table-light" id="dynamic_topics_head">
+                     </thead>
+                   <tbody id="dynamic_topics_body">
+                     </tbody>
+                </table>
+             </div>
+             <textarea class="form-control mb-4" id="h_strategy_fb" rows="2"></textarea>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ</h5>
+             <div class="mb-3">
+                <select class="form-select" id="h_priority" required>
+                  </select>
+             </div>
+             <div class="mb-3">
+               <textarea class="form-control" id="h_feedback" rows="3"></textarea>
+             </div>
+
+             <div class="alert alert-secondary mt-4 mb-4 small">
+                <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="h_pdpa" required>
+                   <label class="form-check-label text-dark" for="h_pdpa">ข้าพเจ้ายินยอมให้สำนักงานจังหวัดเชียงใหม่ รวบรวมและประมวลผลข้อมูลนี้ เพื่อใช้ประกอบการปรับปรุงร่างแผนฯ เท่านั้น โดยไม่เปิดเผยข้อมูลส่วนบุคคลต่อสาธารณะ</label>
+                </div>
+             </div>
+             <div class="d-grid">
+               <button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm text-dark" id="btnSubmitHearing">✅ ส่งแบบรับฟังความคิดเห็น</button>
+             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
+    // ==========================================
+    // 🟢 ระบบป้องกัน Error DOM (Safe Setters) 🟢
+    // ป้องกันปัญหา "Cannot set properties of null" 100%
+    // ==========================================
+    function setElText(id, txt) { 
+        let el = document.getElementById(id); 
+        if (el) el.innerText = txt || ""; 
+    }
+    
+    function setElHtml(id, html) { 
+        let el = document.getElementById(id); 
+        if (el) el.innerHTML = html || ""; 
+    }
+    
+    function setElVal(id, val) { 
+        let el = document.getElementById(id); 
+        if (el) el.value = val || ""; 
+    }
+
     // ==========================================
     // 🟢 ระบบคอนฟิกสเกล Dashboard (Scale Switcher)
     // ==========================================
@@ -1363,7 +1491,7 @@
     let form1Title = "", form1Desc = "", form1Date = "";
     let hTitle = "", hDesc = "", hDate = "", hPlanName = "", hRatingOpen = true;
     let hReqIdcard = "OFF";
-    let currentScaleType = "4"; // Default 4
+    let currentScaleType = "4"; 
     
     let h_topics = ["", "", "", "", "", ""];
     let showNewBadge = true; 
@@ -1449,22 +1577,29 @@
          // ==============================================
          // 1. นำข้อมูลฟอร์มแจ้งปัญหาลงหน้าจอ
          // ==============================================
-         document.getElementById('disp_title_1').innerText = form1Title;
-         document.getElementById('disp_desc_1').innerText = form1Desc;
-         document.getElementById('disp_date_1').innerText = "📅 " + form1Date;
-         document.getElementById('admin_title_1').value = form1Title;
-         document.getElementById('admin_subtitle_1').value = form1Desc;
-         document.getElementById('admin_date_1').value = form1Date;
-         document.getElementById('swForm1').checked = form1Open;
+         setElText('disp_title_1', form1Title);
+         setElText('disp_desc_1', form1Desc);
+         setElText('disp_date_1', "📅 " + form1Date);
+         
+         setElVal('admin_title_1', form1Title);
+         setElVal('admin_subtitle_1', form1Desc);
+         setElVal('admin_date_1', form1Date);
+         
+         let swF1 = document.getElementById('swForm1');
+         if(swF1) swF1.checked = form1Open;
+         
+         let b1 = document.getElementById('banner1');
+         let sb1 = document.getElementById('statusBadge1');
+         let bdg1 = document.getElementById('badge1');
          
          if (form1Open) { 
-             document.getElementById('banner1').classList.remove('closed'); 
-             document.getElementById('statusBadge1').style.display = 'none'; 
-             document.getElementById('badge1').style.display = 'block'; 
+             if(b1) b1.classList.remove('closed'); 
+             if(sb1) sb1.style.display = 'none'; 
+             if(bdg1) bdg1.style.display = 'block'; 
          } else { 
-             document.getElementById('banner1').classList.add('closed'); 
-             document.getElementById('statusBadge1').style.display = 'inline-block'; 
-             document.getElementById('badge1').style.display = 'none'; 
+             if(b1) b1.classList.add('closed'); 
+             if(sb1) sb1.style.display = 'inline-block'; 
+             if(bdg1) bdg1.style.display = 'none'; 
          }
 
          let f1_opts = [settings.f1_opt_1, settings.f1_opt_2, settings.f1_opt_3, settings.f1_opt_4, settings.f1_opt_5, settings.f1_opt_6, settings.f1_opt_7, settings.f1_opt_8].filter(Boolean);
@@ -1477,60 +1612,68 @@
          }
          
          for(let i=1; i<=8; i++) {
-             let el = document.getElementById('h_admin_f1_opt_' + i);
-             if (el) el.value = settings['f1_opt_' + i] || "";
+             setElVal('h_admin_f1_opt_' + i, settings['f1_opt_' + i]);
          }
+
 
          // ==============================================
          // 2. นำข้อมูลฟอร์มความคิดเห็นลงหน้าจอ
          // ==============================================
-         document.getElementById('disp_h_title').innerText = hTitle;
-         document.getElementById('disp_title_2').innerText = hTitle;
-         document.getElementById('disp_desc_2').innerText = hDesc;
-         document.getElementById('disp_date_2').innerText = "📅 " + hDate;
-         document.getElementById('disp_h_plan_name').innerText = hPlanName;
+         setElText('disp_h_title', hTitle);
+         setElText('disp_title_2', hTitle);
+         setElText('disp_desc_2', hDesc);
+         setElText('disp_date_2', "📅 " + hDate);
+         setElText('disp_h_plan_name', hPlanName);
          
-         document.getElementById('h_admin_title').value = hTitle;
-         document.getElementById('h_admin_desc').value = hDesc;
-         document.getElementById('h_admin_date').value = hDate;
-         document.getElementById('h_admin_plan_name').value = hPlanName;
-         document.getElementById('swHearingStatus').checked = hOpen;
-         document.getElementById('swHearingRating').checked = hRatingOpen;
+         setElVal('h_admin_title', hTitle);
+         setElVal('h_admin_desc', hDesc);
+         setElVal('h_admin_date', hDate);
+         setElVal('h_admin_plan_name', hPlanName);
          
+         let swHStatus = document.getElementById('swHearingStatus');
+         if(swHStatus) swHStatus.checked = hOpen;
+         let swHRating = document.getElementById('swHearingRating');
+         if(swHRating) swHRating.checked = hRatingOpen;
+         
+         let b2 = document.getElementById('banner2');
+         let sb2 = document.getElementById('statusBadge2');
+         let bdg2 = document.getElementById('badge2');
+         let hClosedMsg = document.getElementById('hearingClosedMsg');
+         let hFormCont = document.getElementById('hearingFormContainer');
+
          if (hOpen) { 
-             document.getElementById('banner2').classList.remove('closed'); 
-             document.getElementById('statusBadge2').style.display = 'none'; 
-             document.getElementById('badge2').style.display = 'block'; 
-             document.getElementById('hearingClosedMsg').style.display = 'none'; 
-             document.getElementById('hearingFormContainer').style.display = 'block'; 
+             if(b2) b2.classList.remove('closed'); 
+             if(sb2) sb2.style.display = 'none'; 
+             if(bdg2) bdg2.style.display = 'block'; 
+             if(hClosedMsg) hClosedMsg.style.display = 'none'; 
+             if(hFormCont) hFormCont.style.display = 'block'; 
          } else { 
-             document.getElementById('banner2').classList.add('closed'); 
-             document.getElementById('statusBadge2').style.display = 'inline-block'; 
-             document.getElementById('badge2').style.display = 'none'; 
-             document.getElementById('hearingClosedMsg').style.display = 'block'; 
-             document.getElementById('hearingFormContainer').style.display = 'none'; 
+             if(b2) b2.classList.add('closed'); 
+             if(sb2) sb2.style.display = 'inline-block'; 
+             if(bdg2) bdg2.style.display = 'none'; 
+             if(hClosedMsg) hClosedMsg.style.display = 'block'; 
+             if(hFormCont) hFormCont.style.display = 'none'; 
          }
 
-         document.getElementById('disp_h_q1').innerText = settings.h_q1 || "ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม"; 
-         document.getElementById('disp_h_q2').innerText = settings.h_q2 || "ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)"; 
-         document.getElementById('disp_h_q3').innerText = settings.h_q3 || "ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)"; 
-         document.getElementById('disp_h_q4').innerText = settings.h_q4 || "ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ";
+         setElText('disp_h_q1', settings.h_q1 || "ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม");
+         setElText('disp_h_q2', settings.h_q2 || "ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)");
+         setElText('disp_h_q3', settings.h_q3 || "ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)");
+         setElText('disp_h_q4', settings.h_q4 || "ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ");
          
-         document.getElementById('h_admin_q1').value = settings.h_q1 || ""; 
-         document.getElementById('h_admin_q2').value = settings.h_q2 || ""; 
-         document.getElementById('h_admin_q3').value = settings.h_q3 || ""; 
-         document.getElementById('h_admin_q4').value = settings.h_q4 || "";
+         setElVal('h_admin_q1', settings.h_q1);
+         setElVal('h_admin_q2', settings.h_q2);
+         setElVal('h_admin_q3', settings.h_q3);
+         setElVal('h_admin_q4', settings.h_q4);
 
-         // 🟢 ส่วนที่ 1: Labels & Sectors
-         document.getElementById('disp_lbl_name').innerText = settings.h_lbl_name || "ชื่อ-นามสกุล";
-         document.getElementById('disp_lbl_district').innerText = settings.h_lbl_district || "อำเภอที่อยู่อาศัย";
-         document.getElementById('disp_lbl_sector').innerText = settings.h_lbl_sector || "ท่านสังกัดภาคส่วนใด";
-         document.getElementById('disp_lbl_idcard').innerText = settings.h_lbl_idcard || "เลขประจำตัวประชาชน 13 หลัก";
+         setElText('disp_lbl_name', settings.h_lbl_name || "ชื่อ-นามสกุล");
+         setElText('disp_lbl_district', settings.h_lbl_district || "อำเภอที่อยู่อาศัย");
+         setElText('disp_lbl_sector', settings.h_lbl_sector || "ท่านสังกัดภาคส่วนใด");
+         setElText('disp_lbl_idcard', settings.h_lbl_idcard || "เลขประจำตัวประชาชน 13 หลัก");
          
-         document.getElementById('h_admin_lbl_name').value = settings.h_lbl_name || "";
-         document.getElementById('h_admin_lbl_district').value = settings.h_lbl_district || "";
-         document.getElementById('h_admin_lbl_sector').value = settings.h_lbl_sector || "";
-         document.getElementById('h_admin_lbl_idcard').value = settings.h_lbl_idcard || "";
+         setElVal('h_admin_lbl_name', settings.h_lbl_name);
+         setElVal('h_admin_lbl_district', settings.h_lbl_district);
+         setElVal('h_admin_lbl_sector', settings.h_lbl_sector);
+         setElVal('h_admin_lbl_idcard', settings.h_lbl_idcard);
 
          // Dropdown ภาคส่วน
          let sec_opts = [settings.h_sec_1, settings.h_sec_2, settings.h_sec_3, settings.h_sec_4, settings.h_sec_5, settings.h_sec_6].filter(Boolean);
@@ -1542,67 +1685,75 @@
              });
          }
          for(let i=1; i<=6; i++) {
-             let el = document.getElementById('h_admin_sec_' + i);
-             if (el) el.value = settings['h_sec_' + i] || "";
+             setElVal('h_admin_sec_' + i, settings['h_sec_' + i]);
          }
 
          // บัตรประชาชน
          hReqIdcard = settings.h_req_idcard || "OFF";
-         document.getElementById('swReqIdCard').checked = (hReqIdcard === 'ON');
+         let swId = document.getElementById('swReqIdCard');
+         if(swId) swId.checked = (hReqIdcard === 'ON');
          
          let divIdCard = document.getElementById('div_h_idcard');
          let inIdCard = document.getElementById('h_idcard');
-         if (hReqIdcard === 'ON') {
-             divIdCard.style.display = 'block';
-             inIdCard.setAttribute('required', 'required');
-         } else {
-             divIdCard.style.display = 'none';
-             inIdCard.removeAttribute('required');
+         if(divIdCard && inIdCard) {
+             if (hReqIdcard === 'ON') {
+                 divIdCard.style.display = 'block';
+                 inIdCard.setAttribute('required', 'required');
+             } else {
+                 divIdCard.style.display = 'none';
+                 inIdCard.removeAttribute('required');
+             }
          }
 
-         // ข้อมูลชี้แจง และ Consent
-         document.getElementById('disp_h_info_title').innerText = settings.h_info_title || ""; 
-         document.getElementById('disp_h_info_desc').innerText = settings.h_info_desc || "";
+         // ซิงค์ชื่อหัวข้อ Dashboard 
+         setElText('lbl_dash_vision', settings.h_q2 || "ความเห็นต่อวิสัยทัศน์/เป้าหมาย");
+         setElText('lbl_dash_priority', settings.h_q4 || "สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข");
+
+         setElText('disp_h_info_title', settings.h_info_title);
+         setElText('disp_h_info_desc', settings.h_info_desc);
          
          let consentText = settings.h_consent_text || "ข้าพเจ้าได้อ่านและทำความเข้าใจรายละเอียดและเอกสารร่างแผนฯ เบื้องต้นแล้ว";
-         document.getElementById('disp_h_consent').innerHTML = consentText + ' <span class="text-danger">*</span>';
-         document.getElementById('h_admin_consent_text').value = consentText;
+         setElHtml('disp_h_consent', consentText + ' <span class="text-danger">*</span>');
+         setElVal('h_admin_consent_text', consentText);
 
          let hImgObj = document.getElementById('disp_h_img'); 
-         if (settings.h_img) { hImgObj.src = convertDriveUrl(settings.h_img); hImgObj.style.display = 'block'; } else { hImgObj.style.display = 'none'; }
-         let hSumObj = document.getElementById('disp_h_sum'); 
-         if (settings.h_sum) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else { hSumObj.style.display = 'none'; }
-         let hFullObj = document.getElementById('disp_h_full'); 
-         if (settings.h_full) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else { hFullObj.style.display = 'none'; }
-
-         document.getElementById('h_admin_info_title').value = settings.h_info_title || ""; 
-         document.getElementById('h_admin_info_desc').value = settings.h_info_desc || ""; 
-         document.getElementById('h_admin_img').value = settings.h_img || ""; 
-         document.getElementById('h_admin_sum').value = settings.h_sum || ""; 
-         document.getElementById('h_admin_full').value = settings.h_full || "";
+         if (settings.h_img && hImgObj) { hImgObj.src = convertDriveUrl(settings.h_img); hImgObj.style.display = 'block'; } 
+         else if(hImgObj) { hImgObj.style.display = 'none'; }
          
-         // 🟢 ระบบ Scale Switcher 🟢
+         let hSumObj = document.getElementById('disp_h_sum'); 
+         if (settings.h_sum && hSumObj) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } 
+         else if(hSumObj) { hSumObj.style.display = 'none'; }
+         
+         let hFullObj = document.getElementById('disp_h_full'); 
+         if (settings.h_full && hFullObj) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } 
+         else if(hFullObj) { hFullObj.style.display = 'none'; }
+
+         setElVal('h_admin_info_title', settings.h_info_title);
+         setElVal('h_admin_info_desc', settings.h_info_desc);
+         setElVal('h_admin_img', settings.h_img);
+         setElVal('h_admin_sum', settings.h_sum);
+         setElVal('h_admin_full', settings.h_full);
+         
+         for(let i=0; i<6; i++) { 
+             setElVal('h_admin_s3_' + (i+1), h_topics[i]);
+         }
+
+         // 🟢 ระบบ Scale Switcher
          let radioScale = document.getElementById('scale' + currentScaleType);
          if(radioScale) radioScale.checked = true;
 
-         // 🟢 สร้างตารางประเด็นส่วนที่ 3 ตามสเกลที่เลือกอัตโนมัติ
+         // 🟢 สร้างตารางประเด็นส่วนที่ 3
          let activeScale = scaleConfigs[currentScaleType];
-         
-         // สร้างหัวตาราง (Thead)
          let theadHtml = `<tr><th class="text-start">ประเด็นการพัฒนา</th>`;
          activeScale.labels.forEach(lbl => {
              theadHtml += `<th>${lbl}</th>`;
          });
          theadHtml += `</tr>`;
-         document.getElementById('dynamic_topics_head').innerHTML = theadHtml;
+         setElHtml('dynamic_topics_head', theadHtml);
 
-         // สร้างเนื้อหาตาราง (Tbody)
          let tableBodyHtml = '';
          h_topics.forEach((topic, idx) => {
              if (topic && topic.trim() !== "") {
-                 let elAdminTopic = document.getElementById('h_admin_s3_' + (idx+1));
-                 if (elAdminTopic) elAdminTopic.value = topic;
-                 
                  tableBodyHtml += `<tr><td class="text-start fw-bold" id="disp_h_s3_${idx+1}">${topic}</td>`;
                  activeScale.labels.forEach(lbl => {
                      let req = lbl === activeScale.labels[0] ? 'required' : '';
@@ -1611,7 +1762,7 @@
                  tableBodyHtml += `</tr>`;
              }
          });
-         document.getElementById('dynamic_topics_body').innerHTML = tableBodyHtml;
+         setElHtml('dynamic_topics_body', tableBodyHtml);
 
          // Dropdown ส่วนที่ 4
          let p_topics = [settings.h_p_1, settings.h_p_2, settings.h_p_3, settings.h_p_4, settings.h_p_5, settings.h_p_6].filter(t => t);
@@ -1625,10 +1776,9 @@
              });
          }
          
-         let elP_ph = document.getElementById('h_admin_p_ph'); if (elP_ph) elP_ph.value = settings.h_p_ph || "";
+         setElVal('h_admin_p_ph', settings.h_p_ph);
          for(let i=1; i<=6; i++) {
-             let el = document.getElementById('h_admin_p_' + i);
-             if (el) el.value = settings['h_p_' + i] || "";
+             setElVal('h_admin_p_' + i, settings['h_p_' + i]);
          }
 
          // Placeholder
@@ -1640,33 +1790,34 @@
          let hStrategyFb = document.getElementById('h_strategy_fb'); if(hStrategyFb) hStrategyFb.placeholder = ph2;
          let hFeedback = document.getElementById('h_feedback'); if(hFeedback) hFeedback.placeholder = ph3;
 
-         let elPh1 = document.getElementById('h_admin_fb_ph_1'); if (elPh1) elPh1.value = ph1;
-         let elPh2 = document.getElementById('h_admin_fb_ph_2'); if (elPh2) elPh2.value = ph2;
-         let elPh3 = document.getElementById('h_admin_fb_ph_3'); if (elPh3) elPh3.value = ph3;
+         setElVal('h_admin_fb_ph_1', ph1);
+         setElVal('h_admin_fb_ph_2', ph2);
+         setElVal('h_admin_fb_ph_3', ph3);
 
          // ==============================================
          // 3. ตั้งค่าทั่วไป (Dash, PR, Videos)
          // ==============================================
-         document.getElementById('disp_video_title').innerText = settings.video_title || "📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด"; 
-         document.getElementById('admin_video_title').value = settings.video_title || "";
+         setElText('disp_video_title', settings.video_title || "📺 วิดีโอแนะนำความสำคัญของแผนพัฒนาจังหวัด");
+         setElVal('admin_video_title', settings.video_title);
          
          updateVideo(settings.video_url || ""); 
          updateDashboard(settings.dash_url || "");
          
-         document.getElementById('admin_dash_main_url').value = settings.dash_main_url || "";
-         if(settings.dash_main_url) {
-             document.getElementById('dashMainLinkDiv').style.display = 'block';
-             document.getElementById('dashMainLinkBtn').href = settings.dash_main_url;
-         } else {
-             document.getElementById('dashMainLinkDiv').style.display = 'none';
+         setElVal('admin_dash_main_url', settings.dash_main_url);
+         let dMainLinkDiv = document.getElementById('dashMainLinkDiv');
+         let dMainLinkBtn = document.getElementById('dashMainLinkBtn');
+         if(settings.dash_main_url && dMainLinkDiv && dMainLinkBtn) {
+             dMainLinkDiv.style.display = 'block';
+             dMainLinkBtn.href = settings.dash_main_url;
+         } else if(dMainLinkDiv) {
+             dMainLinkDiv.style.display = 'none';
          }
 
          // สร้าง Carousel สื่อประชาสัมพันธ์
          let pr_imgs = [settings.pr_img_1, settings.pr_img_2, settings.pr_img_3, settings.pr_img_4, settings.pr_img_5].filter(img => img && img.trim() !== "");
          
          for(let i=1; i<=5; i++) {
-             let el = document.getElementById('h_admin_pr_' + i);
-             if (el) el.value = settings['pr_img_' + i] || "";
+             setElVal('h_admin_pr_' + i, settings['pr_img_' + i]);
          }
 
          if (pr_imgs.length > 0) {
@@ -1677,11 +1828,13 @@
                  indicatorsHtml += `<button type="button" data-bs-target="#prCarousel" data-bs-slide-to="${idx}" ${idx === 0 ? 'class="active"' : ''}></button>`;
                  innerHtml += `<div class="carousel-item ${idx === 0 ? 'active' : ''}" data-bs-interval="4000"><img src="${finalUrl}"></div>`;
              });
-             document.getElementById('pr_indicators').innerHTML = indicatorsHtml;
-             document.getElementById('pr_inner').innerHTML = innerHtml;
-             document.getElementById('sec-pr').style.display = 'block';
+             setElHtml('pr_indicators', indicatorsHtml);
+             setElHtml('pr_inner', innerHtml);
+             let secPr = document.getElementById('sec-pr');
+             if(secPr) secPr.style.display = 'block';
          } else {
-             document.getElementById('sec-pr').style.display = 'none';
+             let secPr = document.getElementById('sec-pr');
+             if(secPr) secPr.style.display = 'none';
          }
 
          buildYearFilter(); 
@@ -1689,19 +1842,24 @@
          renderQA(); 
          renderVideos();
          
-         document.getElementById('globalLoader').style.opacity = '0';
-         setTimeout(() => { 
-             document.getElementById('globalLoader').style.display = 'none'; 
-         }, 300);
+         let loader = document.getElementById('globalLoader');
+         if(loader) {
+             loader.style.opacity = '0';
+             setTimeout(() => { loader.style.display = 'none'; }, 300);
+         }
 
       }).catch(error => {
           console.error("InitSystem Error:", error);
-          document.getElementById('globalLoader').style.display = 'none';
-          Swal.fire({ 
-              icon: 'error', 
-              title: 'ไม่สามารถโหลดข้อมูลได้', 
-              html: 'พบข้อผิดพลาด: <br><span class="text-danger">' + error.message + '</span><br>กรุณารีเฟรชหน้าต่างอีกครั้ง' 
-          });
+          let loader = document.getElementById('globalLoader');
+          if(loader) {
+              loader.style.display = 'flex';
+              loader.style.opacity = '1';
+              loader.innerHTML = `<div class='p-5 text-center'>
+                 <h4 class='text-danger fw-bold'>❌ ไม่สามารถโหลดข้อมูลได้</h4>
+                 <p class='text-muted'>${error.message}</p>
+                 <button class='btn btn-primary mt-3' onclick='location.reload()'>รีเฟรชหน้าต่าง</button>
+              </div>`;
+          }
       });
     }
 
@@ -1738,8 +1896,9 @@
     function updateVideo(url) { 
         let videoId = extractYouTubeID(url); 
         let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : ""; 
-        document.getElementById('main_video_frame').src = embedUrl; 
-        document.getElementById('admin_video_url').value = url || ""; 
+        let frame = document.getElementById('main_video_frame');
+        if(frame) frame.src = embedUrl; 
+        setElVal('admin_video_url', url);
     }
 
     function extractYouTubeID(url) { 
@@ -1752,21 +1911,22 @@
     function updateDashboard(url) { 
         let ph = document.getElementById('dash_placeholder'); 
         let frame = document.getElementById('main_dash_frame'); 
-        document.getElementById('admin_dash_url').value = url || ""; 
+        setElVal('admin_dash_url', url);
         
         if (url && url.length > 5) { 
-            ph.style.display = 'none'; 
-            frame.style.display = 'block'; 
-            frame.src = url; 
+            if(ph) ph.style.display = 'none'; 
+            if(frame) { frame.style.display = 'block'; frame.src = url; }
         } else { 
-            ph.style.display = 'flex'; 
-            frame.style.display = 'none'; 
+            if(ph) ph.style.display = 'flex'; 
+            if(frame) frame.style.display = 'none'; 
         } 
     }
 
     function toggleSidebar() { 
-        document.getElementById('sidebar').classList.toggle('active'); 
-        document.getElementById('sidebarOverlay').classList.toggle('active'); 
+        let sb = document.getElementById('sidebar');
+        let overlay = document.getElementById('sidebarOverlay');
+        if(sb) sb.classList.toggle('active'); 
+        if(overlay) overlay.classList.toggle('active'); 
     }
 
     function showPage(id) {
@@ -1790,15 +1950,18 @@
       
       window.scrollTo(0,0);
       if (window.innerWidth <= 992) { 
-          document.getElementById('sidebar').classList.remove('active'); 
-          document.getElementById('sidebarOverlay').classList.remove('active'); 
+          let sb = document.getElementById('sidebar');
+          let overlay = document.getElementById('sidebarOverlay');
+          if(sb) sb.classList.remove('active'); 
+          if(overlay) overlay.classList.remove('active'); 
       }
     }
 
     function scrollToId(id) { 
         showPage('home'); 
         setTimeout(() => { 
-            document.getElementById(id).scrollIntoView({behavior:'smooth'}); 
+            let target = document.getElementById(id);
+            if(target) target.scrollIntoView({behavior:'smooth'}); 
         }, 200); 
     }
 
@@ -1849,7 +2012,8 @@
        let titleVal = getVal('admin_title_1'); 
        let descVal = getVal('admin_subtitle_1'); 
        let dateVal = getVal('admin_date_1'); 
-       let status = document.getElementById('swForm1').checked ? 'OPEN' : 'CLOSED';
+       let swF1 = document.getElementById('swForm1');
+       let status = (swF1 && swF1.checked) ? 'OPEN' : 'CLOSED';
        
        Swal.fire({ 
            title: 'กำลังบันทึก...', 
@@ -1883,7 +2047,12 @@
     }
 
     function saveHearingConfig() {
-       let selectedScale = document.querySelector('input[name="admin_scale_type"]:checked') ? document.querySelector('input[name="admin_scale_type"]:checked').value : "4";
+       let scaleRadio = document.querySelector('input[name="admin_scale_type"]:checked');
+       let selectedScale = scaleRadio ? scaleRadio.value : "4";
+       
+       let swStatus = document.getElementById('swHearingStatus');
+       let swRating = document.getElementById('swHearingRating');
+       let swIdCard = document.getElementById('swReqIdCard');
        
        let payload = {
           action: 'updateHearingConfig', 
@@ -1892,8 +2061,8 @@
           h_desc: getVal('h_admin_desc'), 
           h_date: getVal('h_admin_date'), 
           h_plan_name: getVal('h_admin_plan_name'), 
-          h_status: document.getElementById('swHearingStatus').checked ? 'OPEN' : 'CLOSED', 
-          h_rating: document.getElementById('swHearingRating').checked ? 'ON' : 'OFF',
+          h_status: (swStatus && swStatus.checked) ? 'OPEN' : 'CLOSED', 
+          h_rating: (swRating && swRating.checked) ? 'ON' : 'OFF',
           h_img: getVal('h_admin_img'), 
           h_sum: getVal('h_admin_sum'), 
           h_full: getVal('h_admin_full'), 
@@ -1904,7 +2073,7 @@
           h_q2: getVal('h_admin_q2'), 
           h_q3: getVal('h_admin_q3'), 
           h_q4: getVal('h_admin_q4'), 
-          h_req_idcard: document.getElementById('swReqIdCard').checked ? 'ON' : 'OFF',
+          h_req_idcard: (swIdCard && swIdCard.checked) ? 'ON' : 'OFF',
           h_lbl_idcard: getVal('h_admin_lbl_idcard'),
           h_lbl_name: getVal('h_admin_lbl_name'),
           h_lbl_district: getVal('h_admin_lbl_district'),
@@ -1952,9 +2121,12 @@
     function openDocModal() { 
         document.getElementById('adminDocForm').reset(); 
         document.getElementById('doc_id').value = ''; 
-        document.getElementById('docModalTitle').innerText = 'เพิ่มเอกสารใหม่';
-        document.getElementById('newBadgeToggleDiv').style.display = 'block'; 
-        document.getElementById('doc_hide_new_badge').checked = false; 
+        setElText('docModalTitle', 'เพิ่มเอกสารใหม่');
+        
+        let bdgDiv = document.getElementById('newBadgeToggleDiv');
+        let hideBdg = document.getElementById('doc_hide_new_badge');
+        if(bdgDiv) bdgDiv.style.display = 'block'; 
+        if(hideBdg) hideBdg.checked = false; 
         
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); 
         modalInstance.show();
@@ -1964,21 +2136,26 @@
        let d = docs.find(x => x.id === id); 
        if(!d) return;
        
-       document.getElementById('doc_id').value = d.id; 
-       document.getElementById('doc_title').value = d.title; 
-       document.getElementById('doc_year').value = d.year || ''; 
-       document.getElementById('doc_desc').value = d.desc; 
-       document.getElementById('doc_link').value = d.link; 
-       document.getElementById('doc_cat').value = d.type; 
-       document.getElementById('doc_ai_status').value = d.ai_status || 'ON'; 
-       document.getElementById('doc_order').value = d.order == 999 ? '' : d.order; 
-       document.getElementById('doc_is_pinned').checked = d.is_pinned; 
-       document.getElementById('doc_is_important').checked = d.is_important;
+       setElVal('doc_id', d.id);
+       setElVal('doc_title', d.title);
+       setElVal('doc_year', d.year || '');
+       setElVal('doc_desc', d.desc);
+       setElVal('doc_link', d.link);
+       setElVal('doc_cat', d.type);
+       setElVal('doc_ai_status', d.ai_status || 'ON');
+       setElVal('doc_order', d.order == 999 ? '' : d.order);
        
-       document.getElementById('newBadgeToggleDiv').style.display = 'none'; 
-       document.getElementById('doc_hide_new_badge').checked = d.hide_new_badge === true;
+       let pin = document.getElementById('doc_is_pinned');
+       let imp = document.getElementById('doc_is_important');
+       if(pin) pin.checked = d.is_pinned; 
+       if(imp) imp.checked = d.is_important;
        
-       document.getElementById('docModalTitle').innerText = 'แก้ไขเอกสาร';
+       let bdgDiv = document.getElementById('newBadgeToggleDiv');
+       let hideBdg = document.getElementById('doc_hide_new_badge');
+       if(bdgDiv) bdgDiv.style.display = 'none'; 
+       if(hideBdg) hideBdg.checked = (d.hide_new_badge === true);
+       
+       setElText('docModalTitle', 'แก้ไขเอกสาร');
        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); 
        modalInstance.show();
     }
@@ -1991,6 +2168,10 @@
           didOpen: () => Swal.showLoading() 
       });
       
+      let pin = document.getElementById('doc_is_pinned');
+      let imp = document.getElementById('doc_is_important');
+      let hideBdg = document.getElementById('doc_hide_new_badge');
+
       let payload = { 
           action: 'saveDoc', 
           token: adminToken, 
@@ -2002,9 +2183,9 @@
           ai_status: getVal('doc_ai_status'), 
           year: getVal('doc_year'), 
           order: getVal('doc_order'), 
-          is_pinned: document.getElementById('doc_is_pinned').checked, 
-          is_important: document.getElementById('doc_is_important').checked, 
-          hide_new_badge: document.getElementById('doc_hide_new_badge').checked 
+          is_pinned: pin ? pin.checked : false, 
+          is_important: imp ? imp.checked : false, 
+          hide_new_badge: hideBdg ? hideBdg.checked : false 
       };
       
       postData(payload, (res) => {
@@ -2068,7 +2249,7 @@
        sortedYears.forEach(y => { 
            html += `<option value="${y}">ปี ${y}</option>`; 
        });
-       document.getElementById('filterYear').innerHTML = html;
+       setElHtml('filterYear', html);
     }
 
     function sortDocsLogic(a, b) {
@@ -2121,9 +2302,9 @@
     }
     
     function clearSearch() { 
-        document.getElementById('searchDoc').value = ''; 
-        document.getElementById('filterCat').value = 'All'; 
-        document.getElementById('filterYear').value = 'All'; 
+        setElVal('searchDoc', '');
+        setElVal('filterCat', 'All');
+        setElVal('filterYear', 'All');
         filterDocs(); 
     }
 
@@ -2142,7 +2323,7 @@
       let html = ''; 
       if(filteredDocs.length === 0) { 
           html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; 
-          document.getElementById('pagination').innerHTML=''; 
+          setElHtml('pagination', '');
       } else {
         let start = (currentPage - 1) * itemsPerPage; 
         let end = start + itemsPerPage; 
@@ -2192,7 +2373,7 @@
         });
         renderPagination();
       } 
-      document.getElementById('docListContainer').innerHTML = html;
+      setElHtml('docListContainer', html);
     }
 
     function renderPagination() { 
@@ -2209,7 +2390,7 @@
             } 
             html += `<div class="page-btn ${currentPage===totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage+1})">»</div>`; 
         } 
-        document.getElementById('pagination').innerHTML = html; 
+        setElHtml('pagination', html);
     }
 
     function changePage(p) { 
@@ -2299,9 +2480,10 @@
     function handleBannerClick(num) { 
         if(num === 1) { 
             if(form1Open) { 
-                document.getElementById('formTitle').innerText = form1Title; 
-                document.getElementById('f_topic_type').value = form1Title; 
-                document.getElementById('topicSelectDiv').style.display = 'block'; 
+                setElText('formTitle', form1Title);
+                setElVal('f_topic_type', form1Title);
+                let topicSel = document.getElementById('topicSelectDiv');
+                if(topicSel) topicSel.style.display = 'block'; 
                 let modalInstance = bootstrap.Modal.getInstance(document.getElementById('formModal')) || new bootstrap.Modal(document.getElementById('formModal')); 
                 modalInstance.show();
             } else { 
@@ -2318,22 +2500,22 @@
     }
     
     function openVideoModal() {
-        document.getElementById('vid_id').value = ''; 
-        document.getElementById('vid_title').value = ''; 
-        document.getElementById('vid_desc').value = ''; 
-        document.getElementById('vid_link').value = ''; 
-        document.getElementById('vid_order').value = ''; 
-        document.getElementById('vidModalTitle').innerText = 'เพิ่มวิดีโอ';
+        setElVal('vid_id', '');
+        setElVal('vid_title', '');
+        setElVal('vid_desc', '');
+        setElVal('vid_link', '');
+        setElVal('vid_order', '');
+        setElText('vidModalTitle', 'เพิ่มวิดีโอ');
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); 
         modalInstance.show();
     }
 
     function openQAModal() {
-        document.getElementById('qa_id').value = ''; 
-        document.getElementById('qa_emoji').value = '❓'; 
-        document.getElementById('qa_question').value = ''; 
-        document.getElementById('qa_answer').value = ''; 
-        document.getElementById('qaModalTitle').innerText = 'เพิ่ม Q&A';
+        setElVal('qa_id', '');
+        setElVal('qa_emoji', '❓');
+        setElVal('qa_question', '');
+        setElVal('qa_answer', '');
+        setElText('qaModalTitle', 'เพิ่ม Q&A');
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); 
         modalInstance.show();
     }
@@ -2342,12 +2524,12 @@
         let v = videoList.find(x => x.id === id); 
         if(!v) return; 
         
-        document.getElementById('vid_id').value = v.id; 
-        document.getElementById('vid_title').value = v.title; 
-        document.getElementById('vid_desc').value = v.desc || ""; 
-        document.getElementById('vid_link').value = v.link; 
-        document.getElementById('vid_order').value = v.order == 999 ? "" : v.order; 
-        document.getElementById('vidModalTitle').innerText='แก้ไขวิดีโอ'; 
+        setElVal('vid_id', v.id);
+        setElVal('vid_title', v.title);
+        setElVal('vid_desc', v.desc || "");
+        setElVal('vid_link', v.link);
+        setElVal('vid_order', v.order == 999 ? "" : v.order);
+        setElText('vidModalTitle', 'แก้ไขวิดีโอ');
         
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); 
         modalInstance.show(); 
@@ -2418,18 +2600,18 @@
                 h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar" onclick="showFullVideoTitle('${vid.id}')" title="คลิกเพื่อดูรายละเอียด"><div class="video-title-text">${vid.title}</div><i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; 
             }); 
         } 
-        document.getElementById('videoListContainer').innerHTML = h; 
+        setElHtml('videoListContainer', h);
     }
 
     function editQA(id) { 
         let q = qaList.find(x => x.id === id); 
         if(!q) return; 
         
-        document.getElementById('qa_id').value = q.id; 
-        document.getElementById('qa_emoji').value = q.emoji||'❓'; 
-        document.getElementById('qa_question').value = q.q; 
-        document.getElementById('qa_answer').value = q.a; 
-        document.getElementById('qaModalTitle').innerText='แก้ไข Q&A'; 
+        setElVal('qa_id', q.id);
+        setElVal('qa_emoji', q.emoji||'❓');
+        setElVal('qa_question', q.q);
+        setElVal('qa_answer', q.a);
+        setElText('qaModalTitle', 'แก้ไข Q&A');
         
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); 
         modalInstance.show(); 
@@ -2497,7 +2679,7 @@
                 h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; 
             }); 
         } 
-        document.getElementById('accQA').innerHTML = h; 
+        setElHtml('accQA', h);
     }
 
     function openChat(docId) { 
@@ -2505,7 +2687,7 @@
         if(!doc) return; 
         
         currentDocLink = doc.link; 
-        document.getElementById('chatHistory').innerHTML = `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`; 
+        setElHtml('chatHistory', `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`);
         
         let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); 
         modalInstance.show(); 
@@ -2513,10 +2695,12 @@
     
     function sendChat() { 
         let input = document.getElementById('chatInput'); 
+        if(!input) return;
         let question = input.value.trim(); 
         if(!question) return; 
         
         let history = document.getElementById('chatHistory'); 
+        if(!history) return;
         history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; 
         input.value = ''; 
         history.scrollTop = history.scrollHeight; 
@@ -2531,7 +2715,8 @@
         })
         .then(r => r.text())
         .then(text => {
-            document.getElementById(loadingId).remove();
+            let loadingEl = document.getElementById(loadingId);
+            if(loadingEl) loadingEl.remove();
             let data;
             try { 
                 data = JSON.parse(text); 
@@ -2544,7 +2729,8 @@
             history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; 
             history.scrollTop = history.scrollHeight; 
         }).catch(e => {
-            document.getElementById(loadingId).remove();
+            let loadingEl = document.getElementById(loadingId);
+            if(loadingEl) loadingEl.remove();
             history.innerHTML += `<div class="chat-ai chat-msg text-danger">การเชื่อมต่อล้มเหลว โปรดตรวจสอบอินเทอร์เน็ต</div>`;
         });
     }
@@ -2552,13 +2738,14 @@
     function submitHearing(e) { 
         e.preventDefault(); 
         let btn = document.getElementById('btnSubmitHearing'); 
+        if(!btn) return;
         let oldText = btn.innerText; 
         btn.disabled = true; 
         btn.innerText = 'กำลังส่ง...'; 
         
         let idcardVal = "";
         if (hReqIdcard === 'ON') {
-            idcardVal = document.getElementById('h_idcard').value;
+            idcardVal = getVal('h_idcard');
             if (!checkThaiID(idcardVal)) {
                 Swal.fire('ข้อผิดพลาด', 'เลขประจำตัวประชาชน 13 หลัก ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง', 'error');
                 btn.disabled = false;
@@ -2600,9 +2787,12 @@
                 Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
                 hOpen = false; 
                 
-                document.getElementById('banner2').classList.add('closed'); 
-                document.getElementById('statusBadge2').style.display = 'inline-block'; 
-                document.getElementById('badge2').style.display = 'none'; 
+                let b2 = document.getElementById('banner2');
+                let sb2 = document.getElementById('statusBadge2');
+                let bdg2 = document.getElementById('badge2');
+                if(b2) b2.classList.add('closed'); 
+                if(sb2) sb2.style.display = 'inline-block'; 
+                if(bdg2) bdg2.style.display = 'none'; 
                 
                 let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); 
                 if(m) m.hide();
@@ -2631,13 +2821,14 @@
         btn.disabled = true; 
         btn.innerText = 'กำลังส่ง...'; 
         
-        let topicVal = document.getElementById('f_topic_type').value; 
+        let topicVal = getVal('f_topic_type'); 
         let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS";
         let finalTopic = topicVal;
         
-        if(document.getElementById('topicSelectDiv').style.display === 'block') {
+        let topicSel = document.getElementById('topicSelectDiv');
+        if(topicSel && topicSel.style.display === 'block') {
             let select = document.getElementById('f_topic_select');
-            if(select.value === "") { 
+            if(select && select.value === "") { 
                 Swal.fire('กรุณาเลือกหมวดหมู่'); 
                 btn.disabled = false; 
                 btn.innerText = oldText; 
@@ -2661,9 +2852,12 @@
                 Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
                 if (topicKey === "FORM_1_STATUS") form1Open = false;
                 
-                document.getElementById('banner1').classList.add('closed'); 
-                document.getElementById('statusBadge1').style.display = 'inline-block'; 
-                document.getElementById('badge1').style.display = 'none'; 
+                let b1 = document.getElementById('banner1');
+                let sb1 = document.getElementById('statusBadge1');
+                let bdg1 = document.getElementById('badge1');
+                if(b1) b1.classList.add('closed'); 
+                if(sb1) sb1.style.display = 'inline-block'; 
+                if(bdg1) bdg1.style.display = 'none'; 
                 
                 let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); 
                 if(m) m.hide();
@@ -2680,7 +2874,7 @@
     }
     
     function setStar(val) { 
-        document.getElementById('sys_rating_val').value = val; 
+        setElVal('sys_rating_val', val);
         document.querySelectorAll('.star-rating i').forEach((item, idx) => { 
             if(idx < val) item.classList.add('active'); 
             else item.classList.remove('active'); 
@@ -2704,8 +2898,8 @@
             let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); 
             if(m) m.hide(); 
             Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); 
-            document.getElementById('sys_rating_val').value = 0; 
-            document.getElementById('sys_feedback').value = ''; 
+            setElVal('sys_rating_val', 0);
+            setElVal('sys_feedback', '');
             setStar(0); 
         }); 
     }
@@ -2722,22 +2916,23 @@
        .then(data => {
            Swal.close(); 
            
-           document.getElementById('btnOpenSheet').href = data.sheetUrl; 
-           document.getElementById('stat_issues_total').innerText = data.issues.total; 
-           document.getElementById('stat_hearing_total').innerText = data.hearing.total;
+           let btnOS = document.getElementById('btnOpenSheet');
+           if(btnOS) btnOS.href = data.sheetUrl; 
+           setElText('stat_issues_total', data.issues.total);
+           setElText('stat_hearing_total', data.hearing.total);
            
            renderChart('chartIssues', 'bar', Object.keys(data.issues.byCat), Object.values(data.issues.byCat), 'เรื่องแจ้ง', '#e91e63'); 
            renderChart('chartSector', 'pie', Object.keys(data.hearing.bySector), Object.values(data.hearing.bySector), 'ภาคส่วน', ['#f1c40f','#e67e22','#e74c3c','#9b59b6', '#34495e']); 
            renderChart('chartVision', 'doughnut', Object.keys(data.hearing.byVision), Object.values(data.hearing.byVision), 'วิสัยทัศน์', ['#2ecc71','#f1c40f','#e74c3c']); 
            renderChart('chartPriority', 'bar', Object.keys(data.hearing.byPriority), Object.values(data.hearing.byPriority), 'ความสำคัญ', '#34495e');
            
-           // 🟢 ดึง Scale Setting ที่แอดมินตั้งไว้
+           // ดึง Scale Setting ที่แอดมินตั้งไว้
            let backendScale = data.hearing.scaleType || "4";
-           let activeScale = scaleConfigs[backendScale];
+           let activeScale = scaleConfigs[backendScale] || scaleConfigs["4"];
            let stdL = activeScale.labels;
            let stdC = activeScale.colors;
            
-           document.getElementById('lbl_dash_scale_info').innerText = "(ระบบแสดงผลแบบ " + backendScale + " ระดับ)";
+           setElText('lbl_dash_scale_info', "(ระบบแสดงผลแบบ " + backendScale + " ระดับ)");
 
            // 1. สร้างกราฟภาพรวม (Summary)
            let summaryData = data.hearing.summary;
@@ -2756,7 +2951,7 @@
                theadHtml += `<th>${lbl}</th>`;
            });
            theadHtml += `</tr>`;
-           document.getElementById('summaryTableHead').innerHTML = theadHtml;
+           setElHtml('summaryTableHead', theadHtml);
 
            let tableHtml = '';
            h_topics.forEach((topic, idx) => {
@@ -2788,46 +2983,21 @@
                    tableHtml += `<td class="align-middle" style="background-color:#f8f9fa;">${summaryCell}</td></tr>`;
                }
            });
-           document.getElementById('summaryTableBody').innerHTML = tableHtml;
+           setElHtml('summaryTableBody', tableHtml);
 
            // 3. สร้างกราฟรายข้อ 1-6
            let getD = (obj) => stdL.map(l => obj[l] || 0);
            
-           if(h_topics[0] !== "") { 
-               document.getElementById('lbl_chartT1').innerText = h_topics[0]; 
-               renderChart('chartT1', 'doughnut', stdL, getD(data.hearing.byT1), '', stdC); 
-               document.getElementById('col_chartT1').style.display = 'block'; 
-           } else { document.getElementById('col_chartT1').style.display = 'none'; }
-           
-           if(h_topics[1] !== "") { 
-               document.getElementById('lbl_chartT2').innerText = h_topics[1]; 
-               renderChart('chartT2', 'doughnut', stdL, getD(data.hearing.byT2), '', stdC); 
-               document.getElementById('col_chartT2').style.display = 'block'; 
-           } else { document.getElementById('col_chartT2').style.display = 'none'; }
-           
-           if(h_topics[2] !== "") { 
-               document.getElementById('lbl_chartT3').innerText = h_topics[2]; 
-               renderChart('chartT3', 'doughnut', stdL, getD(data.hearing.byT3), '', stdC); 
-               document.getElementById('col_chartT3').style.display = 'block'; 
-           } else { document.getElementById('col_chartT3').style.display = 'none'; }
-           
-           if(h_topics[3] !== "") { 
-               document.getElementById('lbl_chartT4').innerText = h_topics[3]; 
-               renderChart('chartT4', 'doughnut', stdL, getD(data.hearing.byT4), '', stdC); 
-               document.getElementById('col_chartT4').style.display = 'block'; 
-           } else { document.getElementById('col_chartT4').style.display = 'none'; }
-           
-           if(h_topics[4] !== "") { 
-               document.getElementById('lbl_chartT5').innerText = h_topics[4]; 
-               renderChart('chartT5', 'doughnut', stdL, getD(data.hearing.byT5), '', stdC); 
-               document.getElementById('col_chartT5').style.display = 'block'; 
-           } else { document.getElementById('col_chartT5').style.display = 'none'; }
-           
-           if(h_topics[5] !== "") { 
-               document.getElementById('lbl_chartT6').innerText = h_topics[5]; 
-               renderChart('chartT6', 'doughnut', stdL, getD(data.hearing.byT6), '', stdC); 
-               document.getElementById('col_chartT6').style.display = 'block'; 
-           } else { document.getElementById('col_chartT6').style.display = 'none'; }
+           for(let i=1; i<=6; i++) {
+               let colDiv = document.getElementById('col_chartT' + i);
+               if(h_topics[i-1] !== "") { 
+                   setElText('lbl_chartT' + i, h_topics[i-1]);
+                   renderChart('chartT' + i, 'doughnut', stdL, getD(data.hearing['byT'+i]), '', stdC); 
+                   if(colDiv) colDiv.style.display = 'block'; 
+               } else { 
+                   if(colDiv) colDiv.style.display = 'none'; 
+               }
+           }
 
        }).catch(e => {
            console.error("Dashboard Load Error:", e);
@@ -2841,7 +3011,9 @@
            charts[chartKey].destroy(); 
        }
        
-       let ctx = document.getElementById(canvasId).getContext('2d');
+       let ctx = document.getElementById(canvasId);
+       if(!ctx) return;
+       ctx = ctx.getContext('2d');
        
        let config = { 
            type: type, 
