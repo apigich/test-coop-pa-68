@@ -1244,10 +1244,113 @@
           </div>
       </div>
 
-      <div id="page-videos" style="display:none;"><div class="content-section"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3><div id="adminVideoBtnGroup" style="display:none; gap: 8px;"><button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button><button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button></div></div><hr class="text-secondary mt-0 mb-4"><div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div></div></div>
-      <div id="page-docs" style="display:none;"><div class="content-section"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3><div id="adminDocBtnGroup" style="display:none; gap: 8px;"><button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button><button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button></div></div><hr class="text-secondary mt-0 mb-3"><div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border"><div class="col-md-4"><label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label><input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()"></div><div class="col-md-3"><label class="small text-muted fw-bold mb-1">หมวดหมู่</label><select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select></div><div class="col-md-3"><label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label><select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select></div><div class="col-md-2 mt-auto"><button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button></div></div><div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง</div><div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div><div id="pagination" class="pagination-container"></div></div></div>
-      <div id="page-calendar" style="display:none;"><div class="content-section border-0 bg-transparent p-0 mb-4 shadow-none"><h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2><p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p></div><div class="alert alert-info shadow-sm" role="alert"><i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่</div><div class="content-section text-center py-5 shadow-sm border"><i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i><h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3><p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p><a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow"><i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน</a></div></div>
-      <div id="page-qa" style="display:none;"><div class="content-section"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3><div id="adminQABtnGroup" style="display:none; gap: 8px;"><button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button><button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button></div></div><hr class="text-secondary mt-0 mb-4"><div class="accordion accordion-flush border rounded shadow-sm" id="accQA"></div></div></div>
+      <div id="page-videos" style="display:none;">
+        <div class="content-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3>
+             <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()">
+                   <i class="material-icons align-middle">add</i> เพิ่มวิดีโอ
+                 </button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()">
+                   <i class="material-icons align-middle">logout</i>
+                 </button>
+             </div>
+          </div>
+          <hr class="text-secondary mt-0 mb-4">
+          <div id="videoListContainer" class="row g-4">
+            <div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-docs" style="display:none;">
+        <div class="content-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
+             <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openDocModal()">
+                   <i class="material-icons align-middle">add</i> เพิ่มเอกสาร
+                 </button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()">
+                   <i class="material-icons align-middle">logout</i>
+                 </button>
+             </div>
+          </div>
+          <hr class="text-secondary mt-0 mb-3">
+          
+          <div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border">
+             <div class="col-md-4">
+                 <label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label>
+                 <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
+             </div>
+             <div class="col-md-3">
+                 <label class="small text-muted fw-bold mb-1">หมวดหมู่</label>
+                 <select id="filterCat" class="form-select" onchange="filterDocs()">
+                   <option value="All">ทุกหมวดหมู่</option>
+                   <option value="General">เอกสารทั่วไป</option>
+                   <option value="Plan">แผนพัฒนา</option>
+                   <option value="Report">รายงานผล</option>
+                   <option value="Announcement">ประกาศ/คำสั่ง</option>
+                 </select>
+             </div>
+             <div class="col-md-3">
+                 <label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label>
+                 <select id="filterYear" class="form-select" onchange="filterDocs()">
+                   <option value="All">ทุกปีงบประมาณ</option>
+                 </select>
+             </div>
+             <div class="col-md-2 mt-auto">
+                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()">
+                   <i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า
+                 </button>
+             </div>
+          </div>
+
+          <div class="text-muted small mb-3 text-start px-2">
+            <b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ
+          </div>
+          
+          <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
+          <div id="pagination" class="pagination-container"></div>
+        </div>
+      </div>
+
+      <div id="page-calendar" style="display:none;">
+        <div class="content-section border-0 bg-transparent p-0 mb-4 shadow-none">
+          <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
+          <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
+        </div>
+        <div class="alert alert-info shadow-sm" role="alert">
+          <i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่
+        </div>
+        <div class="content-section text-center py-5 shadow-sm border">
+           <i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i>
+           <h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3>
+           <p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p>
+           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
+             <i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน
+           </a>
+        </div>
+      </div>
+
+      <div id="page-qa" style="display:none;">
+        <div class="content-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+             <h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3>
+             <div id="adminQABtnGroup" style="display:none; gap: 8px;">
+                 <button class="btn btn-primary fw-bold" onclick="openQAModal()">
+                   <i class="material-icons align-middle">add</i> เพิ่ม Q&A
+                 </button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ">
+                   <i class="material-icons align-middle">logout</i>
+                 </button>
+             </div>
+          </div>
+          <hr class="text-secondary mt-0 mb-4">
+          <div class="accordion accordion-flush border rounded shadow-sm" id="accQA"></div>
+        </div>
+      </div>
 
     </div> 
   </div> 
@@ -1259,7 +1362,11 @@
         <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
         <div id="footerCopyright">© 2026 All Rights Reserved.</div>
-        <div class="admin-link-container"><a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a></div>
+        <div class="admin-link-container">
+          <a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger">
+            <i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ
+          </a>
+        </div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">ช่องทางการติดต่อ</h5>
@@ -1275,26 +1382,399 @@
         <div class="map-container mb-3" style="height: 200px; background: #333;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3776.121520722174!2d98.97130430000001!3d18.8372638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3b0703e9939d%3A0x32f88414140cedb9!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1771695612921!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a href="https://maps.app.goo.gl/6GuRPUwyPccXYz778" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
+        <a href="https://maps.app.goo.gl/6GuRPUwyPccXYz778" target="_blank" class="btn btn-outline-light btn-sm w-100">
+          <i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps
+        </a>
       </div>
     </div>
   </footer>
 
-  <div class="modal fade" id="chatModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header bg-info text-white"><h5 class="modal-title fw-bold"><i class="material-icons align-text-bottom me-2">smart_toy</i> ถาม AI เกี่ยวกับเอกสาร</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-0"><div id="chatHistory" class="chat-container"></div><div class="p-3 border-top bg-light"><div class="input-group"><input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()"><button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button></div></div></div></div></div></div>
-  <div class="modal fade" id="formModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header bg-primary text-white"><h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-4"><form onsubmit="submitForm(event)"><input type="hidden" id="f_topic_type"><div class="mb-3"><label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input class="form-control" id="f_name" required></div><div class="mb-3"><label class="fw-bold form-label">เบอร์ติดต่อ</label><input class="form-control" id="f_contact"></div><div class="mb-3" id="topicSelectDiv"><label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label><select class="form-select" id="f_topic_select" required></select></div><div class="mb-3"><label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label><textarea class="form-control" id="f_detail" rows="5" required></textarea></div><div class="d-grid"><button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button></div></form></div></div></div></div>
-  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog modal-dialog-centered"><div class="modal-content text-center"><div class="modal-header bg-warning text-dark border-0"><h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5></div><div class="modal-body p-4"><h5 class="mb-4 text-success fw-bold">ส่งข้อมูลสำเร็จ ขอบพระคุณอย่างยิ่ง!</h5><p class="text-muted">โปรดให้คะแนนความพึงพอใจในการใช้งานระบบ S-MAP</p><div class="star-rating mb-4 d-flex justify-content-center gap-2" id="starContainer"><i class="material-icons" data-val="1" onclick="setStar(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="2" onclick="setStar(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="3" onclick="setStar(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="4" onclick="setStar(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i></div><input type="hidden" id="sys_rating_val" value="0"><div class="mb-3 text-start"><textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea></div><button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button></div></div></div></div>
-  <div class="modal fade" id="adminDocModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="docModalTitle">จัดการเอกสาร</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body bg-light"><form id="adminDocForm" onsubmit="submitDocument(event)"><input type="hidden" id="doc_id"><div class="row g-2 mb-2"><div class="col-md-9"><label class="small text-muted fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label><input type="text" class="form-control" id="doc_title" required></div><div class="col-md-3"><label class="small text-muted fw-bold">ปีงบประมาณ</label><input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567"></div></div><div class="mb-2"><label class="small text-muted fw-bold">คำอธิบายเพิ่มเติม</label><input type="text" class="form-control" id="doc_desc"></div><div class="row g-2 mb-2"><div class="col-md-6"><label class="small text-muted fw-bold">หมวดหมู่</label><select class="form-select" id="doc_cat"><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select></div><div class="col-md-6"><label class="small text-muted fw-bold">AI Chatbot</label><select class="form-select" id="doc_ai_status"><option value="ON">🟢 เปิดใช้งาน AI Chatbot</option><option value="OFF">🔴 ปิดใช้งาน AI</option></select></div></div><div class="mb-3"><label class="small text-muted fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label><input type="text" class="form-control" id="doc_link" required></div><div class="p-3 border rounded bg-white"><div class="row"><div class="col-md-12"><label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label><input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้"></div><div class="col-md-4 pt-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_is_pinned"><label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label></div></div><div class="col-md-4 pt-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_is_important"><label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label></div></div><div class="col-md-12 pt-3 border-top mt-3" id="newBadgeToggleDiv"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_hide_new_badge"><label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW</label></div></div></div></div><div class="mt-4 text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึกข้อมูล</button></div></form></div></div></div></div>
-  <div class="modal fade" id="adminVideoModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="vidModalTitle">เพิ่มวิดีโอ</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="submitVideo(event)"><input type="hidden" id="vid_id"><div class="mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div><div class="mb-2"><label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label><textarea class="form-control" id="vid_desc" rows="3"></textarea></div><div class="mb-2"><label class="small text-muted fw-bold">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div><div class="mb-3"><label class="small text-muted fw-bold">ลำดับ</label><input type="number" class="form-control" id="vid_order"></div><div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div></form></div></div></div></div>
-  <div class="modal fade" id="adminQAModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="qaModalTitle">เพิ่ม Q&A</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="submitQA(event)"><input type="hidden" id="qa_id"><div class="row g-2 mb-2"><div class="col-3"><label class="small text-muted fw-bold">ไอคอน</label><select class="form-select" id="qa_emoji"><option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="🟢">🟢</option><option value="🔥">🔥</option><option value="⭐">⭐</option><option value="📌">📌</option><option value="💡">💡</option></select></div><div class="col-9"><label class="small text-muted fw-bold">คำถาม</label><input type="text" class="form-control" id="qa_question" required></div></div><div class="mb-3"><label class="small text-muted fw-bold">คำตอบ</label><textarea class="form-control" id="qa_answer" rows="4" required></textarea></div><div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div></form></div></div></div></div>
+  <div class="modal fade" id="chatModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title fw-bold"><i class="material-icons align-text-bottom me-2">smart_toy</i> ถาม AI เกี่ยวกับเอกสาร</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-0">
+          <div id="chatHistory" class="chat-container"></div>
+          <div class="p-3 border-top bg-light">
+             <div class="input-group">
+                <input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()">
+                <button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button>
+             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="formModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form onsubmit="submitForm(event)">
+            <input type="hidden" id="f_topic_type">
+            <div class="mb-3">
+              <label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
+              <input class="form-control" id="f_name" required>
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold form-label">เบอร์ติดต่อ</label>
+              <input class="form-control" id="f_contact">
+            </div>
+            <div class="mb-3" id="topicSelectDiv">
+               <label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label>
+               <select class="form-select" id="f_topic_select" required>
+                 </select>
+            </div>
+            <div class="mb-3">
+              <label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label>
+              <textarea class="form-control" id="f_detail" rows="5" required></textarea>
+            </div>
+            <div class="d-grid">
+              <button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div class="modal-header bg-warning text-dark border-0">
+          <h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5>
+        </div>
+        <div class="modal-body p-4">
+          <h5 class="mb-4 text-success fw-bold">ส่งข้อมูลสำเร็จ ขอบพระคุณอย่างยิ่ง!</h5>
+          <p class="text-muted">โปรดให้คะแนนความพึงพอใจในการใช้งานระบบ S-MAP</p>
+          <div class="star-rating mb-4 d-flex justify-content-center gap-2" id="starContainer">
+             <i class="material-icons" data-val="1" onclick="setStar(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="2" onclick="setStar(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="3" onclick="setStar(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="4" onclick="setStar(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">star</i>
+             <i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i>
+          </div>
+          <input type="hidden" id="sys_rating_val" value="0">
+          <div class="mb-3 text-start">
+            <textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea>
+          </div>
+          <button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="adminDocModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title fw-bold" id="docModalTitle">จัดการเอกสาร</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body bg-light">
+          <form id="adminDocForm" onsubmit="submitDocument(event)">
+             <input type="hidden" id="doc_id">
+             
+             <div class="row g-2 mb-2">
+                 <div class="col-md-9">
+                   <label class="small text-muted fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" id="doc_title" required>
+                 </div>
+                 <div class="col-md-3">
+                   <label class="small text-muted fw-bold">ปีงบประมาณ</label>
+                   <input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567">
+                 </div>
+             </div>
+             
+             <div class="mb-2">
+               <label class="small text-muted fw-bold">คำอธิบายเพิ่มเติม</label>
+               <input type="text" class="form-control" id="doc_desc">
+             </div>
+             
+             <div class="row g-2 mb-2">
+                <div class="col-md-6">
+                  <label class="small text-muted fw-bold">หมวดหมู่</label>
+                  <select class="form-select" id="doc_cat">
+                    <option value="General">เอกสารทั่วไป</option>
+                    <option value="Plan">แผนพัฒนา</option>
+                    <option value="Report">รายงานผล</option>
+                    <option value="Announcement">ประกาศ/คำสั่ง</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label class="small text-muted fw-bold">AI Chatbot</label>
+                  <select class="form-select" id="doc_ai_status">
+                    <option value="ON">🟢 เปิดใช้งาน AI Chatbot</option>
+                    <option value="OFF">🔴 ปิดใช้งาน AI</option>
+                  </select>
+                </div>
+             </div>
+             
+             <div class="mb-3">
+                 <label class="small text-muted fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label>
+                 <input type="text" class="form-control" id="doc_link" required>
+             </div>
+             
+             <div class="p-3 border rounded bg-white">
+                 <div class="row">
+                     <div class="col-md-12">
+                       <label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label>
+                       <input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้">
+                     </div>
+                     
+                     <div class="col-md-4 pt-3">
+                       <div class="form-check form-switch">
+                         <input class="form-check-input" type="checkbox" id="doc_is_pinned">
+                         <label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label>
+                       </div>
+                     </div>
+                     <div class="col-md-4 pt-3">
+                       <div class="form-check form-switch">
+                         <input class="form-check-input" type="checkbox" id="doc_is_important">
+                         <label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label>
+                       </div>
+                     </div>
+                     
+                     <div class="col-md-12 pt-3 border-top mt-3" id="newBadgeToggleDiv">
+                         <div class="form-check form-switch">
+                           <input class="form-check-input" type="checkbox" id="doc_hide_new_badge">
+                           <label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW (แม้จะเพิ่งอัปโหลดก็ตาม)</label>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             
+             <div class="mt-4 text-end">
+               <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
+               <button type="submit" class="btn btn-success fw-bold px-4">บันทึกข้อมูล</button>
+             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="adminVideoModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="vidModalTitle">เพิ่มวิดีโอ</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="submitVideo(event)">
+                    <input type="hidden" id="vid_id">
+                    <div class="mb-2">
+                      <label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label>
+                      <input type="text" class="form-control" id="vid_title" required>
+                    </div>
+                    <div class="mb-2">
+                      <label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label>
+                      <textarea class="form-control" id="vid_desc" rows="3" placeholder="สรุปเนื้อหาสั้นๆ ให้ประชาชนอ่าน..."></textarea>
+                    </div>
+                    <div class="mb-2">
+                      <label class="small text-muted fw-bold">ลิงก์ YouTube</label>
+                      <input type="text" class="form-control" id="vid_link" required>
+                    </div>
+                    <div class="mb-3">
+                      <label class="small text-muted fw-bold">ลำดับ (เลขน้อยขึ้นก่อน)</label>
+                      <input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้">
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
+                      <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="adminQAModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="qaModalTitle">เพิ่ม Q&A</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form onsubmit="submitQA(event)">
+                    <input type="hidden" id="qa_id">
+                    <div class="row g-2 mb-2">
+                        <div class="col-3">
+                          <label class="small text-muted fw-bold">ไอคอน</label>
+                          <select class="form-select" id="qa_emoji">
+                            <option value="❓">❓</option>
+                            <option value="📢">📢</option>
+                            <option value="🔴">🔴</option>
+                            <option value="🟢">🟢</option>
+                            <option value="🔥">🔥</option>
+                            <option value="⭐">⭐</option>
+                            <option value="📌">📌</option>
+                            <option value="💡">💡</option>
+                          </select>
+                        </div>
+                        <div class="col-9">
+                          <label class="small text-muted fw-bold">คำถาม</label>
+                          <input type="text" class="form-control" id="qa_question" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                      <label class="small text-muted fw-bold">คำตอบ</label>
+                      <textarea class="form-control" id="qa_answer" rows="4" required></textarea>
+                    </div>
+                    <div class="text-end">
+                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
+                      <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="hearingModal" tabindex="-1">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-warning text-dark">
+          <h5 class="modal-title fw-bold" id="disp_h_title">รับฟังความคิดเห็น</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body bg-light">
+          <div class="text-center mb-2">
+            <img id="disp_h_img" class="hearing-banner-img shadow-sm" src="" style="display:none;">
+          </div>
+          <div id="hearingClosedMsg" class="alert alert-danger text-center shadow-sm" style="display:none;">
+            <i class="material-icons fs-1 mb-2">lock</i>
+            <h5 class="fw-bold">ขณะนี้ปิดรับฟังความคิดเห็นแล้ว</h5>
+          </div>
+
+          <form id="hearingFormContainer" onsubmit="submitHearing(event)" class="bg-white p-3 p-md-4 border rounded shadow-sm">
+             <h4 class="fw-bold text-center text-primary mb-4" id="disp_h_plan_name">แผนพัฒนาจังหวัดเชียงใหม่</h4>
+             
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q1">ส่วนที่ 1: ข้อมูลทั่วไปของผู้ตอบแบบสอบถาม</h5>
+             <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                  <label class="form-label fw-bold"><span id="disp_lbl_name">ชื่อ-นามสกุล</span> <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="h_name" required>
+                </div>
+                
+                <div class="col-md-6" id="div_h_idcard" style="display:none;">
+                   <label class="form-label fw-bold"><span id="disp_lbl_idcard">เลขประจำตัวประชาชน 13 หลัก</span> <span class="text-danger">*</span></label>
+                   <input type="text" class="form-control" id="h_idcard" maxlength="13" pattern="^[0-9]{13}$" placeholder="กรอกเฉพาะตัวเลข 13 หลัก">
+                   <div class="invalid-feedback" id="idcard_err">เลขบัตรประชาชนไม่ถูกต้อง</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label class="form-label fw-bold"><span id="disp_lbl_district">อำเภอที่อยู่อาศัย</span> <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="h_district" required>
+                </div>
+                <div class="col-md-12">
+                   <label class="form-label fw-bold"><span id="disp_lbl_sector">ท่านสังกัดภาคส่วนใด</span> <span class="text-danger">*</span></label>
+                   <select class="form-select" id="h_sector" required>
+                     </select>
+                </div>
+             </div>
+
+             <div class="bg-light border rounded p-4 mb-4 mt-2 shadow-sm border-primary border-opacity-25">
+                 <h5 class="fw-bold text-dark mb-2" id="disp_h_info_title">หลักการและเหตุผล</h5>
+                 <p class="text-muted mb-4" id="disp_h_info_desc" style="white-space: pre-line;">รายละเอียดชี้แจง...</p>
+                 <div class="d-flex justify-content-start gap-3 flex-wrap mb-4">
+                     <a id="disp_h_sum" href="#" target="_blank" class="btn btn-outline-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">description</i> สรุปอย่างย่อ</a>
+                     <a id="disp_h_full" href="#" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">menu_book</i> ร่างแผนฉบับเต็ม</a>
+                 </div>
+                 <div class="form-check border-top pt-3">
+                     <input class="form-check-input" type="checkbox" id="h_info_consent" required>
+                     <label class="form-check-label fw-bold text-danger" for="h_info_consent" id="disp_h_consent">
+                         </label>
+                 </div>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3 mt-4" id="disp_h_q2">ส่วนที่ 2: ความคิดเห็นต่อเป้าหมายการพัฒนาจังหวัด (Vision)</h5>
+             <div class="mb-4 ps-2">
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วย" required>
+                  <label class="form-check-label">เห็นด้วย</label>
+                </div>
+                <div class="form-check mb-2">
+                  <input class="form-check-input" type="radio" name="h_vision" value="เห็นด้วยแต่ควรปรับปรุงเพิ่มเติม">
+                  <label class="form-check-label">เห็นด้วย แต่ควรปรับปรุงเพิ่มเติม</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="h_vision" value="ไม่เห็นด้วย">
+                  <label class="form-check-label">ไม่เห็นด้วย</label>
+                </div>
+                <textarea class="form-control mt-3" id="h_vision_fb" rows="2"></textarea>
+             </div>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q3">ส่วนที่ 3: ความคิดเห็นต่อประเด็นการพัฒนา (Strategic Issues)</h5>
+             <div class="table-responsive mb-2">
+                <table class="table table-bordered table-striped align-middle text-center small">
+                   <thead class="table-light" id="dynamic_topics_head">
+                     </thead>
+                   <tbody id="dynamic_topics_body">
+                     </tbody>
+                </table>
+             </div>
+             <textarea class="form-control mb-4" id="h_strategy_fb" rows="2"></textarea>
+
+             <h5 class="fw-bold text-primary border-bottom pb-2 mb-3" id="disp_h_q4">ส่วนที่ 4: การจัดลำดับความสำคัญและข้อเสนอแนะ</h5>
+             <div class="mb-3">
+                <select class="form-select" id="h_priority" required>
+                  </select>
+             </div>
+             <div class="mb-3">
+               <textarea class="form-control" id="h_feedback" rows="3"></textarea>
+             </div>
+
+             <div class="alert alert-secondary mt-4 mb-4 small">
+                <div class="form-check">
+                   <input class="form-check-input" type="checkbox" id="h_pdpa" required>
+                   <label class="form-check-label text-dark" for="h_pdpa">ข้าพเจ้ายินยอมให้สำนักงานจังหวัดเชียงใหม่ รวบรวมและประมวลผลข้อมูลนี้ เพื่อใช้ประกอบการปรับปรุงร่างแผนฯ เท่านั้น โดยไม่เปิดเผยข้อมูลส่วนบุคคลต่อสาธารณะ</label>
+                </div>
+             </div>
+             <div class="d-grid">
+               <button type="submit" class="btn btn-warning btn-lg fw-bold shadow-sm text-dark" id="btnSubmitHearing">✅ ส่งแบบรับฟังความคิดเห็น</button>
+             </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
     // ==========================================
     // 🟢 ระบบป้องกัน Error DOM (Safe Setters)
     // ==========================================
-    function setElText(id, txt) { let el = document.getElementById(id); if (el) el.innerText = txt || ""; }
-    function setElHtml(id, html) { let el = document.getElementById(id); if (el) el.innerHTML = html || ""; }
-    function setElVal(id, val) { let el = document.getElementById(id); if (el) el.value = val || ""; }
+    function setElText(id, txt) { 
+        let el = document.getElementById(id); 
+        if (el) {
+            el.innerText = txt || ""; 
+        }
+    }
+    
+    function setElHtml(id, html) { 
+        let el = document.getElementById(id); 
+        if (el) {
+            el.innerHTML = html || ""; 
+        }
+    }
+    
+    function setElVal(id, val) { 
+        let el = document.getElementById(id); 
+        if (el) {
+            el.value = val || ""; 
+        }
+    }
 
     // ==========================================
     // 🟢 ระบบคอนฟิกสเกล Dashboard (Scale Switcher)
@@ -1342,6 +1822,7 @@
         return url;
     }
 
+    // ตรวจสอบเลขบัตร ปชช.
     function checkThaiID(id) {
         if (id.length != 13) return false;
         let sum = 0;
@@ -1415,84 +1896,169 @@
          
          let swF1 = document.getElementById('swForm1');
          if(swF1) swF1.checked = form1Open;
-         let b1 = document.getElementById('banner1'), sb1 = document.getElementById('statusBadge1'), bdg1 = document.getElementById('badge1');
-         if (form1Open) { if(b1) b1.classList.remove('closed'); if(sb1) sb1.style.display = 'none'; if(bdg1) bdg1.style.display = 'block'; } 
-         else { if(b1) b1.classList.add('closed'); if(sb1) sb1.style.display = 'inline-block'; if(bdg1) bdg1.style.display = 'none'; }
+         let b1 = document.getElementById('banner1');
+         let sb1 = document.getElementById('statusBadge1');
+         let bdg1 = document.getElementById('badge1');
+         
+         if (form1Open) { 
+             if(b1) b1.classList.remove('closed'); 
+             if(sb1) sb1.style.display = 'none'; 
+             if(bdg1) bdg1.style.display = 'block'; 
+         } else { 
+             if(b1) b1.classList.add('closed'); 
+             if(sb1) sb1.style.display = 'inline-block'; 
+             if(bdg1) bdg1.style.display = 'none'; 
+         }
 
          let f1_opts = [settings.f1_opt_1, settings.f1_opt_2, settings.f1_opt_3, settings.f1_opt_4, settings.f1_opt_5, settings.f1_opt_6, settings.f1_opt_7, settings.f1_opt_8].filter(Boolean);
          let f1Select = document.getElementById('f_topic_select');
          if (f1Select) {
              f1Select.innerHTML = '<option value="" selected disabled>-- กรุณาเลือก --</option>';
-             f1_opts.forEach(opt => { f1Select.innerHTML += `<option value="${opt}">${opt}</option>`; });
+             f1_opts.forEach(opt => {
+                 f1Select.innerHTML += `<option value="${opt}">${opt}</option>`;
+             });
          }
-         for(let i=1; i<=8; i++) { setElVal('h_admin_f1_opt_' + i, settings['f1_opt_' + i]); }
+         
+         for(let i=1; i<=8; i++) {
+             setElVal('h_admin_f1_opt_' + i, settings['f1_opt_' + i]);
+         }
 
          setElText('disp_h_title', hTitle);
          setElText('disp_title_2', hTitle);
          setElText('disp_desc_2', hDesc);
          setElText('disp_date_2', "📅 " + hDate);
          setElText('disp_h_plan_name', hPlanName);
+         
          setElVal('h_admin_title', hTitle);
          setElVal('h_admin_desc', hDesc);
          setElVal('h_admin_date', hDate);
          setElVal('h_admin_plan_name', hPlanName);
          
-         let swHStatus = document.getElementById('swHearingStatus'); if(swHStatus) swHStatus.checked = hOpen;
-         let swHRating = document.getElementById('swHearingRating'); if(swHRating) swHRating.checked = hRatingOpen;
+         let swHStatus = document.getElementById('swHearingStatus');
+         if(swHStatus) swHStatus.checked = hOpen;
+         let swHRating = document.getElementById('swHearingRating');
+         if(swHRating) swHRating.checked = hRatingOpen;
          
-         let b2 = document.getElementById('banner2'), sb2 = document.getElementById('statusBadge2'), bdg2 = document.getElementById('badge2');
-         let hClosedMsg = document.getElementById('hearingClosedMsg'), hFormCont = document.getElementById('hearingFormContainer');
-         if (hOpen) { if(b2) b2.classList.remove('closed'); if(sb2) sb2.style.display = 'none'; if(bdg2) bdg2.style.display = 'block'; if(hClosedMsg) hClosedMsg.style.display = 'none'; if(hFormCont) hFormCont.style.display = 'block'; } 
-         else { if(b2) b2.classList.add('closed'); if(sb2) sb2.style.display = 'inline-block'; if(bdg2) bdg2.style.display = 'none'; if(hClosedMsg) hClosedMsg.style.display = 'block'; if(hFormCont) hFormCont.style.display = 'none'; }
+         let b2 = document.getElementById('banner2');
+         let sb2 = document.getElementById('statusBadge2');
+         let bdg2 = document.getElementById('badge2');
+         let hClosedMsg = document.getElementById('hearingClosedMsg');
+         let hFormCont = document.getElementById('hearingFormContainer');
 
-         setElText('disp_h_q1', settings.h_q1); setElText('disp_h_q2', settings.h_q2); setElText('disp_h_q3', settings.h_q3); setElText('disp_h_q4', settings.h_q4);
-         setElVal('h_admin_q1', settings.h_q1); setElVal('h_admin_q2', settings.h_q2); setElVal('h_admin_q3', settings.h_q3); setElVal('h_admin_q4', settings.h_q4);
+         if (hOpen) { 
+             if(b2) b2.classList.remove('closed'); 
+             if(sb2) sb2.style.display = 'none'; 
+             if(bdg2) bdg2.style.display = 'block'; 
+             if(hClosedMsg) hClosedMsg.style.display = 'none'; 
+             if(hFormCont) hFormCont.style.display = 'block'; 
+         } else { 
+             if(b2) b2.classList.add('closed'); 
+             if(sb2) sb2.style.display = 'inline-block'; 
+             if(bdg2) bdg2.style.display = 'none'; 
+             if(hClosedMsg) hClosedMsg.style.display = 'block'; 
+             if(hFormCont) hFormCont.style.display = 'none'; 
+         }
 
-         setElText('disp_lbl_name', settings.h_lbl_name); setElText('disp_lbl_district', settings.h_lbl_district);
-         setElText('disp_lbl_sector', settings.h_lbl_sector); setElText('disp_lbl_idcard', settings.h_lbl_idcard);
+         setElText('disp_h_q1', settings.h_q1);
+         setElText('disp_h_q2', settings.h_q2);
+         setElText('disp_h_q3', settings.h_q3);
+         setElText('disp_h_q4', settings.h_q4);
          
-         setElVal('h_admin_lbl_name', settings.h_lbl_name); setElVal('h_admin_lbl_district', settings.h_lbl_district);
-         setElVal('h_admin_lbl_sector', settings.h_lbl_sector); setElVal('h_admin_lbl_idcard', settings.h_lbl_idcard);
+         setElVal('h_admin_q1', settings.h_q1);
+         setElVal('h_admin_q2', settings.h_q2);
+         setElVal('h_admin_q3', settings.h_q3);
+         setElVal('h_admin_q4', settings.h_q4);
+
+         setElText('disp_lbl_name', settings.h_lbl_name);
+         setElText('disp_lbl_district', settings.h_lbl_district);
+         setElText('disp_lbl_sector', settings.h_lbl_sector);
+         setElText('disp_lbl_idcard', settings.h_lbl_idcard);
+         
+         setElVal('h_admin_lbl_name', settings.h_lbl_name);
+         setElVal('h_admin_lbl_district', settings.h_lbl_district);
+         setElVal('h_admin_lbl_sector', settings.h_lbl_sector);
+         setElVal('h_admin_lbl_idcard', settings.h_lbl_idcard);
 
          let sec_opts = [settings.h_sec_1, settings.h_sec_2, settings.h_sec_3, settings.h_sec_4, settings.h_sec_5, settings.h_sec_6].filter(Boolean);
          let secSelect = document.getElementById('h_sector');
          if (secSelect) {
              secSelect.innerHTML = '<option value="" selected disabled>-- เลือกภาคส่วน --</option>';
-             sec_opts.forEach(opt => { secSelect.innerHTML += `<option value="${opt}">${opt}</option>`; });
+             sec_opts.forEach(opt => {
+                 secSelect.innerHTML += `<option value="${opt}">${opt}</option>`;
+             });
          }
-         for(let i=1; i<=6; i++) { setElVal('h_admin_sec_' + i, settings['h_sec_' + i]); }
+         for(let i=1; i<=6; i++) {
+             setElVal('h_admin_sec_' + i, settings['h_sec_' + i]);
+         }
 
          hReqIdcard = settings.h_req_idcard || "OFF";
-         let swId = document.getElementById('swReqIdCard'); if(swId) swId.checked = (hReqIdcard === 'ON');
-         let divIdCard = document.getElementById('div_h_idcard'); let inIdCard = document.getElementById('h_idcard');
+         let swId = document.getElementById('swReqIdCard');
+         if(swId) swId.checked = (hReqIdcard === 'ON');
+         
+         let divIdCard = document.getElementById('div_h_idcard');
+         let inIdCard = document.getElementById('h_idcard');
          if(divIdCard && inIdCard) {
-             if (hReqIdcard === 'ON') { divIdCard.style.display = 'block'; inIdCard.setAttribute('required', 'required'); } 
-             else { divIdCard.style.display = 'none'; inIdCard.removeAttribute('required'); }
+             if (hReqIdcard === 'ON') {
+                 divIdCard.style.display = 'block';
+                 inIdCard.setAttribute('required', 'required');
+             } else {
+                 divIdCard.style.display = 'none';
+                 inIdCard.removeAttribute('required');
+             }
          }
 
          setElText('lbl_dash_vision', settings.h_q2 || "ความเห็นต่อวิสัยทัศน์/เป้าหมาย");
          setElText('lbl_dash_priority', settings.h_q4 || "สรุปประเด็นเร่งด่วนที่สุดที่ควรได้รับการแก้ไข");
 
-         setElText('disp_h_info_title', settings.h_info_title); setElText('disp_h_info_desc', settings.h_info_desc);
+         setElText('disp_h_info_title', settings.h_info_title);
+         setElText('disp_h_info_desc', settings.h_info_desc);
+         
          let consentText = settings.h_consent_text || "ข้าพเจ้าได้อ่านและทำความเข้าใจรายละเอียดและเอกสารร่างแผนฯ เบื้องต้นแล้ว";
          setElHtml('disp_h_consent', consentText + ' <span class="text-danger">*</span>');
          setElVal('h_admin_consent_text', consentText);
 
-         let hImgObj = document.getElementById('disp_h_img'); if (settings.h_img && hImgObj) { hImgObj.src = convertDriveUrl(settings.h_img); hImgObj.style.display = 'block'; } else if(hImgObj) { hImgObj.style.display = 'none'; }
-         let hSumObj = document.getElementById('disp_h_sum'); if (settings.h_sum && hSumObj) { hSumObj.href = settings.h_sum; hSumObj.style.display = 'inline-block'; } else if(hSumObj) { hSumObj.style.display = 'none'; }
-         let hFullObj = document.getElementById('disp_h_full'); if (settings.h_full && hFullObj) { hFullObj.href = settings.h_full; hFullObj.style.display = 'inline-block'; } else if(hFullObj) { hFullObj.style.display = 'none'; }
-
-         setElVal('h_admin_info_title', settings.h_info_title); setElVal('h_admin_info_desc', settings.h_info_desc);
-         setElVal('h_admin_img', settings.h_img); setElVal('h_admin_sum', settings.h_sum); setElVal('h_admin_full', settings.h_full);
+         let hImgObj = document.getElementById('disp_h_img'); 
+         if (settings.h_img && hImgObj) { 
+             hImgObj.src = convertDriveUrl(settings.h_img); 
+             hImgObj.style.display = 'block'; 
+         } else if(hImgObj) { 
+             hImgObj.style.display = 'none'; 
+         }
          
-         for(let i=0; i<6; i++) { setElVal('h_admin_s3_' + (i+1), h_topics[i]); }
+         let hSumObj = document.getElementById('disp_h_sum'); 
+         if (settings.h_sum && hSumObj) { 
+             hSumObj.href = settings.h_sum; 
+             hSumObj.style.display = 'inline-block'; 
+         } else if(hSumObj) { 
+             hSumObj.style.display = 'none'; 
+         }
+         
+         let hFullObj = document.getElementById('disp_h_full'); 
+         if (settings.h_full && hFullObj) { 
+             hFullObj.href = settings.h_full; 
+             hFullObj.style.display = 'inline-block'; 
+         } else if(hFullObj) { 
+             hFullObj.style.display = 'none'; 
+         }
+
+         setElVal('h_admin_info_title', settings.h_info_title);
+         setElVal('h_admin_info_desc', settings.h_info_desc);
+         setElVal('h_admin_img', settings.h_img);
+         setElVal('h_admin_sum', settings.h_sum);
+         setElVal('h_admin_full', settings.h_full);
+         
+         for(let i=0; i<6; i++) { 
+             setElVal('h_admin_s3_' + (i+1), h_topics[i]);
+         }
 
          let radioScale = document.getElementById('scale' + currentScaleType);
          if(radioScale) radioScale.checked = true;
 
          let activeScale = scaleConfigs[currentScaleType];
          let theadHtml = `<tr><th class="text-start">ประเด็นการพัฒนา</th>`;
-         activeScale.labels.forEach(lbl => { theadHtml += `<th>${lbl}</th>`; });
+         activeScale.labels.forEach(lbl => {
+             theadHtml += `<th>${lbl}</th>`;
+         });
          theadHtml += `</tr>`;
          setElHtml('dynamic_topics_head', theadHtml);
 
@@ -1512,55 +2078,93 @@
          let p_topics = [settings.h_p_1, settings.h_p_2, settings.h_p_3, settings.h_p_4, settings.h_p_5, settings.h_p_6].filter(t => t);
          let p_ph = settings.h_p_ph || "-- เลือกประเด็น --";
          let pSelect = document.getElementById('h_priority');
+         
          if (pSelect) {
              pSelect.innerHTML = `<option value="" selected disabled>${p_ph}</option>`;
-             p_topics.forEach(t => { pSelect.innerHTML += `<option value="${t}">${t}</option>`; });
+             p_topics.forEach(t => {
+                 pSelect.innerHTML += `<option value="${t}">${t}</option>`;
+             });
          }
          
          setElVal('h_admin_p_ph', settings.h_p_ph);
-         for(let i=1; i<=6; i++) { setElVal('h_admin_p_' + i, settings['h_p_' + i]); }
+         for(let i=1; i<=6; i++) {
+             setElVal('h_admin_p_' + i, settings['h_p_' + i]);
+         }
 
-         let hVisionFb = document.getElementById('h_vision_fb'); if(hVisionFb) hVisionFb.placeholder = settings.h_fb_ph_1;
-         let hStrategyFb = document.getElementById('h_strategy_fb'); if(hStrategyFb) hStrategyFb.placeholder = settings.h_fb_ph_2;
-         let hFeedback = document.getElementById('h_feedback'); if(hFeedback) hFeedback.placeholder = settings.h_fb_ph_3;
+         let hVisionFb = document.getElementById('h_vision_fb'); 
+         if(hVisionFb) hVisionFb.placeholder = settings.h_fb_ph_1 || "";
+         
+         let hStrategyFb = document.getElementById('h_strategy_fb'); 
+         if(hStrategyFb) hStrategyFb.placeholder = settings.h_fb_ph_2 || "";
+         
+         let hFeedback = document.getElementById('h_feedback'); 
+         if(hFeedback) hFeedback.placeholder = settings.h_fb_ph_3 || "";
 
-         setElVal('h_admin_fb_ph_1', settings.h_fb_ph_1); setElVal('h_admin_fb_ph_2', settings.h_fb_ph_2); setElVal('h_admin_fb_ph_3', settings.h_fb_ph_3);
+         setElVal('h_admin_fb_ph_1', settings.h_fb_ph_1);
+         setElVal('h_admin_fb_ph_2', settings.h_fb_ph_2);
+         setElVal('h_admin_fb_ph_3', settings.h_fb_ph_3);
 
-         setElText('disp_video_title', settings.video_title); setElVal('admin_video_title', settings.video_title);
-         updateVideo(settings.video_url || ""); updateDashboard(settings.dash_url || "");
+         setElText('disp_video_title', settings.video_title);
+         setElVal('admin_video_title', settings.video_title);
+         
+         updateVideo(settings.video_url || ""); 
+         updateDashboard(settings.dash_url || "");
          
          setElVal('admin_dash_main_url', settings.dash_main_url);
-         let dMainLinkDiv = document.getElementById('dashMainLinkDiv'); let dMainLinkBtn = document.getElementById('dashMainLinkBtn');
-         if(settings.dash_main_url && dMainLinkDiv && dMainLinkBtn) { dMainLinkDiv.style.display = 'block'; dMainLinkBtn.href = settings.dash_main_url; } 
-         else if(dMainLinkDiv) { dMainLinkDiv.style.display = 'none'; }
+         let dMainLinkDiv = document.getElementById('dashMainLinkDiv');
+         let dMainLinkBtn = document.getElementById('dashMainLinkBtn');
+         if(settings.dash_main_url && dMainLinkDiv && dMainLinkBtn) {
+             dMainLinkDiv.style.display = 'block';
+             dMainLinkBtn.href = settings.dash_main_url;
+         } else if(dMainLinkDiv) {
+             dMainLinkDiv.style.display = 'none';
+         }
 
          let pr_imgs = [settings.pr_img_1, settings.pr_img_2, settings.pr_img_3, settings.pr_img_4, settings.pr_img_5].filter(img => img && img.trim() !== "");
-         for(let i=1; i<=5; i++) { setElVal('h_admin_pr_' + i, settings['pr_img_' + i]); }
+         
+         for(let i=1; i<=5; i++) {
+             setElVal('h_admin_pr_' + i, settings['pr_img_' + i]);
+         }
 
          if (pr_imgs.length > 0) {
-             let indicatorsHtml = '', innerHtml = '';
+             let indicatorsHtml = '';
+             let innerHtml = '';
              pr_imgs.forEach((imgUrl, idx) => {
                  let finalUrl = convertDriveUrl(imgUrl); 
                  indicatorsHtml += `<button type="button" data-bs-target="#prCarousel" data-bs-slide-to="${idx}" ${idx === 0 ? 'class="active"' : ''}></button>`;
                  innerHtml += `<div class="carousel-item ${idx === 0 ? 'active' : ''}" data-bs-interval="4000"><img src="${finalUrl}"></div>`;
              });
-             setElHtml('pr_indicators', indicatorsHtml); setElHtml('pr_inner', innerHtml);
-             let secPr = document.getElementById('sec-pr'); if(secPr) secPr.style.display = 'block';
+             setElHtml('pr_indicators', indicatorsHtml);
+             setElHtml('pr_inner', innerHtml);
+             let secPr = document.getElementById('sec-pr');
+             if(secPr) secPr.style.display = 'block';
          } else {
-             let secPr = document.getElementById('sec-pr'); if(secPr) secPr.style.display = 'none';
+             let secPr = document.getElementById('sec-pr');
+             if(secPr) secPr.style.display = 'none';
          }
 
-         buildYearFilter(); filterDocs(); renderQA(); renderVideos();
+         buildYearFilter(); 
+         filterDocs(); 
+         renderQA(); 
+         renderVideos();
          
          let loader = document.getElementById('globalLoader');
-         if(loader) { loader.style.opacity = '0'; setTimeout(() => { loader.style.display = 'none'; }, 300); }
+         if(loader) {
+             loader.style.opacity = '0';
+             setTimeout(() => { loader.style.display = 'none'; }, 300);
+         }
 
       }).catch(error => {
           console.error("InitSystem Error:", error);
           let loader = document.getElementById('globalLoader');
           if(loader) {
-              loader.style.display = 'flex'; loader.style.opacity = '1';
-              loader.innerHTML = `<div class='p-5 text-center'><h4 class='text-danger fw-bold'>❌ ไม่สามารถโหลดข้อมูลได้</h4><p class='text-muted'>${error.message}</p><button class='btn btn-primary mt-3' onclick='location.reload()'>รีเฟรชหน้าต่าง</button></div>`;
+              loader.style.display = 'flex';
+              loader.style.opacity = '1';
+              loader.innerHTML = `<div class='p-5 text-center'>
+                 <h4 class='text-danger fw-bold'>❌ ไม่สามารถโหลดข้อมูลได้</h4>
+                 <p class='text-muted'>${error.message}</p>
+                 <button class='btn btn-primary mt-3' onclick='location.reload()'>รีเฟรชหน้าต่าง</button>
+              </div>`;
           }
       });
     }
@@ -1578,8 +2182,16 @@
         let stdC = activeScale.colors;
         let calcMode = document.querySelector('input[name="calcMode"]:checked').value; // 'avg' or 'pos'
 
-        let theadHtml = `<tr><th rowspan="2" class="align-middle">ประเด็นการพัฒนา</th><th colspan="${stdL.length}">ระดับความคิดเห็น: จำนวน (ร้อยละ)</th><th rowspan="2" class="align-middle">สรุปผลภาพรวม</th></tr><tr>`;
-        stdL.forEach(lbl => { theadHtml += `<th>${lbl}</th>`; });
+        let theadHtml = `
+            <tr>
+                <th rowspan="2" class="align-middle">ประเด็นการพัฒนา</th>
+                <th colspan="${stdL.length}">ระดับความคิดเห็น: จำนวน (ร้อยละ)</th>
+                <th rowspan="2" class="align-middle">สรุปผลภาพรวม</th>
+            </tr>
+            <tr>`;
+        stdL.forEach(lbl => {
+            theadHtml += `<th>${lbl}</th>`;
+        });
         theadHtml += `</tr>`;
         setElHtml('summaryTableHead', theadHtml);
 
@@ -1597,10 +2209,12 @@
                         let weights = [];
                         if(backendScale === "5") weights = [5, 4, 3, 2, 1];
                         else if(backendScale === "4") weights = [4, 3, 2, 1];
-                        else if(backendScale === "2") weights = [1, 0]; // Special case for 2 scale
+                        else if(backendScale === "2") weights = [1, 0];
 
                         let sumWeight = 0;
-                        counts.forEach((c, i) => { sumWeight += c * weights[i]; });
+                        counts.forEach((c, i) => {
+                            sumWeight += c * weights[i];
+                        });
                         let avg = sumWeight / total;
                         
                         // Interpretation
@@ -1641,6 +2255,7 @@
                     let pct = total > 0 ? ((val / total) * 100).toFixed(1) : 0;
                     tableHtml += `<td>${val} <br><span class="text-muted small">(${pct}%)</span></td>`;
                 });
+                
                 tableHtml += `<td class="align-middle" style="background-color:#f8f9fa;">${summaryCell}</td></tr>`;
             }
         });
@@ -1648,7 +2263,10 @@
     }
 
     function loadDashboard() {
-       Swal.fire({ title: 'กำลังดึงข้อมูล...', didOpen: () => Swal.showLoading() });
+       Swal.fire({ 
+           title: 'กำลังดึงข้อมูล...', 
+           didOpen: () => Swal.showLoading() 
+       });
        
        fetch(SCRIPT_URL + '?action=getDashboardStats')
        .then(r => r.json())
@@ -1656,8 +2274,10 @@
            Swal.close(); 
            globalDashboardData = data; // Store data globally
 
-           let btnOS = document.getElementById('btnOpenSheet'); if(btnOS) btnOS.href = data.sheetUrl; 
-           setElText('stat_issues_total', data.issues.total); setElText('stat_hearing_total', data.hearing.total);
+           let btnOS = document.getElementById('btnOpenSheet');
+           if(btnOS) btnOS.href = data.sheetUrl; 
+           setElText('stat_issues_total', data.issues.total);
+           setElText('stat_hearing_total', data.hearing.total);
            
            renderChart('chartIssues', 'bar', Object.keys(data.issues.byCat), Object.values(data.issues.byCat), 'เรื่องแจ้ง', '#e91e63'); 
            renderChart('chartSector', 'pie', Object.keys(data.hearing.bySector), Object.values(data.hearing.bySector), 'ภาคส่วน', ['#f1c40f','#e67e22','#e74c3c','#9b59b6', '#34495e']); 
@@ -1666,24 +2286,31 @@
            
            let backendScale = data.hearing.scaleType || "4";
            let activeScale = scaleConfigs[backendScale] || scaleConfigs["4"];
-           let stdL = activeScale.labels; let stdC = activeScale.colors;
+           let stdL = activeScale.labels;
+           let stdC = activeScale.colors;
+           
            setElText('lbl_dash_scale_info', "(ระบบแสดงผลแบบ " + backendScale + " ระดับ)");
 
-           let summaryData = data.hearing.summary; let summaryVals = stdL.map(l => summaryData[l] || 0);
+           let summaryData = data.hearing.summary;
+           let summaryVals = stdL.map(l => summaryData[l] || 0);
            renderChart('chartSummary', 'doughnut', stdL, summaryVals, 'ภาพรวม', stdC);
            
            // Render Table (Default Mode)
            renderSummaryTable(data);
 
            let getD = (obj) => stdL.map(l => obj[l] || 0);
+           
            for(let i=1; i<=6; i++) {
                let colDiv = document.getElementById('col_chartT' + i);
                if(h_topics[i-1] !== "") { 
                    setElText('lbl_chartT' + i, h_topics[i-1]);
                    renderChart('chartT' + i, 'doughnut', stdL, getD(data.hearing['byT'+i]), '', stdC); 
                    if(colDiv) colDiv.style.display = 'block'; 
-               } else { if(colDiv) colDiv.style.display = 'none'; }
+               } else { 
+                   if(colDiv) colDiv.style.display = 'none'; 
+               }
            }
+
        }).catch(e => {
            console.error("Dashboard Load Error:", e);
            Swal.fire('Error', 'ไม่สามารถโหลดแดชบอร์ดได้', 'error');
@@ -1691,9 +2318,52 @@
     }
 
     function renderChart(canvasId, type, labels, data, label, colors) {
-       let chartKey = canvasId.toLowerCase(); if(charts[chartKey]) { charts[chartKey].destroy(); }
-       let ctx = document.getElementById(canvasId); if(!ctx) return; ctx = ctx.getContext('2d');
-       let config = { type: type, data: { labels: labels, datasets: [{ label: label, data: data, backgroundColor: colors, borderWidth: 1 }] }, options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: (type !== 'bar'), position: 'bottom' }, tooltip: { callbacks: { label: function(context) { let value = context.parsed.y !== undefined ? context.parsed.y : context.parsed; let dataset = context.chart.data.datasets[context.datasetIndex]; let total = dataset.data.reduce((a, b) => Number(a) + Number(b), 0); let percentage = total > 0 ? ((value * 100) / total).toFixed(1) + '%' : '0%'; let labelText = context.chart.config.type === 'bar' ? (context.dataset.label ? context.dataset.label + ': ' : '') : (context.label ? context.label + ' ' : ''); return [ labelText + value + ' คน', 'คิดเป็น ' + percentage ]; } } } } } };
+       let chartKey = canvasId.toLowerCase();
+       if(charts[chartKey]) { 
+           charts[chartKey].destroy(); 
+       }
+       
+       let ctx = document.getElementById(canvasId);
+       if(!ctx) return;
+       ctx = ctx.getContext('2d');
+       
+       let config = { 
+           type: type, 
+           data: { 
+               labels: labels, 
+               datasets: [{ 
+                   label: label, 
+                   data: data, 
+                   backgroundColor: colors, 
+                   borderWidth: 1 
+               }] 
+           }, 
+           options: { 
+               responsive: true, 
+               maintainAspectRatio: false, 
+               plugins: { 
+                   legend: { 
+                       display: (type !== 'bar'), 
+                       position: 'bottom' 
+                   },
+                   tooltip: {
+                       callbacks: {
+                           label: function(context) {
+                               let value = context.parsed.y !== undefined ? context.parsed.y : context.parsed;
+                               let dataset = context.chart.data.datasets[context.datasetIndex];
+                               let total = dataset.data.reduce((a, b) => Number(a) + Number(b), 0);
+                               let percentage = total > 0 ? ((value * 100) / total).toFixed(1) + '%' : '0%';
+                               let labelText = context.chart.config.type === 'bar' ? (context.dataset.label ? context.dataset.label + ': ' : '') : (context.label ? context.label + ' ' : '');
+                               return [
+                                   labelText + value + ' คน',
+                                   'คิดเป็น ' + percentage
+                               ];
+                           }
+                       }
+                   }
+               } 
+           } 
+       };
        charts[chartKey] = new Chart(ctx, config);
     }
   </script>
