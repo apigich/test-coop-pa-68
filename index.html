@@ -12,674 +12,95 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
-    * { 
-      box-sizing: border-box; 
-    }
-    
-    body { 
-      font-family: 'Sarabun', sans-serif; 
-      background-color: #f0f2f5; 
-      margin: 0; 
-      padding: 0; 
-      overflow-x: hidden; 
-    }
+    * { box-sizing: border-box; }
+    body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
     
     /* ================= LOADER ================= */
-    #globalLoader { 
-      position: fixed; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: #ffffff; 
-      z-index: 9999; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: center; 
-      align-items: center; 
-      transition: opacity 0.3s ease; 
-    }
-    
-    .loader-content { 
-      text-align: center; 
-    }
-    
-    .loader-spinner { 
-      width: 60px; 
-      height: 60px; 
-      margin: 0 auto 20px; 
-      border: 6px solid #f3f3f3; 
-      border-top: 6px solid #0d6efd; 
-      border-radius: 50%; 
-      animation: spin 1s linear infinite; 
-    }
-    
-    @keyframes spin { 
-      0% { transform: rotate(0deg); } 
-      100% { transform: rotate(360deg); } 
-    }
+    #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
+    .loader-content { text-align: center; }
+    .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     /* ================= HEADER ================= */
-    .main-header { 
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
-      color: white; 
-      position: relative; 
-      padding: 0; 
-      height: auto; 
-      min-height: 250px; 
-      display: flex; 
-      align-items: center; 
-    }
+    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
+    .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
+    .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
+    .header-icon-box { margin-right: 30px; }
+    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
+    .org-top-text { font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
+    .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
+    .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
+    @media (max-width: 992px) { .main-header { min-height: auto; } .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; } .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; } .org-top-text { font-size: 1.1rem; } .org-main-text { font-size: 1.5rem; line-height: 1.4; } .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; } .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; } }
     
-    .header-overlay { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      width: 100%; 
-      height: 100%; 
-      background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); 
-      z-index: 1; 
-    }
-    
-    .header-content { 
-      position: relative; 
-      z-index: 2; 
-      width: 100%; 
-      padding: 40px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-    }
-    
-    .header-icon-box { 
-      margin-right: 30px; 
-    }
-    
-    .org-title-group { 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: center; 
-    }
-    
-    .org-top-text { 
-      font-weight: 400; 
-      font-size: 1.4rem; 
-      letter-spacing: 1px; 
-      color: #ffeb3b; 
-      margin-bottom: 5px; 
-      text-transform: uppercase; 
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
-    }
-    
-    .org-main-text { 
-      font-weight: 700; 
-      line-height: 1.3; 
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
-      font-size: 2.2rem; 
-    }
-    
-    .eng-subtitle { 
-      font-weight: 300; 
-      opacity: 0.9; 
-      font-size: 1rem; 
-      margin-top: 5px; 
-      letter-spacing: 0.5px; 
-    }
+    /* ================= LAYOUT ================= */
+    .wrapper { display: flex; width: 100%; align-items: flex-start; }
+    .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
+    @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
+    .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
+    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
+    .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
+    .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
+    .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
+    .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
+    .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
+    .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
+    .carousel-item { background-color: #e9ecef; height: 500px; }
+    .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
+    @media (max-width: 768px) { .carousel-item { height: 400px; } }
+    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
+    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
+    .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block; }
+    .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
 
-    .sidebar-toggle-btn { 
-      position: absolute; 
-      top: 30px; 
-      left: 30px; 
-      z-index: 1001; 
-      color: white; 
-      border-radius: 8px; 
-      cursor: pointer; 
-      padding: 5px 10px; 
-      width: 45px; 
-      height: 45px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      background-color: rgba(255,255,255,0.2); 
-      border: 1px solid rgba(255,255,255,0.5); 
-    }
+    /* ================= COMPONENTS ================= */
+    .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
+    .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
+    .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .banner-text { flex-grow: 1; position: relative; z-index: 2; overflow: hidden; }
+    .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+    .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
+    .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
+    .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
+    .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
+    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
+    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    .badge-custom-new { display: inline-block; background-color: transparent; color: #FFD700; -webkit-text-stroke: 0.8px #ffb300; text-shadow: 1px 1px 0px #ffff00, -1px -1px 0px #ffff00, 1px -1px 0px #ffff00, -1px 1px 0px #ffff00; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; border: 2px solid #ff0000; animation: pulse-red-border 1.2s infinite; }
+    @keyframes pulse-red-border { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
+    .badge-pin { background-color: #34495e; color: white; }
+    
+    .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
+    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
+    .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
+    .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    .chat-container { height: 400px; overflow-y: auto; border: 1px solid #eee; background: #f8f9fa; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+    .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
+    .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
+    .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .chat-ai strong { color: #0d6efd; }
+    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+    
+    .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
+    .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
+    
+    .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
+    .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
+    .star-rating i.active { color: #f39c12; }
+    .hearing-banner-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
+    .dash-card { border-left: 5px solid; transition: transform 0.2s; }
+    .dash-card:hover { transform: translateY(-3px); }
+    .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
+    .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
 
-    @media (max-width: 992px) { 
-      .main-header { min-height: auto; }
-      .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; }
-      .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; }
-      .org-top-text { font-size: 1.1rem; }
-      .org-main-text { font-size: 1.5rem; line-height: 1.4; }
-      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
-      .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
-    }
-    
-    /* ================= LAYOUT & SIDEBAR ================= */
-    .wrapper { 
-      display: flex; 
-      width: 100%; 
-      align-items: flex-start; 
-    }
-    
-    .sidebar { 
-      min-width: 260px; 
-      max-width: 260px; 
-      background: white; 
-      border-right: 1px solid #e9ecef; 
-      transition: all 0.3s; 
-      position: sticky; 
-      top: 0; 
-      height: 100vh; 
-      overflow-y: auto; 
-      z-index: 1000; 
-      display: flex; 
-      flex-direction: column; 
-      flex-shrink: 0; 
-    }
-    
-    @media (max-width: 992px) { 
-      .sidebar { 
-        position: fixed; 
-        left: 0; 
-        top: 0; 
-        margin-left: -260px; 
-        box-shadow: 4px 0 10px rgba(0,0,0,0.1); 
-      } 
-      .sidebar.active { margin-left: 0; } 
-      .overlay { 
-        display: none; 
-        position: fixed; 
-        top: 0; 
-        left: 0; 
-        width: 100vw; 
-        height: 100vh; 
-        background: rgba(0,0,0,0.5); 
-        z-index: 998; 
-        opacity: 0; 
-        transition: all 0.3s; 
-      } 
-      .overlay.active { display: block; opacity: 1; } 
-    }
-    
-    .nav-link-main { 
-      padding: 15px 25px; 
-      color: #0d6efd; 
-      font-weight: 700; 
-      cursor: pointer; 
-      display: block; 
-      text-decoration: none; 
-      border-bottom: 1px solid #f8f9fa; 
-      transition: 0.2s; 
-      font-size: 1rem; 
-    }
-    
-    .nav-link-main:hover { 
-      background-color: #f1f8ff; 
-      color: #0a58ca; 
-      padding-left: 30px; 
-    }
-    
-    .nav-link-main.active { 
-      background-color: #e7f1ff; 
-      border-left: 5px solid #0d6efd; 
-      color: #0d6efd; 
-    }
-    
-    .nav-link-sub { 
-      padding: 10px 25px 10px 50px; 
-      color: #6c757d; 
-      cursor: pointer; 
-      display: block; 
-      text-decoration: none; 
-      font-size: 0.9rem; 
-      transition: 0.2s; 
-    }
-    
-    .nav-link-sub:hover { 
-      color: #0d6efd; 
-      background-color: #f8f9fa; 
-      transform: translateX(5px); 
-    }
-    
-    .main-content { 
-      width: 100%; 
-      padding: 20px; 
-      min-height: 100vh; 
-      background-color: #f0f2f5; 
-      flex-grow: 1; 
-    }
-    
-    .content-section { 
-      background: white; 
-      padding: 30px; 
-      border-radius: 12px; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
-      margin-bottom: 25px; 
-      border: 1px solid #fff; 
-    }
-    
-    .section-header { 
-      padding-bottom: 10px; 
-      margin-bottom: 20px; 
-      color: #0d6efd; 
-      font-weight: 700; 
-      font-size: 1.4rem; 
-      border-bottom: 2px solid #f0f0f0; 
-    }
-    
-    /* ================= CAROUSEL ================= */
-    .carousel-item { 
-      background-color: #e9ecef; 
-      height: 500px; 
-    }
-    
-    .carousel-item img { 
-      width: auto !important; 
-      height: 100% !important; 
-      max-width: 100%; 
-      margin: 0 auto; 
-      display: block; 
-      object-fit: contain; 
-    }
-    
-    @media (max-width: 768px) { 
-      .carousel-item { height: 400px; } 
-    }
-
-    /* ================= FOOTER ================= */
-    .main-footer { 
-      background-color: #1a1d20; 
-      color: #cfd2d6; 
-      padding: 60px 40px; 
-      margin-top: auto; 
-      border-top: 5px solid #0d6efd; 
-    }
-    
-    .footer-title { 
-      color: white; 
-      font-weight: 700; 
-      margin-bottom: 20px; 
-      border-left: 4px solid #0d6efd; 
-      padding-left: 10px; 
-    }
-    
-    .admin-link-container { 
-      margin-top: 20px; 
-      padding-top: 10px; 
-      border-top: 1px solid rgba(255,255,255,0.1); 
-    }
-    
-    .admin-trigger { 
-      color: #6c757d; 
-      font-size: 0.8rem; 
-      text-decoration: none; 
-      transition: 0.3s; 
-      cursor: pointer; 
-      display: inline-block;
-    }
-    
-    .admin-trigger:hover { 
-      color: #adb5bd; 
-      text-decoration: underline; 
-    }
-
-    /* ================= BANNERS ================= */
-    .banner-btn { 
-      display: flex; 
-      align-items: center; 
-      justify-content: flex-start; 
-      padding: 20px; 
-      margin-bottom: 20px; 
-      border-radius: 15px; 
-      color: white; 
-      cursor: pointer; 
-      transition: all 0.3s ease; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-      position: relative; 
-      overflow: hidden; 
-      border: none; 
-      width: 100%; 
-      text-align: left; 
-      background-size: cover !important; 
-      background-position: center !important; 
-    }
-    
-    .banner-btn:hover { 
-      transform: translateY(-3px); 
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
-      color: white; 
-    }
-    
-    .banner-icon { 
-      flex: 0 0 100px; 
-      width: 100px; 
-      height: 100px; 
-      border-radius: 50%; 
-      font-size: 4rem; 
-      background: rgba(255,255,255,0.25); 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      margin-right: 20px; 
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-    }
-    
-    .banner-text { 
-      flex-grow: 1; 
-      position: relative; 
-      z-index: 2; 
-      overflow: hidden; 
-    }
-    
-    .banner-title { 
-      font-weight: 800; 
-      font-size: clamp(1.2rem, 2vw, 1.6rem); 
-      margin-bottom: 5px; 
-      line-height: 1.2; 
-      text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
-    }
-    
-    .banner-desc { 
-      font-size: 1rem; 
-      opacity: 0.95; 
-      font-weight: 400; 
-      text-shadow: 0 1px 2px rgba(0,0,0,0.2); 
-    }
-    
-    .status-badge { 
-      font-size: 0.85rem; 
-      padding: 4px 10px; 
-      border-radius: 20px; 
-      font-weight: bold; 
-      background: white; 
-      color: #d63031; 
-      display: inline-block; 
-      margin-right: 5px; 
-      margin-top: 5px; 
-    }
-    
-    .date-badge { 
-      font-size: 0.85rem; 
-      padding: 4px 10px; 
-      border-radius: 20px; 
-      background: rgba(0,0,0,0.3); 
-      color: white; 
-      border: 1px solid rgba(255,255,255,0.5); 
-      display: inline-block; 
-      margin-top: 5px; 
-    }
-    
-    .banner-btn.closed { 
-      filter: grayscale(100%); 
-      opacity: 0.7; 
-      background: #636e72 !important; 
-      cursor: not-allowed; 
-      pointer-events: none; 
-    }
-    
-    .new-badge { 
-      position: absolute; 
-      top: 0; 
-      left: 0; 
-      background: #ff0000; 
-      color: white; 
-      font-size: 0.75rem; 
-      font-weight: bold; 
-      padding: 5px 15px; 
-      border-bottom-right-radius: 10px; 
-      z-index: 10; 
-      display: none; 
-    }
-    
-    .bg-gradient-pink { 
-      background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); 
-    }
-    
-    .bg-gradient-yellow { 
-      background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); 
-      color: #4a4a4a !important; 
-    }
-    
-    .badge-custom-new { 
-        display: inline-block;
-        background-color: transparent; 
-        color: #FFD700; 
-        -webkit-text-stroke: 0.8px #ffb300; 
-        text-shadow: 1px 1px 0px #ffff00, -1px -1px 0px #ffff00, 1px -1px 0px #ffff00, -1px 1px 0px #ffff00; 
-        font-weight: 900; 
-        font-size: 0.8rem;
-        letter-spacing: 0.5px;
-        padding: 3px 10px;
-        border-radius: 20px;
-        border: 2px solid #ff0000; 
-        animation: pulse-red-border 1.2s infinite; 
-    }
-    
-    @keyframes pulse-red-border { 
-        0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 
-        70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 
-        100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } 
-    }
-    
-    .badge-pin { 
-      background-color: #34495e; 
-      color: white; 
-    }
-
-    /* ================= ADMIN & UI COMPONENTS ================= */
-    .admin-controls { 
-      display: none; 
-      background: #fff3cd; 
-      border: 1px solid #ffeeba; 
-      padding: 20px; 
-      border-radius: 10px; 
-      margin-bottom: 20px; 
-    }
-    
-    .pagination-container { 
-      display: flex; 
-      justify-content: center; 
-      gap: 5px; 
-      margin-top: 20px; 
-    }
-    
-    .page-btn { 
-      border: 1px solid #dee2e6; 
-      background: white; 
-      color: #0d6efd; 
-      padding: 5px 12px; 
-      cursor: pointer; 
-      border-radius: 5px; 
-    }
-    
-    .page-btn.active { 
-      background: #0d6efd; 
-      color: white; 
-      border-color: #0d6efd; 
-    }
-    
-    .page-btn.disabled { 
-      opacity: 0.5; 
-      cursor: not-allowed; 
-    }
-    
-    /* ================= CHAT AI ================= */
-    .chat-container { 
-      height: 400px; 
-      overflow-y: auto; 
-      border: 1px solid #eee; 
-      background: #f8f9fa; 
-      padding: 15px; 
-      border-radius: 10px; 
-      display: flex; 
-      flex-direction: column; 
-      gap: 10px; 
-    }
-    
-    .chat-msg { 
-      max-width: 80%; 
-      padding: 10px 15px; 
-      border-radius: 15px; 
-      font-size: 0.95rem; 
-      line-height: 1.5; 
-      word-wrap: break-word; 
-    }
-    
-    .chat-user { 
-      align-self: flex-end; 
-      background-color: #0d6efd; 
-      color: white; 
-      border-bottom-right-radius: 2px; 
-    }
-    
-    .chat-ai { 
-      align-self: flex-start; 
-      background-color: white; 
-      color: #333; 
-      border: 1px solid #e0e0e0; 
-      border-bottom-left-radius: 2px; 
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
-    }
-    
-    .chat-ai strong { 
-      color: #0d6efd; 
-    }
-    
-    .typing-indicator span { 
-      display: inline-block; 
-      width: 6px; 
-      height: 6px; 
-      background-color: #888; 
-      border-radius: 50%; 
-      animation: blink 1.4s infinite both; 
-      margin: 0 2px; 
-    }
-    
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } 
-    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    
-    @keyframes blink { 
-      0% { opacity: 0.2; } 
-      20% { opacity: 1; } 
-      100% { opacity: 0.2; } 
-    }
-
-    /* ================= VIDEOS ================= */
-    .video-card { 
-      background: white; 
-      border-radius: 10px; 
-      overflow: hidden; 
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-      margin-bottom: 20px; 
-      transition: transform 0.2s; 
-      border: 1px solid #eee; 
-    }
-    
-    .video-card:hover { 
-      transform: translateY(-5px); 
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15); 
-    }
-    
-    .video-title-bar { 
-      padding: 12px 15px; 
-      background: #f8f9fa; 
-      border-bottom: 1px solid #eee; 
-      font-weight: bold; 
-      color: #333; 
-      font-size: 0.95rem; 
-      cursor: pointer; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-    }
-    
-    .video-title-text { 
-      display: -webkit-box; 
-      -webkit-line-clamp: 2; 
-      -webkit-box-orient: vertical; 
-      overflow: hidden; 
-      flex-grow: 1; 
-      padding-right: 10px; 
-    }
-    
-    .video-title-bar:hover { 
-      background-color: #e9ecef; 
-    }
-    
-    /* ================= OTHER ================= */
-    .star-rating i { 
-      font-size: 2.5rem; 
-      color: #ccc; 
-      cursor: pointer; 
-      transition: color 0.2s; 
-    }
-    
-    .star-rating i.hover { 
-      color: #f1c40f; 
-      opacity: 0.5; 
-    }
-    
-    .star-rating i.active { 
-      color: #f39c12; 
-    }
-    
-    .hearing-banner-img { 
-      width: 100%; 
-      max-height: 250px; 
-      object-fit: cover; 
-      border-radius: 8px; 
-      margin-bottom: 15px; 
-    }
-
-    .dash-card { 
-      border-left: 5px solid; 
-      transition: transform 0.2s; 
-    }
-    
-    .dash-card:hover { 
-      transform: translateY(-3px); 
-    }
-    
-    .dash-icon { 
-      width: 50px; 
-      height: 50px; 
-      border-radius: 50%; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-size: 24px; 
-      color: white; 
-    }
-    
-    .dash-num { 
-      font-size: 2rem; 
-      font-weight: bold; 
-      line-height: 1.2; 
-    }
-
-    .floating-menu-btn { 
-      position: fixed; 
-      bottom: 30px; 
-      right: 20px; 
-      width: 55px; 
-      height: 55px; 
-      background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); 
-      color: white; 
-      border-radius: 50%; 
-      border: none; 
-      box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      z-index: 997; 
-      cursor: pointer; 
-      transition: all 0.3s ease; 
-    }
-    
-    .floating-menu-btn:hover { 
-      transform: translateY(-3px) scale(1.05); 
-      box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); 
-    }
+    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
+    .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
   </style>
 </head>
 <body onload="initSystem()">
@@ -1249,18 +670,12 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3>
              <div id="adminVideoBtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()">
-                   <i class="material-icons align-middle">add</i> เพิ่มวิดีโอ
-                 </button>
-                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()">
-                   <i class="material-icons align-middle">logout</i>
-                 </button>
+                 <button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
-          <div id="videoListContainer" class="row g-4">
-            <div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div>
-          </div>
+          <div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div>
         </div>
       </div>
 
@@ -1269,48 +684,18 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3>
              <div id="adminDocBtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openDocModal()">
-                   <i class="material-icons align-middle">add</i> เพิ่มเอกสาร
-                 </button>
-                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()">
-                   <i class="material-icons align-middle">logout</i>
-                 </button>
+                 <button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-3">
-          
           <div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border">
-             <div class="col-md-4">
-                 <label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label>
-                 <input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()">
-             </div>
-             <div class="col-md-3">
-                 <label class="small text-muted fw-bold mb-1">หมวดหมู่</label>
-                 <select id="filterCat" class="form-select" onchange="filterDocs()">
-                   <option value="All">ทุกหมวดหมู่</option>
-                   <option value="General">เอกสารทั่วไป</option>
-                   <option value="Plan">แผนพัฒนา</option>
-                   <option value="Report">รายงานผล</option>
-                   <option value="Announcement">ประกาศ/คำสั่ง</option>
-                 </select>
-             </div>
-             <div class="col-md-3">
-                 <label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label>
-                 <select id="filterYear" class="form-select" onchange="filterDocs()">
-                   <option value="All">ทุกปีงบประมาณ</option>
-                 </select>
-             </div>
-             <div class="col-md-2 mt-auto">
-                 <button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()">
-                   <i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า
-                 </button>
-             </div>
+             <div class="col-md-4"><label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label><input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()"></div>
+             <div class="col-md-3"><label class="small text-muted fw-bold mb-1">หมวดหมู่</label><select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select></div>
+             <div class="col-md-3"><label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label><select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select></div>
+             <div class="col-md-2 mt-auto"><button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button></div>
           </div>
-
-          <div class="text-muted small mb-3 text-start px-2">
-            <b>* หมายเหตุ:</b> ขณะนี้ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง นอกจากนี้ เอกสารบางรายการผู้จัดทำมีความจำเป็นต้องปิดระบบ Chat Bot เพื่อบริหารจัดการทรัพยากร ทั้งนี้ ผู้ใช้งานยังคงสามารถดาวน์โหลดไฟล์เอกสารเพื่อนำไปใช้งานร่วมกับ AI ภายนอกได้ตามปกติ
-          </div>
-          
+          <div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง</div>
           <div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div>
           <div id="pagination" class="pagination-container"></div>
         </div>
@@ -1321,16 +706,12 @@
           <h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2>
           <p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p>
         </div>
-        <div class="alert alert-info shadow-sm" role="alert">
-          <i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่
-        </div>
+        <div class="alert alert-info shadow-sm" role="alert"><i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่</div>
         <div class="content-section text-center py-5 shadow-sm border">
            <i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i>
            <h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3>
            <p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p>
-           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow">
-             <i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน
-           </a>
+           <a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow"><i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน</a>
         </div>
       </div>
 
@@ -1339,12 +720,8 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
              <h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3>
              <div id="adminQABtnGroup" style="display:none; gap: 8px;">
-                 <button class="btn btn-primary fw-bold" onclick="openQAModal()">
-                   <i class="material-icons align-middle">add</i> เพิ่ม Q&A
-                 </button>
-                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()" title="ออกจากระบบ">
-                   <i class="material-icons align-middle">logout</i>
-                 </button>
+                 <button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button>
+                 <button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button>
              </div>
           </div>
           <hr class="text-secondary mt-0 mb-4">
@@ -1362,11 +739,7 @@
         <p class="mb-2 text-white-50">สำนักงานจังหวัดเชียงใหม่</p>
         <p class="small opacity-50">อาคารอำนวยการ ชั้น 3 ศาลากลางจังหวัดเชียงใหม่ ถนนโชตนา <br>ตำบลช้างเผือก อำเภอเมืองเชียงใหม่ จังหวัดเชียงใหม่ 50300</p>
         <div id="footerCopyright">© 2026 All Rights Reserved.</div>
-        <div class="admin-link-container">
-          <a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger">
-            <i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ
-          </a>
-        </div>
+        <div class="admin-link-container"><a href="javascript:void(0);" onclick="loginToggle()" class="admin-trigger"><i class="material-icons align-middle fs-6 me-1">lock</i>เข้าสู่ระบบผู้ดูแลระบบ</a></div>
       </div>
       <div class="col-lg-4 mb-4 mb-lg-0">
         <h5 class="footer-title">ช่องทางการติดต่อ</h5>
@@ -1382,263 +755,17 @@
         <div class="map-container mb-3" style="height: 200px; background: #333;">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3776.121520722174!2d98.97130430000001!3d18.8372638!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30da3b0703e9939d%3A0x32f88414140cedb9!2z4Lio4Liy4Lil4Liy4LiB4Lil4Liy4LiH4LiI4Lix4LiH4Lir4Lin4Lix4LiU4LmA4LiK4Li14Lii4LiH4LmD4Lir4Lih4LmI!5e0!3m2!1sth!2sth!4v1771695612921!5m2!1sth!2sth" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-        <a href="https://maps.app.goo.gl/6GuRPUwyPccXYz778" target="_blank" class="btn btn-outline-light btn-sm w-100">
-          <i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps
-        </a>
+        <a href="https://maps.app.goo.gl/6GuRPUwyPccXYz778" target="_blank" class="btn btn-outline-light btn-sm w-100"><i class="material-icons align-middle fs-6">near_me</i> นำทาง via Google Maps</a>
       </div>
     </div>
   </footer>
 
-  <div class="modal fade" id="chatModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-info text-white">
-          <h5 class="modal-title fw-bold"><i class="material-icons align-text-bottom me-2">smart_toy</i> ถาม AI เกี่ยวกับเอกสาร</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-0">
-          <div id="chatHistory" class="chat-container"></div>
-          <div class="p-3 border-top bg-light">
-             <div class="input-group">
-                <input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()">
-                <button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button>
-             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="formModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body p-4">
-          <form onsubmit="submitForm(event)">
-            <input type="hidden" id="f_topic_type">
-            <div class="mb-3">
-              <label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label>
-              <input class="form-control" id="f_name" required>
-            </div>
-            <div class="mb-3">
-              <label class="fw-bold form-label">เบอร์ติดต่อ</label>
-              <input class="form-control" id="f_contact">
-            </div>
-            <div class="mb-3" id="topicSelectDiv">
-               <label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label>
-               <select class="form-select" id="f_topic_select" required>
-                 </select>
-            </div>
-            <div class="mb-3">
-              <label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label>
-              <textarea class="form-control" id="f_detail" rows="5" required></textarea>
-            </div>
-            <div class="d-grid">
-              <button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center">
-        <div class="modal-header bg-warning text-dark border-0">
-          <h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5>
-        </div>
-        <div class="modal-body p-4">
-          <h5 class="mb-4 text-success fw-bold">ส่งข้อมูลสำเร็จ ขอบพระคุณอย่างยิ่ง!</h5>
-          <p class="text-muted">โปรดให้คะแนนความพึงพอใจในการใช้งานระบบ S-MAP</p>
-          <div class="star-rating mb-4 d-flex justify-content-center gap-2" id="starContainer">
-             <i class="material-icons" data-val="1" onclick="setStar(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">star</i>
-             <i class="material-icons" data-val="2" onclick="setStar(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">star</i>
-             <i class="material-icons" data-val="3" onclick="setStar(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">star</i>
-             <i class="material-icons" data-val="4" onclick="setStar(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">star</i>
-             <i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i>
-          </div>
-          <input type="hidden" id="sys_rating_val" value="0">
-          <div class="mb-3 text-start">
-            <textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea>
-          </div>
-          <button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="adminDocModal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header bg-dark text-white">
-            <h5 class="modal-title fw-bold" id="docModalTitle">จัดการเอกสาร</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-        </div>
-        <div class="modal-body bg-light">
-          <form id="adminDocForm" onsubmit="submitDocument(event)">
-             <input type="hidden" id="doc_id">
-             
-             <div class="row g-2 mb-2">
-                 <div class="col-md-9">
-                   <label class="small text-muted fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label>
-                   <input type="text" class="form-control" id="doc_title" required>
-                 </div>
-                 <div class="col-md-3">
-                   <label class="small text-muted fw-bold">ปีงบประมาณ</label>
-                   <input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567">
-                 </div>
-             </div>
-             
-             <div class="mb-2">
-               <label class="small text-muted fw-bold">คำอธิบายเพิ่มเติม</label>
-               <input type="text" class="form-control" id="doc_desc">
-             </div>
-             
-             <div class="row g-2 mb-2">
-                <div class="col-md-6">
-                  <label class="small text-muted fw-bold">หมวดหมู่</label>
-                  <select class="form-select" id="doc_cat">
-                    <option value="General">เอกสารทั่วไป</option>
-                    <option value="Plan">แผนพัฒนา</option>
-                    <option value="Report">รายงานผล</option>
-                    <option value="Announcement">ประกาศ/คำสั่ง</option>
-                  </select>
-                </div>
-                <div class="col-md-6">
-                  <label class="small text-muted fw-bold">AI Chatbot</label>
-                  <select class="form-select" id="doc_ai_status">
-                    <option value="ON">🟢 เปิดใช้งาน AI Chatbot</option>
-                    <option value="OFF">🔴 ปิดใช้งาน AI</option>
-                  </select>
-                </div>
-             </div>
-             
-             <div class="mb-3">
-                 <label class="small text-muted fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label>
-                 <input type="text" class="form-control" id="doc_link" required>
-             </div>
-             
-             <div class="p-3 border rounded bg-white">
-                 <div class="row">
-                     <div class="col-md-12">
-                       <label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label>
-                       <input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้">
-                     </div>
-                     
-                     <div class="col-md-4 pt-3">
-                       <div class="form-check form-switch">
-                         <input class="form-check-input" type="checkbox" id="doc_is_pinned">
-                         <label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label>
-                       </div>
-                     </div>
-                     <div class="col-md-4 pt-3">
-                       <div class="form-check form-switch">
-                         <input class="form-check-input" type="checkbox" id="doc_is_important">
-                         <label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label>
-                       </div>
-                     </div>
-                     
-                     <div class="col-md-12 pt-3 border-top mt-3" id="newBadgeToggleDiv">
-                         <div class="form-check form-switch">
-                           <input class="form-check-input" type="checkbox" id="doc_hide_new_badge">
-                           <label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW (แม้จะเพิ่งอัปโหลดก็ตาม)</label>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-             
-             <div class="mt-4 text-end">
-               <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
-               <button type="submit" class="btn btn-success fw-bold px-4">บันทึกข้อมูล</button>
-             </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="adminVideoModal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title fw-bold" id="vidModalTitle">เพิ่มวิดีโอ</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form onsubmit="submitVideo(event)">
-                    <input type="hidden" id="vid_id">
-                    <div class="mb-2">
-                      <label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label>
-                      <input type="text" class="form-control" id="vid_title" required>
-                    </div>
-                    <div class="mb-2">
-                      <label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label>
-                      <textarea class="form-control" id="vid_desc" rows="3" placeholder="สรุปเนื้อหาสั้นๆ ให้ประชาชนอ่าน..."></textarea>
-                    </div>
-                    <div class="mb-2">
-                      <label class="small text-muted fw-bold">ลิงก์ YouTube</label>
-                      <input type="text" class="form-control" id="vid_link" required>
-                    </div>
-                    <div class="mb-3">
-                      <label class="small text-muted fw-bold">ลำดับ (เลขน้อยขึ้นก่อน)</label>
-                      <input type="number" class="form-control" id="vid_order" placeholder="เว้นว่างได้">
-                    </div>
-                    <div class="text-end">
-                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
-                      <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
-
-  <div class="modal fade" id="adminQAModal" tabindex="-1" data-bs-backdrop="static">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title fw-bold" id="qaModalTitle">เพิ่ม Q&A</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <form onsubmit="submitQA(event)">
-                    <input type="hidden" id="qa_id">
-                    <div class="row g-2 mb-2">
-                        <div class="col-3">
-                          <label class="small text-muted fw-bold">ไอคอน</label>
-                          <select class="form-select" id="qa_emoji">
-                            <option value="❓">❓</option>
-                            <option value="📢">📢</option>
-                            <option value="🔴">🔴</option>
-                            <option value="🟢">🟢</option>
-                            <option value="🔥">🔥</option>
-                            <option value="⭐">⭐</option>
-                            <option value="📌">📌</option>
-                            <option value="💡">💡</option>
-                          </select>
-                        </div>
-                        <div class="col-9">
-                          <label class="small text-muted fw-bold">คำถาม</label>
-                          <input type="text" class="form-control" id="qa_question" required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                      <label class="small text-muted fw-bold">คำตอบ</label>
-                      <textarea class="form-control" id="qa_answer" rows="4" required></textarea>
-                    </div>
-                    <div class="text-end">
-                      <button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button>
-                      <button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-  </div>
+  <div class="modal fade" id="chatModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header bg-info text-white"><h5 class="modal-title fw-bold"><i class="material-icons align-text-bottom me-2">smart_toy</i> ถาม AI เกี่ยวกับเอกสาร</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-0"><div id="chatHistory" class="chat-container"></div><div class="p-3 border-top bg-light"><div class="input-group"><input type="text" id="chatInput" class="form-control" placeholder="พิมพ์คำถาม..." onkeypress="if(event.key==='Enter') sendChat()"><button class="btn btn-primary" onclick="sendChat()"><i class="material-icons">send</i></button></div></div></div></div></div></div>
+  <div class="modal fade" id="formModal" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header bg-primary text-white"><h5 class="modal-title fw-bold" id="formTitle">แบบฟอร์ม</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body p-4"><form onsubmit="submitForm(event)"><input type="hidden" id="f_topic_type"><div class="mb-3"><label class="fw-bold form-label">ชื่อ-นามสกุล <span class="text-danger">*</span></label><input class="form-control" id="f_name" required></div><div class="mb-3"><label class="fw-bold form-label">เบอร์ติดต่อ</label><input class="form-control" id="f_contact"></div><div class="mb-3" id="topicSelectDiv"><label class="fw-bold form-label">หมวดหมู่ <span class="text-danger">*</span></label><select class="form-select" id="f_topic_select" required></select></div><div class="mb-3"><label class="fw-bold form-label">รายละเอียด <span class="text-danger">*</span></label><textarea class="form-control" id="f_detail" rows="5" required></textarea></div><div class="d-grid"><button class="btn btn-success py-2 fw-bold shadow-sm">🚀 ยืนยัน</button></div></form></div></div></div></div>
+  <div class="modal fade" id="ratingModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog modal-dialog-centered"><div class="modal-content text-center"><div class="modal-header bg-warning text-dark border-0"><h5 class="modal-title fw-bold mx-auto">⭐ ประเมินความพึงพอใจ</h5></div><div class="modal-body p-4"><h5 class="mb-4 text-success fw-bold">ส่งข้อมูลสำเร็จ ขอบพระคุณอย่างยิ่ง!</h5><p class="text-muted">โปรดให้คะแนนความพึงพอใจในการใช้งานระบบ S-MAP</p><div class="star-rating mb-4 d-flex justify-content-center gap-2" id="starContainer"><i class="material-icons" data-val="1" onclick="setStar(1)" onmouseover="hoverStar(1)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="2" onclick="setStar(2)" onmouseover="hoverStar(2)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="3" onclick="setStar(3)" onmouseover="hoverStar(3)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="4" onclick="setStar(4)" onmouseover="hoverStar(4)" onmouseout="resetStar()">star</i><i class="material-icons" data-val="5" onclick="setStar(5)" onmouseover="hoverStar(5)" onmouseout="resetStar()">star</i></div><input type="hidden" id="sys_rating_val" value="0"><div class="mb-3 text-start"><textarea class="form-control" id="sys_feedback" rows="2" placeholder="ข้อเสนอแนะเรื่องระบบเว็บ (ไม่บังคับ)..."></textarea></div><button type="button" class="btn btn-primary w-100 fw-bold" onclick="submitRating()">เสร็จสิ้น</button></div></div></div></div>
+  <div class="modal fade" id="adminDocModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="docModalTitle">จัดการเอกสาร</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body bg-light"><form id="adminDocForm" onsubmit="submitDocument(event)"><input type="hidden" id="doc_id"><div class="row g-2 mb-2"><div class="col-md-9"><label class="small text-muted fw-bold">ชื่อเอกสาร <span class="text-danger">*</span></label><input type="text" class="form-control" id="doc_title" required></div><div class="col-md-3"><label class="small text-muted fw-bold">ปีงบประมาณ</label><input type="text" class="form-control" id="doc_year" placeholder="เช่น 2567"></div></div><div class="mb-2"><label class="small text-muted fw-bold">คำอธิบายเพิ่มเติม</label><input type="text" class="form-control" id="doc_desc"></div><div class="row g-2 mb-2"><div class="col-md-6"><label class="small text-muted fw-bold">หมวดหมู่</label><select class="form-select" id="doc_cat"><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select></div><div class="col-md-6"><label class="small text-muted fw-bold">AI Chatbot</label><select class="form-select" id="doc_ai_status"><option value="ON">🟢 เปิดใช้งาน AI Chatbot</option><option value="OFF">🔴 ปิดใช้งาน AI</option></select></div></div><div class="mb-3"><label class="small text-muted fw-bold">ลิงก์ไฟล์ (URL) <span class="text-danger">*</span></label><input type="text" class="form-control" id="doc_link" required></div><div class="p-3 border rounded bg-white"><div class="row"><div class="col-md-12"><label class="small text-muted fw-bold">ลำดับการแสดงผล (ใส่ตัวเลข)</label><input type="number" class="form-control" id="doc_order" placeholder="เว้นว่างได้"></div><div class="col-md-4 pt-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_is_pinned"><label class="small fw-bold text-dark">📌 ปักหมุดบนสุด</label></div></div><div class="col-md-4 pt-3"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_is_important"><label class="small fw-bold text-danger">⭐ ติดป้ายสำคัญ</label></div></div><div class="col-md-12 pt-3 border-top mt-3" id="newBadgeToggleDiv"><div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="doc_hide_new_badge"><label class="small fw-bold text-secondary">🚫 ปิดไม่ให้แสดงป้าย NEW</label></div></div></div></div><div class="mt-4 text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึกข้อมูล</button></div></form></div></div></div></div>
+  <div class="modal fade" id="adminVideoModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="vidModalTitle">เพิ่มวิดีโอ</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="submitVideo(event)"><input type="hidden" id="vid_id"><div class="mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อวิดีโอ</label><input type="text" class="form-control" id="vid_title" required></div><div class="mb-2"><label class="small text-muted fw-bold">คำอธิบาย (ใส่หรือไม่ใส่ก็ได้)</label><textarea class="form-control" id="vid_desc" rows="3"></textarea></div><div class="mb-2"><label class="small text-muted fw-bold">ลิงก์ YouTube</label><input type="text" class="form-control" id="vid_link" required></div><div class="mb-3"><label class="small text-muted fw-bold">ลำดับ</label><input type="number" class="form-control" id="vid_order"></div><div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div></form></div></div></div></div>
+  <div class="modal fade" id="adminQAModal" tabindex="-1" data-bs-backdrop="static"><div class="modal-dialog"><div class="modal-content"><div class="modal-header bg-dark text-white"><h5 class="modal-title fw-bold" id="qaModalTitle">เพิ่ม Q&A</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div><div class="modal-body"><form onsubmit="submitQA(event)"><input type="hidden" id="qa_id"><div class="row g-2 mb-2"><div class="col-3"><label class="small text-muted fw-bold">ไอคอน</label><select class="form-select" id="qa_emoji"><option value="❓">❓</option><option value="📢">📢</option><option value="🔴">🔴</option><option value="🟢">🟢</option><option value="🔥">🔥</option><option value="⭐">⭐</option><option value="📌">📌</option><option value="💡">💡</option></select></div><div class="col-9"><label class="small text-muted fw-bold">คำถาม</label><input type="text" class="form-control" id="qa_question" required></div></div><div class="mb-3"><label class="small text-muted fw-bold">คำตอบ</label><textarea class="form-control" id="qa_answer" rows="4" required></textarea></div><div class="text-end"><button type="button" class="btn btn-secondary me-2" data-bs-dismiss="modal">ยกเลิก</button><button type="submit" class="btn btn-success fw-bold px-4">บันทึก</button></div></form></div></div></div></div>
 
   <div class="modal fade" id="hearingModal" tabindex="-1">
     <div class="modal-dialog modal-xl modal-dialog-scrollable">
@@ -1806,7 +933,7 @@
     
     let h_topics = ["", "", "", "", "", ""];
     let showNewBadge = true; 
-    let globalDashboardData = null; // 🟢 เก็บข้อมูล Dashboard เพื่อใช้สลับโหมดคำนวณ
+    let globalDashboardData = null; 
     
     let currentPage = 1; const itemsPerPage = 10; 
     let currentDocLink = "";
@@ -2169,7 +1296,1045 @@
       });
     }
 
-    // 🟢 ระบบคำนวณผลลัพธ์ Dashboard 2 โหมด (Average vs Positive)
+    function postData(data, callback) { 
+       fetch(SCRIPT_URL, { 
+           method: 'POST', 
+           body: JSON.stringify(data) 
+       })
+       .then(r => r.text())
+       .then(text => { 
+           try { 
+               callback(JSON.parse(text)); 
+           } catch(error) { 
+               Swal.fire('ข้อผิดพลาดเซิร์ฟเวอร์', 'ข้อมูลตอบกลับไม่ถูกต้อง โปรดเช็คการ Deploy', 'error'); 
+           } 
+       })
+       .catch(error => {
+           Swal.fire('ขาดการเชื่อมต่อ', 'โปรดตรวจสอบสัญญาณอินเทอร์เน็ตของคุณ', 'error');
+       }); 
+    }
+
+    function showFullVideoTitle(vidId) { 
+        let v = videoList.find(x => x.id === vidId);
+        if (!v) return;
+        let descHtml = v.desc ? `<hr><div style="text-align:left; font-size:0.95rem; white-space:pre-wrap;" class="text-muted">${v.desc}</div>` : '';
+        Swal.fire({ 
+            title: 'รายละเอียดวิดีโอ', 
+            html: `<strong class="text-primary">${v.title}</strong>${descHtml}`, 
+            icon: 'info', 
+            confirmButtonText: 'ปิด' 
+        }); 
+    }
+
+    function updateVideo(url) { 
+        let videoId = extractYouTubeID(url); 
+        let embedUrl = videoId ? "https://www.youtube.com/embed/" + videoId : ""; 
+        let frame = document.getElementById('main_video_frame');
+        if(frame) frame.src = embedUrl; 
+        setElVal('admin_video_url', url);
+    }
+
+    function extractYouTubeID(url) { 
+        if (!url) return null; 
+        var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/; 
+        var match = url.match(regExp); 
+        return (match && match[2].length == 11) ? match[2] : null; 
+    }
+
+    function updateDashboard(url) { 
+        let ph = document.getElementById('dash_placeholder'); 
+        let frame = document.getElementById('main_dash_frame'); 
+        setElVal('admin_dash_url', url);
+        
+        if (url && url.length > 5) { 
+            if(ph) ph.style.display = 'none'; 
+            if(frame) { frame.style.display = 'block'; frame.src = url; }
+        } else { 
+            if(ph) ph.style.display = 'flex'; 
+            if(frame) frame.style.display = 'none'; 
+        } 
+    }
+
+    function toggleSidebar() { 
+        let sb = document.getElementById('sidebar');
+        let overlay = document.getElementById('sidebarOverlay');
+        if(sb) sb.classList.toggle('active'); 
+        if(overlay) overlay.classList.toggle('active'); 
+    }
+
+    function showPage(id) {
+      let pages = ['page-home','page-docs','page-calendar','page-qa', 'page-videos', 'page-admin-dash'];
+      pages.forEach(page => { 
+          let p = document.getElementById(page);
+          if (p) p.style.display = 'none'; 
+      });
+      let targetPage = document.getElementById('page-' + id);
+      if (targetPage) targetPage.style.display = 'block';
+      
+      document.querySelectorAll('.nav-link-main').forEach(el => { 
+          el.classList.remove('active'); 
+      });
+      if (id !== 'admin-dash') { 
+          let menuLink = document.getElementById('menu-' + id);
+          if (menuLink) menuLink.classList.add('active'); 
+      }
+      if (id === 'docs') filterDocs();
+      if (id === 'admin-dash') loadDashboard();
+      
+      window.scrollTo(0,0);
+      if (window.innerWidth <= 992) { 
+          let sb = document.getElementById('sidebar');
+          let overlay = document.getElementById('sidebarOverlay');
+          if(sb) sb.classList.remove('active'); 
+          if(overlay) overlay.classList.remove('active'); 
+      }
+    }
+
+    function scrollToId(id) { 
+        showPage('home'); 
+        setTimeout(() => { 
+            let target = document.getElementById(id);
+            if(target) target.scrollIntoView({behavior:'smooth'}); 
+        }, 200); 
+    }
+
+    function getVal(id) { 
+        let el = document.getElementById(id);
+        return el ? el.value : ""; 
+    }
+
+    function saveGeneralConfig() {
+       let vTitle = getVal('admin_video_title'); 
+       let vUrl = getVal('admin_video_url'); 
+       let dUrl = getVal('admin_dash_url');
+       let dMainUrl = getVal('admin_dash_main_url');
+       
+       if (!vTitle) { 
+           Swal.fire('แจ้งเตือน', 'กรุณาใส่ชื่อวิดีโอ', 'warning'); 
+           return; 
+       }
+       
+       Swal.fire({ 
+           title: 'กำลังบันทึก...', 
+           allowOutsideClick: false, 
+           didOpen: () => { Swal.showLoading(); } 
+       });
+       
+       postData({ 
+           action: 'updateGeneralConfig', 
+           token: adminToken, 
+           vTitle: vTitle, 
+           video: vUrl, 
+           dash: dUrl,
+           dashMain: dMainUrl,
+           pr_img_1: getVal('h_admin_pr_1'),
+           pr_img_2: getVal('h_admin_pr_2'),
+           pr_img_3: getVal('h_admin_pr_3'),
+           pr_img_4: getVal('h_admin_pr_4'),
+           pr_img_5: getVal('h_admin_pr_5')
+       }, (res) => { 
+           if(res.status === 'SUCCESS') { 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); 
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
+       });
+    }
+
+    function saveFormConfig() {
+       let titleVal = getVal('admin_title_1'); 
+       let descVal = getVal('admin_subtitle_1'); 
+       let dateVal = getVal('admin_date_1'); 
+       let swF1 = document.getElementById('swForm1');
+       let status = (swF1 && swF1.checked) ? 'OPEN' : 'CLOSED';
+       
+       Swal.fire({ 
+           title: 'กำลังบันทึก...', 
+           allowOutsideClick: false, 
+           didOpen: () => { Swal.showLoading(); } 
+       });
+       
+       postData({ 
+           action: 'updateFormConfig', 
+           token: adminToken, 
+           key: 'FORM_1', 
+           title: titleVal, 
+           subtitle: descVal, 
+           dateText: dateVal, 
+           status: status,
+           f1_opt_1: getVal('h_admin_f1_opt_1'),
+           f1_opt_2: getVal('h_admin_f1_opt_2'),
+           f1_opt_3: getVal('h_admin_f1_opt_3'),
+           f1_opt_4: getVal('h_admin_f1_opt_4'),
+           f1_opt_5: getVal('h_admin_f1_opt_5'),
+           f1_opt_6: getVal('h_admin_f1_opt_6'),
+           f1_opt_7: getVal('h_admin_f1_opt_7'),
+           f1_opt_8: getVal('h_admin_f1_opt_8')
+       }, (res) => { 
+           if(res.status === 'SUCCESS') { 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem());
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
+       });
+    }
+
+    function saveHearingConfig() {
+       let scaleRadio = document.querySelector('input[name="admin_scale_type"]:checked');
+       let selectedScale = scaleRadio ? scaleRadio.value : "4";
+       
+       let swStatus = document.getElementById('swHearingStatus');
+       let swRating = document.getElementById('swHearingRating');
+       let swIdCard = document.getElementById('swReqIdCard');
+       
+       let payload = {
+          action: 'updateHearingConfig', 
+          token: adminToken, 
+          h_title: getVal('h_admin_title'), 
+          h_desc: getVal('h_admin_desc'), 
+          h_date: getVal('h_admin_date'), 
+          h_plan_name: getVal('h_admin_plan_name'), 
+          h_status: (swStatus && swStatus.checked) ? 'OPEN' : 'CLOSED', 
+          h_rating: (swRating && swRating.checked) ? 'ON' : 'OFF',
+          h_img: getVal('h_admin_img'), 
+          h_sum: getVal('h_admin_sum'), 
+          h_full: getVal('h_admin_full'), 
+          h_info_title: getVal('h_admin_info_title'), 
+          h_info_desc: getVal('h_admin_info_desc'),   
+          h_consent_text: getVal('h_admin_consent_text'),
+          h_q1: getVal('h_admin_q1'), 
+          h_q2: getVal('h_admin_q2'), 
+          h_q3: getVal('h_admin_q3'), 
+          h_q4: getVal('h_admin_q4'), 
+          h_req_idcard: (swIdCard && swIdCard.checked) ? 'ON' : 'OFF',
+          h_lbl_idcard: getVal('h_admin_lbl_idcard'),
+          h_lbl_name: getVal('h_admin_lbl_name'),
+          h_lbl_district: getVal('h_admin_lbl_district'),
+          h_lbl_sector: getVal('h_admin_lbl_sector'),
+          h_sec_1: getVal('h_admin_sec_1'),
+          h_sec_2: getVal('h_admin_sec_2'),
+          h_sec_3: getVal('h_admin_sec_3'),
+          h_sec_4: getVal('h_admin_sec_4'),
+          h_sec_5: getVal('h_admin_sec_5'),
+          h_sec_6: getVal('h_admin_sec_6'),
+          h_scale_type: selectedScale,
+          h_s3_1: getVal('h_admin_s3_1'), 
+          h_s3_2: getVal('h_admin_s3_2'), 
+          h_s3_3: getVal('h_admin_s3_3'),
+          h_s3_4: getVal('h_admin_s3_4'), 
+          h_s3_5: getVal('h_admin_s3_5'), 
+          h_s3_6: getVal('h_admin_s3_6'),
+          h_p_ph: getVal('h_admin_p_ph'),
+          h_p_1: getVal('h_admin_p_1'),
+          h_p_2: getVal('h_admin_p_2'),
+          h_p_3: getVal('h_admin_p_3'),
+          h_p_4: getVal('h_admin_p_4'),
+          h_p_5: getVal('h_admin_p_5'),
+          h_p_6: getVal('h_admin_p_6'),
+          h_fb_ph_1: getVal('h_admin_fb_ph_1'), 
+          h_fb_ph_2: getVal('h_admin_fb_ph_2'), 
+          h_fb_ph_3: getVal('h_admin_fb_ph_3')
+       };
+       
+       Swal.fire({ 
+           title: 'กำลังบันทึก...', 
+           allowOutsideClick: false, 
+           didOpen: () => { Swal.showLoading(); } 
+       });
+       
+       postData(payload, (res) => { 
+           if(res.status === 'SUCCESS') { 
+               Swal.fire({ icon: 'success', title: 'บันทึกเรียบร้อย', timer: 1500, showConfirmButton: false }).then(()=>initSystem()); 
+           } else { 
+               Swal.fire('Error', res.message, 'error'); 
+           } 
+       });
+    }
+
+    function openDocModal() { 
+        document.getElementById('adminDocForm').reset(); 
+        setElVal('doc_id', ''); 
+        setElText('docModalTitle', 'เพิ่มเอกสารใหม่');
+        
+        let bdgDiv = document.getElementById('newBadgeToggleDiv');
+        let hideBdg = document.getElementById('doc_hide_new_badge');
+        if(bdgDiv) bdgDiv.style.display = 'block'; 
+        if(hideBdg) hideBdg.checked = false; 
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); 
+        modalInstance.show();
+    }
+    
+    function editDoc(id) {
+       let d = docs.find(x => x.id === id); 
+       if(!d) return;
+       
+       setElVal('doc_id', d.id);
+       setElVal('doc_title', d.title);
+       setElVal('doc_year', d.year || '');
+       setElVal('doc_desc', d.desc);
+       setElVal('doc_link', d.link);
+       setElVal('doc_cat', d.type);
+       setElVal('doc_ai_status', d.ai_status || 'ON');
+       setElVal('doc_order', d.order == 999 ? '' : d.order);
+       
+       let pin = document.getElementById('doc_is_pinned');
+       let imp = document.getElementById('doc_is_important');
+       if(pin) pin.checked = d.is_pinned; 
+       if(imp) imp.checked = d.is_important;
+       
+       let bdgDiv = document.getElementById('newBadgeToggleDiv');
+       let hideBdg = document.getElementById('doc_hide_new_badge');
+       if(bdgDiv) bdgDiv.style.display = 'none'; 
+       if(hideBdg) hideBdg.checked = (d.hide_new_badge === true);
+       
+       setElText('docModalTitle', 'แก้ไขเอกสาร');
+       let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')) || new bootstrap.Modal(document.getElementById('adminDocModal')); 
+       modalInstance.show();
+    }
+
+    function submitDocument(e) {
+      e.preventDefault(); 
+      Swal.fire({ 
+          title: 'กำลังบันทึก...', 
+          allowOutsideClick: false, 
+          didOpen: () => Swal.showLoading() 
+      });
+      
+      let pin = document.getElementById('doc_is_pinned');
+      let imp = document.getElementById('doc_is_important');
+      let hideBdg = document.getElementById('doc_hide_new_badge');
+
+      let payload = { 
+          action: 'saveDoc', 
+          token: adminToken, 
+          id: getVal('doc_id'), 
+          title: getVal('doc_title'), 
+          desc: getVal('doc_desc'), 
+          link: getVal('doc_link'), 
+          type: getVal('doc_cat'), 
+          ai_status: getVal('doc_ai_status'), 
+          year: getVal('doc_year'), 
+          order: getVal('doc_order'), 
+          is_pinned: pin ? pin.checked : false, 
+          is_important: imp ? imp.checked : false, 
+          hide_new_badge: hideBdg ? hideBdg.checked : false 
+      };
+      
+      postData(payload, (res) => {
+          if(res.status === 'SUCCESS') { 
+              let m = bootstrap.Modal.getInstance(document.getElementById('adminDocModal')); 
+              if (m) m.hide();
+              Swal.fire('สำเร็จ', 'บันทึกข้อมูลแล้ว', 'success').then(() => initSystem()); 
+          } else { 
+              Swal.fire('Error', res.message, 'error'); 
+          }
+      });
+    }
+
+    function deleteDoc(id) { 
+        Swal.fire({ 
+            title: 'ลบเอกสาร?', 
+            icon: 'warning', 
+            showCancelButton: true, 
+            confirmButtonText: 'ใช่', 
+            cancelButtonText: 'ยกเลิก' 
+        }).then((result) => { 
+            if (result.isConfirmed) { 
+                Swal.fire({ 
+                    title: 'กำลังลบ...', 
+                    allowOutsideClick: false, 
+                    didOpen: () => Swal.showLoading() 
+                }); 
+                postData({ 
+                    action: 'deleteDoc', 
+                    token: adminToken, 
+                    id: id 
+                }, (res) => { 
+                    if(res.status === 'SUCCESS') { 
+                        Swal.fire('ลบเรียบร้อย', '', 'success').then(() => initSystem()); 
+                    } else { 
+                        Swal.fire('Error', res.message, 'error'); 
+                    } 
+                }); 
+            } 
+        }); 
+    }
+
+    function buildYearFilter() {
+       let years = new Set();
+       docs.forEach(d => { 
+           if(d.year !== undefined && d.year !== null && d.year !== "") { 
+               let yearStr = d.year.toString().trim(); 
+               let parts = yearStr.split('-'); 
+               if(parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) { 
+                   for(let y = parseInt(parts[0]); y <= parseInt(parts[1]); y++) { 
+                       years.add(y.toString()); 
+                   } 
+               } else { 
+                   years.add(yearStr); 
+               } 
+           }
+       });
+       
+       let html = '<option value="All">ทุกปีงบประมาณ</option>';
+       let sortedYears = Array.from(years).sort((a,b) => b - a);
+       sortedYears.forEach(y => { 
+           html += `<option value="${y}">ปี ${y}</option>`; 
+       });
+       setElHtml('filterYear', html);
+    }
+
+    function sortDocsLogic(a, b) {
+       if (a.is_pinned !== b.is_pinned) return a.is_pinned ? -1 : 1; 
+       
+       let getYearMax = (y) => { 
+           if (!y) return 0; 
+           let p = y.toString().split('-'); 
+           return p.length === 2 ? parseInt(p[1]) : parseInt(y); 
+       };
+       
+       let yA = getYearMax(a.year); 
+       let yB = getYearMax(b.year);
+       
+       if (yA !== yB) return yB - yA;
+       
+       let oA = a.order || 999; 
+       let oB = b.order || 999;
+       
+       if (oA !== oB) return oA - oB;
+       
+       return new Date(b.created) - new Date(a.created);
+    }
+
+    function filterDocs() {
+       let searchText = getVal('searchDoc').toLowerCase(); 
+       let catFilter = getVal('filterCat'); 
+       let yearFilter = getVal('filterYear');
+       
+       filteredDocs = docs.filter(d => {
+          let mTxt = d.title.toLowerCase().includes(searchText) || (d.desc && d.desc.toLowerCase().includes(searchText));
+          let mCat = (catFilter === 'All') || (d.type === catFilter); 
+          let mYr = (yearFilter === 'All');
+          
+          if (!mYr && d.year) { 
+              let docYr = d.year.toString().trim(); 
+              let p = docYr.split('-'); 
+              if (p.length === 2) { 
+                  mYr = (parseInt(yearFilter) >= parseInt(p[0]) && parseInt(yearFilter) <= parseInt(p[1])); 
+              } else { 
+                  mYr = (yearFilter === docYr); 
+              } 
+          }
+          return mTxt && mCat && mYr;
+       });
+       
+       filteredDocs.sort(sortDocsLogic); 
+       currentPage = 1; 
+       renderDocs();
+    }
+    
+    function clearSearch() { 
+        setElVal('searchDoc', '');
+        setElVal('filterCat', 'All');
+        setElVal('filterYear', 'All');
+        filterDocs(); 
+    }
+
+    function getCatBadge(type) { 
+        let label = type, colorClass = 'bg-secondary'; 
+        switch(type) { 
+            case 'General': label = 'เอกสารทั่วไป'; break; 
+            case 'Plan': label = 'แผนพัฒนา'; colorClass = 'bg-primary'; break; 
+            case 'Report': label = 'รายงานผล'; colorClass = 'bg-success'; break; 
+            case 'Announcement': label = 'ประกาศ/คำสั่ง'; colorClass = 'bg-warning text-dark'; break; 
+        } 
+        return `<span class="badge ${colorClass}">${label}</span>`; 
+    }
+
+    function renderDocs() {
+      let html = ''; 
+      if(filteredDocs.length === 0) { 
+          html = '<div class="text-center text-muted py-5">ไม่พบเอกสาร</div>'; 
+          setElHtml('pagination', '');
+      } else {
+        let start = (currentPage - 1) * itemsPerPage; 
+        let end = start + itemsPerPage; 
+        let paginatedItems = filteredDocs.slice(start, end);
+        
+        paginatedItems.forEach(doc => {
+          let icon = 'description', color = 'text-primary'; 
+          if(doc.link.includes('drive')) { icon = 'add_to_drive'; color = 'text-success'; } 
+          else if(doc.link.includes('.pdf')) { icon = 'picture_as_pdf'; color = 'text-danger'; }
+          
+          let dateStr = "อัปเดต: " + formatDate(doc.created); 
+          let badges = '';
+          if(doc.is_pinned) badges += `<span class="badge badge-pin me-2">📌 ปักหมุด</span>`;
+          if(doc.is_important) badges += `<span class="badge bg-danger me-2">⭐ สำคัญ</span>`;
+          
+          let ageDays = (new Date() - new Date(doc.created)) / (1000 * 60 * 60 * 24);
+          if(ageDays < 14 && doc.hide_new_badge !== true) badges += `<span class="badge-custom-new me-2">NEW</span>`;
+
+          let catBadge = getCatBadge(doc.type);
+          let yrBadge = doc.year ? `<span class="badge bg-info text-dark ms-2"><i class="material-icons align-middle" style="font-size: 11px;">event</i> ปีงบประมาณ ${doc.year}</span>` : '';
+
+          let editBtn = isAdmin ? `<button class="btn btn-sm btn-outline-warning ms-2" onclick="editDoc('${doc.id}')">แก้ไข</button>` : ''; 
+          let deleteBtn = isAdmin ? `<button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteDoc('${doc.id}')">ลบ</button>` : '';
+          let chatBtn = doc.ai_status === 'OFF' ? `<button class="btn btn-sm btn-secondary text-white opacity-50" style="cursor:not-allowed;"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ปิด AI</button>` : `<button class="btn btn-sm btn-info text-white" onclick="openChat('${doc.id}')"><i class="material-icons align-middle" style="font-size:16px;">smart_toy</i> ถาม AI</button>`;
+          
+          html += `
+            <div class="list-group-item list-group-item-action d-flex align-items-start py-4 px-3 border-bottom">
+                <i class="material-icons fs-2 me-4 mt-1 ${color}">${icon}</i>
+                <div class="flex-grow-1">
+                    <a href="${doc.link}" target="_blank" class="text-decoration-none text-dark">
+                        <div class="mb-1 d-flex align-items-center flex-wrap">${badges}</div>
+                        <h5 class="mb-2 fw-bold">${doc.title}</h5>
+                        <div class="mb-2 d-flex flex-wrap align-items-center">
+                            ${catBadge} ${yrBadge} 
+                            <span class="text-muted small ms-md-2 mt-2 mt-md-0 d-block d-md-inline w-100 w-md-auto">${doc.desc || ""}</span>
+                        </div>
+                        <small class="text-secondary">${dateStr}</small>
+                    </a>
+                </div>
+                <div class="d-flex align-items-center ms-3">
+                    ${chatBtn} ${editBtn} ${deleteBtn}
+                </div>
+            </div>`;
+        });
+        renderPagination();
+      } 
+      setElHtml('docListContainer', html);
+    }
+
+    function renderPagination() { 
+        let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
+        let html = ''; 
+        if(totalPages > 1) { 
+            html += `<div class="page-btn ${currentPage===1 ? 'disabled' : ''}" onclick="changePage(${currentPage-1})">«</div>`; 
+            for(let i=1; i<=totalPages; i++) { 
+                if(i===1 || i===totalPages || (i>=currentPage-1 && i<=currentPage+1)) { 
+                    html += `<div class="page-btn ${i===currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</div>`; 
+                } else if(i===currentPage-2 || i===currentPage+2) { 
+                    html += `<span class="px-2">...</span>`; 
+                } 
+            } 
+            html += `<div class="page-btn ${currentPage===totalPages ? 'disabled' : ''}" onclick="changePage(${currentPage+1})">»</div>`; 
+        } 
+        setElHtml('pagination', html);
+    }
+
+    function changePage(p) { 
+        let totalPages = Math.ceil(filteredDocs.length / itemsPerPage); 
+        if(p < 1 || p > totalPages) return; 
+        currentPage = p; 
+        renderDocs(); 
+    }
+
+    function formatDate(isoStr) { 
+        if(!isoStr) return ""; 
+        let d = new Date(isoStr); 
+        return d.toLocaleDateString('th-TH') + ' ' + d.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit'}); 
+    }
+
+    function loginToggle() {
+       if(isAdmin) { 
+           return logoutSystem(); 
+       }
+       Swal.fire({ 
+           title: 'เข้าสู่ระบบ Admin', 
+           html: '<input id="swal-u" class="swal2-input" placeholder="Username"><input id="swal-p" class="swal2-input" type="password" placeholder="Password">', 
+           showCancelButton: true,
+           preConfirm: () => [getVal('swal-u'), getVal('swal-p')] 
+       }).then((result) => { 
+           if (result.isConfirmed) { 
+               if (!result.value[0] || !result.value[1]) {
+                   return Swal.fire('แจ้งเตือน', 'กรุณากรอกให้ครบ', 'warning');
+               }
+               Swal.fire({ 
+                   title: 'กำลังตรวจสอบ...', 
+                   didOpen: () => Swal.showLoading() 
+               }); 
+               postData({
+                   action: 'login', 
+                   username: result.value[0], 
+                   password: result.value[1]
+               }, (data) => { 
+                   if(data.status === 'SUCCESS') { 
+                       adminToken = result.value[1]; 
+                       setAdminMode(true); 
+                       Swal.fire('เข้าสู่ระบบสำเร็จ', '', 'success'); 
+                   } else { 
+                       Swal.fire('เข้าสู่ระบบไม่สำเร็จ', 'ข้อมูลไม่ถูกต้อง', 'error'); 
+                   } 
+               }); 
+           } 
+       });
+    }
+
+    function logoutSystem() { 
+        Swal.fire({ 
+            title: 'ต้องการออกจากระบบ?', 
+            showCancelButton: true, 
+            confirmButtonText: 'ออกจากระบบ' 
+        }).then((result) => { 
+            if(result.isConfirmed) { 
+                adminToken = ""; 
+                setAdminMode(false); 
+                Swal.fire('ออกจากระบบแล้ว', '', 'success'); 
+            } 
+        }); 
+    }
+
+    function setAdminMode(status) { 
+        isAdmin = status; 
+        let adminPanel = document.getElementById('adminHomePanel');
+        if(adminPanel) adminPanel.style.display = status ? 'block' : 'none'; 
+        
+        let blockElements = ['adminMenuSection'];
+        blockElements.forEach(id => { 
+            let element = document.getElementById(id); 
+            if (element) { element.style.display = status ? 'block' : 'none'; } 
+        });
+        
+        let flexElements = ['adminDocBtnGroup', 'adminVideoBtnGroup', 'adminQABtnGroup'];
+        flexElements.forEach(id => { 
+            let element = document.getElementById(id); 
+            if (element) { element.style.display = status ? 'flex' : 'none'; } 
+        });
+
+        filterDocs(); 
+        renderQA(); 
+        renderVideos();
+    }
+
+    function handleBannerClick(num) { 
+        if(num === 1) { 
+            if(form1Open) { 
+                setElText('formTitle', form1Title);
+                setElVal('f_topic_type', form1Title);
+                let topicSel = document.getElementById('topicSelectDiv');
+                if(topicSel) topicSel.style.display = 'block'; 
+                let modalInstance = bootstrap.Modal.getInstance(document.getElementById('formModal')) || new bootstrap.Modal(document.getElementById('formModal')); 
+                modalInstance.show();
+            } else { 
+                Swal.fire('ปิดรับแจ้งชั่วคราว'); 
+            } 
+        } else if (num === 2) { 
+            if(hOpen) { 
+                let modalInstance = bootstrap.Modal.getInstance(document.getElementById('hearingModal')) || new bootstrap.Modal(document.getElementById('hearingModal')); 
+                modalInstance.show();
+            } else { 
+                Swal.fire('ปิดรับฟังความเห็น'); 
+            } 
+        } 
+    }
+
+    function openVideoModal() {
+        setElVal('vid_id', '');
+        setElVal('vid_title', '');
+        setElVal('vid_desc', '');
+        setElVal('vid_link', '');
+        setElVal('vid_order', '');
+        setElText('vidModalTitle', 'เพิ่มวิดีโอ');
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); 
+        modalInstance.show();
+    }
+
+    function openQAModal() {
+        setElVal('qa_id', '');
+        setElVal('qa_emoji', '❓');
+        setElVal('qa_question', '');
+        setElVal('qa_answer', '');
+        setElText('qaModalTitle', 'เพิ่ม Q&A');
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); 
+        modalInstance.show();
+    }
+    
+    function editVideo(id) { 
+        let v = videoList.find(x => x.id === id); 
+        if(!v) return; 
+        
+        setElVal('vid_id', v.id);
+        setElVal('vid_title', v.title);
+        setElVal('vid_desc', v.desc || "");
+        setElVal('vid_link', v.link);
+        setElVal('vid_order', v.order == 999 ? "" : v.order);
+        setElText('vidModalTitle', 'แก้ไขวิดีโอ');
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')) || new bootstrap.Modal(document.getElementById('adminVideoModal')); 
+        modalInstance.show(); 
+    }
+
+    function submitVideo(e) { 
+        e.preventDefault(); 
+        Swal.fire({ 
+            title: 'กำลังบันทึก...', 
+            allowOutsideClick: false, 
+            didOpen: () => Swal.showLoading() 
+        }); 
+        
+        postData({ 
+            action: 'saveVideo', 
+            token: adminToken, 
+            id: getVal('vid_id'), 
+            title: getVal('vid_title'), 
+            desc: getVal('vid_desc'), 
+            link: getVal('vid_link'), 
+            order: getVal('vid_order') 
+        }, (res) => { 
+            if (res.status === 'SUCCESS') { 
+                let m = bootstrap.Modal.getInstance(document.getElementById('adminVideoModal')); 
+                if(m) m.hide(); 
+                Swal.fire('บันทึกวิดีโอแล้ว', '', 'success').then(()=>initSystem()); 
+            } else { 
+                Swal.fire('Error', res.message, 'error'); 
+            } 
+        }); 
+    }
+
+    function deleteVideo(id) { 
+        Swal.fire({ 
+            title: 'ลบวิดีโอ?', 
+            icon: 'warning', 
+            showCancelButton: true 
+        }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ 
+                    title: 'กำลังลบ...', 
+                    didOpen: () => Swal.showLoading() 
+                }); 
+                postData({ 
+                    action: 'deleteVideo', 
+                    token: adminToken, 
+                    id: id 
+                }, (res) => { 
+                    if(res.status==='SUCCESS') { 
+                        Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());
+                    } else { 
+                        Swal.fire('Error', res.message, 'error'); 
+                    } 
+                }); 
+            } 
+        }); 
+    }
+
+    function renderVideos() { 
+        let h = ''; 
+        if(videoList.length === 0) { 
+            h = '<div class="text-center text-muted py-5 w-100">ยังไม่มีวิดีโอ</div>'; 
+        } else { 
+            videoList.forEach(vid => { 
+                let vId = extractYouTubeID(vid.link); 
+                let embedUrl = vId ? "https://www.youtube.com/embed/" + vId : ""; 
+                let adm = isAdmin ? `<div class="p-2 bg-light border-top d-flex justify-content-between"><small class="fw-bold text-muted">ลำดับ: ${vid.order==999?'':vid.order}</small><div><button class="btn btn-sm btn-outline-warning me-1" onclick="editVideo('${vid.id}')">แก้</button><button class="btn btn-sm btn-outline-danger" onclick="deleteVideo('${vid.id}')">ลบ</button></div></div>` : ''; 
+                h += `<div class="col-md-6 col-lg-4"><div class="video-card"><div class="video-title-bar" onclick="showFullVideoTitle('${vid.id}')" title="คลิกเพื่อดูรายละเอียด"><div class="video-title-text">${vid.title}</div><i class="material-icons text-primary" style="font-size: 18px; cursor: pointer;">info</i></div><div class="ratio ratio-16x9"><iframe src="${embedUrl}" allowfullscreen></iframe></div>${adm}</div></div>`; 
+            }); 
+        } 
+        setElHtml('videoListContainer', h);
+    }
+
+    function editQA(id) { 
+        let q = qaList.find(x => x.id === id); 
+        if(!q) return; 
+        
+        setElVal('qa_id', q.id);
+        setElVal('qa_emoji', q.emoji||'❓');
+        setElVal('qa_question', q.q);
+        setElVal('qa_answer', q.a);
+        setElText('qaModalTitle', 'แก้ไข Q&A');
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')) || new bootstrap.Modal(document.getElementById('adminQAModal')); 
+        modalInstance.show(); 
+    }
+
+    function submitQA(e) { 
+        e.preventDefault(); 
+        Swal.fire({ 
+            title: 'กำลังบันทึก...', 
+            allowOutsideClick: false, 
+            didOpen: () => Swal.showLoading() 
+        }); 
+        
+        postData({ 
+            action: 'saveQA', 
+            token: adminToken, 
+            id: getVal('qa_id'), 
+            q: getVal('qa_question'), 
+            a: getVal('qa_answer'), 
+            emoji: getVal('qa_emoji') 
+        }, (res) => { 
+            if(res.status==='SUCCESS') { 
+                let m = bootstrap.Modal.getInstance(document.getElementById('adminQAModal')); 
+                if(m) m.hide(); 
+                Swal.fire('บันทึกเรียบร้อย', '', 'success').then(()=>initSystem()); 
+            } else {
+                Swal.fire('Error', res.message, 'error');
+            } 
+        }); 
+    }
+
+    function deleteQA(id) { 
+        Swal.fire({ 
+            title: 'ลบถาม-ตอบ?', 
+            icon: 'warning', 
+            showCancelButton: true 
+        }).then((r) => { 
+            if (r.isConfirmed) { 
+                Swal.fire({ 
+                    title: 'กำลังลบ...', 
+                    didOpen: () => Swal.showLoading() 
+                }); 
+                postData({ 
+                    action: 'deleteQA', 
+                    token: adminToken, 
+                    id: id 
+                }, (res) => { 
+                    if(res.status==='SUCCESS') { 
+                        Swal.fire('ลบเรียบร้อย', '', 'success').then(()=>initSystem());
+                    } else {
+                        Swal.fire('Error', res.message, 'error');
+                    } 
+                }); 
+            } 
+        }); 
+    }
+
+    function renderQA() { 
+        let h = ''; 
+        if(qaList.length === 0) { 
+            h = '<div class="text-center text-muted py-5">ยังไม่มีข้อมูล</div>'; 
+        } else { 
+            qaList.forEach((item, index) => { 
+                let adm = isAdmin ? `<div class="mt-2 text-end border-top pt-2"><button class="btn btn-sm btn-outline-warning ms-2" onclick="editQA('${item.id}')">แก้</button> <button class="btn btn-sm btn-outline-danger ms-2" onclick="deleteQA('${item.id}')">ลบ</button></div>` : ''; 
+                h += `<div class="accordion-item border rounded mb-3 shadow-sm"><h2 class="accordion-header"><button class="accordion-button collapsed fw-bold text-start" type="button" data-bs-toggle="collapse" data-bs-target="#qa${index}"><span class="me-2 fs-5">${item.emoji}</span> ${item.q}</button></h2><div id="qa${index}" class="accordion-collapse collapse" data-bs-parent="#accQA"><div class="accordion-body bg-light">${item.a.replace(/\n/g,'<br>')}${adm}</div></div></div>`; 
+            }); 
+        } 
+        setElHtml('accQA', h);
+    }
+
+    function openChat(docId) { 
+        let doc = docs.find(d => d.id === docId); 
+        if(!doc) return; 
+        
+        currentDocLink = doc.link; 
+        setElHtml('chatHistory', `<div class="chat-ai chat-msg">สวัสดีครับ! ถามข้อมูลเกี่ยวกับเอกสาร <strong>"${doc.title}"</strong> ได้เลยครับ 😊<br><br><small class="text-danger">⚠️ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้เสมอ</small></div>`);
+        
+        let modalInstance = bootstrap.Modal.getInstance(document.getElementById('chatModal')) || new bootstrap.Modal(document.getElementById('chatModal')); 
+        modalInstance.show(); 
+    }
+    
+    function sendChat() { 
+        let input = document.getElementById('chatInput'); 
+        if(!input) return;
+        let question = input.value.trim(); 
+        if(!question) return; 
+        
+        let history = document.getElementById('chatHistory'); 
+        if(!history) return;
+        history.innerHTML += `<div class="chat-user chat-msg">${question}</div>`; 
+        input.value = ''; 
+        history.scrollTop = history.scrollHeight; 
+        
+        let loadingId = 'loading_' + Date.now(); 
+        history.innerHTML += `<div id="${loadingId}" class="chat-ai chat-msg typing-indicator"><span></span><span></span><span></span></div>`; 
+        history.scrollTop = history.scrollHeight; 
+        
+        fetch(SCRIPT_URL, { 
+            method: 'POST', 
+            body: JSON.stringify({ action: 'chatWithAI', link: currentDocLink, question: question }) 
+        })
+        .then(r => r.text())
+        .then(text => {
+            let loadingEl = document.getElementById(loadingId);
+            if(loadingEl) loadingEl.remove();
+            let data;
+            try { 
+                data = JSON.parse(text); 
+            } catch(e) { 
+                data = {status: 'ERROR', answer: 'ระบบ AI ขัดข้องชั่วคราว (พบปัญหาการตอบกลับจากเซิร์ฟเวอร์)'}; 
+            }
+            
+            let answer = data.status === 'SUCCESS' ? data.answer : "❌ " + data.answer; 
+            answer = answer.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>'); 
+            history.innerHTML += `<div class="chat-ai chat-msg">${answer}</div>`; 
+            history.scrollTop = history.scrollHeight; 
+        }).catch(e => {
+            let loadingEl = document.getElementById(loadingId);
+            if(loadingEl) loadingEl.remove();
+            history.innerHTML += `<div class="chat-ai chat-msg text-danger">การเชื่อมต่อล้มเหลว โปรดตรวจสอบอินเทอร์เน็ต</div>`;
+        });
+    }
+
+    function submitHearing(e) { 
+        e.preventDefault(); 
+        let btn = document.getElementById('btnSubmitHearing'); 
+        if(!btn) return;
+        let oldText = btn.innerText; 
+        btn.disabled = true; 
+        btn.innerText = 'กำลังส่ง...'; 
+        
+        let idcardVal = "";
+        if (hReqIdcard === 'ON') {
+            idcardVal = getVal('h_idcard');
+            if (!checkThaiID(idcardVal)) {
+                Swal.fire('ข้อผิดพลาด', 'เลขประจำตัวประชาชน 13 หลัก ไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง', 'error');
+                btn.disabled = false;
+                btn.innerText = oldText;
+                return;
+            }
+        }
+
+        let t1Val = document.querySelector('input[name="h_t1"]:checked') ? document.querySelector('input[name="h_t1"]:checked').value : "";
+        let t2Val = document.querySelector('input[name="h_t2"]:checked') ? document.querySelector('input[name="h_t2"]:checked').value : "";
+        let t3Val = document.querySelector('input[name="h_t3"]:checked') ? document.querySelector('input[name="h_t3"]:checked').value : "";
+        let t4Val = document.querySelector('input[name="h_t4"]:checked') ? document.querySelector('input[name="h_t4"]:checked').value : "";
+        let t5Val = document.querySelector('input[name="h_t5"]:checked') ? document.querySelector('input[name="h_t5"]:checked').value : "";
+        let t6Val = document.querySelector('input[name="h_t6"]:checked') ? document.querySelector('input[name="h_t6"]:checked').value : "";
+
+        postData({ 
+            action: 'saveHearing', 
+            plan_name: hPlanName, 
+            name: getVal('h_name'), 
+            district: getVal('h_district'), 
+            sector: getVal('h_sector'), 
+            idcard: idcardVal, 
+            vision: document.querySelector('input[name="h_vision"]:checked')?.value || "", 
+            vision_fb: getVal('h_vision_fb'), 
+            t1: t1Val, 
+            t2: t2Val, 
+            t3: t3Val, 
+            t4: t4Val, 
+            t5: t5Val, 
+            t6: t6Val,
+            strategy_fb: getVal('h_strategy_fb'), 
+            priority: getVal('h_priority'), 
+            feedback: getVal('h_feedback') 
+        }, (res) => { 
+            btn.disabled = false; 
+            btn.innerText = oldText; 
+            
+            if(res.status === 'CLOSED_ERROR') {
+                Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
+                hOpen = false; 
+                
+                let b2 = document.getElementById('banner2');
+                let sb2 = document.getElementById('statusBadge2');
+                let bdg2 = document.getElementById('badge2');
+                if(b2) b2.classList.add('closed'); 
+                if(sb2) sb2.style.display = 'inline-block'; 
+                if(bdg2) bdg2.style.display = 'none'; 
+                
+                let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); 
+                if(m) m.hide();
+                
+            } else if(res.status === 'SUCCESS') { 
+                e.target.reset(); 
+                let m = bootstrap.Modal.getInstance(document.getElementById('hearingModal')); 
+                if(m) m.hide(); 
+                
+                if(hRatingOpen) { 
+                    let rModal = bootstrap.Modal.getInstance(document.getElementById('ratingModal')) || new bootstrap.Modal(document.getElementById('ratingModal')); 
+                    rModal.show(); 
+                } else { 
+                    Swal.fire('สำเร็จ', 'ส่งความเห็นเรียบร้อย', 'success'); 
+                } 
+            } else { 
+                Swal.fire('Error', 'ไม่สามารถบันทึกได้', 'error'); 
+            } 
+        }); 
+    }
+
+    function submitForm(e) { 
+        e.preventDefault(); 
+        let btn = e.target.querySelector('button'); 
+        let oldText = btn.innerText; 
+        btn.disabled = true; 
+        btn.innerText = 'กำลังส่ง...'; 
+        
+        let topicVal = getVal('f_topic_type'); 
+        let topicKey = (topicVal === form1Title) ? "FORM_1_STATUS" : "FORM_2_STATUS";
+        let finalTopic = topicVal;
+        
+        let topicSel = document.getElementById('topicSelectDiv');
+        if(topicSel && topicSel.style.display === 'block') {
+            let select = document.getElementById('f_topic_select');
+            if(select && select.value === "") { 
+                Swal.fire('กรุณาเลือกหมวดหมู่'); 
+                btn.disabled = false; 
+                btn.innerText = oldText; 
+                return; 
+            }
+            finalTopic = select.value + " (" + topicVal + ")";
+        }
+        
+        postData({ 
+            action:'saveForm', 
+            name: getVal('f_name'), 
+            contact: getVal('f_contact'), 
+            detail: getVal('f_detail'), 
+            topic: finalTopic, 
+            topicKey: topicKey 
+        }, (res) => { 
+            btn.disabled = false; 
+            btn.innerText = oldText; 
+            
+            if (res.status === 'CLOSED_ERROR') {
+                Swal.fire('ไม่สามารถดำเนินการได้', 'ระบบอาจปิดรับข้อมูลแล้ว หรือการเชื่อมต่อมีปัญหา กรุณารีเฟรชหน้าต่าง', 'error');
+                if (topicKey === "FORM_1_STATUS") form1Open = false;
+                
+                let b1 = document.getElementById('banner1');
+                let sb1 = document.getElementById('statusBadge1');
+                let bdg1 = document.getElementById('badge1');
+                if(b1) b1.classList.add('closed'); 
+                if(sb1) sb1.style.display = 'inline-block'; 
+                if(bdg1) bdg1.style.display = 'none'; 
+                
+                let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); 
+                if(m) m.hide();
+                
+            } else if (res.status === 'SUCCESS') { 
+                Swal.fire('สำเร็จ','ขอบคุณสำหรับข้อมูล ทางเราได้รับเรื่องแล้ว','success'); 
+                e.target.reset(); 
+                let m = bootstrap.Modal.getInstance(document.getElementById('formModal')); 
+                if(m) m.hide(); 
+            } else { 
+                Swal.fire('Error', res.message, 'error'); 
+            } 
+        }); 
+    }
+    
+    function setStar(val) { 
+        setElVal('sys_rating_val', val);
+        document.querySelectorAll('.star-rating i').forEach((item, idx) => { 
+            if(idx < val) item.classList.add('active'); 
+            else item.classList.remove('active'); 
+        }); 
+    }
+
+    function submitRating() { 
+        let sc = getVal('sys_rating_val'); 
+        if(sc == 0) return Swal.fire('ให้คะแนนด้วยครับ'); 
+        
+        Swal.fire({ 
+            title: 'กำลังส่ง...', 
+            didOpen: () => Swal.showLoading() 
+        }); 
+        
+        postData({ 
+            action: 'saveRating', 
+            stars: sc, 
+            sysFeedback: getVal('sys_feedback') 
+        }, (res) => { 
+            let m = bootstrap.Modal.getInstance(document.getElementById('ratingModal')); 
+            if(m) m.hide(); 
+            Swal.fire('ขอบพระคุณ!', 'เสร็จสิ้น', 'success'); 
+            setElVal('sys_rating_val', 0);
+            setElVal('sys_feedback', '');
+            setStar(0); 
+        }); 
+    }
+
+    // 🟢 ระบบคำนวณ Dashboard 2 โหมด 🟢
     function refreshTableCalculation() {
         if (!globalDashboardData) return;
         renderSummaryTable(globalDashboardData);
@@ -2180,7 +2345,9 @@
         let activeScale = scaleConfigs[backendScale] || scaleConfigs["4"];
         let stdL = activeScale.labels;
         let stdC = activeScale.colors;
-        let calcMode = document.querySelector('input[name="calcMode"]:checked').value; // 'avg' or 'pos'
+        
+        let calcModeEl = document.querySelector('input[name="calcMode"]:checked');
+        let calcMode = calcModeEl ? calcModeEl.value : 'avg';
 
         let theadHtml = `
             <tr>
@@ -2205,22 +2372,16 @@
 
                 if (total > 0) {
                     if (calcMode === 'avg') {
-                        // 🟢 Calculation: Weighted Average
                         let weights = [];
                         if(backendScale === "5") weights = [5, 4, 3, 2, 1];
                         else if(backendScale === "4") weights = [4, 3, 2, 1];
                         else if(backendScale === "2") weights = [1, 0];
 
                         let sumWeight = 0;
-                        counts.forEach((c, i) => {
-                            sumWeight += c * weights[i];
-                        });
+                        counts.forEach((c, i) => { sumWeight += c * weights[i]; });
                         let avg = sumWeight / total;
                         
-                        // Interpretation
-                        let meaning = "";
-                        let color = "#333";
-                        
+                        let meaning = ""; let color = "#333";
                         if(backendScale === "5") {
                             if(avg >= 4.21) { meaning = "เห็นด้วยที่สุด"; color = stdC[0]; }
                             else if(avg >= 3.41) { meaning = "เห็นด้วย"; color = stdC[1]; }
@@ -2233,20 +2394,18 @@
                             else if(avg >= 1.76) { meaning = "ไม่แน่ใจ"; color = stdC[2]; }
                             else { meaning = "ไม่เห็นด้วย"; color = stdC[3]; }
                         } else {
-                            // Scale 2
                             meaning = (avg >= 0.5) ? "เห็นด้วย" : "ไม่เห็นด้วย";
                             color = (avg >= 0.5) ? stdC[0] : stdC[1];
                         }
-                        summaryCell = `<span style="color:${color}; font-weight:bold;">${avg.toFixed(2)} (${meaning})</span>`;
+                        summaryCell = `<span style="color:${color}; font-weight:bold;">${avg.toFixed(2)}<br>(${meaning})</span>`;
 
                     } else {
-                        // 🟢 Calculation: Positive % (Top 2 Boxes)
                         let positiveCount = 0;
                         if(backendScale === "2") positiveCount = counts[0];
-                        else positiveCount = counts[0] + counts[1]; // Top 2 boxes
+                        else positiveCount = counts[0] + counts[1]; 
                         
                         let pct = ((positiveCount / total) * 100).toFixed(1);
-                        summaryCell = `<span class="text-success fw-bold">เห็นด้วยรวม ${pct}%</span>`;
+                        summaryCell = `<span class="text-success fw-bold">เห็นด้วยรวม<br>${pct}%</span>`;
                     }
                 }
 
@@ -2272,7 +2431,7 @@
        .then(r => r.json())
        .then(data => {
            Swal.close(); 
-           globalDashboardData = data; // Store data globally
+           globalDashboardData = data; 
 
            let btnOS = document.getElementById('btnOpenSheet');
            if(btnOS) btnOS.href = data.sheetUrl; 
@@ -2295,7 +2454,6 @@
            let summaryVals = stdL.map(l => summaryData[l] || 0);
            renderChart('chartSummary', 'doughnut', stdL, summaryVals, 'ภาพรวม', stdC);
            
-           // Render Table (Default Mode)
            renderSummaryTable(data);
 
            let getD = (obj) => stdL.map(l => obj[l] || 0);
