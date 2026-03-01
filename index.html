@@ -12,105 +12,674 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   
   <style>
-    * { box-sizing: border-box; }
-    body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; }
+    * { 
+      box-sizing: border-box; 
+    }
     
-    /* LOADER */
-    #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
-    .loader-content { text-align: center; }
-    .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    body { 
+      font-family: 'Sarabun', sans-serif; 
+      background-color: #f0f2f5; 
+      margin: 0; 
+      padding: 0; 
+      overflow-x: hidden; 
+    }
+    
+    /* ================= LOADER ================= */
+    #globalLoader { 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: #ffffff; 
+      z-index: 9999; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      align-items: center; 
+      transition: opacity 0.3s ease; 
+    }
+    
+    .loader-content { 
+      text-align: center; 
+    }
+    
+    .loader-spinner { 
+      width: 60px; 
+      height: 60px; 
+      margin: 0 auto 20px; 
+      border: 6px solid #f3f3f3; 
+      border-top: 6px solid #0d6efd; 
+      border-radius: 50%; 
+      animation: spin 1s linear infinite; 
+    }
+    
+    @keyframes spin { 
+      0% { transform: rotate(0deg); } 
+      100% { transform: rotate(360deg); } 
+    }
 
-    /* HEADER */
-    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
-    .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
-    .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
-    .header-icon-box { margin-right: 30px; }
-    .org-title-group { display: flex; flex-direction: column; justify-content: center; }
-    .org-top-text { font-weight: 400; font-size: 1.4rem; letter-spacing: 1px; color: #ffeb3b; margin-bottom: 5px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
-    .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
-    .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
-    .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
-    @media (max-width: 992px) { .main-header { min-height: auto; } .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; } .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; } .org-top-text { font-size: 1.1rem; } .org-main-text { font-size: 1.5rem; line-height: 1.4; } .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; } .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; } }
+    /* ================= HEADER ================= */
+    .main-header { 
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; 
+      color: white; 
+      position: relative; 
+      padding: 0; 
+      height: auto; 
+      min-height: 250px; 
+      display: flex; 
+      align-items: center; 
+    }
     
-    /* LAYOUT & SIDEBAR */
-    .wrapper { display: flex; width: 100%; align-items: flex-start; }
-    .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
-    @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
-    .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
-    .nav-link-main:hover { background-color: #f1f8ff; color: #0a58ca; padding-left: 30px; }
-    .nav-link-main.active { background-color: #e7f1ff; border-left: 5px solid #0d6efd; color: #0d6efd; }
-    .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
-    .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
-    .main-content { width: 100%; padding: 20px; min-height: 100vh; background-color: #f0f2f5; flex-grow: 1; }
-    .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
-    .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
+    .header-overlay { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%; 
+      background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); 
+      z-index: 1; 
+    }
     
-    /* CAROUSEL */
-    .carousel-item { background-color: #e9ecef; height: 500px; }
-    .carousel-item img { width: auto !important; height: 100% !important; max-width: 100%; margin: 0 auto; display: block; object-fit: contain; }
-    @media (max-width: 768px) { .carousel-item { height: 400px; } }
+    .header-content { 
+      position: relative; 
+      z-index: 2; 
+      width: 100%; 
+      padding: 40px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+    }
+    
+    .header-icon-box { 
+      margin-right: 30px; 
+    }
+    
+    .org-title-group { 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+    }
+    
+    .org-top-text { 
+      font-weight: 400; 
+      font-size: 1.4rem; 
+      letter-spacing: 1px; 
+      color: #ffeb3b; 
+      margin-bottom: 5px; 
+      text-transform: uppercase; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5); 
+    }
+    
+    .org-main-text { 
+      font-weight: 700; 
+      line-height: 1.3; 
+      text-shadow: 0 4px 10px rgba(0,0,0,0.3); 
+      font-size: 2.2rem; 
+    }
+    
+    .eng-subtitle { 
+      font-weight: 300; 
+      opacity: 0.9; 
+      font-size: 1rem; 
+      margin-top: 5px; 
+      letter-spacing: 0.5px; 
+    }
 
-    /* FOOTER */
-    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; margin-top: auto; border-top: 5px solid #0d6efd; }
-    .footer-title { color: white; font-weight: 700; margin-bottom: 20px; border-left: 4px solid #0d6efd; padding-left: 10px; }
-    .admin-link-container { margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-    .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block; }
-    .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
+    .sidebar-toggle-btn { 
+      position: absolute; 
+      top: 30px; 
+      left: 30px; 
+      z-index: 1001; 
+      color: white; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      padding: 5px 10px; 
+      width: 45px; 
+      height: 45px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      background-color: rgba(255,255,255,0.2); 
+      border: 1px solid rgba(255,255,255,0.5); 
+    }
 
-    /* BANNERS */
-    .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
-    .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
-    .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    .banner-text { flex-grow: 1; position: relative; z-index: 2; overflow: hidden; }
-    .banner-title { font-weight: 800; font-size: clamp(1.2rem, 2vw, 1.6rem); margin-bottom: 5px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-    .banner-desc { font-size: 1rem; opacity: 0.95; font-weight: 400; text-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-    .status-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; font-weight: bold; background: white; color: #d63031; display: inline-block; margin-right: 5px; margin-top: 5px; }
-    .date-badge { font-size: 0.85rem; padding: 4px 10px; border-radius: 20px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.5); display: inline-block; margin-top: 5px; }
-    .banner-btn.closed { filter: grayscale(100%); opacity: 0.7; background: #636e72 !important; cursor: not-allowed; pointer-events: none; }
-    .new-badge { position: absolute; top: 0; left: 0; background: #ff0000; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 15px; border-bottom-right-radius: 10px; z-index: 10; display: none; }
-    .bg-gradient-pink { background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); }
-    .bg-gradient-yellow { background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); color: #4a4a4a !important; }
+    @media (max-width: 992px) { 
+      .main-header { min-height: auto; }
+      .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; }
+      .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; }
+      .org-top-text { font-size: 1.1rem; }
+      .org-main-text { font-size: 1.5rem; line-height: 1.4; }
+      .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; }
+      .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; }
+    }
     
-    .badge-custom-new { display: inline-block; background-color: transparent; color: #FFD700; -webkit-text-stroke: 0.8px #ffb300; text-shadow: 1px 1px 0px #ffff00, -1px -1px 0px #ffff00, 1px -1px 0px #ffff00, -1px 1px 0px #ffff00; font-weight: 900; font-size: 0.8rem; letter-spacing: 0.5px; padding: 3px 10px; border-radius: 20px; border: 2px solid #ff0000; animation: pulse-red-border 1.2s infinite; }
-    @keyframes pulse-red-border { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
-    .badge-pin { background-color: #34495e; color: white; }
+    /* ================= LAYOUT & SIDEBAR ================= */
+    .wrapper { 
+      display: flex; 
+      width: 100%; 
+      align-items: flex-start; 
+    }
+    
+    .sidebar { 
+      min-width: 260px; 
+      max-width: 260px; 
+      background: white; 
+      border-right: 1px solid #e9ecef; 
+      transition: all 0.3s; 
+      position: sticky; 
+      top: 0; 
+      height: 100vh; 
+      overflow-y: auto; 
+      z-index: 1000; 
+      display: flex; 
+      flex-direction: column; 
+      flex-shrink: 0; 
+    }
+    
+    @media (max-width: 992px) { 
+      .sidebar { 
+        position: fixed; 
+        left: 0; 
+        top: 0; 
+        margin-left: -260px; 
+        box-shadow: 4px 0 10px rgba(0,0,0,0.1); 
+      } 
+      .sidebar.active { margin-left: 0; } 
+      .overlay { 
+        display: none; 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        width: 100vw; 
+        height: 100vh; 
+        background: rgba(0,0,0,0.5); 
+        z-index: 998; 
+        opacity: 0; 
+        transition: all 0.3s; 
+      } 
+      .overlay.active { display: block; opacity: 1; } 
+    }
+    
+    .nav-link-main { 
+      padding: 15px 25px; 
+      color: #0d6efd; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: block; 
+      text-decoration: none; 
+      border-bottom: 1px solid #f8f9fa; 
+      transition: 0.2s; 
+      font-size: 1rem; 
+    }
+    
+    .nav-link-main:hover { 
+      background-color: #f1f8ff; 
+      color: #0a58ca; 
+      padding-left: 30px; 
+    }
+    
+    .nav-link-main.active { 
+      background-color: #e7f1ff; 
+      border-left: 5px solid #0d6efd; 
+      color: #0d6efd; 
+    }
+    
+    .nav-link-sub { 
+      padding: 10px 25px 10px 50px; 
+      color: #6c757d; 
+      cursor: pointer; 
+      display: block; 
+      text-decoration: none; 
+      font-size: 0.9rem; 
+      transition: 0.2s; 
+    }
+    
+    .nav-link-sub:hover { 
+      color: #0d6efd; 
+      background-color: #f8f9fa; 
+      transform: translateX(5px); 
+    }
+    
+    .main-content { 
+      width: 100%; 
+      padding: 20px; 
+      min-height: 100vh; 
+      background-color: #f0f2f5; 
+      flex-grow: 1; 
+    }
+    
+    .content-section { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 12px; 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.03); 
+      margin-bottom: 25px; 
+      border: 1px solid #fff; 
+    }
+    
+    .section-header { 
+      padding-bottom: 10px; 
+      margin-bottom: 20px; 
+      color: #0d6efd; 
+      font-weight: 700; 
+      font-size: 1.4rem; 
+      border-bottom: 2px solid #f0f0f0; 
+    }
+    
+    /* ================= CAROUSEL ================= */
+    .carousel-item { 
+      background-color: #e9ecef; 
+      height: 500px; 
+    }
+    
+    .carousel-item img { 
+      width: auto !important; 
+      height: 100% !important; 
+      max-width: 100%; 
+      margin: 0 auto; 
+      display: block; 
+      object-fit: contain; 
+    }
+    
+    @media (max-width: 768px) { 
+      .carousel-item { height: 400px; } 
+    }
 
-    /* ADMIN & UI COMPONENTS */
-    .admin-controls { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
-    .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
-    .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
-    .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
-    .page-btn.disabled { opacity: 0.5; cursor: not-allowed; }
+    /* ================= FOOTER ================= */
+    .main-footer { 
+      background-color: #1a1d20; 
+      color: #cfd2d6; 
+      padding: 60px 40px; 
+      margin-top: auto; 
+      border-top: 5px solid #0d6efd; 
+    }
     
-    /* CHAT AI */
-    .chat-container { height: 400px; overflow-y: auto; border: 1px solid #eee; background: #f8f9fa; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
-    .chat-msg { max-width: 80%; padding: 10px 15px; border-radius: 15px; font-size: 0.95rem; line-height: 1.5; word-wrap: break-word; }
-    .chat-user { align-self: flex-end; background-color: #0d6efd; color: white; border-bottom-right-radius: 2px; }
-    .chat-ai { align-self: flex-start; background-color: white; color: #333; border: 1px solid #e0e0e0; border-bottom-left-radius: 2px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .chat-ai strong { color: #0d6efd; }
-    .typing-indicator span { display: inline-block; width: 6px; height: 6px; background-color: #888; border-radius: 50%; animation: blink 1.4s infinite both; margin: 0 2px; }
-    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-    @keyframes blink { 0% { opacity: 0.2; } 20% { opacity: 1; } 100% { opacity: 0.2; } }
+    .footer-title { 
+      color: white; 
+      font-weight: 700; 
+      margin-bottom: 20px; 
+      border-left: 4px solid #0d6efd; 
+      padding-left: 10px; 
+    }
+    
+    .admin-link-container { 
+      margin-top: 20px; 
+      padding-top: 10px; 
+      border-top: 1px solid rgba(255,255,255,0.1); 
+    }
+    
+    .admin-trigger { 
+      color: #6c757d; 
+      font-size: 0.8rem; 
+      text-decoration: none; 
+      transition: 0.3s; 
+      cursor: pointer; 
+      display: inline-block; 
+    }
+    
+    .admin-trigger:hover { 
+      color: #adb5bd; 
+      text-decoration: underline; 
+    }
 
-    /* VIDEOS */
-    .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; transition: transform 0.2s; border: 1px solid #eee; }
-    .video-card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
-    .video-title-bar { padding: 12px 15px; background: #f8f9fa; border-bottom: 1px solid #eee; font-weight: bold; color: #333; font-size: 0.95rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-    .video-title-text { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; flex-grow: 1; padding-right: 10px; }
-    .video-title-bar:hover { background-color: #e9ecef; }
+    /* ================= BANNERS ================= */
+    .banner-btn { 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-start; 
+      padding: 20px; 
+      margin-bottom: 20px; 
+      border-radius: 15px; 
+      color: white; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+      position: relative; 
+      overflow: hidden; 
+      border: none; 
+      width: 100%; 
+      text-align: left; 
+      background-size: cover !important; 
+      background-position: center !important; 
+    }
     
-    /* OTHER */
-    .star-rating i { font-size: 2.5rem; color: #ccc; cursor: pointer; transition: color 0.2s; }
-    .star-rating i.hover { color: #f1c40f; opacity: 0.5; }
-    .star-rating i.active { color: #f39c12; }
-    .hearing-banner-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
-    .dash-card { border-left: 5px solid; transition: transform 0.2s; }
-    .dash-card:hover { transform: translateY(-3px); }
-    .dash-icon { width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; }
-    .dash-num { font-size: 2rem; font-weight: bold; line-height: 1.2; }
-    .floating-menu-btn { position: fixed; bottom: 30px; right: 20px; width: 55px; height: 55px; background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); color: white; border-radius: 50%; border: none; box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); display: flex; align-items: center; justify-content: center; z-index: 997; cursor: pointer; transition: all 0.3s ease; }
-    .floating-menu-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); }
+    .banner-btn:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2); 
+      color: white; 
+    }
+    
+    .banner-icon { 
+      flex: 0 0 100px; 
+      width: 100px; 
+      height: 100px; 
+      border-radius: 50%; 
+      font-size: 4rem; 
+      background: rgba(255,255,255,0.25); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin-right: 20px; 
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    }
+    
+    .banner-text { 
+      flex-grow: 1; 
+      position: relative; 
+      z-index: 2; 
+      overflow: hidden; 
+    }
+    
+    .banner-title { 
+      font-weight: 800; 
+      font-size: clamp(1.2rem, 2vw, 1.6rem); 
+      margin-bottom: 5px; 
+      line-height: 1.2; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    }
+    
+    .banner-desc { 
+      font-size: 1rem; 
+      opacity: 0.95; 
+      font-weight: 400; 
+      text-shadow: 0 1px 2px rgba(0,0,0,0.2); 
+    }
+    
+    .status-badge { 
+      font-size: 0.85rem; 
+      padding: 4px 10px; 
+      border-radius: 20px; 
+      font-weight: bold; 
+      background: white; 
+      color: #d63031; 
+      display: inline-block; 
+      margin-right: 5px; 
+      margin-top: 5px; 
+    }
+    
+    .date-badge { 
+      font-size: 0.85rem; 
+      padding: 4px 10px; 
+      border-radius: 20px; 
+      background: rgba(0,0,0,0.3); 
+      color: white; 
+      border: 1px solid rgba(255,255,255,0.5); 
+      display: inline-block; 
+      margin-top: 5px; 
+    }
+    
+    .banner-btn.closed { 
+      filter: grayscale(100%); 
+      opacity: 0.7; 
+      background: #636e72 !important; 
+      cursor: not-allowed; 
+      pointer-events: none; 
+    }
+    
+    .new-badge { 
+      position: absolute; 
+      top: 0; 
+      left: 0; 
+      background: #ff0000; 
+      color: white; 
+      font-size: 0.75rem; 
+      font-weight: bold; 
+      padding: 5px 15px; 
+      border-bottom-right-radius: 10px; 
+      z-index: 10; 
+      display: none; 
+    }
+    
+    .bg-gradient-pink { 
+      background: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%); 
+    }
+    
+    .bg-gradient-yellow { 
+      background: linear-gradient(135deg, #fce38a 0%, #f38181 100%); 
+      color: #4a4a4a !important; 
+    }
+    
+    .badge-custom-new { 
+        display: inline-block;
+        background-color: transparent; 
+        color: #FFD700; 
+        -webkit-text-stroke: 0.8px #ffb300; 
+        text-shadow: 1px 1px 0px #ffff00, -1px -1px 0px #ffff00, 1px -1px 0px #ffff00, -1px 1px 0px #ffff00; 
+        font-weight: 900; 
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        border: 2px solid #ff0000; 
+        animation: pulse-red-border 1.2s infinite; 
+    }
+    
+    @keyframes pulse-red-border { 
+        0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 
+        70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 
+        100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } 
+    }
+    
+    .badge-pin { 
+      background-color: #34495e; 
+      color: white; 
+    }
+
+    /* ================= ADMIN & UI COMPONENTS ================= */
+    .admin-controls { 
+      display: none; 
+      background: #fff3cd; 
+      border: 1px solid #ffeeba; 
+      padding: 20px; 
+      border-radius: 10px; 
+      margin-bottom: 20px; 
+    }
+    
+    .pagination-container { 
+      display: flex; 
+      justify-content: center; 
+      gap: 5px; 
+      margin-top: 20px; 
+    }
+    
+    .page-btn { 
+      border: 1px solid #dee2e6; 
+      background: white; 
+      color: #0d6efd; 
+      padding: 5px 12px; 
+      cursor: pointer; 
+      border-radius: 5px; 
+    }
+    
+    .page-btn.active { 
+      background: #0d6efd; 
+      color: white; 
+      border-color: #0d6efd; 
+    }
+    
+    .page-btn.disabled { 
+      opacity: 0.5; 
+      cursor: not-allowed; 
+    }
+    
+    /* ================= CHAT AI ================= */
+    .chat-container { 
+      height: 400px; 
+      overflow-y: auto; 
+      border: 1px solid #eee; 
+      background: #f8f9fa; 
+      padding: 15px; 
+      border-radius: 10px; 
+      display: flex; 
+      flex-direction: column; 
+      gap: 10px; 
+    }
+    
+    .chat-msg { 
+      max-width: 80%; 
+      padding: 10px 15px; 
+      border-radius: 15px; 
+      font-size: 0.95rem; 
+      line-height: 1.5; 
+      word-wrap: break-word; 
+    }
+    
+    .chat-user { 
+      align-self: flex-end; 
+      background-color: #0d6efd; 
+      color: white; 
+      border-bottom-right-radius: 2px; 
+    }
+    
+    .chat-ai { 
+      align-self: flex-start; 
+      background-color: white; 
+      color: #333; 
+      border: 1px solid #e0e0e0; 
+      border-bottom-left-radius: 2px; 
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05); 
+    }
+    
+    .chat-ai strong { 
+      color: #0d6efd; 
+    }
+    
+    .typing-indicator span { 
+      display: inline-block; 
+      width: 6px; 
+      height: 6px; 
+      background-color: #888; 
+      border-radius: 50%; 
+      animation: blink 1.4s infinite both; 
+      margin: 0 2px; 
+    }
+    
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; } 
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    
+    @keyframes blink { 
+      0% { opacity: 0.2; } 
+      20% { opacity: 1; } 
+      100% { opacity: 0.2; } 
+    }
+
+    /* ================= VIDEOS ================= */
+    .video-card { 
+      background: white; 
+      border-radius: 10px; 
+      overflow: hidden; 
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+      margin-bottom: 20px; 
+      transition: transform 0.2s; 
+      border: 1px solid #eee; 
+    }
+    
+    .video-card:hover { 
+      transform: translateY(-5px); 
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15); 
+    }
+    
+    .video-title-bar { 
+      padding: 12px 15px; 
+      background: #f8f9fa; 
+      border-bottom: 1px solid #eee; 
+      font-weight: bold; 
+      color: #333; 
+      font-size: 0.95rem; 
+      cursor: pointer; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+    }
+    
+    .video-title-text { 
+      display: -webkit-box; 
+      -webkit-line-clamp: 2; 
+      -webkit-box-orient: vertical; 
+      overflow: hidden; 
+      flex-grow: 1; 
+      padding-right: 10px; 
+    }
+    
+    .video-title-bar:hover { 
+      background-color: #e9ecef; 
+    }
+    
+    /* ================= OTHER ================= */
+    .star-rating i { 
+      font-size: 2.5rem; 
+      color: #ccc; 
+      cursor: pointer; 
+      transition: color 0.2s; 
+    }
+    
+    .star-rating i.hover { 
+      color: #f1c40f; 
+      opacity: 0.5; 
+    }
+    
+    .star-rating i.active { 
+      color: #f39c12; 
+    }
+    
+    .hearing-banner-img { 
+      width: 100%; 
+      max-height: 250px; 
+      object-fit: cover; 
+      border-radius: 8px; 
+      margin-bottom: 15px; 
+    }
+
+    .dash-card { 
+      border-left: 5px solid; 
+      transition: transform 0.2s; 
+    }
+    
+    .dash-card:hover { 
+      transform: translateY(-3px); 
+    }
+    
+    .dash-icon { 
+      width: 50px; 
+      height: 50px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 24px; 
+      color: white; 
+    }
+    
+    .dash-num { 
+      font-size: 2rem; 
+      font-weight: bold; 
+      line-height: 1.2; 
+    }
+
+    .floating-menu-btn { 
+      position: fixed; 
+      bottom: 30px; 
+      right: 20px; 
+      width: 55px; 
+      height: 55px; 
+      background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%); 
+      color: white; 
+      border-radius: 50%; 
+      border: none; 
+      box-shadow: 0 4px 15px rgba(13, 110, 253, 0.4); 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 997; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+    }
+    
+    .floating-menu-btn:hover { 
+      transform: translateY(-3px) scale(1.05); 
+      box-shadow: 0 6px 20px rgba(13, 110, 253, 0.6); 
+    }
   </style>
 </head>
 <body onload="initSystem()">
@@ -134,9 +703,15 @@
   <header class="main-header container-fluid">
     <div class="header-overlay"></div>
     <div class="header-content">
-      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
-      <div class="header-icon-box d-none d-lg-block"><i class="material-icons" style="font-size: 5.5rem;">account_balance</i></div> 
-      <div class="header-icon-box d-block d-lg-none"><i class="material-icons" style="font-size: 4.5rem;">account_balance</i></div> 
+      <button class="sidebar-toggle-btn d-lg-none me-3" onclick="toggleSidebar()">
+        <i class="material-icons">menu</i>
+      </button>
+      <div class="header-icon-box d-none d-lg-block">
+        <i class="material-icons" style="font-size: 5.5rem;">account_balance</i>
+      </div> 
+      <div class="header-icon-box d-block d-lg-none">
+        <i class="material-icons" style="font-size: 4.5rem;">account_balance</i>
+      </div> 
       <div class="org-title-group">
         <div class="org-top-text">สำนักงานจังหวัดเชียงใหม่</div>
         <h1 class="m-0 org-main-text">กลุ่มงานยุทธศาสตร์และข้อมูลเพื่อการพัฒนาจังหวัด</h1>
@@ -145,7 +720,9 @@
     </div>
   </header>
 
-  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()"><i class="material-icons">menu</i></button>
+  <button class="floating-menu-btn d-lg-none" onclick="toggleSidebar()">
+    <i class="material-icons">menu</i>
+  </button>
 
   <div class="wrapper">
     <div class="overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -195,17 +772,34 @@
         <div id="adminHomePanel" class="content-section bg-warning-subtle border-warning" style="display:none;">
           <div class="d-flex justify-content-between align-items-center mb-3 border-bottom border-warning pb-2">
              <h5 class="fw-bold text-dark m-0"><i class="material-icons align-middle text-success">verified_user</i> ยินดีต้อนรับผู้ดูแลระบบ</h5>
-             <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()"><i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ</button>
+             <button class="btn btn-sm btn-danger fw-bold" onclick="logoutSystem()">
+               <i class="material-icons align-middle fs-6">logout</i> ออกจากระบบ
+             </button>
           </div>
           
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-danger">
              <h6 class="fw-bold text-danger mb-3">ตั้งค่า: ฟอร์มรับแจ้งปัญหา (กล่องสีชมพู)</h6>
              <div class="row">
-                 <div class="col-md-6 mb-2"><label class="small text-muted">ชื่อหัวข้อ:</label><input type="text" id="admin_title_1" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted">คำอธิบาย (Subtitle):</label><input type="text" id="admin_subtitle_1" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted">ช่วงวันที่:</label><input type="text" id="admin_date_1" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2 d-flex align-items-end"><div class="form-check form-switch bg-light p-2 rounded w-100 border"><label class="form-check-label fw-bold">สถานะเปิดรับ</label><input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1"></div></div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted">ชื่อหัวข้อ:</label>
+                   <input type="text" id="admin_title_1" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted">คำอธิบาย (Subtitle):</label>
+                   <input type="text" id="admin_subtitle_1" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted">ช่วงวันที่:</label>
+                   <input type="text" id="admin_date_1" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2 d-flex align-items-end">
+                     <div class="form-check form-switch bg-light p-2 rounded w-100 border">
+                       <label class="form-check-label fw-bold">สถานะเปิดรับ</label>
+                       <input class="form-check-input fs-5 float-end" type="checkbox" id="swForm1">
+                     </div>
+                 </div>
              </div>
+             
              <div class="mt-3 mb-2 p-2 border border-danger border-opacity-25 rounded bg-light">
                  <label class="small fw-bold text-danger mb-2">ตั้งค่าตัวเลือกหมวดหมู่ปัญหา (สูงสุด 8 ช่อง, เว้นว่างไว้ถ้าไม่ใช้):</label>
                  <div class="row g-2">
@@ -229,43 +823,83 @@
                  <input type="text" id="h_admin_plan_name" class="form-control" placeholder="เช่น แผนพัฒนาจังหวัดเชียงใหม่ พ.ศ. 2566 - 2570">
              </div>
              <div class="row bg-light p-2 rounded mb-3 border">
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label><input type="text" id="h_admin_title" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label><input type="text" id="h_admin_desc" class="form-control form-control-sm"></div>
-                 <div class="col-md-6 mb-2"><label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label><input type="text" id="h_admin_date" class="form-control form-control-sm"></div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted fw-bold">ชื่อหัวข้อบนกล่องหน้าหลัก:</label>
+                   <input type="text" id="h_admin_title" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted fw-bold">คำอธิบาย (Subtitle):</label>
+                   <input type="text" id="h_admin_desc" class="form-control form-control-sm">
+                 </div>
+                 <div class="col-md-6 mb-2">
+                   <label class="small text-muted fw-bold">ช่วงเวลาดำเนินการ:</label>
+                   <input type="text" id="h_admin_date" class="form-control form-control-sm">
+                 </div>
                  <div class="col-md-6 mb-2 d-flex gap-2">
-                     <div class="form-check form-switch w-50 p-2 border rounded bg-white"><label class="form-check-label small">สถานะเปิดรับ</label><input class="form-check-input float-end" type="checkbox" id="swHearingStatus"></div>
-                     <div class="form-check form-switch w-50 p-2 border rounded bg-white"><label class="form-check-label small">เปิดให้ดาวท้ายฟอร์ม</label><input class="form-check-input float-end" type="checkbox" id="swHearingRating"></div>
+                     <div class="form-check form-switch w-50 p-2 border rounded bg-white">
+                       <label class="form-check-label small">สถานะเปิดรับ</label>
+                       <input class="form-check-input float-end" type="checkbox" id="swHearingStatus">
+                     </div>
+                     <div class="form-check form-switch w-50 p-2 border rounded bg-white">
+                       <label class="form-check-label small">เปิดให้ดาวท้ายฟอร์ม</label>
+                       <input class="form-check-input float-end" type="checkbox" id="swHearingRating">
+                     </div>
                  </div>
              </div>
              
              <div class="mb-3 p-2 border rounded border-primary border-opacity-25 bg-white">
                  <label class="fw-bold text-primary small mb-2">ข้อมูลชี้แจงและระบบขอความยินยอม (PDPA)</label>
-                 <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ภาพเงื่อนไข</span><input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพแบนเนอร์ (ถ้ามี)"></div>
-                 <div class="mb-2"><input type="text" class="form-control form-control-sm" id="h_admin_info_title" placeholder="หัวเรื่อง (เช่น หลักการและเหตุผล / สาระสำคัญ)"></div>
-                 <div class="mb-2"><textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea></div>
-                 <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ลิงก์สรุปย่อ</span><input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป"></div>
-                 <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ลิงก์แผนเต็ม</span><input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์"></div>
+                 <div class="input-group input-group-sm mb-2">
+                   <span class="input-group-text bg-light">ภาพเงื่อนไข</span>
+                   <input type="text" class="form-control" id="h_admin_img" placeholder="URL รูปภาพแบนเนอร์ (ถ้ามี)">
+                 </div>
+                 <div class="mb-2">
+                   <input type="text" class="form-control form-control-sm" id="h_admin_info_title" placeholder="หัวเรื่อง (เช่น หลักการและเหตุผล / สาระสำคัญ)">
+                 </div>
+                 <div class="mb-2">
+                   <textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea>
+                 </div>
+                 <div class="input-group input-group-sm mb-2">
+                   <span class="input-group-text bg-light">ลิงก์สรุปย่อ</span>
+                   <input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป">
+                 </div>
+                 <div class="input-group input-group-sm mb-2">
+                   <span class="input-group-text bg-light">ลิงก์แผนเต็ม</span>
+                   <input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์">
+                 </div>
                  <div class="mt-3 pt-3 border-top">
                      <label class="small fw-bold text-danger mb-2">🛡️ ระบบข้อความนโยบาย PDPA ก่อนเข้าฟอร์ม:</label>
-                     <div class="form-check"><input class="form-check-input" type="radio" name="admin_pdpa_mode" id="pdpaAuto" value="AUTO" onchange="togglePdpaMode()" checked><label class="form-check-label small fw-bold">อัตโนมัติ (ดึงชื่อแผน และระบบบังคับบัตร ปชช. มาสร้างข้อความให้เอง อ้างอิงกฎหมายแม่)</label></div>
-                     <div class="form-check mb-2"><input class="form-check-input" type="radio" name="admin_pdpa_mode" id="pdpaCustom" value="CUSTOM" onchange="togglePdpaMode()"><label class="form-check-label small fw-bold">กำหนดข้อความเอง</label></div>
+                     <div class="form-check">
+                         <input class="form-check-input" type="radio" name="admin_pdpa_mode" id="pdpaAuto" value="AUTO" onchange="togglePdpaMode()" checked>
+                         <label class="form-check-label small fw-bold">อัตโนมัติ (ดึงชื่อแผน และระบบบังคับบัตร ปชช. มาสร้างข้อความให้เอง อ้างอิงกฎหมายแม่)</label>
+                     </div>
+                     <div class="form-check mb-2">
+                         <input class="form-check-input" type="radio" name="admin_pdpa_mode" id="pdpaCustom" value="CUSTOM" onchange="togglePdpaMode()">
+                         <label class="form-check-label small fw-bold">กำหนดข้อความเอง</label>
+                     </div>
                      <textarea class="form-control form-control-sm" id="h_admin_pdpa_custom_text" rows="6" style="display:none;" placeholder="พิมพ์ข้อความ PDPA แบบกำหนดเอง..."></textarea>
                  </div>
              </div>
              
              <div class="mb-3 p-2 border rounded border-success border-opacity-25 bg-white">
                  <label class="fw-bold text-success small mb-2">ปรับแต่งหัวข้อแบบฟอร์ม</label>
+                 
                  <div class="mb-1 p-2 bg-light border rounded">
                    <input type="text" class="form-control form-control-sm fw-bold mb-2 text-primary" id="h_admin_q1" placeholder="หัวข้อส่วนที่ 1">
                    <div class="row g-2 mb-2">
                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_name" placeholder="ชื่อช่อง: ชื่อ-นามสกุล"></div>
                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_district" placeholder="ชื่อช่อง: อำเภอที่อยู่อาศัย"></div>
                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_sector" placeholder="ชื่อช่อง: ท่านสังกัดภาคส่วนใด"></div>
-                       <div class="col-md-4"><div class="form-check form-switch p-1 border rounded bg-white mt-1"><input class="form-check-input ms-2" type="checkbox" id="swReqIdCard"><label class="form-check-label small ms-1 fw-bold text-danger">บังคับกรอกบัตร ปชช.</label></div></div>
+                       <div class="col-md-4">
+                           <div class="form-check form-switch p-1 border rounded bg-white mt-1">
+                               <input class="form-check-input ms-2" type="checkbox" id="swReqIdCard" onchange="updateAutoPdpaPreview()">
+                               <label class="form-check-label small ms-1 fw-bold text-danger">บังคับกรอกบัตร ปชช.</label>
+                           </div>
+                       </div>
                        <div class="col-md-8 mt-1"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_idcard" placeholder="ชื่อช่อง: เลขประจำตัวประชาชน 13 หลัก"></div>
                    </div>
                    <div class="mt-2 pt-2 border-top border-secondary border-opacity-25">
-                     <label class="small fw-bold text-secondary">ตัวเลือกภาคส่วน (เว้นว่างไว้ถ้าไม่ใช้):</label>
+                     <label class="small fw-bold text-secondary">ตัวเลือกสำหรับช่องภาคส่วน (เว้นว่างไว้ถ้าไม่ใช้):</label>
                      <div class="row g-1 mt-1">
                        <div class="col-md-4"><input type="text" id="h_admin_sec_1" class="form-control form-control-sm" placeholder="ภาคส่วน 1"></div>
                        <div class="col-md-4"><input type="text" id="h_admin_sec_2" class="form-control form-control-sm" placeholder="ภาคส่วน 2"></div>
@@ -277,15 +911,25 @@
                    </div>
                  </div>
                  
-                 <div class="mb-1 mt-3"><input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_1" placeholder="คำอธิบายกล่องข้อเสนอแนะ ส่วนที่ 2"></div>
+                 <div class="mb-1 mt-3">
+                   <input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q2" placeholder="หัวข้อส่วนที่ 2">
+                 </div>
+                 <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_1" placeholder="คำอธิบายกล่องข้อเสนอแนะ ส่วนที่ 2">
+                 </div>
                  
                  <div class="mb-1 mt-3 d-flex align-items-center justify-content-between bg-light p-2 rounded border">
                    <input type="text" class="form-control form-control-sm fw-bold text-primary w-50" id="h_admin_q3" placeholder="หัวข้อส่วนที่ 3">
                    <div class="w-50 ps-2">
                        <label class="small fw-bold text-dark me-2">ระดับตัวเลือก:</label>
-                       <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="admin_scale_type" id="scale2" value="2"><label class="form-check-label small" for="scale2">2 สเกล</label></div>
-                       <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="admin_scale_type" id="scale5" value="5"><label class="form-check-label small" for="scale5">5 สเกล</label></div>
+                       <div class="form-check form-check-inline">
+                         <input class="form-check-input" type="radio" name="admin_scale_type" id="scale2" value="2">
+                         <label class="form-check-label small" for="scale2">2 สเกล</label>
+                       </div>
+                       <div class="form-check form-check-inline">
+                         <input class="form-check-input" type="radio" name="admin_scale_type" id="scale5" value="5">
+                         <label class="form-check-label small" for="scale5">5 สเกล</label>
+                       </div>
                    </div>
                  </div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_1" placeholder="ประเด็นย่อย 1 (เช่น เศรษฐกิจ) *บังคับ*"></div>
@@ -294,10 +938,16 @@
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_4" placeholder="ประเด็นย่อย 4 (เว้นว่างได้)"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_5" placeholder="ประเด็นย่อย 5 (เว้นว่างได้)"></div>
                  <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-muted" id="h_admin_s3_6" placeholder="ประเด็นย่อย 6 (เว้นว่างได้)"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_2" placeholder="คำอธิบายกล่องข้อเสนอแนะ ส่วนที่ 3"></div>
+                 <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_2" placeholder="คำอธิบายกล่องข้อเสนอแนะ ส่วนที่ 3">
+                 </div>
                  
-                 <div class="mb-1 mt-3"><input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4"></div>
-                 <div class="ps-3 mb-1"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_p_ph" placeholder="คำลอยใน Dropdown"></div>
+                 <div class="mb-1 mt-3">
+                   <input type="text" class="form-control form-control-sm fw-bold text-primary" id="h_admin_q4" placeholder="หัวข้อส่วนที่ 4">
+                 </div>
+                 <div class="ps-3 mb-1">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_p_ph" placeholder="คำลอยใน Dropdown">
+                 </div>
                  <div class="ps-3 mb-1">
                    <div class="row g-2">
                      <div class="col-md-4"><input type="text" id="h_admin_p_1" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown 1"></div>
@@ -308,18 +958,32 @@
                      <div class="col-md-4"><input type="text" id="h_admin_p_6" class="form-control form-control-sm" placeholder="ตัวเลือก Dropdown 6"></div>
                    </div>
                  </div>
-                 <div class="ps-3 mb-1 mt-2"><input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_3" placeholder="คำอธิบายกล่องข้อเสนอแนะ ส่วนที่ 4"></div>
+                 <div class="ps-3 mb-1 mt-2">
+                   <input type="text" class="form-control form-control-sm text-secondary" id="h_admin_fb_ph_3" placeholder="คำอธิบายกล่องข้อเสนอแนะ ส่วนที่ 4">
+                 </div>
              </div>
              <button class="btn btn-sm btn-warning w-100 fw-bold" onclick="saveHearingConfig()">บันทึกการตั้งค่าระบบรับฟังความคิดเห็นแบบมีส่วนร่วมทั้งหมด</button>
           </div>
 
           <div class="mt-3 bg-white p-3 rounded shadow-sm border-start border-4 border-info">
              <h6 class="fw-bold text-info mb-3">ตั้งค่าทั่วไป (วิดีโอ, Dashboard & สื่อประชาสัมพันธ์)</h6>
-             <div class="mb-2"><label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label><input type="text" id="admin_video_title" class="form-control form-control-sm"></div>
-             <div class="mb-2"><label class="small text-muted">ลิงก์ YouTube (Video URL):</label><input type="text" id="admin_video_url" class="form-control form-control-sm"></div>
+             <div class="mb-2">
+               <label class="small text-muted">ชื่อหัวข้อวิดีโอหลัก:</label>
+               <input type="text" id="admin_video_title" class="form-control form-control-sm">
+             </div>
+             <div class="mb-2">
+               <label class="small text-muted">ลิงก์ YouTube (Video URL):</label>
+               <input type="text" id="admin_video_url" class="form-control form-control-sm">
+             </div>
              <hr class="text-muted">
-             <div class="mb-2"><label class="small text-muted">ลิงก์ Looker Studio (Embed Dashboard URL):</label><input type="text" id="admin_dash_url" class="form-control form-control-sm" placeholder="ลิงก์ฝัง iframe..."></div>
-             <div class="mb-2"><label class="small fw-bold text-primary">🔗 ลิงก์เว็บไซต์ Dashboard หลัก:</label><input type="text" id="admin_dash_main_url" class="form-control form-control-sm" placeholder="https://lookerstudio.google.com/reporting/..."></div>
+             <div class="mb-2">
+               <label class="small text-muted">ลิงก์ Looker Studio (Embed Dashboard URL):</label>
+               <input type="text" id="admin_dash_url" class="form-control form-control-sm" placeholder="ลิงก์ฝัง iframe...">
+             </div>
+             <div class="mb-2">
+               <label class="small fw-bold text-primary">🔗 ลิงก์เว็บไซต์ Dashboard หลัก:</label>
+               <input type="text" id="admin_dash_main_url" class="form-control form-control-sm" placeholder="https://lookerstudio.google.com/reporting/...">
+             </div>
              <hr class="text-muted">
              <div class="mb-2">
                  <label class="small fw-bold text-success">สื่อประชาสัมพันธ์ (รองรับลิงก์ภาพจาก Google Drive หรือเว็บอื่นๆ):</label>
@@ -347,7 +1011,10 @@
                 <div class="banner-text">
                    <div class="banner-title" id="disp_title_1">กำลังโหลด...</div>
                    <div class="banner-desc" id="disp_desc_1">...</div>
-                   <div class="mt-2" id="info1"><span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span><span class="date-badge" id="disp_date_1">...</span></div>
+                   <div class="mt-2" id="info1">
+                     <span id="statusBadge1" class="status-badge" style="display:none;">⛔ ปิดรับแจ้ง</span>
+                     <span class="date-badge" id="disp_date_1">...</span>
+                   </div>
                 </div>
               </div>
             </div>
@@ -359,7 +1026,10 @@
                 <div class="banner-text">
                    <div class="banner-title" id="disp_title_2">กำลังโหลด...</div>
                    <div class="banner-desc" id="disp_desc_2">...</div>
-                   <div class="mt-2" id="info2"><span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับฟังความเห็น</span><span class="date-badge" id="disp_date_2">...</span></div>
+                   <div class="mt-2" id="info2">
+                     <span id="statusBadge2" class="status-badge" style="display:none;">⛔ ปิดรับฟังความเห็น</span>
+                     <span class="date-badge" id="disp_date_2">...</span>
+                   </div>
                 </div>
               </div>
             </div>
@@ -378,7 +1048,9 @@
              <iframe id="main_dash_frame" src="" allowfullscreen style="display:none;"></iframe>
           </div>
           <div class="text-center mt-4" id="dashMainLinkDiv" style="display:none;">
-             <a id="dashMainLinkBtn" href="#" target="_blank" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm"><i class="material-icons align-middle me-1">open_in_new</i> เปิดดู Dashboard ฉบับเต็ม</a>
+             <a id="dashMainLinkBtn" href="#" target="_blank" class="btn btn-primary rounded-pill px-4 py-2 fw-bold shadow-sm">
+                 <i class="material-icons align-middle me-1">open_in_new</i> เปิดดู Dashboard ฉบับเต็ม
+             </a>
           </div>
         </div>
 
@@ -387,8 +1059,12 @@
           <div id="prCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators" id="pr_indicators"></div>
             <div class="carousel-inner" id="pr_inner"></div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev"><span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span></button>
-            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next"><span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span></button>
+            <button class="carousel-control-prev" type="button" data-bs-target="#prCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#prCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+            </button>
           </div>
         </div>
 
@@ -650,7 +1326,7 @@
                 
                 <div class="col-md-6" id="div_h_idcard" style="display:none;">
                    <label class="form-label fw-bold"><span id="disp_lbl_idcard">เลขประจำตัวประชาชน 13 หลัก</span> <span class="text-danger">*</span></label>
-                   <input type="text" class="form-control" id="h_idcard" maxlength="13" pattern="^[0-9]{13}$" placeholder="กรอกเฉพาะตัวเลข 13 หลัก">
+                   <input type="text" class="form-control" id="h_idcard" maxlength="13" placeholder="กรอกเฉพาะตัวเลข 13 หลัก">
                    <div class="invalid-feedback" id="idcard_err">เลขบัตรประชาชนไม่ถูกต้อง</div>
                 </div>
                 
@@ -661,34 +1337,34 @@
 
                 <div class="col-md-6">
                   <label class="form-label fw-bold"><span id="disp_lbl_district">อำเภอที่อยู่อาศัย</span> <span class="text-danger">*</span></label>
-                  <select class="form-select" id="h_district" required>
-                     <option value="" selected disabled>-- เลือกอำเภอ --</option>
-                     <option value="กัลยาณิวัฒนา">กัลยาณิวัฒนา</option>
-                     <option value="จอมทอง">จอมทอง</option>
-                     <option value="เชียงดาว">เชียงดาว</option>
-                     <option value="ไชยปราการ">ไชยปราการ</option>
-                     <option value="ดอยเต่า">ดอยเต่า</option>
-                     <option value="ดอยสะเก็ด">ดอยสะเก็ด</option>
-                     <option value="ดอยหล่อ">ดอยหล่อ</option>
-                     <option value="ฝาง">ฝาง</option>
-                     <option value="พร้าว">พร้าว</option>
-                     <option value="เมืองเชียงใหม่">เมืองเชียงใหม่</option>
-                     <option value="แม่แจ่ม">แม่แจ่ม</option>
-                     <option value="แม่แตง">แม่แตง</option>
-                     <option value="แม่ริม">แม่ริม</option>
-                     <option value="แม่วาง">แม่วาง</option>
-                     <option value="แม่อาย">แม่อาย</option>
-                     <option value="แม่ออน">แม่ออน</option>
-                     <option value="เวียงแหง">เวียงแหง</option>
-                     <option value="สะเมิง">สะเมิง</option>
-                     <option value="สันกำแพง">สันกำแพง</option>
-                     <option value="สันทราย">สันทราย</option>
-                     <option value="สันป่าตอง">สันป่าตอง</option>
-                     <option value="สารภี">สารภี</option>
-                     <option value="หางดง">หางดง</option>
-                     <option value="อมก๋อย">อมก๋อย</option>
-                     <option value="ฮอด">ฮอด</option>
-                  </select>
+                  <input type="text" class="form-control" id="h_district" list="district_list" required autocomplete="off" placeholder="พิมพ์ค้นหา หรือเลือกจากรายการ...">
+                  <datalist id="district_list">
+                     <option value="กัลยาณิวัฒนา"></option>
+                     <option value="จอมทอง"></option>
+                     <option value="เชียงดาว"></option>
+                     <option value="ไชยปราการ"></option>
+                     <option value="ดอยเต่า"></option>
+                     <option value="ดอยสะเก็ด"></option>
+                     <option value="ดอยหล่อ"></option>
+                     <option value="ฝาง"></option>
+                     <option value="พร้าว"></option>
+                     <option value="เมืองเชียงใหม่"></option>
+                     <option value="แม่แจ่ม"></option>
+                     <option value="แม่แตง"></option>
+                     <option value="แม่ริม"></option>
+                     <option value="แม่วาง"></option>
+                     <option value="แม่อาย"></option>
+                     <option value="แม่ออน"></option>
+                     <option value="เวียงแหง"></option>
+                     <option value="สะเมิง"></option>
+                     <option value="สันกำแพง"></option>
+                     <option value="สันทราย"></option>
+                     <option value="สันป่าตอง"></option>
+                     <option value="สารภี"></option>
+                     <option value="หางดง"></option>
+                     <option value="อมก๋อย"></option>
+                     <option value="ฮอด"></option>
+                  </datalist>
                 </div>
                 
                 <div class="col-md-12">
@@ -703,6 +1379,10 @@
                  <div class="d-flex justify-content-start gap-3 flex-wrap mb-4">
                      <a id="disp_h_sum" href="#" target="_blank" class="btn btn-outline-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">description</i> สรุปอย่างย่อ</a>
                      <a id="disp_h_full" href="#" target="_blank" class="btn btn-primary fw-bold rounded-pill px-4" style="display:none;"><i class="material-icons align-middle fs-6 me-1">menu_book</i> ร่างแผนฉบับเต็ม</a>
+                 </div>
+                 <div class="form-check border-top pt-3">
+                     <input class="form-check-input" type="checkbox" id="h_info_consent" required>
+                     <label class="form-check-label fw-bold text-danger" for="h_info_consent" id="disp_h_consent"></label>
                  </div>
              </div>
 
@@ -739,23 +1419,17 @@
     // ==========================================
     function setElText(id, txt) { 
         let el = document.getElementById(id); 
-        if (el) { 
-            el.innerText = txt || ""; 
-        } 
+        if (el) { el.innerText = txt || ""; } 
     }
     
     function setElHtml(id, html) { 
         let el = document.getElementById(id); 
-        if (el) { 
-            el.innerHTML = html || ""; 
-        } 
+        if (el) { el.innerHTML = html || ""; } 
     }
     
     function setElVal(id, val) { 
         let el = document.getElementById(id); 
-        if (el) { 
-            el.value = val || ""; 
-        } 
+        if (el) { el.value = val || ""; } 
     }
 
     function getVal(id) { 
@@ -923,7 +1597,7 @@
         let reqId = reqIdEl ? reqIdEl.checked : (hReqIdcard === 'ON');
         let idPart = reqId ? "เลขประจำตัวประชาชน 13 หลัก, " : "";
         
-        return `อาศัยอำนาจตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 และตามประกาศจังหวัดเชียงใหม่ เรื่อง นโยบายการคุ้มครองข้อมูลส่วนบุคคล (Privacy Policy) จังหวัดเชียงใหม่\n\nสำนักงานจังหวัดเชียงใหม่ มีความจำเป็นต้องเก็บรวบรวมและใช้ข้อมูลส่วนบุคคลของท่าน ประกอบด้วย: ชื่อ-นามสกุล, ${idPart}เบอร์โทรศัพท์, อำเภอที่อยู่อาศัย และภาคส่วนที่ท่านสังกัด\n\nวัตถุประสงค์หลัก:\n1. เพื่อใช้ในการยืนยันตัวตนของผู้ให้ข้อมูลและป้องกันการให้ข้อมูลซ้ำซ้อน\n2. เพื่อใช้ติดต่อประสานงานกรณีต้องการรายละเอียดเพิ่มเติมเกี่ยวกับข้อเสนอแนะของท่าน\n3. เพื่อใช้ในการวิเคราะห์ข้อมูลเชิงสถิติแยกตามภาคส่วนและพื้นที่อำเภอ เพื่อนำไปประกอบการพัฒนา "${plan}" ให้สมบูรณ์ยิ่งขึ้น\n\nการคุ้มครองสิทธิ:\nข้อมูลของท่านจะถูกเก็บรักษาเป็นความลับในระบบที่มีการควบคุมการเข้าถึง และจะถูกทำลายทิ้งภายในระยะเวลาที่ระบุไว้ในนโยบายฯ ของจังหวัด ทั้งนี้ ท่านมีสิทธิในการขอเข้าถึง แก้ไข หรือขอให้ลบข้อมูลส่วนบุคคลของท่านได้โดยการติดต่อหน่วยงานตามช่องทางที่ระบุไว้ในหน้าหลักของระบบ S-MAP`;
+        return `อาศัยอำนาจตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 และตามประกาศจังหวัดเชียงใหม่ เรื่อง นโยบายการคุ้มครองข้อมูลส่วนบุคคล (Privacy Policy) จังหวัดเชียงใหม่\n\nสำนักงานจังหวัดเชียงใหม่ มีความจำเป็นต้องเก็บรวบรวมและใช้ข้อมูลส่วนบุคคลของท่าน ประกอบด้วย: ชื่อ-นามสกุล, ${idPart}เบอร์โทรศัพท์, อำเภอที่อยู่อาศัย และภาคส่วนที่ท่านสังกัด\n\nวัตถุประสงค์หลัก:\n1. เพื่อใช้ในการยืนยันตัวตนของผู้ให้ข้อมูลและป้องกันการให้ข้อมูลซ้ำซ้อน\n2. เพื่อใช้ติดต่อประสานงานกรณีต้องการรายละเอียดเพิ่มเติมเกี่ยวกับข้อเสนอแนะของท่าน\n3. เพื่อใช้ในการวิเคราะห์ข้อมูลเชิงสถิติแยกตามภาคส่วนและพื้นที่อำเภอ เพื่อนำไปประกอบการพัฒนา "${plan}" ให้สมบูรณ์ยิ่งขึ้น\n\nการคุ้มครองสิทธิ:\nข้อมูลของท่านจะถูกเก็บรักษาเป็นความลับในระบบที่มีการควบคุมการเข้าถึง และจะถูกทำลายทิ้งภายในระยะเวลาที่ระบุไว้ในนโยบายฯ ของจังหวัด ทั้งนี้ ท่านมีสิทธิในการขอเข้าถึง ขอรับสำเนา ขอแก้ไขข้อมูลให้ถูกต้อง หรือขอให้ลบทำลายข้อมูลส่วนบุคคลของท่านได้ ตามหลักเกณฑ์ที่กฎหมายกำหนด`;
     }
 
     function togglePdpaMode() {
@@ -1131,6 +1805,10 @@
          setElText('disp_h_info_title', settings.h_info_title); 
          setElText('disp_h_info_desc', settings.h_info_desc);
          
+         let consentText = settings.h_consent_text || "ข้าพเจ้าได้อ่านและทำความเข้าใจรายละเอียดและเอกสารร่างแผนฯ เบื้องต้นแล้ว";
+         setElHtml('disp_h_consent', consentText + ' <span class="text-danger">*</span>');
+         setElVal('h_admin_consent_text', consentText);
+
          let hImgObj = document.getElementById('disp_h_img'); 
          if (settings.h_img && hImgObj) { 
              hImgObj.src = convertDriveUrl(settings.h_img); 
