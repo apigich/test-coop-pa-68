@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>S-MAP Chiang Mai (Smart Movement & Awareness Platform)</title>
-  
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -13,43 +12,17 @@
   
   <style>
     * { box-sizing: border-box; }
+    /* ล็อคโครงสร้างหน้าเว็บไม่ให้แตกและดัน Footer ลงล่างเสมอ */
+    body { font-family: 'Sarabun', sans-serif; background-color: #f0f2f5; margin: 0; padding: 0; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
+    .wrapper { display: flex; width: 100%; flex: 1; align-items: flex-start; }
+    .main-footer { background-color: #1a1d20; color: #cfd2d6; padding: 60px 40px; width: 100%; flex-shrink: 0; border-top: 5px solid #0d6efd; }
     
-    /* 🟢 ล็อคโครงสร้างหลักป้องกันเว็บพัง 🟢 */
-    body { 
-      font-family: 'Sarabun', sans-serif; 
-      background-color: #f0f2f5; 
-      margin: 0; 
-      padding: 0; 
-      overflow-x: hidden; 
-      display: flex; 
-      flex-direction: column; 
-      min-height: 100vh; 
-    }
-    
-    .wrapper { 
-      display: flex; 
-      width: 100%; 
-      flex: 1; /* ดัน Footer ลงล่างเสมอ */
-      align-items: flex-start; 
-    }
-
-    .main-footer { 
-      background-color: #1a1d20; 
-      color: #cfd2d6; 
-      padding: 60px 40px; 
-      width: 100%;
-      flex-shrink: 0; /* ป้องกัน Footer โดนบีบ */
-      border-top: 5px solid #0d6efd; 
-    }
-    
-    /* ================= LOADER ================= */
     #globalLoader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.3s ease; }
     .loader-content { text-align: center; }
     .loader-spinner { width: 60px; height: 60px; margin: 0 auto 20px; border: 6px solid #f3f3f3; border-top: 6px solid #0d6efd; border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    /* ================= HEADER ================= */
-    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; height: auto; min-height: 250px; display: flex; align-items: center; }
+    .main-header { background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Doi_Suthep_02.jpg/1200px-Doi_Suthep_02.jpg') center center/cover no-repeat; color: white; position: relative; padding: 0; min-height: 250px; display: flex; align-items: center; }
     .header-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(13, 110, 253, 0.92) 0%, rgba(0, 50, 133, 0.85) 100%); z-index: 1; }
     .header-content { position: relative; z-index: 2; width: 100%; padding: 40px; display: flex; align-items: center; justify-content: center; }
     .header-icon-box { margin-right: 30px; }
@@ -58,9 +31,8 @@
     .org-main-text { font-weight: 700; line-height: 1.3; text-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 2.2rem; }
     .eng-subtitle { font-weight: 300; opacity: 0.9; font-size: 1rem; margin-top: 5px; letter-spacing: 0.5px; }
     .sidebar-toggle-btn { position: absolute; top: 30px; left: 30px; z-index: 1001; color: white; border-radius: 8px; cursor: pointer; padding: 5px 10px; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; background-color: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.5); }
-    @media (max-width: 992px) { .main-header { min-height: auto; } .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; } .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; } .org-top-text { font-size: 1.1rem; } .org-main-text { font-size: 1.5rem; line-height: 1.4; } .eng-subtitle { font-size: 0.85rem; margin-top: 5px; display: block; } .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; } }
+    @media (max-width: 992px) { .main-header { min-height: auto; } .header-content { flex-direction: column; text-align: center; padding: 70px 20px 40px 20px; gap: 15px; } .header-icon-box { margin-right: 0 !important; margin-bottom: 10px; } .org-top-text { font-size: 1.1rem; } .org-main-text { font-size: 1.5rem; line-height: 1.4; } .eng-subtitle { display: block; } .sidebar-toggle-btn { top: 20px !important; left: 20px !important; background-color: transparent !important; border: 2px solid rgba(255,255,255,0.7) !important; box-shadow: none !important; } }
     
-    /* ================= SIDEBAR ================= */
     .sidebar { min-width: 260px; max-width: 260px; background: white; border-right: 1px solid #e9ecef; transition: all 0.3s; position: sticky; top: 0; height: 100vh; overflow-y: auto; z-index: 1000; display: flex; flex-direction: column; flex-shrink: 0; }
     @media (max-width: 992px) { .sidebar { position: fixed; left: 0; top: 0; margin-left: -260px; box-shadow: 4px 0 10px rgba(0,0,0,0.1); } .sidebar.active { margin-left: 0; } .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 998; opacity: 0; transition: all 0.3s; } .overlay.active { display: block; opacity: 1; } }
     .nav-link-main { padding: 15px 25px; color: #0d6efd; font-weight: 700; cursor: pointer; display: block; text-decoration: none; border-bottom: 1px solid #f8f9fa; transition: 0.2s; font-size: 1rem; }
@@ -69,7 +41,6 @@
     .nav-link-sub { padding: 10px 25px 10px 50px; color: #6c757d; cursor: pointer; display: block; text-decoration: none; font-size: 0.9rem; transition: 0.2s; }
     .nav-link-sub:hover { color: #0d6efd; background-color: #f8f9fa; transform: translateX(5px); }
     
-    /* ================= MAIN CONTENT ================= */
     .main-content { width: 100%; padding: 20px; background-color: #f0f2f5; flex-grow: 1; overflow: hidden; }
     .content-section { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 25px; border: 1px solid #fff; }
     .section-header { padding-bottom: 10px; margin-bottom: 20px; color: #0d6efd; font-weight: 700; font-size: 1.4rem; border-bottom: 2px solid #f0f0f0; }
@@ -83,7 +54,6 @@
     .admin-trigger { color: #6c757d; font-size: 0.8rem; text-decoration: none; transition: 0.3s; cursor: pointer; display: inline-block; }
     .admin-trigger:hover { color: #adb5bd; text-decoration: underline; }
 
-    /* ================= BANNERS & BADGES ================= */
     .banner-btn { display: flex; align-items: center; justify-content: flex-start; padding: 20px; margin-bottom: 20px; border-radius: 15px; color: white; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: relative; overflow: hidden; border: none; width: 100%; text-align: left; background-size: cover !important; background-position: center !important; }
     .banner-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); color: white; }
     .banner-icon { flex: 0 0 100px; width: 100px; height: 100px; border-radius: 50%; font-size: 4rem; background: rgba(255,255,255,0.25); display: flex; align-items: center; justify-content: center; margin-right: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
@@ -100,7 +70,6 @@
     @keyframes pulse-red-border { 0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.8); } 70% { box-shadow: 0 0 0 8px rgba(255, 0, 0, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } }
     .badge-pin { background-color: #34495e; color: white; }
 
-    /* ================= MISC COMPONENTS ================= */
     .pagination-container { display: flex; justify-content: center; gap: 5px; margin-top: 20px; }
     .page-btn { border: 1px solid #dee2e6; background: white; color: #0d6efd; padding: 5px 12px; cursor: pointer; border-radius: 5px; }
     .page-btn.active { background: #0d6efd; color: white; border-color: #0d6efd; }
@@ -273,6 +242,7 @@
                  <div class="mb-2"><textarea class="form-control form-control-sm" id="h_admin_info_desc" rows="3" placeholder="พิมพ์รายละเอียดเพื่อชี้แจงประชาชน..."></textarea></div>
                  <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ลิงก์สรุปย่อ</span><input type="text" class="form-control" id="h_admin_sum" placeholder="URL เอกสารสรุป"></div>
                  <div class="input-group input-group-sm mb-2"><span class="input-group-text bg-light">ลิงก์แผนเต็ม</span><input type="text" class="form-control" id="h_admin_full" placeholder="URL ร่างแผนฉบับสมบูรณ์"></div>
+                 <div class="mt-2 pt-2 border-top"><label class="small text-danger fw-bold">ข้อความยืนยันการอ่านแผน (ใน Step 2):</label><input type="text" class="form-control form-control-sm" id="h_admin_consent_text" placeholder="ข้าพเจ้าได้อ่านและทำความเข้าใจรายละเอียดและเอกสารร่างแผนฯ เบื้องต้นแล้ว"></div>
                  
                  <div class="mt-3 pt-3 border-top">
                      <label class="small fw-bold text-danger mb-2">🛡️ ระบบข้อความนโยบาย PDPA ก่อนเข้าฟอร์ม:</label>
@@ -290,7 +260,7 @@
                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_name" placeholder="ชื่อช่อง: ชื่อ-นามสกุล"></div>
                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_district" placeholder="ชื่อช่อง: อำเภอที่อยู่อาศัย"></div>
                        <div class="col-md-4"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_sector" placeholder="ชื่อช่อง: ท่านสังกัดภาคส่วนใด"></div>
-                       <div class="col-md-4"><div class="form-check form-switch p-1 border rounded bg-white mt-1"><input class="form-check-input ms-2" type="checkbox" id="swReqIdCard"><label class="form-check-label small ms-1 fw-bold text-danger">บังคับกรอกบัตร ปชช.</label></div></div>
+                       <div class="col-md-4"><div class="form-check form-switch p-1 border rounded bg-white mt-1"><input class="form-check-input ms-2" type="checkbox" id="swReqIdCard" onchange="updateAutoPdpaPreview()"><label class="form-check-label small ms-1 fw-bold text-danger">บังคับกรอกบัตร ปชช.</label></div></div>
                        <div class="col-md-8 mt-1"><input type="text" class="form-control form-control-sm" id="h_admin_lbl_idcard" placeholder="ชื่อช่อง: เลขประจำตัวประชาชน 13 หลัก"></div>
                    </div>
                    <div class="mt-2 pt-2 border-top border-secondary border-opacity-25">
@@ -314,6 +284,7 @@
                    <div class="w-50 ps-2">
                        <label class="small fw-bold text-dark me-2">ระดับตัวเลือก:</label>
                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="admin_scale_type" id="scale2" value="2"><label class="form-check-label small" for="scale2">2 สเกล</label></div>
+                       <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="admin_scale_type" id="scale4" value="4"><label class="form-check-label small" for="scale4">4 สเกล</label></div>
                        <div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="admin_scale_type" id="scale5" value="5"><label class="form-check-label small" for="scale5">5 สเกล</label></div>
                    </div>
                  </div>
@@ -539,11 +510,8 @@
                  </div>
              </div>
           </div> <div id="page-videos" style="display:none;"><div class="content-section"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="section-header m-0 border-0 pb-0">▶️ คลังวิดีโอแนะนำ</h3><div id="adminVideoBtnGroup" style="display:none; gap: 8px;"><button class="btn btn-primary fw-bold" onclick="openVideoModal()"><i class="material-icons align-middle">add</i> เพิ่มวิดีโอ</button><button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button></div></div><hr class="text-secondary mt-0 mb-4"><div id="videoListContainer" class="row g-4"><div class="text-center text-muted py-5 w-100">กำลังโหลดวิดีโอ...</div></div></div></div>
-      
       <div id="page-docs" style="display:none;"><div class="content-section"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="section-header m-0 border-0 pb-0">📂 เอกสารและข้อมูลที่เกี่ยวข้อง</h3><div id="adminDocBtnGroup" style="display:none; gap: 8px;"><button class="btn btn-primary fw-bold" onclick="openDocModal()"><i class="material-icons align-middle">add</i> เพิ่มเอกสาร</button><button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button></div></div><hr class="text-secondary mt-0 mb-3"><div class="row g-2 mb-3 align-items-center p-3 bg-light rounded border"><div class="col-md-4"><label class="small text-muted fw-bold mb-1">ค้นหาคำในชื่อเอกสาร</label><input type="search" id="searchDoc" class="form-control" placeholder="🔍 ค้นหาเอกสาร..." oninput="filterDocs()"></div><div class="col-md-3"><label class="small text-muted fw-bold mb-1">หมวดหมู่</label><select id="filterCat" class="form-select" onchange="filterDocs()"><option value="All">ทุกหมวดหมู่</option><option value="General">เอกสารทั่วไป</option><option value="Plan">แผนพัฒนา</option><option value="Report">รายงานผล</option><option value="Announcement">ประกาศ/คำสั่ง</option></select></div><div class="col-md-3"><label class="small text-muted fw-bold mb-1">ปีงบประมาณ</label><select id="filterYear" class="form-select" onchange="filterDocs()"><option value="All">ทุกปีงบประมาณ</option></select></div><div class="col-md-2 mt-auto"><button class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center" onclick="clearSearch()"><i class="material-icons me-1" style="font-size: 18px;">refresh</i> ล้างค่า</button></div></div><div class="text-muted small mb-3 text-start px-2"><b>* หมายเหตุ:</b> ระบบยังอยู่ในช่วงทดลองใช้งาน การประมวลผลข้อมูลของ AI อาจเกิดความคลาดเคลื่อนได้ กรุณาตรวจสอบข้อมูลก่อนนำไปใช้ทุกครั้ง</div><div id="docListContainer" class="list-group list-group-flush border rounded shadow-sm"></div><div id="pagination" class="pagination-container"></div></div></div>
-      
       <div id="page-calendar" style="display:none;"><div class="content-section border-0 bg-transparent p-0 mb-4 shadow-none"><h2 class="text-primary fw-bold"><i class="material-icons align-middle fs-2">calendar_month</i> ปฏิทินกิจกรรมจังหวัด</h2><p class="text-muted">รวมกิจกรรมสำคัญ การประชุม และแผนงานของจังหวัดเชียงใหม่</p></div><div class="alert alert-info shadow-sm" role="alert"><i class="material-icons align-middle me-2">info</i> ตารางกิจกรรมด้านล่างเป็นการแสดงผลจากระบบปฏิทินกลางของจังหวัดเชียงใหม่</div><div class="content-section text-center py-5 shadow-sm border"><i class="material-icons text-primary mb-3" style="font-size: 5rem;">event_available</i><h3 class="fw-bold text-dark">ระบบปฏิทินกลาง จังหวัดเชียงใหม่</h3><p class="text-muted mb-4">เชื่อมต่อฐานข้อมูลจาก Server สำนักงานจังหวัดโดยตรง</p><a href="http://164.115.44.24/cmbase/public/calendar" target="_blank" class="btn btn-primary btn-lg rounded-pill px-5 py-3 shadow"><i class="material-icons align-middle me-2">open_in_new</i> คลิกเพื่อเปิดดูปฏิทิน</a></div></div>
-      
       <div id="page-qa" style="display:none;"><div class="content-section"><div class="d-flex justify-content-between align-items-center mb-3"><h3 class="section-header m-0 border-0 pb-0">❓ ถาม-ตอบ (Q&A)</h3><div id="adminQABtnGroup" style="display:none; gap: 8px;"><button class="btn btn-primary fw-bold" onclick="openQAModal()"><i class="material-icons align-middle">add</i> เพิ่ม Q&A</button><button class="btn btn-danger fw-bold px-3" onclick="logoutSystem()"><i class="material-icons align-middle">logout</i></button></div></div><hr class="text-secondary mt-0 mb-4"><div class="accordion accordion-flush border rounded shadow-sm" id="accQA"></div></div></div>
 
     </div> </div> <footer class="main-footer container-fluid p-0">
@@ -677,7 +645,6 @@
                 <div class="col-md-6" id="div_h_idcard" style="display:none;">
                    <label class="form-label fw-bold"><span id="disp_lbl_idcard">เลขประจำตัวประชาชน 13 หลัก</span> <span class="text-danger">*</span></label>
                    <input type="text" class="form-control" id="h_idcard" maxlength="13" placeholder="กรอกเฉพาะตัวเลข 13 หลัก">
-                   <div class="invalid-feedback" id="idcard_err">เลขบัตรประชาชนไม่ถูกต้อง</div>
                 </div>
                 
                 <div class="col-md-6">
@@ -744,7 +711,7 @@
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   
   <script>
     // ==========================================
@@ -804,6 +771,7 @@
         }
     };
 
+    // ล็อกชื่ออำเภอให้พิมพ์ได้แค่ 25 อำเภอนี้เท่านั้น
     const chiangMaiDistricts = [
         "กัลยาณิวัฒนา", "จอมทอง", "เชียงดาว", "ไชยปราการ", "ดอยเต่า", 
         "ดอยสะเก็ด", "ดอยหล่อ", "ฝาง", "พร้าว", "เมืองเชียงใหม่", 
@@ -926,7 +894,7 @@
     }
 
     // ==========================================
-    // 🟢 ระบบการสร้างข้อความ PDPA ทางการ (อ้างอิงกฎหมาย)
+    // 🟢 ระบบการสร้างข้อความ PDPA ทางการ
     // ==========================================
     function getOfficialPdpaText() {
         let plan = getVal('h_admin_plan_name') || hPlanName || "แผนพัฒนาจังหวัดเชียงใหม่";
@@ -956,7 +924,7 @@
     function updateAutoPdpaPreview() {
         let modeEl = document.querySelector('input[name="admin_pdpa_mode"]:checked');
         if(modeEl && modeEl.value === 'AUTO') {
-           // อัปเดตเมื่อมีการเปิดปิดสวิตช์บังคับบัตรประชาชน
+           // อัปเดตเงื่อนไขต่างๆ
         }
     }
 
@@ -1293,18 +1261,19 @@
          renderQA(); 
          renderVideos();
          
-         if (loader) { 
-             loader.style.opacity = '0'; 
-             setTimeout(() => { loader.style.display = 'none'; }, 300); 
+         let loaderElement = document.getElementById('globalLoader');
+         if (loaderElement) { 
+             loaderElement.style.opacity = '0'; 
+             setTimeout(() => { loaderElement.style.display = 'none'; }, 300); 
          }
 
       }).catch(error => {
           console.error("InitSystem Error:", error);
-          let loader = document.getElementById('globalLoader');
-          if (loader) {
-              loader.style.display = 'flex'; 
-              loader.style.opacity = '1';
-              loader.innerHTML = `
+          let loaderElement = document.getElementById('globalLoader');
+          if (loaderElement) {
+              loaderElement.style.display = 'flex'; 
+              loaderElement.style.opacity = '1';
+              loaderElement.innerHTML = `
               <div class='p-5 text-center'>
                  <h4 class='text-danger fw-bold'>❌ ไม่สามารถโหลดข้อมูลได้</h4>
                  <p class='text-muted'>${error.message}</p>
@@ -2283,7 +2252,6 @@
             }
         }
         
-        // ตรวจสอบอำเภอให้ตรงกับ List เท่านั้น
         let districtVal = getVal('h_district');
         if (!chiangMaiDistricts.includes(districtVal)) {
             Swal.fire('ข้อมูลไม่ถูกต้อง', 'กรุณาเลือกชื่ออำเภอจากรายการที่ระบบกำหนดให้เท่านั้น (ห้ามพิมพ์ชื่ออำเภอนอกเหนือจากที่ระบุ)', 'warning');
